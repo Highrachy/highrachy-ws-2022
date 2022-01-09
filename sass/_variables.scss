@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Poppins:wght@300;500;700;900&display=swap');
 $text-font: 'Karla';
-$headings-font: 'Poppins';
+$headings-font: 'Poppins', Arial;
 
 $text-color: #3d3d3d;
 
@@ -1157,7 +1157,7 @@ $navbar-nav-link-padding-x: 1.5rem;
 // $navbar-dark-toggler-border-color: rgba($white, 0.1);
 
 $navbar-light-color: $text-color;
-// $navbar-light-hover-color: rgba($black, 0.7);
+$navbar-light-hover-color: rgba($red, 0.7);
 // $navbar-light-active-color: rgba($black, 0.9);
 // $navbar-light-disabled-color: rgba($black, 0.3);
 // $navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
