@@ -24,3 +24,5 @@ const Modal = ({ children, content }) => {
     </>
   );
 };
+
+export default Modal;

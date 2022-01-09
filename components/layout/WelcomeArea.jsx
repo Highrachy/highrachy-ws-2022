@@ -16,37 +16,35 @@ const IMAGE_LIST = [
 const STRINGS = ['Expert', 'Specialist', 'Professional'];
 
 const WelcomeArea = () => (
-  <div className="welcome-area h-100" id="welcome-area">
-    <div className="header-text">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-5 col-md-12 col-sm-12 align-self-center">
-            <h1 className="h2">
-              Industry Leading <br />
-              Solutions{' '}
-              <span className="text-danger">
-                <ITyped
-                  className="d-inline"
-                  showCursor={false}
-                  strings={STRINGS}
-                  typeSpeed={50}
-                  backSpeed={50}
-                  startDelay={100}
-                  backDelay={2000}
-                />
-              </span>
-            </h1>
-            <p className="lead">
-              Welcome to Highrachy, a 21st century project oriented firm
-              determined to meet your real estate and technological needs.
-            </p>
-            <Button type="primary" className="mt-3">
-              Let’s Work Together
-            </Button>
-          </div>
-          <div className="offset-lg-1 col-lg-6 col-md-12 col-sm-12 align-self-center">
-            <ImageListSection />
-          </div>
+  <div className="welcome-area mb-7">
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-5 col-md-12 col-sm-12 align-self-center">
+          <h1 className="h2">
+            Industry Leading <br />
+            Solutions{' '}
+            <span className="text-danger">
+              <ITyped
+                className="d-inline"
+                showCursor={false}
+                strings={STRINGS}
+                typeSpeed={50}
+                backSpeed={30}
+                startDelay={100}
+                backDelay={2500}
+              />
+            </span>
+          </h1>
+          <p className="lead">
+            Welcome to Highrachy, a 21st century project oriented firm
+            determined to meet your real estate and technological needs.
+          </p>
+          <Button type="primary" className="mt-3">
+            Let’s Work Together
+          </Button>
+        </div>
+        <div className="offset-lg-1 col-lg-6 col-md-12 col-sm-12 align-self-center">
+          <ImageListSection />
         </div>
       </div>
     </div>
@@ -67,7 +65,7 @@ export const ImageListSection = () => {
         layout
       >
         <AnimatePresence initial={false}>
-          <div className="col-6">
+          <div key="image-list__col-1" className="col-6">
             {[0, 1].map((index) => (
               <SingleImage
                 key={index}
@@ -78,11 +76,11 @@ export const ImageListSection = () => {
               />
             ))}
           </div>
-          <div className="col-6">
+          <div key="image-list__col-2" className="col-6">
             {[2, 3].map((index) => (
               <SingleImage
                 key={index}
-                name={index}
+                name={`image-list-${index}`}
                 tall={index === 3}
                 src={IMAGE_LIST[index]}
                 onClick={onClick}
