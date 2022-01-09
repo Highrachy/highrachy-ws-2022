@@ -1,3 +1,6 @@
+import { FiChevronRight } from 'react-icons/fi';
+import { FiChevronLeft } from 'react-icons/fi';
+
 export const IconWithBackground = ({ size = 5, icon }) => (
   <div
     className="position-relative bg-light-red rounded-circle text-primary"
@@ -96,3 +99,6 @@ export const InvestmentIcon = () => (
     />
   </svg>
 );
+
+export const RightAngleIcon = () => <FiChevronRight />;
+export const LeftAngleIcon = () => <FiChevronLeft />;

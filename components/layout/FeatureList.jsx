@@ -1,19 +1,15 @@
 import React from 'react';
 import { IconWithBackground } from '../common/Icons';
 import expertise from 'data/expertise';
+import { SectionHeader } from '../common/Header';
 
 const FeatureList = () => {
   return (
     <section className="py-7 bg-light">
       <div className="container">
-        <header className="text-center mb-6">
-          <h3 className="section-title">Our Expertise</h3>
-          <div className="header-block">
-            <span className="header-block__1"></span>
-            <span className="header-block__2"></span>
-            <span className="header-block__3"></span>
-          </div>
-        </header>
+        <SectionHeader center className="mb-6">
+          Our Expertise
+        </SectionHeader>
         <div className="row">
           {Object.entries(expertise).map(([name, content]) => (
             <FeatureCard key={name} {...content} />

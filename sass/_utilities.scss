@@ -1,6 +1,7 @@
 // Background
+$light-red: rgba(237, 50, 55, 0.1);
 .bg-light-red {
-  background: rgba(237, 50, 55, 0.1);
+  background: $light-red;
 }
 
 // Text
@@ -23,4 +24,9 @@
   &__3 {
     width: 0.7rem;
   }
+}
+
+.text-lg {
+  font-size: 1.12rem;
+  line-height: 2rem;
 }

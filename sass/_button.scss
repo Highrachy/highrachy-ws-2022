@@ -1,0 +1,63 @@
+.btn-angle-list {
+  width: 100%;
+  margin: auto;
+  display: inline-block;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  border: 1px solid $gray-200;
+  border-radius: 4px;
+  background: #fff;
+  margin-bottom: 1.25rem;
+  outline: none !important;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 10rem;
+    height: 6.25rem;
+    left: -4.38rem;
+    top: 0px;
+    background: $light-red;
+    transform: rotate(60deg);
+    transition: all 0.4s ease-out;
+  }
+
+  svg {
+    display: inline-block;
+    margin-left: 1.38rem;
+    margin-right: 2rem;
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease-out;
+    color: $gray-900;
+  }
+
+  span {
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
+    color: $gray-900;
+  }
+
+  &:hover {
+    span {
+      color: $black;
+    }
+
+    svg {
+      color: #fff;
+      margin-left: 25px;
+      margin-right: 37px;
+    }
+
+    &:after {
+      height: 120px;
+      background: $primary;
+    }
+  }
+}
