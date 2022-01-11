@@ -2,10 +2,11 @@ import React from 'react';
 import { IconWithBackground } from '../common/Icons';
 import expertise from 'data/expertise';
 import { SectionHeader } from '../common/Header';
+import Shape from '../common/Shape';
 
 const FeatureList = () => {
   return (
-    <section className="py-7 bg-light">
+    <section className="py-7 pb-8 bg-light position-relative">
       <div className="container">
         <SectionHeader center className="mb-6">
           Our Expertise
@@ -16,6 +17,7 @@ const FeatureList = () => {
           ))}
         </div>
       </div>
+      <Shape />
     </section>
   );
 };

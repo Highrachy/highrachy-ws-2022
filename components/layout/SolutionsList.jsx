@@ -8,7 +8,7 @@ const SolutionsImage = ({ title, image }) => (
   <div className="col-lg-4 col-md-8 col-sm-12 align-self-center position-relative">
     <Image
       src={image}
-      className="img-fluid d-block position-absolute"
+      className="img-fluid d-block"
       height={500}
       width={360}
       alt={title}
@@ -30,7 +30,6 @@ const SolutionsContent = ({ content, title, list }) => (
 );
 
 const SingleSolutionsList = ({ alternate, ...props }) => {
-  console.log(`alternate`, alternate);
   return (
     <section className={`py-7 ${alternate ? 'bg-light' : ''}`}>
       <div className="container">

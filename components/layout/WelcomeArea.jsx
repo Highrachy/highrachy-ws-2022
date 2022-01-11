@@ -19,7 +19,7 @@ const WelcomeArea = () => (
   <div className="welcome-area mb-7">
     <div className="container">
       <div className="row">
-        <div className="col-lg-5 col-md-12 col-sm-12 align-self-center">
+        <div className="col-lg-5 col-md-12 col-sm-12 align-self-center mt-5">
           <h1 className="h2">
             Industry Leading <br />
             Solutions{' '}
@@ -39,7 +39,7 @@ const WelcomeArea = () => (
             Welcome to Highrachy, a 21st century project oriented firm
             determined to meet your real estate and technological needs.
           </p>
-          <Button type="primary" className="mt-3">
+          <Button color="primary" className="mt-3 mb-6">
             Let’s Work Together
           </Button>
         </div>
@@ -59,11 +59,7 @@ export const ImageListSection = () => {
 
   return (
     <>
-      <motion.section
-        className="position-relative row g-2"
-        style={{ width: '554px', height: '524px' }}
-        layout
-      >
+      <motion.section className="position-relative row g-2" layout>
         <AnimatePresence initial={false}>
           <div key="image-list__col-1" className="col-6">
             {[0, 1].map((index) => (
@@ -101,7 +97,8 @@ export const ImageListSection = () => {
 
 const SingleImage = ({ tall, src, name, onClick }) => {
   const height = tall ? 350 : 210;
-  const width = '300';
+  const width = 300;
+
   return (
     <motion.div
       key={name}

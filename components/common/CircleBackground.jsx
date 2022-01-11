@@ -5,6 +5,8 @@ const CircleBackground = ({ background, left, size, top }) => (
       position: 'absolute',
       width: size,
       height: size,
+      maxHeight: '100vw',
+      maxWidth: '100vw',
       left,
       top,
       background,
