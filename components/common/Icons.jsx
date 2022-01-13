@@ -1,9 +1,13 @@
 import { FiChevronRight } from 'react-icons/fi';
 import { FiChevronLeft } from 'react-icons/fi';
+import { FaFacebookSquare } from 'react-icons/fa';
+import { FaTwitterSquare } from 'react-icons/fa';
+import { FaLinkedin } from 'react-icons/fa';
+import { FaInstagramSquare } from 'react-icons/fa';
 
-export const IconWithBackground = ({ size = 5, icon }) => (
+export const IconWithBackground = ({ size = 4, icon }) => (
   <div
-    className="position-relative bg-light-red rounded-circle text-primary"
+    className="icon-background position-relative bg-light-red rounded-circle text-primary"
     style={{
       width: `${size}rem`,
       height: `${size}rem`,
@@ -15,10 +19,15 @@ export const IconWithBackground = ({ size = 5, icon }) => (
   </div>
 );
 
+export const FacebookIcon = () => <FaFacebookSquare />;
+export const TwitterIcon = () => <FaTwitterSquare />;
+export const LinkedInIcon = () => <FaLinkedin />;
+export const InstagramIcon = () => <FaInstagramSquare />;
+
 export const ConsultingIcon = () => (
   <svg
-    width="32"
-    height="32"
+    width="24"
+    height="24"
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -32,8 +41,8 @@ export const ConsultingIcon = () => (
 
 export const TechnologyIcon = () => (
   <svg
-    width="32"
-    height="35"
+    width="24"
+    height="26"
     viewBox="0 0 32 35"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -67,8 +76,8 @@ export const TechnologyIcon = () => (
 
 export const InvestmentIcon = () => (
   <svg
-    width="32"
-    height="35"
+    width="24"
+    height="26"
     viewBox="0 0 32 35"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

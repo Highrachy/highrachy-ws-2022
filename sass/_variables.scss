@@ -551,8 +551,8 @@ $grid-breakpoints: (
 // $component-active-bg: $primary;
 
 // // scss-docs-start caret-variables
-// $caret-width: 0.3em;
-// $caret-vertical-align: $caret-width * 0.85;
+$caret-width: 0.25em;
+$caret-vertical-align: $caret-width * 0.6;
 // $caret-spacing: $caret-width * 0.85;
 // // scss-docs-end caret-variables
 
@@ -1135,7 +1135,7 @@ $input-btn-padding-x: 2rem;
 $navbar-padding-y: 1.5rem;
 // $navbar-padding-x: null;
 
-$navbar-nav-link-padding-x: 1.5rem;
+$navbar-nav-link-padding-x: 1.8rem;
 
 // $navbar-brand-font-size: $font-size-lg;
 // // Compute the navbar-brand padding-y so the navbar-brand will have the same height as navbar-text and nav-link
@@ -1180,10 +1180,10 @@ $navbar-light-hover-color: rgba($red, 0.7);
 // // scss-docs-start dropdown-variables
 // $dropdown-min-width: 10rem;
 // $dropdown-padding-x: 0;
-// $dropdown-padding-y: 0.5rem;
+$dropdown-padding-y: 0;
 // $dropdown-spacer: 0.125rem;
-// $dropdown-font-size: $font-size-base;
-// $dropdown-color: $body-color;
+$dropdown-font-size: 0.8rem;
+// $dropdown-color: red;
 // $dropdown-bg: $white;
 // $dropdown-border-color: rgba($black, 0.15);
 // $dropdown-border-radius: $border-radius;
@@ -1196,7 +1196,7 @@ $navbar-light-hover-color: rgba($red, 0.7);
 // $dropdown-divider-margin-y: $spacer * 0.5;
 // $dropdown-box-shadow: $box-shadow;
 
-// $dropdown-link-color: $gray-900;
+$dropdown-link-color: $gray-800;
 // $dropdown-link-hover-color: shade-color($dropdown-link-color, 10%);
 // $dropdown-link-hover-bg: $gray-200;
 

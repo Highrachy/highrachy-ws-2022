@@ -1,0 +1,29 @@
+.header-block {
+  span {
+    display: inline-block;
+    height: 4px;
+    border-radius: 2px;
+    background-color: $red;
+  }
+
+  &__1 {
+    width: 2.5rem;
+    margin-right: 3px;
+  }
+  &__2 {
+    width: 1.25rem;
+    margin-right: 3px;
+  }
+  &__3 {
+    width: 0.7rem;
+  }
+}
+
+.text-lg {
+  font-size: 1.12rem;
+  line-height: 2rem;
+}
+
+.text-color {
+  color: $text-color !important;
+}

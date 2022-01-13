@@ -23,6 +23,13 @@ export const investment = {
   title: 'Real Investment',
 };
 
-const expertise = { consulting, technology, investment };
+export const property = {
+  content:
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quis voluptas tenetur, dignissimos soluta odio!',
+  icon: <InvestmentIcon />,
+  title: 'Property Management',
+};
 
-export default expertise;
+const services = { consulting, technology, investment, property };
+
+export default services;

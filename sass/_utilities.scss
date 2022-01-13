@@ -1,32 +1,27 @@
 // Background
 $light-red: rgba(237, 50, 55, 0.1);
+
 .bg-light-red {
   background: $light-red;
 }
 
-// Text
-.header-block {
-  span {
-    display: inline-block;
-    height: 4px;
-    border-radius: 2px;
-    background-color: $red;
-  }
-
-  &__1 {
-    width: 2.5rem;
-    margin-right: 3px;
-  }
-  &__2 {
-    width: 1.25rem;
-    margin-right: 3px;
-  }
-  &__3 {
-    width: 0.7rem;
-  }
+.z-n1 {
+  z-index: -1;
 }
 
-.text-lg {
-  font-size: 1.12rem;
-  line-height: 2rem;
+.z-n2 {
+  z-index: -2;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  height: 6rem;
+  width: 3rem;
+  background: $red;
+  top: 40%;
+
+  &-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

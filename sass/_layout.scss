@@ -1,0 +1,39 @@
+.dropdown-item {
+  height: 3rem;
+  line-height: 3rem;
+  transition: all 0.3s ease-out 0s;
+  border-bottom: 1px solid $gray-200;
+  border-left: 5px solid transparent;
+
+  &:hover {
+    background: $gray-100;
+    padding-left: 1.5rem;
+    border-left-color: lighten($black, 60);
+    color: darken($red, 15);
+    &:before {
+      width: 3px;
+    }
+  }
+}
+
+.parallax {
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.service-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    .icon-background {
+      background: lighten($red, 30);
+      color: white;
+    }
+  }
+}
