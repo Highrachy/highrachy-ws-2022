@@ -5,6 +5,7 @@ import Tilt from 'react-tilt';
 import Image from 'next/image';
 import { shimmer, toBase64 } from 'helpers/image';
 import Button from '../form/Button';
+import Section from '../common/Section';
 
 const IMAGE_LIST = [
   'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
@@ -16,7 +17,7 @@ const IMAGE_LIST = [
 const STRINGS = ['Expert', 'Specialist', 'Professional'];
 
 const WelcomeArea = () => (
-  <div className="welcome-area mb-7">
+  <Section noPaddingTop>
     <div className="container">
       <div className="row">
         <div className="col-lg-5 col-md-12 col-sm-12 align-self-center mt-5">
@@ -48,7 +49,7 @@ const WelcomeArea = () => (
         </div>
       </div>
     </div>
-  </div>
+  </Section>
 );
 
 export const ImageListSection = () => {

@@ -2,15 +2,14 @@ import projects from '@/data/projects';
 import Image from 'next/image';
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import { SectionHeader } from '../common/Header';
+import { SectionHeader } from './Header';
 import Humanize from 'humanize-plus';
+import Section from '../common/Section';
+import Link from 'next/link';
 
 const ProjectList = () => {
   return (
-    <section className="py-7">
-      <SectionHeader center className="mb-6">
-        Our Projects
-      </SectionHeader>
+    <Section title="Our Projects" centered>
       <Carousel>
         {projects.map(({ title, image, content }) => (
           <Carousel.Item key={title}>
@@ -28,14 +27,16 @@ const ProjectList = () => {
                 <div className="col-lg-4 col-md-8 col-sm-12 align-self-center">
                   <h4>{title}</h4>
                   <p className="text-lg">{Humanize.truncate(content, 200)}</p>
-                  <a href="#">View More</a>
+                  <Link href="/contact-us" passHref>
+                    <a>View More</a>
+                  </Link>
                 </div>
               </div>
             </div>
           </Carousel.Item>
         ))}
       </Carousel>
-    </section>
+    </Section>
   );
 };
 

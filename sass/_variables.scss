@@ -604,7 +604,7 @@ $font-size-base: 1rem; // Assumes the browser default, typically `16px`
 
 // $font-weight-base: $font-weight-normal;
 
-// $line-height-base: 1.5;
+$line-height-base: 1.8;
 // $line-height-sm: 1.25;
 // $line-height-lg: 2;
 
@@ -1132,7 +1132,7 @@ $input-btn-padding-x: 2rem;
 // // Navbar
 
 // // scss-docs-start navbar-variables
-$navbar-padding-y: 1.5rem;
+$navbar-padding-y: 1rem;
 // $navbar-padding-x: null;
 
 $navbar-nav-link-padding-x: 1.8rem;
@@ -1559,8 +1559,8 @@ $dropdown-link-color: $gray-800;
 // $breadcrumb-item-padding-x: 0.5rem;
 // $breadcrumb-margin-bottom: 1rem;
 // $breadcrumb-bg: null;
-// $breadcrumb-divider-color: $gray-600;
-// $breadcrumb-active-color: $gray-600;
+$breadcrumb-divider-color: $gray-200;
+$breadcrumb-active-color: $gray-300;
 // $breadcrumb-divider: quote('/');
 // $breadcrumb-divider-flipped: $breadcrumb-divider;
 // $breadcrumb-border-radius: null;

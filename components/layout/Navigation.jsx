@@ -7,46 +7,6 @@ import ActiveLink from '../utils/ActiveLink';
 
 const Navigation = () => {
   return (
-    // <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
-    //   <div className="container">
-    //     <Link href="/" passHref>
-    //       <a className="navbar-brand">
-    //         <Image src="/logo.png" alt="Highrachy" width="169" height="50" />
-    //       </a>
-    //     </Link>
-    //     <button
-    //       className="navbar-toggler"
-    //       type="button"
-    //       data-bs-toggle="collapse"
-    //       data-bs-target="#navbarSupportedContent"
-    //       aria-controls="navbarSupportedContent"
-    //       aria-expanded="false"
-    //       aria-label="Toggle navigation"
-    //     >
-    //       <span className="navbar-toggler-icon"></span>
-    //     </button>
-
-    //     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    //       <ul className="navbar-nav ms-auto">
-    //         {Object.entries(NAVIGATION_LINKS).map(([key, value], index) => (
-    //           <ActiveLink
-    //             activeClassName="text-danger"
-    //             key={index}
-    //             href={value === 'Home' ? '/' : `/${key}`}
-    //             passHref
-    //           >
-    //             <a
-    //               aria-current="page"
-    //               className={`nav-link ${key === 'contact-us' ? 'pe-0' : ''}`}
-    //             >
-    //               {value}
-    //             </a>
-    //           </ActiveLink>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   </div>
-    // </nav>
     <Navbar bg="transparent" expand="lg">
       <Container>
         <Link href="/" passHref>
@@ -57,15 +17,15 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {navigation.map(({ children, link, title }, index) => (
+            {navigation.map(({ children, url, title }, index) => (
               <React.Fragment key={index}>
                 {Object.keys(children)?.length > 0 ? (
-                  <NavDropdown title={title} id={`${link}-dropdown`}>
-                    {Object.entries(children).map(([link, title], index) => (
+                  <NavDropdown title={title} id={`${url}-dropdown`}>
+                    {Object.entries(children).map(([url, title], index) => (
                       <ActiveLink
                         activeClassName="text-danger"
-                        key={`${link}-dropdown-${index}`}
-                        href={link}
+                        key={`${url}-dropdown-${index}`}
+                        href={url}
                         passHref
                       >
                         <NavDropdown.Item>{title}</NavDropdown.Item>
@@ -75,10 +35,10 @@ const Navigation = () => {
                 ) : (
                   <ActiveLink
                     activeClassName="text-danger"
-                    href={`/${link}`}
+                    href={`/${url}`}
                     passHref
                   >
-                    <Nav.Link aria-current="page" className={`nav-link`}>
+                    <Nav.Link aria-current="page" className={`nav-url`}>
                       {title}
                     </Nav.Link>
                   </ActiveLink>

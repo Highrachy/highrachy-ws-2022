@@ -2,7 +2,8 @@ import solutions from 'data/solutions';
 import Image from 'next/image';
 import React from 'react';
 import AngleList from '../common/AngleList';
-import { SectionHeader } from '../common/Header';
+import Section from '../common/Section';
+import { SectionHeader } from './Header';
 
 const SolutionsImage = ({ title, image }) => (
   <div className="col-lg-4 col-md-8 col-sm-12 align-self-center position-relative">
@@ -31,7 +32,7 @@ const SolutionsContent = ({ content, title, list }) => (
 
 const SingleSolutionsList = ({ alternate, ...props }) => {
   return (
-    <section className={`py-7 ${alternate ? 'bg-light' : ''}`}>
+    <Section altBg={alternate}>
       <div className="container">
         <div className="row">
           {alternate ? (
@@ -47,7 +48,7 @@ const SingleSolutionsList = ({ alternate, ...props }) => {
           )}
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

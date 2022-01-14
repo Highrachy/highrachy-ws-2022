@@ -1,28 +1,13 @@
 import Overlay from './Overlay';
 
-const Parallax = ({ bgImage }) => (
+const Parallax = ({ bgImage, children }) => (
   <section
     className="parallax z-n2"
     style={{
-      backgroundImage: `url('${bgImage}')`,
+      backgroundImage: `linear-gradient(0deg, rgba(61, 61, 61, 0.8), rgba(61, 61, 61, 1)), url(${bgImage})`,
     }}
   >
-    <Overlay />
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-6 offset-lg-3">
-          <div className="py-7 text-center">
-            <div className="text-white lead pb-5">
-              We are here to answer your questions 24/7
-            </div>
-            <h3 className="h2 text-white pb-5">NEED A CONSULTATION?</h3>
-            <a href="contact.html" className="btn btn-primary btn-wide">
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    {children}
   </section>
 );
 

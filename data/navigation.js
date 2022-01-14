@@ -1,12 +1,12 @@
-const home = {
+export const home = {
   title: 'Home',
-  link: '',
+  url: '',
   children: {},
 };
 
-const services = {
+export const services = {
   title: 'Services',
-  link: 'services',
+  url: 'services',
   children: {
     consultancy: 'PM Consultancy and RE Advisory',
     'property-devlopment': 'Property Development & Management',
@@ -15,21 +15,21 @@ const services = {
   },
 };
 
-const projects = {
+export const projects = {
   title: 'Projects',
-  link: 'projects',
+  url: 'projects',
   children: {
     'our-projects': 'Our Projects',
     'our-approach': 'Our Approach',
   },
 };
 
-const about = {
+export const about = {
   title: 'About Us',
-  link: 'about-us',
+  url: 'about-us',
   children: {
     'our-team': 'Our Team',
-    'the-culture': 'Our Culture',
+    'about-us': 'Our Culture',
     'contact-us': 'Contact Us',
     career: 'Career',
   },

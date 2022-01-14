@@ -17,8 +17,7 @@ $light-red: rgba(237, 50, 55, 0.1);
 .carousel-control-next {
   height: 6rem;
   width: 3rem;
-  background: $red;
-  top: 40%;
+  background: lighten($red, 10);
 
   &-icon {
     width: 1.5rem;

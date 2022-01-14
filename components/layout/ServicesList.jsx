@@ -1,17 +1,15 @@
 import React from 'react';
 import { IconWithBackground } from '../common/Icons';
 import expertise from '@/data/services';
-import { SectionHeader } from '../common/Header';
+import { SectionHeader } from './Header';
 import Shape from '../common/Shape';
 import Humanize from 'humanize-plus';
+import Section from '../common/Section';
 
 const ServicesList = () => {
   return (
-    <section className="py-7 pb-8 bg-light position-relative">
+    <Section title="Our Services" altBg centered>
       <div className="container">
-        <SectionHeader center className="mb-6">
-          Our Services
-        </SectionHeader>
         <div className="row">
           {Object.entries(expertise).map(([name, content]) => (
             <SingleServiceCard key={name} {...content} />
@@ -19,7 +17,7 @@ const ServicesList = () => {
         </div>
       </div>
       <Shape />
-    </section>
+    </Section>
   );
 };
 
