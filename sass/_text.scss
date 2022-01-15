@@ -4,18 +4,34 @@
     height: 4px;
     border-radius: 2px;
     background-color: $red;
+    margin-right: 3px;
   }
 
   &__1 {
     width: 2.5rem;
-    margin-right: 3px;
   }
   &__2 {
     width: 1.25rem;
-    margin-right: 3px;
   }
   &__3 {
     width: 0.7rem;
+  }
+  &__4 {
+    width: 0;
+  }
+
+  &.small {
+    span {
+      height: 3px;
+
+      &.header-block__1 {
+        width: 0;
+      }
+
+      &.header-block__4 {
+        width: 0.3rem;
+      }
+    }
   }
 }
 
@@ -24,6 +40,7 @@
   line-height: 2rem;
 }
 
-.text-color {
+.text-color,
+.text-gray {
   color: $text-color !important;
 }

@@ -1,4 +1,5 @@
 import { InvestmentIcon } from '@/components/common/Icons';
+import { PropertyManagementIcon } from '@/components/common/Icons';
 import { TechnologyIcon } from '@/components/common/Icons';
 import { ConsultingIcon } from '@/components/common/Icons';
 
@@ -26,7 +27,7 @@ export const investment = {
 export const property = {
   content:
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quis voluptas tenetur, dignissimos soluta odio!',
-  icon: <InvestmentIcon />,
+  icon: <PropertyManagementIcon />,
   title: 'Property Management',
 };
 

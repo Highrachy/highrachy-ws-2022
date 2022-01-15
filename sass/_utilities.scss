@@ -15,12 +15,47 @@ $light-red: rgba(237, 50, 55, 0.1);
 
 .carousel-control-prev,
 .carousel-control-next {
-  height: 6rem;
-  width: 3rem;
-  background: lighten($red, 10);
+  height: 5rem;
+  width: 2.5rem;
+  background: lighten($dark, 15);
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
 
   &-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.img-block__text {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  top: 50%;
+  transform: perspective(1px) translateY(-50%);
+  background: #fff;
+  box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+  margin-left: -5%;
+  width: 38%;
+}
+.img-block__text.order-first {
+  left: 5rem;
+}
+
+.card-client {
+  transition: all ease-out 0.3s;
+  img {
+    filter: grayscale(50%);
+    transition: all ease-out 0.3s;
+  }
+  &:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.275rem 0.75rem -0.0625rem rgb(19 16 34 / 6%),
+      0 0.125rem 0.4rem -0.0625rem rgb(19 16 34 / 3%);
+
+    img {
+      filter: none;
+      transform: scale(1.3);
+    }
   }
 }

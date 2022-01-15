@@ -4,7 +4,8 @@ import Footer from '@/components/layout/Footer';
 import Navigation from '@/components/layout/Navigation';
 import ProjectList from '@/components/layout/ProjectList';
 import WelcomeArea from '@/components/layout/WelcomeArea';
-import Consultation from '@/components/layout/Consultation';
+import NeedConsultation from '@/components/common/NeedConsultation';
+import BusinessRelationships from '@/components/layout/BusinessRelationships';
 
 export default function Home() {
   return (
@@ -13,8 +14,8 @@ export default function Home() {
       <Navigation />
       <WelcomeArea />
       <ServicesList />
-      <ProjectList />
-      <Consultation />
+      <ProjectList isSlideshow />
+      <BusinessRelationships topClientsOnly />
       <Footer />
     </>
   );

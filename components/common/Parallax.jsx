@@ -4,7 +4,7 @@ const Parallax = ({ bgImage, children }) => (
   <section
     className="parallax z-n2"
     style={{
-      backgroundImage: `linear-gradient(0deg, rgba(61, 61, 61, 0.8), rgba(61, 61, 61, 1)), url(${bgImage})`,
+      backgroundImage: `linear-gradient(0deg, rgba(61, 61, 61, 0.7), rgba(61, 61, 61, 0.9)), url(${bgImage})`,
     }}
   >
     {children}
