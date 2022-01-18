@@ -4,9 +4,13 @@ import { FaFacebookSquare } from 'react-icons/fa';
 import { FaTwitterSquare } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaInstagramSquare } from 'react-icons/fa';
-import { BiBuildingHouse } from 'react-icons/bi';
+import { FaCertificate } from 'react-icons/fa';
+import { GiWallet } from 'react-icons/gi';
+import { BsFillCloudCheckFill } from 'react-icons/bs';
+import { GiHealthNormal } from 'react-icons/gi';
+import classNames from 'classnames';
 
-export const IconWithBackground = ({ size = 4, icon }) => (
+export const IconWithBackground = ({ size = 4, icon, iconClassName }) => (
   <div
     className="icon-background position-relative bg-light-red rounded-circle text-primary"
     style={{
@@ -14,7 +18,12 @@ export const IconWithBackground = ({ size = 4, icon }) => (
       height: `${size}rem`,
     }}
   >
-    <span className="position-absolute top-50 start-50 translate-middle">
+    <span
+      className={classNames(
+        iconClassName,
+        'position-absolute top-50 start-50 translate-middle'
+      )}
+    >
       {icon}
     </span>
   </div>
@@ -212,3 +221,7 @@ export const InvestmentIcon = () => (
 
 export const RightAngleIcon = () => <FiChevronRight />;
 export const LeftAngleIcon = () => <FiChevronLeft />;
+export const InclusiveIcon = () => <FaCertificate />;
+export const SalaryIcon = () => <GiWallet />;
+export const HealthIcon = () => <GiHealthNormal />;
+export const RemoteWorkIcon = () => <BsFillCloudCheckFill />;

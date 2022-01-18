@@ -59,3 +59,26 @@ $light-red: rgba(237, 50, 55, 0.1);
     }
   }
 }
+
+.icon-md svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.lift {
+  transition: box-shadow 0.3s ease, -webkit-transform 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0.8125rem 1rem rgba(35, 35, 35, 0.15) !important;
+    -webkit-transform: translate3d(0, -6px, 0) !important;
+    transform: translate3d(0, -6px, 0) !important;
+  }
+}
+
+.shadow {
+  box-shadow: 0 0.625rem 1rem rgba(35, 35, 35, 0.1) !important;
+}
+
+.header-404 {
+  font-size: 12rem;
+}

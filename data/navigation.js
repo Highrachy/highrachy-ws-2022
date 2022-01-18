@@ -29,11 +29,11 @@ export const about = {
   title: 'About Us',
   url: 'about-us',
   children: {
-    'about-us': 'About Us',
+    // 'about-us': 'About Us',
+    'about-us': 'Our Culture',
     'our-team': 'Our Team',
-    'our-culture': 'Our Culture',
     'contact-us': 'Contact Us',
-    career: 'Career',
+    careers: 'Careers',
   },
 };
 

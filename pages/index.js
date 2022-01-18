@@ -4,7 +4,6 @@ import Footer from '@/components/layout/Footer';
 import Navigation from '@/components/layout/Navigation';
 import ProjectList from '@/components/layout/ProjectList';
 import WelcomeArea from '@/components/layout/WelcomeArea';
-import NeedConsultation from '@/components/common/NeedConsultation';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
 
 export default function Home() {

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { SectionHeader } from '../layout/Header';
+import { HeaderUnderBlock } from '../layout/Header';
 
 const Section = ({
   children,
@@ -10,14 +10,15 @@ const Section = ({
   altBg,
   noPaddingTop,
   noPaddingBottom,
+  small,
 }) => {
   return (
     <section
       className={classNames(className, 'position-relative', {
         'bg-light': altBg,
-        'py-7': !noPaddingBottom && !noPaddingTop,
-        'pt-7': noPaddingBottom,
-        'pb-7': noPaddingTop,
+        'py-6 py-lg-7': !noPaddingBottom && !noPaddingTop,
+        'pt-6 pt-lg-7': noPaddingBottom,
+        'pb-6 pb-lg-7': noPaddingTop,
       })}
     >
       {title && (
@@ -25,6 +26,7 @@ const Section = ({
           <SectionHeader
             center={!!centered}
             className={classNames({ 'mb-6': centered, 'mb-3': !centered })}
+            small={small}
           >
             {title}
           </SectionHeader>
@@ -34,5 +36,12 @@ const Section = ({
     </section>
   );
 };
+
+export const SectionHeader = ({ children, className, center, small }) => (
+  <header className={classNames(className, { 'text-center': center })}>
+    <h3 className={classNames({ 'h4 mb-0': small, h3: !small })}>{children}</h3>
+    <HeaderUnderBlock small={small} />
+  </header>
+);
 
 export default Section;

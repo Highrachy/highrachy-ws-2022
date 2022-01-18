@@ -4,13 +4,9 @@ import Link from 'next/link';
 import React from 'react';
 import Parallax from '../common/Parallax';
 import Section from '../common/Section';
+import { SectionHeader as SHeader } from '../common/Section';
 
-export const SectionHeader = ({ children, className, center, small }) => (
-  <header className={classNames(className, { 'text-center': center })}>
-    <h3 className={classNames({ 'h4 mb-0': small, h3: !small })}>{children}</h3>
-    <HeaderUnderBlock small={small} />
-  </header>
-);
+export const SectionHeader = (props) => <SHeader {...props} />;
 
 export const HeaderUnderBlock = ({ small }) => (
   <div className={classNames('header-block', { small })}>
