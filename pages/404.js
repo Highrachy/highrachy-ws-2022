@@ -3,7 +3,7 @@ import Navigation from '@/components/layout/Navigation';
 import Parallax from '@/components/common/Parallax';
 import Section from '@/components/common/Section';
 
-export default function Home() {
+export default function NotFound() {
   return (
     <>
       <Navigation />

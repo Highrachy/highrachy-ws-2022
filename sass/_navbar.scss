@@ -1,18 +1,36 @@
+.navbar {
+  padding-top: 0.5rem !important;
+  &.hide {
+    transform: translateY(-100%);
+    transition: all 0.4s ease-in-out;
+  }
+  &.show {
+    transform: initial;
+    transition: all 0.4s ease-in-out;
+
+    &.bg-white {
+      box-shadow: 0px 8px 6px -6px (238, 238, 238, 1);
+    }
+  }
+}
+
+.navbar-brand {
+  padding: 1rem 0;
+}
+
 .dropdown-item {
   height: 3rem;
   line-height: 3rem;
-  transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out;
   border-bottom: 1px solid $gray-200;
-  border-left: 5px solid transparent;
+  border-left: 2px solid transparent;
+  min-width: 15rem;
 
   &:hover {
     background: $gray-100;
     padding-left: 1.5rem;
-    border-left-color: lighten($black, 60);
-    color: darken($red, 15);
-    &:before {
-      width: 3px;
-    }
+    border-left-color: red;
+    color: darken($red, 10);
   }
 }
 
@@ -51,5 +69,18 @@
 
   .dropdown-item {
     padding-left: 3rem;
+  }
+
+  .navbar-toggler {
+    border: none;
+    color: transparent;
+    padding: 0;
+    margin-top: -1rem;
+
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      fill: $black;
+    }
   }
 }

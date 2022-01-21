@@ -18,7 +18,7 @@ const STRINGS = ['Expert', 'Specialist', 'Professional'];
 
 const WelcomeArea = () => (
   <Section noPaddingTop>
-    <div className="container">
+    <div className="container mt-5">
       <div className="row">
         <div className="col-lg-5 col-md-12 col-sm-12 align-self-center mt-5">
           <h1 className="h2">

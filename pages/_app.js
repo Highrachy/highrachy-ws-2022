@@ -1,9 +1,21 @@
 import Head from 'next/head';
+import NextNProgress from 'nextjs-progressbar';
+import React from 'react';
 import '../sass/App.scss';
+import NotFound from './404';
 
 function MyApp({ Component, pageProps }) {
-  return (
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <>
+      <NextNProgress color="#ed3237" />
       <Head>
         <link
           rel="apple-touch-icon"
@@ -28,5 +40,7 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+const LoadingScreen = () => <NotFound />;
 
 export default MyApp;
