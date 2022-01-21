@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
+import Link from 'next/link';
 import React from 'react';
 
 const careers = () => {
@@ -47,12 +48,11 @@ const Career = () => (
                 Permanent, Full-time
               </span>
             </div>
-            <a
-              className="btn btn-secondary btn-wide text-uppercase stretched-link"
-              href="/careers-single"
-            >
-              Apply Now
-            </a>
+            <Link href="/careers-signle">
+              <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
+                Apply Now
+              </a>
+            </Link>
           </div>
         </li>
         <li className="list-group-item">
@@ -66,12 +66,11 @@ const Career = () => (
                 Contract
               </span>
             </div>
-            <a
-              className="btn btn-secondary btn-wide text-uppercase stretched-link"
-              href="/careers-single"
-            >
-              Apply Now
-            </a>
+            <Link href="/careers-signle">
+              <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
+                Apply Now
+              </a>
+            </Link>
           </div>
         </li>
       </ul>
