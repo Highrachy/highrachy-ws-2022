@@ -25,7 +25,10 @@ const Section = ({
         <div className="container">
           <SectionHeader
             center={!!centered}
-            className={classNames({ 'mb-6': centered, 'mb-3': !centered })}
+            className={classNames({
+              'mb-md-6 mb-5': centered,
+              'mb-3': !centered,
+            })}
             small={small}
           >
             {title}

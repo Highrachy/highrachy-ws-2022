@@ -21,8 +21,8 @@ const BusinessRelationships = ({ topClientsOnly }) => {
 export default BusinessRelationships;
 
 const ClientCard = ({ client }) => (
-  <div className="col-sm-3">
-    <div className="card-client card card-body card-hover pb-4 mx-2 mb-5">
+  <div className="col-sm-3 col-6 g-1">
+    <div className="card-client card card-body card-hover pb-4 mx-2 mb-3">
       <Image
         src={`/assets/img/clients/${client}.png`}
         className="d-block mx-auto my-2"

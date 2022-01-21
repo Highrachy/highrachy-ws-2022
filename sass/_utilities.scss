@@ -28,24 +28,31 @@ $light-red: rgba(237, 50, 55, 0.1);
 }
 
 .img-block__text {
-  position: absolute;
-  z-index: 2;
-  right: 1rem;
-  top: 50%;
-  transform: perspective(1px) translateY(-50%);
   background: #fff;
   box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
-  margin-left: -5%;
-  width: 38%;
+  margin-top: -0.5rem;
+
+  @include media-breakpoint-up(md) {
+    position: absolute;
+    z-index: 2;
+    right: 1rem;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%);
+    margin-left: -5%;
+    width: 38%;
+    margin-top: 0;
+  }
 }
-.img-block__text.order-first {
-  left: 5rem;
+
+.img-block__text.alt {
+  @include media-breakpoint-up(md) {
+    left: 5rem;
+  }
 }
 
 .card-client {
   transition: all ease-out 0.3s;
   img {
-    filter: grayscale(50%);
     transition: all ease-out 0.3s;
   }
   &:hover {
@@ -54,8 +61,7 @@ $light-red: rgba(237, 50, 55, 0.1);
       0 0.125rem 0.4rem -0.0625rem rgb(19 16 34 / 3%);
 
     img {
-      filter: none;
-      transform: scale(1.3);
+      transform: scale(1.5);
     }
   }
 }

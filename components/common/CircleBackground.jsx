@@ -5,8 +5,8 @@ const CircleBackground = ({ background, left, size, top }) => (
       position: 'absolute',
       width: size,
       height: size,
-      maxHeight: '100vw',
-      maxWidth: '100vw',
+      maxHeight: '125vw',
+      maxWidth: '125vw',
       left,
       top,
       background,
@@ -17,9 +17,9 @@ const CircleBackground = ({ background, left, size, top }) => (
 
 CircleBackground.defaultProps = {
   background: '#FAFAFA',
-  left: '-8rem',
+  left: '-12rem',
   size: '50rem',
-  top: '-8rem',
+  top: '-6rem',
 };
 
 export default CircleBackground;

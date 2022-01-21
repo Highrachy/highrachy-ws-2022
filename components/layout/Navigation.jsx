@@ -87,7 +87,7 @@ const Navigation = () => {
     );
 
   return (
-    <Navbar bg="transparent" expand="lg">
+    <Navbar bg="transparent" expand="lg" sticky="top">
       <Container>
         <Link href="/" passHref>
           <Navbar.Brand>

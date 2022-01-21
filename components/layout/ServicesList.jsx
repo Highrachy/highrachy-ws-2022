@@ -21,7 +21,7 @@ const ServicesList = () => {
 };
 
 const SingleServiceCard = ({ content, icon, title }) => (
-  <section className="col-md-3 col-sm-6 col-12">
+  <section className="col-md-3 col-sm-6 col-12 mb-4">
     <div className="service-card card w-100 h-100 text-center px-1 pt-5 pb-3">
       <div className="mx-auto mb-2">
         <IconWithBackground icon={icon} />
