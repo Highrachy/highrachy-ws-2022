@@ -11,7 +11,7 @@ const Section = ({
   noPaddingTop,
   noPaddingBottom,
   small,
-  ...props,
+  ...props
 }) => {
   return (
     <section
