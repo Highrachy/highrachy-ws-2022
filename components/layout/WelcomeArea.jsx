@@ -36,11 +36,13 @@ const WelcomeArea = () => (
               />
             </span>
           </h1>
-          <p className="lead">
-            Welcome to Highrachy, a 21st century project oriented firm
-            determined to meet your real estate and technological needs.
+          <p className="lead my-3">
+            Highrachy is a 21st century project-oriented organization setup
+            primarily to meet your real estate needs. Experience top notch
+            processes and solutions that are deliberately designed to guarantee
+            your Real Estate goals are met, constantly
           </p>
-          <Button color="primary" className="mt-3 mb-6">
+          <Button color="primary" className="mb-6">
             Let’s Work Together
           </Button>
         </div>

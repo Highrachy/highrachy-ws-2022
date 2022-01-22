@@ -1,5 +1,5 @@
 import FeatureCard from '@/components/common/FeatureCard';
-import { GetInTouch } from '@/components/common/NeedConsultation';
+import NeedConsultation from '@/components/common/NeedConsultation';
 import Section from '@/components/common/Section';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
@@ -18,7 +18,12 @@ const careers = () => {
       />
       <Career />
       <Perks />
-      <GetInTouch />
+      <NeedConsultation
+        header="We're always on the hunt for talented designers and
+              developers to join our team"
+        text="Didn't see your job"
+        buttonText="Get in Touch"
+      />
       <Footer hideConsultation />
     </>
   );

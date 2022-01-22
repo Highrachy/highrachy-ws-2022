@@ -1,18 +1,26 @@
+import { convertToSlug } from '@/helpers/string';
+import servicesText from './services';
+
 export const home = {
   title: 'Home',
   url: '',
   children: {},
 };
 
+const servicesDropDown = Object.values(servicesText).reduce(
+  (acc, { title }) => {
+    acc[`/services#${convertToSlug(title)}`] = title;
+    return acc;
+  },
+  {}
+);
+
 export const services = {
   title: 'Services',
   url: 'services',
   children: {
     services: 'Our Services',
-    consultancy: 'PM Consultancy and RE Advisory',
-    'property-devlopment': 'Property Development & Management',
-    'real-investment': 'Real Investment',
-    technology: 'Technology',
+    ...servicesDropDown,
   },
 };
 

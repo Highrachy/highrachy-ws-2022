@@ -11,6 +11,7 @@ const Section = ({
   noPaddingTop,
   noPaddingBottom,
   small,
+  ...props,
 }) => {
   return (
     <section
@@ -20,6 +21,7 @@ const Section = ({
         'pt-6 pt-lg-7': noPaddingBottom,
         'pb-6 pb-lg-7': noPaddingTop,
       })}
+      {...props}
     >
       {title && (
         <div className="container">

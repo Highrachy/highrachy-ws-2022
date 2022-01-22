@@ -71,6 +71,11 @@ $light-red: rgba(237, 50, 55, 0.1);
   width: 1.5rem;
 }
 
+.icon-lg svg {
+  height: 4rem;
+  width: 4rem;
+}
+
 .lift {
   transition: box-shadow 0.3s ease, -webkit-transform 0.3s ease;
 

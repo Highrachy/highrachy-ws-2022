@@ -1,5 +1,5 @@
 import CircleBackground from '@/components/common/CircleBackground';
-import ServicesList from '@/components/layout/ServicesList';
+import { ServicesListCard } from '@/components/layout/ServicesList';
 import Footer from '@/components/layout/Footer';
 import Navigation from '@/components/layout/Navigation';
 import ProjectList from '@/components/layout/ProjectList';
@@ -12,7 +12,7 @@ export default function Home() {
       <CircleBackground />
       <Navigation />
       <WelcomeArea />
-      <ServicesList />
+      <ServicesListCard />
       <ProjectList isSlideshow />
       <BusinessRelationships topClientsOnly />
       <Footer />

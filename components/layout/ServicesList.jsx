@@ -1,11 +1,15 @@
 import React from 'react';
 import { IconWithBackground } from '../common/Icons';
-import expertise from '@/data/services';
+import expertise, { servicesLeadText } from '@/data/services';
 import Shape from '../common/Shape';
 import Humanize from 'humanize-plus';
 import Section from '../common/Section';
+import { SectionHeader } from './Header';
+import services from '@/data/services';
+import classNames from 'classnames';
+import { convertToSlug } from '@/helpers/string';
 
-const ServicesList = () => {
+export const ServicesListCard = () => {
   return (
     <Section title="Our Services" altBg centered>
       <div className="container mb-6">
@@ -38,5 +42,56 @@ const SingleServiceCard = ({ content, icon, title }) => (
     </div>
   </section>
 );
+
+const ServicesImage = ({ altBg, icon }) => (
+  <div
+    className={classNames(
+      'col-md-4 col-sm-12 align-self-center position-relative',
+      {
+        'order-md-first': !!altBg,
+        'order-md-last': !altBg,
+      }
+    )}
+  >
+    <IconWithBackground icon={icon} size={16} iconClassName="icon-lg" />
+  </div>
+);
+
+const ServicesContent = ({ altBg, content, name }) => (
+  <div
+    className={classNames('col-md-8 col-sm-12 align-self-center', {
+      'order-md-first': !altBg,
+      'order-md-last': !!altBg,
+    })}
+  >
+    <SectionHeader className="mb-3">{name}</SectionHeader>
+
+    <p className="text-lg">{content}</p>
+  </div>
+);
+
+const SingleServicesList = ({ alternate, ...props }) => {
+  return (
+    <Section altBg={alternate} id={convertToSlug(props.title)}>
+      <div className="container">
+        <div className="row">
+          <>
+            <ServicesContent {...props} altBg={alternate} />
+            <ServicesImage {...props} altBg={alternate} />
+          </>
+        </div>
+      </div>
+    </Section>
+  );
+};
+
+const ServicesList = () =>
+  Object.values(services).map((service, index) => (
+    <SingleServicesList
+      key={index}
+      {...service}
+      alternate={(index + 1) % 2 === 0}
+    />
+  ));
 
 export default ServicesList;

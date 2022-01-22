@@ -47,6 +47,7 @@ const Form = () => (
             />
             <label htmlFor="floatingEmail">Email address</label>
           </div>
+          {/* subject - investment, consultation, others, property management */}
 
           <div className="form-floating mb-3">
             <input
