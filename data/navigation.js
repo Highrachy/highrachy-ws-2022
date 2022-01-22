@@ -20,7 +20,7 @@ export const projects = {
   title: 'Projects',
   url: 'projects',
   children: {
-    'our-projects': 'Our Projects',
+    projects: 'Our Projects',
     'our-approach': 'Our Approach',
   },
 };

@@ -6,14 +6,17 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-const careers = () => {
+const SingleCareer = () => {
+  const router = useRouter();
+  const { job } = router.query;
   return (
     <>
       <Navigation />
       <PageHeader
-        title="Careers"
+        title={`Career ${job}`}
         bgImage="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
       />
 
@@ -161,4 +164,4 @@ const Form = () => (
   </Section>
 );
 
-export default careers;
+export default SingleCareer;

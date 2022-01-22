@@ -48,7 +48,13 @@ const Career = () => (
                 Permanent, Full-time
               </span>
             </div>
-            <Link href="/careers-signle">
+            <Link
+              passHref
+              href={{
+                pathname: '/careers/[job]',
+                query: { job: 'Front End Engineer' },
+              }}
+            >
               <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
                 Apply Now
               </a>
@@ -66,7 +72,13 @@ const Career = () => (
                 Contract
               </span>
             </div>
-            <Link href="/careers-signle">
+            <Link
+              passHref
+              href={{
+                pathname: '/careers/[job]',
+                query: { job: 'Backend Designer' },
+              }}
+            >
               <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
                 Apply Now
               </a>

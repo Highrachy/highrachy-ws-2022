@@ -5,6 +5,7 @@ import { VisionIcon } from '@/components/common/Icons';
 import { TechnologyIcon } from '@/components/common/Icons';
 import ImageBlock from '@/components/common/ImageBlock';
 import Section from '@/components/common/Section';
+import Shape from '@/components/common/Shape';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
@@ -82,7 +83,7 @@ const ValuePreposition = () => (
 
 const MissionAndVision = () => (
   <Section altBg>
-    <div className="container">
+    <div className="container mb-6">
       <div className="row">
         <div className="offset-md-1 col-md-10">
           <div className="row">
@@ -99,6 +100,7 @@ const MissionAndVision = () => (
         </div>
       </div>
     </div>
+    <Shape />
   </Section>
 );
 

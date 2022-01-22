@@ -13,15 +13,9 @@ const ProjectList = ({ isSlideshow }) => {
 const ProjectListCarousel = () => (
   <Section title="Our Projects" centered>
     <Carousel>
-      {projects.map(({ title, image, content }) => (
-        <Carousel.Item key={title}>
-          <ImageBlock title={title} image={image}>
-            <h5 className="mb-0 text-gray">{title}</h5>
-            <p className="text pt-3">{humanize.truncate(content, 200)}</p>
-            <Link href="/contact-us" passHref>
-              <a>View More</a>
-            </Link>
-          </ImageBlock>
+      {projects.map((props, index) => (
+        <Carousel.Item key={index}>
+          <ProjectCard {...props} index={index} />
         </Carousel.Item>
       ))}
     </Carousel>
@@ -33,19 +27,29 @@ const isAltBg = (index) => (index + 1) % 2 === 0;
 const ProjectListGrid = () => {
   return (
     <Section title="Our Projects">
-      {projects.map(({ title, image, content }, index) => (
-        <Section key={title} noPaddingTop={index === 0} altBg={isAltBg(index)}>
-          <ImageBlock title={title} image={image} altBg={isAltBg(index)}>
-            <h5 className="mb-0 text-gray">{title}</h5>
-            <p className="text pt-3">{humanize.truncate(content, 200)}</p>
-            <Link href="/contact-us" passHref>
-              <a>View More</a>
-            </Link>
-          </ImageBlock>
+      {projects.map((props, index) => (
+        <Section key={index} noPaddingTop={index === 0} altBg={isAltBg(index)}>
+          <ProjectCard useAltBg {...props} index={index} />
         </Section>
       ))}
     </Section>
   );
 };
+
+const ProjectCard = ({ title, content, image, index, useAltBg }) => (
+  <ImageBlock title={title} image={image} altBg={useAltBg && isAltBg(index)}>
+    <h5 className="mb-0 text-gray">{title}</h5>
+    <p className="text pt-3">{humanize.truncate(content, 200)}</p>
+    <Link
+      passHref
+      href={{
+        pathname: '/projects/[project]',
+        query: { project: title },
+      }}
+    >
+      <a>Learn More</a>
+    </Link>
+  </ImageBlock>
+);
 
 export default ProjectList;

@@ -81,7 +81,7 @@ const Navigation = () => {
             <ActiveLink
               activeClassName="text-danger"
               key={`${url}-dropdown-${index}`}
-              href={url}
+              href={`/${url}`}
               passHref
             >
               <NavDropdown.Item>{title}</NavDropdown.Item>
