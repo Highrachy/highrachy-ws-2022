@@ -22,8 +22,7 @@ const NeedConsultation = ({ image, text, header, buttonText }) => (
 );
 
 NeedConsultation.defaultProps = {
-  image:
-    'https://get.pxhere.com/photo/man-light-black-and-white-group-people-white-skyline-photography-window-city-meeting-reflection-corporate-office-communication-darkness-business-partner-black-monochrome-conversation-skyscrapers-women-talking-symmetry-photograph-snapshot-image-conference-shape-contact-feedback-company-discussion-interview-cityview-organization-viewing-platform-monochrome-photography-discussing-911100.jpg',
+  image: '/assets/img/bg/consultation.jpg',
   text: 'We are here to answer your questions 24/7',
   header: 'NEED A CONSULTATION?',
   buttonText: 'Contact Us',

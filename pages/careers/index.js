@@ -12,10 +12,7 @@ const careers = () => {
   return (
     <>
       <Navigation />
-      <PageHeader
-        title="Careers"
-        bgImage="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-      />
+      <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />
       <Career />
       <Perks />
       <NeedConsultation

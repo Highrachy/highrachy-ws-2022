@@ -7,6 +7,7 @@ import { SectionHeader } from './Header';
 import services from '@/data/services';
 import classNames from 'classnames';
 import { convertToSlug } from '@/helpers/string';
+import Link from 'next/link';
 
 export const ServicesListCard = () => {
   return (
@@ -24,22 +25,21 @@ export const ServicesListCard = () => {
 };
 
 const SingleServiceCard = ({ content, icon, title }) => (
-  <section className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
-    <div className="service-card card w-100 h-100 text-center px-1 px-md-3 px-lg-1 pt-5 pb-3">
-      <div className="mx-auto mb-2">
-        <IconWithBackground icon={icon} iconClassName="icon-md" />
-      </div>
-      <div className="card-body">
-        <div className="card-text">
-          <h6 className="text-color">{title} </h6>
-          <p className="text-muted small">{Humanize.truncate(content, 80)}</p>
-          {/* <a href="#" className="text-left stretched-link">
-            Go somewhere
-          </a> */}
+  <Link href={`/services#${convertToSlug(title)}`} passHref>
+    <section className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+      <div className="service-card card w-100 h-100 text-center px-1 px-md-3 px-lg-1 pt-5 pb-3">
+        <div className="mx-auto mb-2">
+          <IconWithBackground icon={icon} iconClassName="icon-md" />
+        </div>
+        <div className="card-body">
+          <div className="card-text">
+            <h6 className="text-color">{title} </h6>
+            <p className="text-muted small">{Humanize.truncate(content, 80)}</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </Link>
 );
 
 const ServicesImage = ({ altBg, icon }) => (

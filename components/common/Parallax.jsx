@@ -1,5 +1,3 @@
-import Overlay from './Overlay';
-
 const Parallax = ({ bgImage, children }) => (
   <section
     className="parallax z-n2"

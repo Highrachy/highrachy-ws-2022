@@ -9,10 +9,7 @@ const Services = () => {
   return (
     <>
       <Navigation />
-      <PageHeader
-        title="Our Services"
-        bgImage="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-      />
+      <PageHeader title="Our Services" bgImage="/assets/img/bg/services.jpg" />
       <ServicesList />
       <NeedConsultation
         text="Expand your wealth today with wonderful returns on your investment."

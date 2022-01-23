@@ -8,10 +8,7 @@ const Services = () => {
   return (
     <>
       <Navigation />
-      <PageHeader
-        title="Our Projects"
-        bgImage="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-      />
+      <PageHeader title="Our Projects" bgImage="/assets/img/bg/projects.jpg" />
       <ProjectList />
       <Footer />
     </>

@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <>
       <Navigation />
-      <Parallax bgImage="https://images.unsplash.com/photo-1625887022685-2ba48f557be6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80">
+      <Parallax bgImage="/assets/img/bg/404.jpg">
         <Section className="text-center">
           <div className="container">
             <div className="row">
