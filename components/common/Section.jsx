@@ -11,6 +11,7 @@ const Section = ({
   noPaddingTop,
   noPaddingBottom,
   small,
+  headerClassName,
   ...props
 }) => {
   return (
@@ -31,6 +32,7 @@ const Section = ({
               'mb-md-6 mb-5': centered,
               'mb-3': !centered,
             })}
+            headerClassName={headerClassName}
             small={small}
           >
             {title}
@@ -42,9 +44,19 @@ const Section = ({
   );
 };
 
-export const SectionHeader = ({ children, className, center, small }) => (
+export const SectionHeader = ({
+  children,
+  className,
+  center,
+  headerClassName,
+  small,
+}) => (
   <header className={classNames(className, { 'text-center': center })}>
-    <h3 className={classNames({ 'h4 mb-0': small, h3: !small })}>{children}</h3>
+    <h3
+      className={classNames(headerClassName, { 'h4 mb-0': small, h3: !small })}
+    >
+      {children}
+    </h3>
     <HeaderUnderBlock small={small} />
   </header>
 );

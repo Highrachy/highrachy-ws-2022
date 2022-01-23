@@ -20,7 +20,7 @@ const WelcomeArea = () => (
   <Section noPaddingTop>
     <div className="container mt-5">
       <div className="row">
-        <div className="col-lg-5 col-md-12 col-sm-12 align-self-center mt-5">
+        <div className="col-lg-5 col-md-7 col-sm-12 align-self-center mt-5">
           <h1 className="h2">
             Industry Leading <br />
             Solutions{' '}
@@ -46,7 +46,7 @@ const WelcomeArea = () => (
             Let’s Work Together
           </Button>
         </div>
-        <div className="offset-lg-1 col-lg-6 col-md-12 col-sm-12 align-self-center">
+        <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center">
           <ImageListSection />
         </div>
       </div>

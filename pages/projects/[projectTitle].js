@@ -13,17 +13,21 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const SingleProject = () => {
-  const router = useRouter();
-  const { project } = router.query;
+const SingleProject = ({ project }) => {
+  const breadcrumb = [
+    { title: 'Projects', url: 'projects' },
+    { title: project.title },
+  ];
+
   return (
     <>
       <Navigation />
       <PageHeader
-        title={`Single Project ${project}`}
+        title={project.title}
+        breadcrumb={breadcrumb}
         bgImage="https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
       />
-      <Project {...projects[0]} />
+      <Project {...project} />
       <Footer />
     </>
   );
@@ -56,7 +60,7 @@ const Project = ({ content, image, title }) => (
 const ShareContent = () => (
   <div className="share-content">
     <strong>Share:</strong>
-    <ul className="list-inline">
+    <ul className="list-inline icon-md">
       <li className="list-inline-item">
         <FacebookIcon />
       </li>
@@ -72,5 +76,25 @@ const ShareContent = () => (
     </ul>
   </div>
 );
+
+export async function getStaticProps({ params }) {
+  const projectList = Object.values(projects);
+  const project = projectList.find((p) => p.title === params.projectTitle);
+  return { props: { project } };
+}
+
+export async function getStaticPaths() {
+  const projectLists = Object.values(projects);
+  return {
+    paths: projectLists.map((projectList) => {
+      return {
+        params: {
+          projectTitle: projectList.title,
+        },
+      };
+    }),
+    fallback: false,
+  };
+}
 
 export default SingleProject;

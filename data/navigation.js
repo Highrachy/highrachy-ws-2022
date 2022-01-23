@@ -9,7 +9,7 @@ export const home = {
 
 const servicesDropDown = Object.values(servicesText).reduce(
   (acc, { title }) => {
-    acc[`/services#${convertToSlug(title)}`] = title;
+    acc[`services#${convertToSlug(title)}`] = title;
     return acc;
   },
   {}
@@ -27,19 +27,16 @@ export const services = {
 export const projects = {
   title: 'Projects',
   url: 'projects',
-  children: {
-    projects: 'Our Projects',
-    'our-approach': 'Our Approach',
-  },
+  children: {},
 };
 
 export const about = {
   title: 'About Us',
   url: 'about-us',
   children: {
-    // 'about-us': 'About Us',
-    'about-us': 'Our Culture',
-    'our-team': 'Our Team',
+    'about-us': 'About Us',
+    'our-culture': 'Our Culture',
+    'our-culture#our-team': 'Our Team',
     'contact-us': 'Contact Us',
     careers: 'Careers',
   },

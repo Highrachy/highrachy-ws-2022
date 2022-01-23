@@ -6,10 +6,10 @@ const ImageBlock = ({ image, children, title, altBg }) => (
   <div className="container position-relative">
     <div className="row">
       <div
-        className={classNames('col-md-8 p-0', {
-          'order-md-first': !altBg,
-          'order-md-last': !!altBg,
-          'offset-md-4': !!altBg,
+        className={classNames('col-lg-8 p-0', {
+          'order-lg-first': !altBg,
+          'order-lg-last': !!altBg,
+          'offset-lg-4': !!altBg,
         })}
       >
         <Image
@@ -21,9 +21,9 @@ const ImageBlock = ({ image, children, title, altBg }) => (
         />
       </div>
       <div
-        className={classNames('col-md-4 img-block__text p-md-5 p-4 rounded', {
-          'order-md-first alt': !!altBg,
-          'order-md-last': !altBg,
+        className={classNames('col-lg-4 img-block__text p-lg-5 p-4 rounded', {
+          'order-lg-first alt': !!altBg,
+          'order-lg-last': !altBg,
         })}
       >
         {children}

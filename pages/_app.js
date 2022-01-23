@@ -5,15 +5,7 @@ import '../sass/App.scss';
 import NotFound from './404';
 
 function MyApp({ Component, pageProps }) {
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setLoading(false);
-  }, []);
-
-  return loading ? (
-    <LoadingScreen />
-  ) : (
+  return (
     <>
       <NextNProgress color="#ed3237" />
       <Head>

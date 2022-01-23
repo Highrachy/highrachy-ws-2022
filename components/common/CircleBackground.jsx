@@ -17,9 +17,9 @@ const CircleBackground = ({ background, left, size, top }) => (
 
 CircleBackground.defaultProps = {
   background: '#FAFAFA',
-  left: '-12rem',
+  left: '-10rem',
   size: '50rem',
-  top: '-6rem',
+  top: '-5rem',
 };
 
 export default CircleBackground;

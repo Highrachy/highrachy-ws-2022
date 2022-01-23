@@ -8,8 +8,8 @@ import { SectionHeader as SHeader } from '../common/Section';
 
 export const SectionHeader = (props) => <SHeader {...props} />;
 
-export const HeaderUnderBlock = ({ small }) => (
-  <div className={classNames('header-block', { small })}>
+export const HeaderUnderBlock = ({ small, className }) => (
+  <div className={classNames(className, 'header-block', { small })}>
     <span className="header-block__1"></span>
     <span className="header-block__2"></span>
     <span className="header-block__3"></span>
@@ -39,11 +39,6 @@ export const PageHeader = ({ title, breadcrumb, bgImage }) => {
     </Parallax>
   );
 };
-
-// const breadcrumb = [
-//   { title: 'Services', url: 'test' },
-//   // { title: 'Our Culture' },
-// ];
 
 export const BreadCrumb = ({ breadcrumb }) => {
   const paths = [home, ...breadcrumb];

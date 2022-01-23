@@ -106,12 +106,13 @@ const Navigation = () => {
     </ActiveLink>
   );
 
-  const currentNavigation =
-    width > 991 ? (
-      <DesktopNavigation MENU={MENU} Listings={Listings} />
-    ) : (
-      <MobileNavigation MENU={MENU} Listings={Listings} />
-    );
+  const isDesktop = width > 991;
+
+  const currentNavigation = isDesktop ? (
+    <DesktopNavigation MENU={MENU} Listings={Listings} />
+  ) : (
+    <MobileNavigation MENU={MENU} Listings={Listings} />
+  );
 
   return (
     <Navbar
@@ -123,7 +124,12 @@ const Navigation = () => {
       <Container>
         <Link href="/" passHref>
           <Navbar.Brand>
-            <Image src="/logo.png" alt="Highrachy" width="169" height="50" />
+            <Image
+              src="/logo.png"
+              alt="Highrachy"
+              width={isDesktop ? '169' : '142'}
+              height={isDesktop ? '50' : '42'}
+            />
           </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="highrachy-navbar">

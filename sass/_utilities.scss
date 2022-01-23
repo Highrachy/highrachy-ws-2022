@@ -5,6 +5,10 @@ $light-red: rgba(237, 50, 55, 0.1);
   background: $light-red;
 }
 
+.text-light-red {
+  color: lighten($primary, 40);
+}
+
 .z-n1 {
   z-index: -1;
 }
@@ -32,7 +36,7 @@ $light-red: rgba(237, 50, 55, 0.1);
   box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
   margin-top: -0.5rem;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     position: absolute;
     z-index: 2;
     right: 1rem;
@@ -45,7 +49,7 @@ $light-red: rgba(237, 50, 55, 0.1);
 }
 
 .img-block__text.alt {
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     left: 5rem;
   }
 }
@@ -74,6 +78,18 @@ $light-red: rgba(237, 50, 55, 0.1);
 .icon-lg svg {
   height: 4rem;
   width: 4rem;
+}
+.icon-xl svg {
+  height: 8rem;
+  width: 8rem;
+}
+.icon-xxl svg {
+  height: 12rem;
+  width: 12rem;
+  @include media-breakpoint-up(lg) {
+    height: 16rem;
+    width: 16rem;
+  }
 }
 
 .lift {

@@ -23,7 +23,7 @@ const Footer = ({ hideConsultation }) => (
       <Section noPaddingBottom>
         <div className="container">
           <div className="row">
-            <div className="col-lg-4 col-md-12 col-sm-12">
+            <div className="col-md-4 col-sm-12">
               <h6 className="text-white">About Us</h6>
               <p className="small">
                 We pride ourselves in our excellent service delivery standards
@@ -39,7 +39,7 @@ const Footer = ({ hideConsultation }) => (
                 ))}
               </ul>
             </div>
-            <div className="col-lg-4 col-md-4 col-sm-6 col-6">
+            <div className="col-md-4 col-sm-6 col-6">
               <h6 className="text-white">Helpful Links</h6>
               <ul className="text-white list-unstyled">
                 {helpfulLinks.map((text) => (

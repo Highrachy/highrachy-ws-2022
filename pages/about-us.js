@@ -11,6 +11,7 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import { welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
 import projects from '@/data/projects';
 import { our_team } from '@/data/team';
 import Image from 'next/image';
@@ -27,7 +28,6 @@ const AboutUs = () => {
       <OurCompany />
       <MissionAndVision />
       <ValuePreposition />
-      <OurTeam />
       <BusinessRelationships />
       <Footer />
     </>
@@ -38,24 +38,13 @@ const OurCompany = () => (
   <Section title="Our Company">
     <div className="container">
       <div className="row">
-        <div className="col-sm-7">
-          <p>
-            Far from a mere technology company, we are a solutions company that
-            goes way beyond solving problems as identified by you, but also
-            constantly enhancing your lives, lifestyles and living.
-          </p>
-          Our solutions are inspired by ideas that promise more convenience,
-          comfort, security, safety, income and plain fun just for YOU.
-          <p></p>
-          <p>
-            A real estate partner you can trust. Our research and development
-            (R&amp;D) team ensures that your returns on investing with us is
-            guaranteed.
-          </p>
+        <div className="col-lg-7 col-md-6 pe-lg-6">
+          <p className="text lead pt-3">{welcomeNote}</p>
+          <p className="lead fw-bold">{welcomeNoteLeadText}</p>
         </div>
-        <div className="col-sm-4 offset-sm-1">
+        <div className="col-lg-5 col-md-6 mt-lg-n6">
           <Image
-            src="/assets/svg/our-culture.svg"
+            src="/assets/svg/our-company.svg"
             className="img-fluid d-block"
             height={790}
             width={980}
@@ -85,7 +74,7 @@ const MissionAndVision = () => (
   <Section altBg>
     <div className="container mb-6">
       <div className="row">
-        <div className="offset-md-1 col-md-10">
+        <div className="offset-lg-1 col-lg-10">
           <div className="row">
             <FeatureCard icon={<VisionIcon />} title="Our Vision">
               To be a globally known one-stop-shop for value within the real and
@@ -105,35 +94,3 @@ const MissionAndVision = () => (
 );
 
 export default AboutUs;
-
-export const OurTeam = () => (
-  <Section title="Our Team">
-    <div className="container">
-      <div className="row">
-        {our_team.map((member, index) => (
-          <SingleTeamCard {...member} key={index} />
-        ))}
-      </div>
-    </div>
-  </Section>
-);
-
-const SingleTeamCard = ({ image, name, title }) => (
-  <div className="col-md-6 col-lg-4 mb-5">
-    <div className="card shadow lift rounded">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image}
-        alt={name}
-        className="img-fluid w-100 card-img-top rounded-top"
-      />
-      <div className="card-body py-4">
-        <p className="card-text">
-          <strong>{name}</strong>
-          <br />
-          <span className="small">{title}</span>
-        </p>
-      </div>
-    </div>
-  </div>
-);

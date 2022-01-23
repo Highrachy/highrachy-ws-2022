@@ -1,6 +1,5 @@
 import React from 'react';
 import { IconWithBackground } from '../common/Icons';
-import expertise, { servicesLeadText } from '@/data/services';
 import Shape from '../common/Shape';
 import Humanize from 'humanize-plus';
 import Section from '../common/Section';
@@ -14,7 +13,7 @@ export const ServicesListCard = () => {
     <Section title="Our Services" altBg centered>
       <div className="container mb-6">
         <div className="row">
-          {Object.entries(expertise).map(([name, content]) => (
+          {Object.entries(services).map(([name, content]) => (
             <SingleServiceCard key={name} {...content} />
           ))}
         </div>
@@ -25,10 +24,10 @@ export const ServicesListCard = () => {
 };
 
 const SingleServiceCard = ({ content, icon, title }) => (
-  <section className="col-md-3 col-sm-6 col-12 mb-4">
-    <div className="service-card card w-100 h-100 text-center px-1 pt-5 pb-3">
+  <section className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
+    <div className="service-card card w-100 h-100 text-center px-1 px-md-3 px-lg-1 pt-5 pb-3">
       <div className="mx-auto mb-2">
-        <IconWithBackground icon={icon} />
+        <IconWithBackground icon={icon} iconClassName="icon-md" />
       </div>
       <div className="card-body">
         <div className="card-text">
@@ -53,7 +52,8 @@ const ServicesImage = ({ altBg, icon }) => (
       }
     )}
   >
-    <IconWithBackground icon={icon} size={16} iconClassName="icon-lg" />
+    {/* <IconWithBackground icon={icon} size={12} iconClassName="icon-lg" /> */}
+    <div className="icon-xxl text-light-red">{icon}</div>
   </div>
 );
 
@@ -64,7 +64,9 @@ const ServicesContent = ({ altBg, content, name }) => (
       'order-md-last': !!altBg,
     })}
   >
-    <SectionHeader className="mb-3">{name}</SectionHeader>
+    <SectionHeader small className="mb-3" headerClassName="text-gray">
+      {name}
+    </SectionHeader>
 
     <p className="text-lg">{content}</p>
   </div>
@@ -74,24 +76,31 @@ const SingleServicesList = ({ alternate, ...props }) => {
   return (
     <Section altBg={alternate} id={convertToSlug(props.title)}>
       <div className="container">
-        <div className="row">
-          <>
-            <ServicesContent {...props} altBg={alternate} />
-            <ServicesImage {...props} altBg={alternate} />
-          </>
+        <div className="row justify-content-center">
+          <ServicesContent {...props} altBg={alternate} />
+          <ServicesImage {...props} altBg={alternate} />
         </div>
       </div>
     </Section>
   );
 };
 
-const ServicesList = () =>
-  Object.values(services).map((service, index) => (
-    <SingleServicesList
-      key={index}
-      {...service}
-      alternate={(index + 1) % 2 === 0}
-    />
-  ));
+const ServicesList = () => (
+  <Section title="Our Services" noPaddingBottom>
+    <div className="container">
+      <p className="lead mt-4 mb-5">
+        Our unique approach recognizes the value of trust and our commitment to
+        you is consistency and reliability.
+      </p>
+    </div>
+    {Object.values(services).map((service, index) => (
+      <SingleServicesList
+        key={index}
+        {...service}
+        alternate={(index + 1) % 2 === 1}
+      />
+    ))}
+  </Section>
+);
 
 export default ServicesList;

@@ -27,6 +27,16 @@ const isAltBg = (index) => (index + 1) % 2 === 0;
 const ProjectListGrid = () => {
   return (
     <Section title="Our Projects">
+      <div className="container">
+        <p className="lead mt-4 mb-6">
+          Actualize the dream of buying a home, readily tailored to suit your
+          peculiar taste with the specific finishing details you desire.
+          Highrachy aims to meet the needs of communities and individuals we
+          work with. Our properties are available to anyone who wants to feature
+          modern and stylish designs and first-class amenities that support a
+          convenient and peaceful lifestyle.
+        </p>
+      </div>
       {projects.map((props, index) => (
         <Section key={index} noPaddingTop={index === 0} altBg={isAltBg(index)}>
           <ProjectCard useAltBg {...props} index={index} />
@@ -43,8 +53,8 @@ const ProjectCard = ({ title, content, image, index, useAltBg }) => (
     <Link
       passHref
       href={{
-        pathname: '/projects/[project]',
-        query: { project: title },
+        pathname: '/projects/[projectTitle]',
+        query: { projectTitle: title },
       }}
     >
       <a>Learn More</a>
