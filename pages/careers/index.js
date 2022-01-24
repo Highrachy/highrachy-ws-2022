@@ -1,20 +1,23 @@
 import FeatureCard from '@/components/common/FeatureCard';
 import NeedConsultation from '@/components/common/NeedConsultation';
 import Section from '@/components/common/Section';
+import Button from '@/components/form/Button';
 import Footer from '@/components/layout/Footer';
+import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
 import Link from 'next/link';
 import React from 'react';
 
-const careers = () => {
+const Careers = () => {
   return (
     <>
       <Navigation />
       <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />
       <Career />
       <Perks />
+      <AvailablePositions />
       <NeedConsultation
         header="We're always on the hunt for talented designers and
               developers to join our team"
@@ -32,12 +35,41 @@ const Career = () => (
       <div className="row">
         <div className="col-12">
           <p className="lead mb-4">
-            We’re a growing team of professionals looking to disrupt the
-            industry with our bold endeavours
+            Careers at Highrachy is truly one of a kind experience. We are
+            committed to making your life as rewarding as your job. You get the
+            opportunity to build a successful career and be the change you want
+            to see in the world.
           </p>
+          <Link href="#available-positions" passHref>
+            <a className="btn btn-primary">View Available Positions</a>
+          </Link>
         </div>
       </div>
+    </div>
+  </Section>
+);
 
+const Perks = () => (
+  <Section title="Benefits & Incentives" centered altBg>
+    <div className="container">
+      <div className="row">
+        <div className="offset-md-1 col-md-10">
+          <div className="row">
+            {benefits.map(({ icon, title, content }, index) => (
+              <FeatureCard key={index} icon={icon} title={title}>
+                {content}
+              </FeatureCard>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+);
+
+const AvailablePositions = () => (
+  <Section title="Available Positions" centered altBg id="available-positions">
+    <div className="container">
       <ul className="list-group">
         <li className="list-group-item">
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
@@ -91,22 +123,4 @@ const Career = () => (
     </div>
   </Section>
 );
-
-const Perks = () => (
-  <Section title="Benefits & Incentives" centered altBg>
-    <div className="container">
-      <div className="row">
-        <div className="offset-md-1 col-md-10">
-          <div className="row">
-            {benefits.map(({ icon, title, content }, index) => (
-              <FeatureCard key={index} icon={icon} title={title}>
-                {content}
-              </FeatureCard>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  </Section>
-);
-export default careers;
+export default Careers;

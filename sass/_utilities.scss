@@ -109,3 +109,47 @@ $light-red: rgba(237, 50, 55, 0.1);
 .header-404 {
   font-size: 12rem;
 }
+
+.img-cover {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.google-map {
+  height: 32rem;
+  filter: saturate(0);
+  overflow: hidden;
+  background: #f2f2f2;
+  transition: all 1s ease-out;
+
+  &:hover {
+    filter: none;
+  }
+}
+
+.form-wrapper {
+  margin-top: -5rem;
+  padding: 1rem 4rem 3rem;
+  -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  margin-top: -107px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.contact-info .icon-circled {
+  font-size: 1.2rem;
+  color: white;
+  background: $secondary;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  margin-right: 1rem;
+  border-radius: 50%;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}

@@ -6,8 +6,15 @@ import { FaLinkedin } from 'react-icons/fa';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { FaCertificate } from 'react-icons/fa';
 import { GiWallet } from 'react-icons/gi';
-import { BsFillCloudCheckFill } from 'react-icons/bs';
-import { GiHealthNormal } from 'react-icons/gi';
+import { IoMdShirt } from 'react-icons/io';
+import { RiTeamFill } from 'react-icons/ri';
+import { FaBed } from 'react-icons/fa';
+import { FaBath } from 'react-icons/fa';
+import { FaToilet } from 'react-icons/fa';
+import { FaPhone } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
+import { FaMapMarker } from 'react-icons/fa';
+import { HiLocationMarker } from 'react-icons/hi';
 import classNames from 'classnames';
 
 export const IconWithBackground = ({ size = 4, icon, iconClassName }) => (
@@ -207,10 +214,20 @@ export const InvestmentIcon = () => (
 
 export const RightAngleIcon = () => <FiChevronRight />;
 export const LeftAngleIcon = () => <FiChevronLeft />;
-export const InclusiveIcon = () => <FaCertificate />;
+
+export const LearningIcon = () => <FaCertificate />;
 export const SalaryIcon = () => <GiWallet />;
-export const HealthIcon = () => <GiHealthNormal />;
-export const RemoteWorkIcon = () => <BsFillCloudCheckFill />;
+export const TeamBondingIcon = () => <RiTeamFill />;
+export const SwagIcon = () => <IoMdShirt />;
+
+export const BedIcon = () => <FaBed />;
+export const ToiletIcon = () => <FaToilet />;
+export const BathIcon = () => <FaBath />;
+export const LocationIcon = () => <HiLocationMarker />;
+
+export const PhoneIcon = () => <FaPhone />;
+export const WebsiteIcon = () => <FaGlobe />;
+export const MarkerIcon = () => <FaMapMarker />;
 
 export const FamilyIcon = () => (
   <svg

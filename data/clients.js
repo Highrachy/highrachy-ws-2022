@@ -13,4 +13,4 @@ export const allClients = [
   'somkolch',
 ];
 
-export const topClients = ['samsung', 'bristow', 'axis', 'elvira'];
+export const topClients = ['samsung', 'bristow', 'axis', 'legrand'];

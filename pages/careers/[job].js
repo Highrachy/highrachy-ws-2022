@@ -1,11 +1,8 @@
-import FeatureCard from '@/components/common/FeatureCard';
-import { GetInTouch } from '@/components/common/NeedConsultation';
 import Section from '@/components/common/Section';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { benefits } from '@/data/careers';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -138,11 +135,14 @@ const Form = () => (
             />
             <label htmlFor="floatingEmail">Email address</label>
           </div>
-          <div className="mb-3">
-            <label htmlFor="formFile" className="form-label">
-              Cover Letter
-            </label>
-            <input className="form-control" type="file" id="formFile" />
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className="form-control"
+              id="floatingPhone"
+              placeholder="name@example.com"
+            />
+            <label htmlFor="floatingPhone">Phone Number</label>
           </div>
           <div className="mb-3">
             <label htmlFor="formFile2" className="form-label">

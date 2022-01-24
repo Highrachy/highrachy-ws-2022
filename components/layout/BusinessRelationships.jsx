@@ -1,18 +1,30 @@
 import { allClients, topClients } from '@/data/clients';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import Section from '../common/Section';
 
 const BusinessRelationships = ({ topClientsOnly }) => {
   const clientsToShow = topClientsOnly ? topClients : allClients;
   return (
-    <Section title="Our Business Relationships" centered>
+    <Section
+      title="Our Business Relationships"
+      centered
+      id="business-relationships"
+    >
       <div className="container">
         <div className="row">
           {clientsToShow.map((client) => (
             <ClientCard key={client} client={client} />
           ))}
         </div>
+        {topClientsOnly && (
+          <div className="text-end">
+            <Link href="/about-us#business-relationships" passHref>
+              <a className="">View All Business Relationships</a>
+            </Link>
+          </div>
+        )}
       </div>
     </Section>
   );

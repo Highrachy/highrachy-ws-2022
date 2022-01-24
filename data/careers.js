@@ -1,30 +1,31 @@
 import { SalaryIcon } from '@/components/common/Icons';
-import { HealthIcon } from '@/components/common/Icons';
-import { RemoteWorkIcon } from '@/components/common/Icons';
-import { InclusiveIcon } from '@/components/common/Icons';
+import { TeamBondingIcon } from '@/components/common/Icons';
+import { SwagIcon } from '@/components/common/Icons';
+import { LearningIcon } from '@/components/common/Icons';
 
 export const benefits = [
   {
-    icon: <InclusiveIcon />,
-    title: 'Inclusive Environment',
-    content:
-      'A self-contained unit of a discourse in writing dealing with a particular point or idea. A paragraph consists of one or more sentences.',
-  },
-  {
-    icon: <RemoteWorkIcon />,
-    title: 'Remote Opportunities',
+    icon: <LearningIcon />,
+    title: 'Continuous learning and development',
     content:
       'A self-contained unit of a discourse in writing dealing with a particular point or idea. A paragraph consists of one or more sentences.',
   },
   {
     icon: <SalaryIcon />,
-    title: 'Competetive Salary',
+    title: 'Competitive Compensations',
     content:
       'A self-contained unit of a discourse in writing dealing with a particular point or idea. A paragraph consists of one or more sentences.',
   },
   {
-    icon: <HealthIcon />,
-    title: 'Healthcare Benefits',
+    icon: <SwagIcon />,
+    title: 'Corporate branded swag',
+    content:
+      'A self-contained unit of a discourse in writing dealing with a particular point or idea. A paragraph consists of one or more sentences.',
+  },
+
+  {
+    icon: <TeamBondingIcon />,
+    title: 'Team bonding events',
     content:
       'A self-contained unit of a discourse in writing dealing with a particular point or idea. A paragraph consists of one or more sentences.',
   },
