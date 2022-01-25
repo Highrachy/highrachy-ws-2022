@@ -1,4 +1,5 @@
 import FeatureCard from '@/components/common/FeatureCard';
+import { IconWithBackground } from '@/components/common/Icons';
 import NeedConsultation from '@/components/common/NeedConsultation';
 import Section from '@/components/common/Section';
 import Button from '@/components/form/Button';
@@ -53,22 +54,30 @@ const Perks = () => (
   <Section title="Benefits & Incentives" centered altBg>
     <div className="container">
       <div className="row">
-        <div className="offset-md-1 col-md-10">
-          <div className="row">
-            {benefits.map(({ icon, title, content }, index) => (
-              <FeatureCard key={index} icon={icon} title={title}>
-                {content}
-              </FeatureCard>
-            ))}
-          </div>
-        </div>
+        {benefits.map(({ icon, title }, index) => (
+          <section
+            key={index}
+            className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4"
+          >
+            <div className="service-card card w-100 h-100 text-center px-1 px-md-3 px-lg-1 pt-5 pb-3">
+              <div className="mx-auto mb-2">
+                <IconWithBackground icon={icon} iconClassName="icon-md" />
+              </div>
+              <div className="card-body">
+                <div className="card-text">
+                  <h6 className="text-color mb-3">{title} </h6>
+                </div>
+              </div>
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   </Section>
 );
 
 const AvailablePositions = () => (
-  <Section title="Available Positions" centered altBg id="available-positions">
+  <Section title="Available Positions" centered id="available-positions">
     <div className="container">
       <ul className="list-group">
         <li className="list-group-item">

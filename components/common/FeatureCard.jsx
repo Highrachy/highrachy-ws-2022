@@ -2,8 +2,9 @@ import { IconWithBackground } from './Icons';
 
 const FeatureCard = ({ children, icon, title, size }) => {
   const width = {
-    half: 'col-sm-6 col-12 col-md-6',
-    'one-third': 'col-sm-6 col-12 col-md-6 col-lg-4',
+    half: 'col-md-6 col-sm-6 col-12',
+    'one-third': 'col-lg-4 col-md-6 col-sm-6 col-12',
+    'one-fourth': 'col-lg-3 col-md-6 col-sm-6 col-12',
   };
   return (
     <section className={`${width[size]} mb-4`}>
