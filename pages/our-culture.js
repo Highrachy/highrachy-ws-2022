@@ -36,15 +36,23 @@ const OurCulture = () => {
 };
 
 const OurCultureSection = () => (
-  <Section altBg noPaddingBottom>
-    <ImageBlock
-      title={'Our Culture'}
-      image={'/assets/svg/our-culture.svg'}
-      altBg
-    >
-      <SectionHeader small>Our Culture</SectionHeader>
-      <p className="text pt-3">{aboutUsLeadText}</p>
-    </ImageBlock>
+  <Section title="Our Culture">
+    <div className="container">
+      <div className="row">
+        <div className="col-lg-7 col-md-6 pe-lg-6">
+          <p className="text lead pt-3">{aboutUsLeadText}</p>
+        </div>
+        <div className="col-lg-5 col-md-6 mt-lg-n6">
+          <Image
+            src="/assets/img/about-us/our-culture.png"
+            className="img-fluid d-block"
+            height={372}
+            width={590}
+            alt="Our Company"
+          />
+        </div>
+      </div>
+    </div>
   </Section>
 );
 

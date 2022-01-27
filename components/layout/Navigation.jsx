@@ -100,8 +100,11 @@ const Navigation = () => {
 
   const Listings = (
     <ActiveLink activeClassName="text-danger" href={`/listings`} passHref>
-      <Nav.Link aria-current="page" className={`btn btn-sm btn-dark`}>
-        Listings
+      <Nav.Link
+        aria-current="page"
+        className={`btn btn-sm btn-outline-danger btn-listings`}
+      >
+        Find Apartments
       </Nav.Link>
     </ActiveLink>
   );

@@ -41,11 +41,11 @@ const OurCompany = () => (
         </div>
         <div className="col-lg-5 col-md-6 mt-lg-n6">
           <Image
-            src="/assets/svg/our-company.svg"
+            src="/assets/img/about-us/our-company.png"
             className="img-fluid d-block"
-            height={790}
-            width={980}
-            alt="Our Culture"
+            height={396}
+            width={598}
+            alt="Our Company"
           />
         </div>
       </div>

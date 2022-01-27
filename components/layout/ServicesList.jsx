@@ -8,6 +8,7 @@ import services from '@/data/services';
 import classNames from 'classnames';
 import { convertToSlug } from '@/helpers/string';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const ServicesListCard = () => {
   return (
@@ -42,24 +43,29 @@ const SingleServiceCard = ({ content, icon, title }) => (
   </Link>
 );
 
-const ServicesImage = ({ altBg, icon }) => (
+const ServicesImage = ({ altBg, image, title }) => (
   <div
     className={classNames(
-      'col-md-4 col-sm-12 align-self-center position-relative',
+      'col-md-5 col-sm-12 align-self-center position-relative',
       {
         'order-md-first': !!altBg,
         'order-md-last': !altBg,
       }
     )}
   >
-    {/* <IconWithBackground icon={icon} size={12} iconClassName="icon-lg" /> */}
-    <div className="icon-xxl text-light-red">{icon}</div>
+    <Image
+      src={image}
+      alt={title}
+      className="img-fluid"
+      height="450"
+      width="450"
+    />
   </div>
 );
 
 const ServicesContent = ({ altBg, content, name }) => (
   <div
-    className={classNames('col-md-8 col-sm-12 align-self-center', {
+    className={classNames('col-md-7 col-sm-12 align-self-center', {
       'order-md-first': !altBg,
       'order-md-last': !!altBg,
     })}

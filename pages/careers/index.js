@@ -8,6 +8,7 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -34,8 +35,9 @@ const Career = () => (
   <Section title="Join our Team">
     <div className="container">
       <div className="row">
-        <div className="col-12">
-          <p className="lead mb-4">
+        <div className="col-lg-7 col-md-6 pe-lg-6">
+          <p className="text lead pt-3 mb-4">
+            {' '}
             Careers at Highrachy is truly one of a kind experience. We are
             committed to making your life as rewarding as your job. You get the
             opportunity to build a successful career and be the change you want
@@ -44,6 +46,15 @@ const Career = () => (
           <Link href="#available-positions" passHref>
             <a className="btn btn-primary">View Available Positions</a>
           </Link>
+        </div>
+        <div className="col-lg-5 col-md-6 mt-lg-n6">
+          <Image
+            src="/assets/img/about-us/careers.png"
+            className="img-fluid d-block"
+            height={372}
+            width={590}
+            alt="Join Our Team"
+          />
         </div>
       </div>
     </div>

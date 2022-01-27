@@ -19,9 +19,13 @@ $light-red: rgba(237, 50, 55, 0.1);
 
 .carousel-control-prev,
 .carousel-control-next {
-  height: 5rem;
-  width: 2.5rem;
-  background: lighten($dark, 15);
+  height: 3rem;
+  width: 1.5rem;
+  @include media-breakpoint-up(sm) {
+    height: 5rem;
+    width: 2.5rem;
+  }
+  background: lighten($red, 30);
   top: 50%;
   transform: perspective(1px) translateY(-50%);
 

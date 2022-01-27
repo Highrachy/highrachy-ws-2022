@@ -7,6 +7,16 @@
   color: white !important;
 }
 
+.btn-listings {
+  border-width: 2px !important;
+  color: $text-color !important;
+  background: $white !important;
+
+  &:hover {
+    color: $white !important;
+  }
+}
+
 .btn-angle-list {
   width: 100%;
   margin: auto;
