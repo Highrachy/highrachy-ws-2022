@@ -43,7 +43,7 @@ const MobileNavigation = ({ MENU, Listings }) => (
   </>
 );
 
-const Navigation = () => {
+const Navigation = ({ parentPage }) => {
   const { width } = useWindowSize();
 
   const currentScrollPos = useScrollPosition();
@@ -76,10 +76,13 @@ const Navigation = () => {
   const MENU = navigation.map(({ children, url, title }, index) => (
     <React.Fragment key={index}>
       {Object.keys(children)?.length > 0 ? (
-        <NavDropdown title={title} id={`${url}-dropdown`}>
+        <NavDropdown
+          title={title}
+          id={`${url}-dropdown`}
+          active={parentPage === url}
+        >
           {Object.entries(children).map(([url, title], index) => (
             <ActiveLink
-              activeClassName="text-danger"
               key={`${url}-dropdown-${index}`}
               href={`/${url}`}
               passHref
@@ -89,7 +92,7 @@ const Navigation = () => {
           ))}
         </NavDropdown>
       ) : (
-        <ActiveLink activeClassName="text-danger" href={`/${url}`} passHref>
+        <ActiveLink href={`/${url}`} passHref>
           <Nav.Link aria-current="page" className={`nav-url`}>
             {title}
           </Nav.Link>
@@ -99,7 +102,7 @@ const Navigation = () => {
   ));
 
   const Listings = (
-    <ActiveLink activeClassName="text-danger" href={`/listings`} passHref>
+    <ActiveLink href={`/listings`} passHref>
       <Nav.Link
         aria-current="page"
         className={`btn btn-sm btn-outline-danger btn-listings`}

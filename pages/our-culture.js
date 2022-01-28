@@ -8,6 +8,7 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { aboutUsLeadText, theCulture } from '@/data/about-us';
+import { about } from '@/data/navigation';
 import { our_team } from '@/data/team';
 import Image from 'next/image';
 import React from 'react';
@@ -20,7 +21,7 @@ const breadcrumb = [
 const OurCulture = () => {
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={about.url} />
       <PageHeader
         breadcrumb={breadcrumb}
         title="Our Culture"

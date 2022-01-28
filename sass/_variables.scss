@@ -25,6 +25,9 @@ $gray-900: #3d3d3d;
 $black: #000;
 // scss-docs-end gray-color-variables
 
+// custom background
+$light-red: rgba(237, 50, 55, 0.1);
+
 // fusv-disable
 // scss-docs-start gray-colors-map
 $grays: (
@@ -1162,7 +1165,7 @@ $navbar-nav-link-padding-x: 1.6rem;
 
 $navbar-light-color: $text-color;
 $navbar-light-hover-color: $nav-link-hover-color;
-// $navbar-light-active-color: rgba($black, 0.9);
+$navbar-light-active-color: rgba($red, 0.9);
 // $navbar-light-disabled-color: rgba($black, 0.3);
 // $navbar-light-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$navbar-light-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
 // $navbar-light-toggler-border-color: rgba($black, 0.1);
@@ -1200,8 +1203,8 @@ $dropdown-link-color: $gray-800;
 // $dropdown-link-hover-color: shade-color($dropdown-link-color, 10%);
 // $dropdown-link-hover-bg: $gray-200;
 
-// $dropdown-link-active-color: $component-active-color;
-// $dropdown-link-active-bg: $component-active-bg;
+// $dropdown-link-active-color: transparent;
+$dropdown-link-active-bg: transparent;
 
 // $dropdown-link-disabled-color: $gray-500;
 

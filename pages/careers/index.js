@@ -2,12 +2,13 @@ import FeatureCard from '@/components/common/FeatureCard';
 import { IconWithBackground } from '@/components/common/Icons';
 import NeedConsultation from '@/components/common/NeedConsultation';
 import Section from '@/components/common/Section';
-import Button from '@/components/form/Button';
+import Button from '@/components/forms/Button';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
+import { about } from '@/data/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -15,7 +16,7 @@ import React from 'react';
 const Careers = () => {
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={about.url} />
       <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />
       <Career />
       <Perks />

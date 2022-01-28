@@ -1,6 +1,3 @@
-// Background
-$light-red: rgba(237, 50, 55, 0.1);
-
 .bg-light-red {
   background: $light-red;
 }
@@ -25,7 +22,7 @@ $light-red: rgba(237, 50, 55, 0.1);
     height: 5rem;
     width: 2.5rem;
   }
-  background: lighten($red, 30);
+  background: lighten($dark, 20);
   top: 50%;
   transform: perspective(1px) translateY(-50%);
 
@@ -156,4 +153,12 @@ $light-red: rgba(237, 50, 55, 0.1);
   border-radius: 50%;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+}
+
+.react-datepicker__navigation-icon {
+  margin-top: 20px;
+}
+
+.react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
+  margin-left: -5px;
 }

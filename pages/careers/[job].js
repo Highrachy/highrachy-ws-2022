@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import { about } from '@/data/navigation';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -11,7 +12,7 @@ const SingleCareer = () => {
   const { job } = router.query;
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={about.url} />
       <PageHeader
         title={`Career - ${job}`}
         bgImage="/assets/img/bg/careers.jpg"

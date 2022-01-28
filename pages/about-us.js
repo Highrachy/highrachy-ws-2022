@@ -12,15 +12,15 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
+import { about } from '@/data/navigation';
 import projects from '@/data/projects';
-import { our_team } from '@/data/team';
 import Image from 'next/image';
 import React from 'react';
 
 const AboutUs = () => {
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={about.url} />
       <PageHeader title="About Us" bgImage="/assets/img/bg/about-us.jpg" />
       <OurCompany />
       <MissionAndVision />

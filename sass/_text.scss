@@ -44,3 +44,10 @@
 .text-gray {
   color: $text-color !important;
 }
+
+.optional-form-field {
+  float: right;
+  font-size: 0.75rem;
+  padding-top: 0.25rem;
+  color: $text-muted;
+}

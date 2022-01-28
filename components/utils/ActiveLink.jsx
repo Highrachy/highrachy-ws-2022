@@ -29,4 +29,8 @@ ActiveLink.propTypes = {
   activeClassName: PropTypes.string.isRequired,
 };
 
+ActiveLink.defaultProps = {
+  activeClassName: 'text-danger active',
+};
+
 export default ActiveLink;

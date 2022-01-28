@@ -3,12 +3,13 @@ import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import ServicesList from '@/components/layout/ServicesList';
+import { services } from '@/data/navigation';
 import React from 'react';
 
 const Services = () => {
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={services.url} />
       <PageHeader title="Our Services" bgImage="/assets/img/bg/services.jpg" />
       <ServicesList />
       <NeedConsultation

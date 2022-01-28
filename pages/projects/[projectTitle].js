@@ -3,14 +3,14 @@ import { LinkedInIcon } from '@/components/common/Icons';
 import { InstagramIcon } from '@/components/common/Icons';
 import { TwitterIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
-import Button from '@/components/form/Button';
+import Button from '@/components/forms/Button';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import projects from '@/data/projects';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { projects as projectNav } from '@/data/navigation';
 import React from 'react';
 
 const SingleProject = ({ project }) => {
@@ -21,7 +21,7 @@ const SingleProject = ({ project }) => {
 
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={projectNav.url} />
       <PageHeader
         title={project.title}
         breadcrumb={breadcrumb}

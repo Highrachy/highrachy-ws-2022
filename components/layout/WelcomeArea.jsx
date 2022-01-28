@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Tilt from 'react-tilt';
 import Image from 'next/image';
 import { shimmer, toBase64 } from 'helpers/image';
-import Button from '../form/Button';
+import Button from '../forms/Button';
 import Section from '../common/Section';
 
 const IMAGE_LIST = [

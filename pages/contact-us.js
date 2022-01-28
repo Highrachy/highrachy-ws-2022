@@ -7,19 +7,19 @@ import { LinkedInIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import { FacebookIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
-import Button from '@/components/form/Button';
+import Button from '@/components/forms/Button';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import { about } from '@/data/navigation';
 import React from 'react';
 
 const careers = () => {
   return (
     <>
-      <Navigation />
+      <Navigation parentPage={about.url} />
       <Map />
-      {/* <PageHeader title="Contact Us" bgImage="/assets/img/bg/contact-us.jpg" /> */}
       <CForm />
       <Footer hideConsultation />
     </>
