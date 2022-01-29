@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from 'components/forms/FormTooltip';
 import Link from 'next/link';
+import classNames from 'classnames';
 
 const Label = ({
   className,
+  children,
+  floatingLabel,
+  hideOptionalText,
+  labelLink,
   name,
   optional,
-  children,
   text,
   tooltipHeader,
   tooltipPosition,
   tooltipText,
-  labelLink,
-  hideOptionalText,
 }) => {
   const labelText = children || text;
   const sanitizedLabelLink = { to: null, text: null, ...labelLink };
@@ -22,7 +24,7 @@ const Label = ({
 
   return (
     <label
-      className={`form-label ${className ? className : ''}`}
+      className={classNames(className, { 'form-label': !floatingLabel })}
       htmlFor={name}
     >
       {labelText}

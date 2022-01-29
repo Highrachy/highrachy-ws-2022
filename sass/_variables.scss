@@ -81,7 +81,7 @@ $primary: darken(#ed3237, 10%);
 // $success: $green;
 // $info: $cyan;
 // $warning: $yellow;
-// $danger: $red;
+$danger: darken(#ed3237, 10%);
 // $light: $gray-100;
 // $dark: $gray-900;
 // // scss-docs-end theme-color-variables
@@ -840,8 +840,8 @@ $input-btn-padding-x: 2rem;
 // // scss-docs-end form-text-variables
 
 // // scss-docs-start form-label-variables
-// $form-label-margin-bottom: 0.5rem;
-// $form-label-font-size: null;
+$form-label-margin-bottom: 0.15rem;
+$form-label-font-size: 0.85rem;
 // $form-label-font-style: null;
 // $form-label-font-weight: null;
 // $form-label-color: null;

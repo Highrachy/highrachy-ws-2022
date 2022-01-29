@@ -11,7 +11,6 @@ const genId = (name, value) => `${name}-${value}`.replace(/\./g, '-');
 
 const Radio = ({
   checked,
-  custom,
   formGroupLabelClassName,
   inline,
   inputClassName,
@@ -21,25 +20,10 @@ const Radio = ({
 }) => {
   const radioId = genId(name, value);
   return (
-    <div
-      className={classNames(
-        { 'form-check': !inline && !custom },
-        { 'form-check-inline': inline && !custom },
-        { 'custom-control custom-radio': custom },
-        { ' custom-control-inline': inline && custom }
-      )}
-    >
+    <div className={classNames('form-check', { 'form-check-inline': inline })}>
       <Field
         checked={checked}
-        className={classNames(
-          inputClassName,
-          {
-            'form-check-input': !custom,
-          },
-          {
-            'custom-control-input': custom,
-          }
-        )}
+        className={classNames(inputClassName, 'form-check-input')}
         id={radioId}
         name={name}
         type="radio"
@@ -47,15 +31,7 @@ const Radio = ({
       />
 
       <label
-        className={classNames(
-          formGroupLabelClassName,
-          {
-            'custom-control-label': custom,
-          },
-          {
-            'form-check-label': !custom,
-          }
-        )}
+        className={classNames(formGroupLabelClassName, 'form-check-label')}
         htmlFor={radioId}
         id={`${radioId}-label `}
       >
@@ -67,8 +43,7 @@ const Radio = ({
 
 Radio.propTypes = {
   checked: PropTypes.bool,
-  custom: PropTypes.bool.isRequired,
-  formGroupLabelClassName: PropTypes.string.isRequired,
+  formGroupLabelClassName: PropTypes.string,
   inline: PropTypes.bool.isRequired,
   inputClassName: PropTypes.string.isRequired,
   label: PropTypes.string,
@@ -77,13 +52,13 @@ Radio.propTypes = {
 };
 
 Radio.defaultProps = {
+  formGroupLabelClassName: null,
   checked: false,
   label: null,
   value: null,
 };
 
 const RadioSelect = ({
-  custom,
   formGroupLabelClassName,
   formik,
   helpText,
@@ -111,7 +86,6 @@ const RadioSelect = ({
     return (
       <Radio
         checked={fieldValue === optionValue}
-        custom={custom}
         formGroupLabelClassName={formGroupLabelClassName}
         formik={formik}
         inline={inline}
@@ -155,7 +129,6 @@ const RadioSelect = ({
 };
 
 RadioSelect.propTypes = {
-  custom: PropTypes.bool,
   formGroupLabelClassName: PropTypes.string,
   formik: PropTypes.object.isRequired,
   helpText: PropTypes.string,
@@ -176,8 +149,7 @@ RadioSelect.propTypes = {
 };
 
 RadioSelect.defaultProps = {
-  custom: false,
-  formGroupClassName: 'col mb-4',
+  formGroupClassName: 'mb-4',
   helpText: null,
   inline: false,
   inputClassName: '',

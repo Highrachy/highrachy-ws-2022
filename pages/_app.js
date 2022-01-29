@@ -4,7 +4,7 @@ import React from 'react';
 import '../sass/App.scss';
 import NotFound from './404';
 import dynamic from 'next/dynamic';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 
 function MyApp({ Component, pageProps }) {
   const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
   });
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
       <AnimatedCursor
         innerSize={12}
         outerSize={32}

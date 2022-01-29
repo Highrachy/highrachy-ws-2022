@@ -40,7 +40,7 @@ const WelcomeArea = () => (
             Highrachy is a 21st century project-oriented organization setup
             primarily to meet your real estate needs.
           </p>
-          <Button color="primary" className="mb-6">
+          <Button color="primary" href="/contact-us" className="mb-6">
             Let’s Work Together
           </Button>
         </div>

@@ -10,7 +10,6 @@ import Label from './Label';
 const genId = (name, value) => `${name}-${value}`.replace(/\./g, '-');
 
 const Checkbox = ({
-  custom,
   formGroupLabelClassName,
   inline,
   inputClassName,
@@ -20,29 +19,14 @@ const Checkbox = ({
 }) => {
   const checkBoxId = genId(name, value);
   return (
-    <div
-      className={classNames(
-        { 'form-check': !inline && !custom },
-        { 'form-check-inline': inline && !custom },
-        { 'custom-control custom-checkbox': custom },
-        { ' custom-control-inline': inline && custom }
-      )}
-    >
+    <div className={classNames('form-check', { 'form-check-inline': inline })}>
       <Field name={name}>
         {({ field, form }) => {
           const fieldValue = field.value || [];
           return (
             <input
               checked={fieldValue.includes(value)}
-              className={classNames(
-                inputClassName,
-                {
-                  'form-check-input': !custom,
-                },
-                {
-                  'custom-control-input': custom,
-                }
-              )}
+              className={classNames('form-check-input', inputClassName)}
               id={checkBoxId}
               name={name}
               onChange={() => {
@@ -61,15 +45,7 @@ const Checkbox = ({
         }}
       </Field>
       <label
-        className={classNames(
-          formGroupLabelClassName,
-          {
-            'custom-control-label': custom,
-          },
-          {
-            'form-check-label': !custom,
-          }
-        )}
+        className={classNames(formGroupLabelClassName, 'form-check-label')}
         htmlFor={checkBoxId}
         id={`${checkBoxId}-label `}
       >
@@ -80,7 +56,6 @@ const Checkbox = ({
 };
 
 Checkbox.propTypes = {
-  custom: PropTypes.bool.isRequired,
   formGroupLabelClassName: PropTypes.string.isRequired,
   inline: PropTypes.bool.isRequired,
   inputClassName: PropTypes.string.isRequired,
@@ -95,7 +70,6 @@ Checkbox.defaultProps = {
 };
 
 const CheckboxGroup = ({
-  custom,
   formGroupLabelClassName,
   formik,
   helpText,
@@ -120,7 +94,6 @@ const CheckboxGroup = ({
     const optionLabel = label || Humanize.capitalize(value);
     return (
       <Checkbox
-        custom={custom}
         formGroupLabelClassName={formGroupLabelClassName}
         formik={formik}
         inline={inline}
@@ -166,7 +139,6 @@ const CheckboxGroup = ({
 
 CheckboxGroup.propTypes = {
   checkboxSizeClassName: PropTypes.string,
-  custom: PropTypes.bool,
   formGroupLabelClassName: PropTypes.string,
   formik: PropTypes.object.isRequired,
   helpText: PropTypes.string,
@@ -186,7 +158,6 @@ CheckboxGroup.propTypes = {
 };
 
 CheckboxGroup.defaultProps = {
-  custom: false,
   formGroupLabelClassName: '',
   helpText: null,
   inline: false,

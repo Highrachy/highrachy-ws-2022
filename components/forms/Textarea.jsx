@@ -17,7 +17,6 @@ const TextArea = ({
   helpText,
   inline,
   inputClassName,
-  inputSizeClassName,
   isValidMessage,
   label,
   labelLink,
@@ -32,9 +31,7 @@ const TextArea = ({
   ...others
 }) => {
   return (
-    <div
-      className={classNames('col mb-4', formGroupClassName, { row: inline })}
-    >
+    <div className={classNames('mb-4', formGroupClassName, { row: inline })}>
       <Label
         className={labelClassName}
         labelLink={labelLink}
@@ -45,22 +42,20 @@ const TextArea = ({
         tooltipPosition={tooltipPosition}
         tooltipText={tooltipText}
       />
-      <div className={inputSizeClassName}>
-        <Field
-          aria-describedby={name}
-          autoComplete={autoComplete}
-          className={classNames(
-            'form-control',
-            inputClassName,
-            getValidityClass(formik, name, showFeedback)
-          )}
-          component="textarea"
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          {...others}
-        />
-      </div>
+      <Field
+        aria-describedby={name}
+        autoComplete={autoComplete}
+        className={classNames(
+          'form-control',
+          inputClassName,
+          getValidityClass(formik, name, showFeedback)
+        )}
+        component="textarea"
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        {...others}
+      />
       <FeedbackMessage
         formik={formik}
         helpText={helpText}
@@ -78,7 +73,6 @@ TextArea.defaultProps = {
   helpText: null,
   inline: false,
   inputClassName: null,
-  inputSizeClassName: null,
   isValidMessage: '',
   label: null,
   labelClassName: null,
@@ -98,7 +92,6 @@ TextArea.propTypes = {
   helpText: PropTypes.string,
   inline: PropTypes.bool,
   inputClassName: PropTypes.string,
-  inputSizeClassName: PropTypes.number,
   isValidMessage: PropTypes.string,
   label: PropTypes.string,
   labelClassName: PropTypes.string,

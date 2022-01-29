@@ -35,7 +35,7 @@ const DatePicker = ({
   tooltipPosition,
   ...props
 }) => (
-  <div className={classNames('col mb-4', formGroupClassName)}>
+  <div className={classNames('mb-4', formGroupClassName)}>
     <div>
       <Label
         className={labelClassName}

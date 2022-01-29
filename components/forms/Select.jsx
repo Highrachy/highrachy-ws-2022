@@ -18,7 +18,6 @@ const Select = ({
   helpText,
   inline,
   inputClassName,
-  inputSizeClassName,
   isValidMessage,
   label,
   labelLink,
@@ -32,9 +31,7 @@ const Select = ({
   tooltipPosition,
 }) => {
   return (
-    <div
-      className={classNames('col mb-4', formGroupClassName, { row: inline })}
-    >
+    <div className={classNames('mb-4', formGroupClassName, { row: inline })}>
       <Label
         className={labelClassName}
         labelLink={labelLink}
@@ -44,26 +41,24 @@ const Select = ({
         tooltipPosition={tooltipPosition}
         tooltipText={tooltipText}
       />
-      <div className={inputSizeClassName}>
-        <Field
-          aria-describedby={name}
-          className={classNames(
-            'form-select',
-            inputClassName,
-            getValidityClass(formik, name, showFeedback)
-          )}
-          component="select"
-          id={name}
-          name={name}
-        >
-          {blankOption && (
-            <option key={`blankOptionfor${name}`} value="">
-              {blankOption}
-            </option>
-          )}
-          {<Select.Options options={options} />}
-        </Field>
-      </div>
+      <Field
+        aria-describedby={name}
+        className={classNames(
+          'form-select',
+          inputClassName,
+          getValidityClass(formik, name, showFeedback)
+        )}
+        component="select"
+        id={name}
+        name={name}
+      >
+        {blankOption && (
+          <option key={`blankOptionfor${name}`} value="">
+            {blankOption}
+          </option>
+        )}
+        {<Select.Options options={options} />}
+      </Field>
       <FeedbackMessage
         formik={formik}
         helpText={helpText}
@@ -83,7 +78,6 @@ Select.defaultProps = {
   helpText: null,
   inline: false,
   inputClassName: null,
-  inputSizeClassName: null,
   isValidMessage: '',
   label: null,
   labelLink: null,
@@ -102,7 +96,6 @@ Select.propTypes = {
   helpText: PropTypes.string,
   inline: PropTypes.bool,
   inputClassName: PropTypes.string,
-  inputSizeClassName: PropTypes.number,
   isValidMessage: PropTypes.string,
   label: PropTypes.string,
   labelClassName: PropTypes.number,

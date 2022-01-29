@@ -14,10 +14,10 @@ const Input = ({
   autoComplete,
   formGroupClassName,
   formik,
+  floatingLabel,
   helpText,
   inline,
   inputClassName,
-  inputSizeClassName,
   isValidMessage,
   label,
   labelLink,
@@ -32,38 +32,41 @@ const Input = ({
   type,
   ...props
 }) => {
+  const inputLabel = (
+    <Label
+      className={labelClassName}
+      labelLink={labelLink}
+      floatingLabel={floatingLabel}
+      name={name}
+      optional={optional}
+      text={label}
+      tooltipHeader={tooltipHeader}
+      tooltipPosition={tooltipPosition}
+      tooltipText={tooltipText}
+    />
+  );
   return (
     <div
-      className={classNames('col mb-4', formGroupClassName, {
-        row: inline,
+      className={classNames('mb-4', formGroupClassName, {
+        'form-floating': floatingLabel,
       })}
     >
-      <Label
-        className={labelClassName}
-        labelLink={labelLink}
+      {!floatingLabel && inputLabel}
+      <Field
+        aria-describedby={`${name}-help-block`}
+        autoComplete={autoComplete}
+        className={classNames(
+          'form-control',
+          inputClassName,
+          getValidityClass(formik, name, showFeedback)
+        )}
+        id={name}
         name={name}
-        optional={optional}
-        text={label}
-        tooltipHeader={tooltipHeader}
-        tooltipPosition={tooltipPosition}
-        tooltipText={tooltipText}
+        type={type}
+        placeholder={placeholder || label}
+        {...props}
       />
-      <div className={inputSizeClassName}>
-        <Field
-          aria-describedby={`${name}-help-block`}
-          autoComplete={autoComplete}
-          className={classNames(
-            'form-control',
-            inputClassName,
-            getValidityClass(formik, name, showFeedback)
-          )}
-          id={name}
-          name={name}
-          type={type}
-          placeholder={placeholder || label}
-          {...props}
-        />
-      </div>
+      {floatingLabel && inputLabel}
       <FeedbackMessage
         formik={formik}
         helpText={helpText}
@@ -79,11 +82,11 @@ const Input = ({
 
 Input.defaultProps = {
   autoComplete: 'off',
-  formGroupClassName: 'col mb-4',
+  formGroupClassName: 'mb-4',
+  floatingLabel: false,
   helpText: null,
   inline: false,
   inputClassName: null,
-  inputSizeClassName: null,
   isValidMessage: '',
   label: null,
   labelClassName: null,
@@ -100,11 +103,11 @@ Input.defaultProps = {
 Input.propTypes = {
   autoComplete: PropTypes.string,
   formGroupClassName: PropTypes.string,
+  floatingLabel: PropTypes.bool,
   formik: PropTypes.object.isRequired,
   helpText: PropTypes.string,
   inline: PropTypes.bool,
   inputClassName: PropTypes.string,
-  inputSizeClassName: PropTypes.number,
   isValidMessage: PropTypes.string,
   label: PropTypes.string,
   labelClassName: PropTypes.string,

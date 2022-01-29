@@ -13,14 +13,12 @@ const Switch = ({
   helpText,
   inline,
   inputClassName,
-  inputSizeClassName,
   isValidMessage,
   label,
   labelLink,
   labelClassName,
   name,
   optional,
-  placeholder,
   showFeedback,
   tooltipHeader,
   tooltipText,
@@ -28,13 +26,8 @@ const Switch = ({
   ...props
 }) => {
   return (
-    <>
-      <div
-        className={classNames(
-          'form-check form-switch col mb-4',
-          formGroupClassName
-        )}
-      >
+    <div className={classNames('mb-4', formGroupClassName)}>
+      <div className="form-check form-switch">
         <Field
           aria-describedby={name}
           autoComplete={autoComplete}
@@ -42,7 +35,6 @@ const Switch = ({
           id={name}
           name={name}
           type="checkbox"
-          placeholder={placeholder || label}
           {...props}
         />
         <Label
@@ -57,7 +49,7 @@ const Switch = ({
           tooltipText={tooltipText}
         />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -67,13 +59,11 @@ Switch.defaultProps = {
   helpText: null,
   inline: false,
   inputClassName: null,
-  inputSizeClassName: null,
   isValidMessage: '',
   label: null,
   labelClassName: null,
   labelLink: null,
   optional: false,
-  placeholder: null,
   showFeedback: feedback.ALL,
   tooltipHeader: null,
   tooltipText: null,
@@ -87,7 +77,6 @@ Switch.propTypes = {
   helpText: PropTypes.string,
   inline: PropTypes.bool,
   inputClassName: PropTypes.string,
-  inputSizeClassName: PropTypes.number,
   isValidMessage: PropTypes.string,
   label: PropTypes.string,
   labelClassName: PropTypes.string,
@@ -98,7 +87,6 @@ Switch.propTypes = {
   }),
   name: PropTypes.string.isRequired,
   optional: PropTypes.bool,
-  placeholder: PropTypes.string,
   showFeedback: PropTypes.oneOf(Object.keys(feedback)),
   tooltipHeader: PropTypes.string,
   tooltipPosition: PropTypes.string,

@@ -16,6 +16,17 @@ export const objectToOptions = (obj, defaultLabel = null, inverse = false) => {
     : output;
 };
 
+export const valuesToOptions = (values, defaultLabel = null) => {
+  const output = values.map((value) => ({
+    value: value.toString(),
+    label: humanize.titleCase(value.toString()),
+  }));
+
+  return defaultLabel
+    ? [{ value: '', label: defaultLabel }, ...output]
+    : output;
+};
+
 export const dataToOptions = (data, label, value = '_id') => {
   if (!data) return null;
   const output = Object.values(data).map((item) => ({

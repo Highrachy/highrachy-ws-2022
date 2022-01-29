@@ -1,26 +1,31 @@
 import { TwitterIcon } from '@/components/common/Icons';
 import { InstagramIcon } from '@/components/common/Icons';
-import { MarkerIcon } from '@/components/common/Icons';
 import { PhoneIcon } from '@/components/common/Icons';
 import { WebsiteIcon } from '@/components/common/Icons';
 import { LinkedInIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import { FacebookIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
-import Button from '@/components/forms/Button';
+import FormikForm from '@/components/forms/FormikForm';
+import Input from '@/components/forms/Input';
+import { contactUsSchema } from '@/components/forms/schemas/page-schema';
+import Select from '@/components/forms/Select';
+import Textarea from '@/components/forms/Textarea';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
-import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
+import services from '@/data/services';
+import { valuesToOptions } from '@/utils/helpers';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const careers = () => {
   return (
     <>
       <Navigation parentPage={about.url} />
       <Map />
-      <CForm />
+      <ContactInfo />
       <Footer hideConsultation />
     </>
   );
@@ -31,7 +36,6 @@ const Map = () => (
     <iframe
       title="Highrachy on Google Map"
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7225456353594!2d3.4277053146311514!3d6.429678795348128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf52560c8903b%3A0x264b8d5dbb789d4a!2sHighrachy!5e0!3m2!1sen!2sus!4v1643001127842!5m2!1sen!2sus"
-      width={600}
       height={450}
       style={{ border: 0 }}
       allowFullScreen
@@ -41,7 +45,7 @@ const Map = () => (
   </section>
 );
 
-const Form = () => (
+const GetInTouch = () => (
   <section className="form-wrapper p-5">
     <SectionHeader>Get in Touch</SectionHeader>
     <div className="py-4">
@@ -49,78 +53,18 @@ const Form = () => (
         If you want to reach out, discuss opportunities or plan your property
         strategy, we’d love to hear from you.
       </p>
-      <form action="#form" method="post">
-        <div className="form-floating mb-4">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Full name"
-            aria-label="Full name"
-            id="floatingInput"
-          />
-          <label htmlFor="floatingInput">Full Name</label>
-        </div>
-
-        <div className="form-floating mb-4">
-          <input
-            type="email"
-            className="form-control"
-            id="floatingEmail"
-            placeholder="name@example.com"
-          />
-          <label htmlFor="floatingEmail">Email address</label>
-        </div>
-
-        <div className="form-floating mb-4">
-          <select
-            className="form-select"
-            id="floatingSelect"
-            aria-label="Floating label select example"
-          >
-            <option value="">Select a Subject</option>
-            <option value={1}>Investment</option>
-            <option value={2}>Consultation</option>
-            <option value={3}>Property Management</option>
-            <option value={4}>Enquiries</option>
-            <option value={5}>Others</option>
-          </select>
-          <label htmlFor="floatingSelect">Subject</label>
-        </div>
-
-        <div className="form-floating mb-4">
-          <input
-            type="email"
-            className="form-control"
-            id="floatingSubject"
-            placeholder="subject"
-          />
-          <label htmlFor="floatingSubject">Subject</label>
-        </div>
-
-        <div className="form-floating mb-4">
-          <textarea
-            className="form-control"
-            id="floatingTextarea"
-            placeholder="name@example.com"
-            style={{ height: '100px' }}
-          />
-          <label htmlFor="floatingTextarea">Your Message</label>
-        </div>
-
-        <Button color="primary" className="mt-4 mb-6">
-          Send Message
-        </Button>
-      </form>
+      <ContactUsForm />
     </div>
   </section>
 );
-const CForm = () => (
+
+const ContactInfo = () => (
   <Section noPaddingTop altBg>
     <div id="form" className="contact-form-area">
       <div className="container">
         <div className="row align-items-center">
           <div className="col-lg-6 col-12 mb-5 pd-5">
-            <Form />
+            <GetInTouch />
           </div>
           <div className="col-lg-5 offset-lg-1">
             <div className="contact-info-wrapper mt-7">
@@ -201,4 +145,35 @@ const CForm = () => (
     </div>
   </Section>
 );
+
+const ContactUsForm = () => {
+  const allServices = Object.values(services).map((service) => service.title);
+  const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
+  const handleSubmit = (values, actions) => {
+    setTimeout(() => {
+      console.log('values', values);
+      toast.success('Information sent successfully');
+      actions.setSubmitting(false);
+    }, 4000);
+  };
+  return (
+    <FormikForm
+      schema={contactUsSchema}
+      handleSubmit={handleSubmit}
+      name="contact-us-form"
+      butttonText="Send Message"
+      persistForm
+    >
+      <Input name="fullName" label="Full Name" />
+      <Input name="email" type="email" label="Email Address" />
+      <Input name="phone" label="Phone Number" optional />
+      <Select
+        name="subject"
+        label="Subject"
+        options={valuesToOptions(subjects, 'Select One...')}
+      />
+      <Textarea name="message" label="Your Message" />
+    </FormikForm>
+  );
+};
 export default careers;

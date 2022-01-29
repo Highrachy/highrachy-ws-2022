@@ -19,7 +19,6 @@ const InputFormat = ({
   helpText,
   inline,
   inputClassName,
-  inputSizeClassName,
   isValidMessage,
   label,
   labelLink,
@@ -39,7 +38,7 @@ const InputFormat = ({
 }) => {
   return (
     <div
-      className={classNames('col mb-4', formGroupClassName, {
+      className={classNames('mb-4', formGroupClassName, {
         row: inline,
       })}
     >
@@ -52,38 +51,34 @@ const InputFormat = ({
         tooltipPosition={tooltipPosition}
         tooltipText={tooltipText}
       />
-      <div className={inputSizeClassName}>
-        <Field name={name}>
-          {({ field, form }) => {
-            // we are using array for range,
-            // we want to ensure that the array value is not used
-            const value = Array.isArray(getIn(formik.values, name))
-              ? 0
-              : getIn(formik.values, name);
-            return (
-              <NumberFormat
-                {...props}
-                className={classNames(
-                  'form-control',
-                  inputClassName,
-                  getValidityClass(formik, name, showFeedback)
-                )}
-                id={name}
-                name={name}
-                onBlur={field.onBlur}
-                onValueChange={(number) =>
-                  form.setFieldValue(name, number.value)
-                }
-                prefix={prefix}
-                suffix={suffix}
-                thousandSeparator={true}
-                placeholder={placeholder || label}
-                value={value}
-              />
-            );
-          }}
-        </Field>
-      </div>
+      <Field name={name}>
+        {({ field, form }) => {
+          // we are using array for range,
+          // we want to ensure that the array value is not used
+          const value = Array.isArray(getIn(formik.values, name))
+            ? 0
+            : getIn(formik.values, name);
+          return (
+            <NumberFormat
+              {...props}
+              className={classNames(
+                'form-control',
+                inputClassName,
+                getValidityClass(formik, name, showFeedback)
+              )}
+              id={name}
+              name={name}
+              onBlur={field.onBlur}
+              onValueChange={(number) => form.setFieldValue(name, number.value)}
+              prefix={prefix}
+              suffix={suffix}
+              thousandSeparator={true}
+              placeholder={placeholder || label}
+              value={value}
+            />
+          );
+        }}
+      </Field>
       <FeedbackMessage
         formik={formik}
         helpText={helpText}
@@ -99,11 +94,10 @@ const InputFormat = ({
 
 InputFormat.defaultProps = {
   autoComplete: 'off',
-  formGroupClassName: 'col mb-4',
+  formGroupClassName: 'mb-4',
   helpText: null,
   inline: false,
   inputClassName: null,
-  inputSizeClassName: null,
   isValidMessage: '',
   label: null,
   labelClassName: null,
@@ -126,7 +120,6 @@ InputFormat.propTypes = {
   helpText: PropTypes.string,
   inline: PropTypes.bool,
   inputClassName: PropTypes.string,
-  inputSizeClassName: PropTypes.number,
   isValidMessage: PropTypes.string,
   label: PropTypes.string,
   labelClassName: PropTypes.string,
