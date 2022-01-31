@@ -85,7 +85,7 @@ const AvailableListings = () => {
             ))}
           </div>
         </FormikForm>
-        <ul className="list-group">
+        <ul className="list-group mt-5">
           {listings.map(([key, listing], index) => (
             <li key={index} className="list-group-item">
               <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
@@ -115,7 +115,7 @@ const AvailableListings = () => {
                     query: { property: key },
                   }}
                 >
-                  <a className="btn btn-outline-secondary btn-wide text-uppercase stretched-link">
+                  <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
                     Apply Now
                   </a>
                 </Link>
