@@ -46,8 +46,9 @@
 }
 
 .optional-form-field {
-  float: right;
   font-size: 0.75rem;
   padding-top: 0.25rem;
   color: $text-muted;
+  display: inline-block;
+  margin-top: -2px;
 }

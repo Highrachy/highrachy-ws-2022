@@ -162,3 +162,68 @@
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
   margin-left: -5px;
 }
+
+.form-switch {
+  .form-check-input {
+    height: 1.75rem;
+  }
+  .form-check-label {
+    margin-top: 0.2rem;
+  }
+}
+
+.table {
+  font-size: 0.9rem;
+  thead tr {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    background: #f5f6fa;
+
+    th {
+      padding: 1rem 1.25rem;
+      vertical-align: middle;
+    }
+  }
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #e5e5e5 !important;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  td:first-child,
+  th:first-child {
+    padding-left: 2rem;
+  }
+
+  td:last-child,
+  th:last-child {
+    padding-right: 2rem;
+  }
+
+  &.table-no-padding {
+    td:first-child,
+    th:first-child {
+      padding-left: 0.5rem;
+    }
+
+    td:last-child,
+    th:last-child {
+      padding-right: 0.5rem;
+    }
+  }
+
+  .block-text-small {
+    font-size: 12px;
+    display: block;
+  }
+
+  .block-text-smaller {
+    font-size: 10px;
+    display: block;
+  }
+}

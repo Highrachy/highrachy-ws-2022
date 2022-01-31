@@ -10,7 +10,7 @@ export const welcomeNote =
 export const welcomeNoteLeadText =
   'Give yourself the gift of true value driven by quality for a better tomorrow with us.';
 
-export const aboutUsLeadText = `Integrating all that is precious to people and communities, Highrachy develops and manages dynamic exclusively rated infrastructures with complete facilities that connect today with tomorrow's possibilities and embrace every moment of life's pursuit. We create new value, social value, and above all, real value.`;
+export const aboutUsLeadText = `Integrating all that is precious to people and communities, Highrachy develops and manages dynamic exclusively rated infrastructures with complete facilities that connect today with tomorrow's possibilities and embraces every moment of life's pursuit. We create new value, social value, and above all, real value.`;
 
 export const theCulture = {
   Family: {

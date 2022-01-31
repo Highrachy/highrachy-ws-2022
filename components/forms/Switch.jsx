@@ -47,6 +47,7 @@ const Switch = ({
           tooltipHeader={tooltipHeader}
           tooltipPosition={tooltipPosition}
           tooltipText={tooltipText}
+          floatingLabel
         />
       </div>
     </div>

@@ -93,7 +93,7 @@ const DatePicker = ({
                   form.setFieldValue(name, '');
                 }
               }}
-              placeholderText={placeholder}
+              placeholderText={placeholder || label}
               selected={selectedValue}
               showTimeSelect={showTimeSelect}
               showTimeSelectOnly={showTimeSelectOnly}

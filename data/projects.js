@@ -1,6 +1,6 @@
 export const blissville = {
   content:
-    'Blissville is a 12 mixed unit residential estate that promotes refined living. Surrounded by energy efficient facilities, its location is very close to access roads, shopping areas, schools, and favorite places of your choice. ',
+    'Blissville is a closely knit gated community of 12 family units, sitting on two blocks that promotes refined living. Surrounded by energy efficient facilities, its location is very close to access roads, shopping areas, schools, and favorite places of your choice. ',
   image: '/assets/img/projects/blissville.jpg',
   title: 'Blissville',
 };

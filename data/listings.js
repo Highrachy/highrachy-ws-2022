@@ -24,7 +24,7 @@ export const allListings = {
     location: 'ajah',
   },
   'blissville-uno-3-bedroom-flat': {
-    name: 'Quiver court',
+    name: 'Blissville Uno',
     type: '3 bedroom flat',
     description: `A maid's room, 4 baths, 5 toilets`,
     address:

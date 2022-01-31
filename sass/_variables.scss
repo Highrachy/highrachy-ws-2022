@@ -695,8 +695,8 @@ $lead-font-weight: 300;
 // // Customizes the `.table` component with basic values, each used across all table variations.
 
 // // scss-docs-start table-variables
-// $table-cell-padding-y: 0.5rem;
-// $table-cell-padding-x: 0.5rem;
+$table-cell-padding-y: 1.25rem;
+$table-cell-padding-x: 1.25rem;
 // $table-cell-padding-y-sm: 0.25rem;
 // $table-cell-padding-x-sm: 0.25rem;
 
@@ -752,7 +752,7 @@ $lead-font-weight: 300;
 
 // // scss-docs-start input-btn-variables
 $input-btn-padding-y: 0.8rem;
-$input-btn-padding-x: 2rem;
+$input-btn-padding-x: 1.5rem;
 // $input-btn-font-family: null;
 // $input-btn-font-size: $font-size-base;
 // $input-btn-line-height: $line-height-base;
@@ -950,7 +950,7 @@ $form-label-font-size: 0.85rem;
 
 // // scss-docs-start form-switch-variables
 // $form-switch-color: rgba($black, 0.25);
-// $form-switch-width: 2em;
+$form-switch-width: 3.5em;
 // $form-switch-padding-start: $form-switch-width + 0.5em;
 // $form-switch-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-color}'/></svg>");
 // $form-switch-border-radius: $form-switch-width;
