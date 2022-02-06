@@ -6,6 +6,7 @@ import ProjectList from '@/components/layout/ProjectList';
 import WelcomeArea from '@/components/layout/WelcomeArea';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import { home } from '@/data/navigation';
+import Test from '@/components/utils/test';
 
 export default function Home() {
   return (

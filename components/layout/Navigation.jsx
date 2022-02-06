@@ -105,7 +105,7 @@ const Navigation = ({ parentPage }) => {
     <ActiveLink href={`/listings`} passHref>
       <Nav.Link
         aria-current="page"
-        className={`btn btn-sm btn-outline-danger btn-listings`}
+        className={`btn btn-sm btn-outline-dark btn-listings`}
       >
         Find Apartments
       </Nav.Link>

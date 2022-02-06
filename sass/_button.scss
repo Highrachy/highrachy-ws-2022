@@ -8,13 +8,13 @@
 }
 
 .btn-listings {
-  border: 2px solid $primary !important;
+  border: 2px solid $dark !important;
   color: $text-color !important;
   background: $white !important;
 
   &:hover {
     color: $white !important;
-    background: $primary !important;
+    background: $dark !important;
   }
 }
 
