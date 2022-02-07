@@ -8,6 +8,7 @@ import { Persist } from 'formik-persist';
 
 const FormikForm = ({
   buttonText,
+  buttonColor,
   children,
   handleSubmit,
   name,
@@ -26,7 +27,11 @@ const FormikForm = ({
         <Form>
           {children}
 
-          <Button color="danger" loading={isSubmitting} onClick={handleSubmit}>
+          <Button
+            color={buttonColor}
+            loading={isSubmitting}
+            onClick={handleSubmit}
+          >
             {buttonText}
           </Button>
           {persistForm && <Persist name={name} />}
@@ -37,6 +42,11 @@ const FormikForm = ({
       )}
     </Formik>
   );
+};
+
+FormikForm.defaultProps = {
+  buttonText: 'Submit',
+  buttonColor: 'danger',
 };
 
 export default FormikForm;

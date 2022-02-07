@@ -40,15 +40,22 @@ const SingleListing = ({ property }) => {
         bgImage="/assets/img/bg/listings.jpg"
         breadcrumb={breadcrumb}
       />
-
       <TenantForm listing={property} />
       <Footer hideConsultation />
     </>
   );
 };
 
-const IntroText = () => (
+const AlertStatus = ({ listing }) =>
+  listing?.availableUnits === 0 && (
+    <div className="alert alert-danger my-4" role="alert">
+      This property is currently <strong>Occupied</strong>
+    </div>
+  );
+
+const IntroText = ({ listing }) => (
   <div className="col-sm-12">
+    <AlertStatus listing={listing} />
     <p className="lead fw-normal mt-3">
       Thank you for your request to rent one of our properties. The process to
       secure the flat/house is as follows:
@@ -155,7 +162,7 @@ const TenantForm = ({ listing }) => {
   const ALL_STEPS = [
     <div key="1">
       <SectionHeader small>Tenant Application Form</SectionHeader>
-      <IntroText />
+      <IntroText listing={listing} />
       <PropertyListing listing={listing} />
     </div>,
     <PersonalInformation key="2" />,
@@ -185,7 +192,15 @@ const TenantForm = ({ listing }) => {
 
                   {!isLastStep && (
                     <Button color="danger" onClick={() => setStep(step + 1)}>
-                      {isFirstStep ? 'Apply Now' : <>Continue</>}
+                      {isFirstStep ? (
+                        listing?.availableUnits === 0 ? (
+                          'Apply for Occupied Apartment'
+                        ) : (
+                          'Apply Now'
+                        )
+                      ) : (
+                        <>Continue</>
+                      )}
                     </Button>
                   )}
                   <div className="mt-6 float-end">

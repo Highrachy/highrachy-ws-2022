@@ -4,7 +4,9 @@ import { ToiletIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
 import FormikForm from '@/components/forms/FormikForm';
+import Label from '@/components/forms/Label';
 import Select from '@/components/forms/Select';
+import Switch from '@/components/forms/Switch';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
@@ -42,17 +44,23 @@ const AvailableListings = () => {
   }, {});
 
   const [listings, setListings] = React.useState(currentListings);
+  const [showOccupied, setShowOccupied] = React.useState(false);
   const handleSubmit = (values, actions) => {
     setTimeout(() => {
       setListings(() =>
         currentListings.filter(([_, listing]) => {
           return Object.keys(values).every((key) => {
+            if (!values[key] && values[key] !== 0) return true;
             return listing[key].toString() === values[key].toString();
           });
         })
       );
       actions.setSubmitting(false);
     }, 100);
+  };
+
+  const handleShowOccupied = () => {
+    setShowOccupied(!showOccupied);
   };
 
   return (
@@ -68,6 +76,8 @@ const AvailableListings = () => {
           handleSubmit={handleSubmit}
           name="listings-form"
           showFormikState
+          buttonText="Find Apartments"
+          buttonColor="dark"
         >
           <div className="row">
             {filterType.map((key) => (
@@ -84,44 +94,74 @@ const AvailableListings = () => {
               />
             ))}
           </div>
+          <div className="row">
+            <div className="mb-4">
+              <div className="form-check form-switch">
+                <input
+                  aria-describedby="availableUnits"
+                  className="form-check-input"
+                  name="availableUnits"
+                  type="checkbox"
+                  onChange={handleShowOccupied}
+                />
+                <Label
+                  name="availableUnits"
+                  className="form-check-label"
+                  hideOptionalText
+                  optional
+                  text="Show Occupied Apartments"
+                  floatingLabel
+                />
+              </div>
+            </div>
+          </div>
         </FormikForm>
         <ul className="list-group mt-5">
-          {listings.map(([key, listing], index) => (
-            <li key={index} className="list-group-item">
-              <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
-                <div>
-                  <h5 className="mb-0">
-                    {listing.type} - {listing.name}
-                  </h5>
-                  <div className="text-muted">
-                    <LocationIcon /> {listing.address}
+          {listings.map(
+            ([key, listing], index) =>
+              (listing.availableUnits > 0 || showOccupied) && (
+                <li key={index} className="list-group-item">
+                  <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
+                    <div>
+                      <h5 className="mb-0">
+                        {listing.type} - {listing.name}
+                      </h5>
+                      <div className="text-muted">
+                        <LocationIcon /> {listing.address}
+                      </div>
+                      <ul className="list-inline text-muted">
+                        <li className="list-inline-item pe-4">
+                          <BedIcon /> {listing.beds}
+                        </li>
+                        <li className="list-inline-item pe-4">
+                          <BathIcon /> {listing.baths}
+                        </li>
+                        <li className="list-inline-item pe-4">
+                          <ToiletIcon /> {listing.toilets}
+                        </li>
+                      </ul>
+                    </div>
+                    <Link
+                      passHref
+                      href={{
+                        pathname: '/listings/[property]',
+                        query: { property: key },
+                      }}
+                    >
+                      {listing.availableUnits > 0 ? (
+                        <a className="btn btn-dark btn-wide text-uppercase stretched-link">
+                          Apply Now
+                        </a>
+                      ) : (
+                        <span className="btn text-danger btn-wide text-uppercase stretched-link">
+                          Occupied
+                        </span>
+                      )}
+                    </Link>
                   </div>
-                  <ul className="list-inline text-muted">
-                    <li className="list-inline-item pe-4">
-                      <BedIcon /> {listing.beds}
-                    </li>
-                    <li className="list-inline-item pe-4">
-                      <BathIcon /> {listing.baths}
-                    </li>
-                    <li className="list-inline-item pe-4">
-                      <ToiletIcon /> {listing.toilets}
-                    </li>
-                  </ul>
-                </div>
-                <Link
-                  passHref
-                  href={{
-                    pathname: '/listings/[property]',
-                    query: { property: key },
-                  }}
-                >
-                  <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
-                    Apply Now
-                  </a>
-                </Link>
-              </div>
-            </li>
-          ))}
+                </li>
+              )
+          )}
         </ul>
       </div>
     </Section>
