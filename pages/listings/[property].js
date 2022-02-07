@@ -49,7 +49,8 @@ const SingleListing = ({ property }) => {
 const AlertStatus = ({ listing }) =>
   listing?.availableUnits === 0 && (
     <div className="alert alert-danger my-4" role="alert">
-      This property is currently <strong>Occupied</strong>
+      This property will be <strong>available soon</strong>. You can submit an
+      application to join the waiting list.
     </div>
   );
 
@@ -194,7 +195,7 @@ const TenantForm = ({ listing }) => {
                     <Button color="danger" onClick={() => setStep(step + 1)}>
                       {isFirstStep ? (
                         listing?.availableUnits === 0 ? (
-                          'Apply for Occupied Apartment'
+                          'Join the waiting list'
                         ) : (
                           'Apply Now'
                         )

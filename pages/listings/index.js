@@ -44,7 +44,7 @@ const AvailableListings = () => {
   }, {});
 
   const [listings, setListings] = React.useState(currentListings);
-  const [showOccupied, setShowOccupied] = React.useState(false);
+  const [showOccupied, setShowOccupied] = React.useState(true);
   const handleSubmit = (values, actions) => {
     setTimeout(() => {
       setListings(() =>
@@ -109,7 +109,7 @@ const AvailableListings = () => {
                   className="form-check-label"
                   hideOptionalText
                   optional
-                  text="Show Occupied Apartments"
+                  text="Hide property that will be available soon"
                   floatingLabel
                 />
               </div>
@@ -154,7 +154,7 @@ const AvailableListings = () => {
                         </a>
                       ) : (
                         <span className="btn text-danger btn-wide text-uppercase stretched-link">
-                          Occupied
+                          Available Soon
                         </span>
                       )}
                     </Link>
