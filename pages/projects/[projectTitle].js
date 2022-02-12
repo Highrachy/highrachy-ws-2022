@@ -12,6 +12,7 @@ import projects from '@/data/projects';
 import Image from 'next/image';
 import { projects as projectNav } from '@/data/navigation';
 import React from 'react';
+import Sharer from '@/components/utils/Sharer';
 
 const SingleProject = ({ project }) => {
   const breadcrumb = [
@@ -38,6 +39,7 @@ const Project = ({ content, image, title, externalLink }) => (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8">
+          <ShareContent title={title} />
           <SectionHeader className="mb-4">{title}</SectionHeader>
           <Image
             src={image}
@@ -52,30 +54,18 @@ const Project = ({ content, image, title, externalLink }) => (
               More Details
             </Button>
           )}
-          <ShareContent />
         </div>
       </div>
     </div>
   </Section>
 );
 
-const ShareContent = () => (
-  <div className="share-content">
-    <strong>Share:</strong>
-    <ul className="list-inline icon-md">
-      <li className="list-inline-item">
-        <FacebookIcon />
-      </li>
-      <li className="list-inline-item">
-        <TwitterIcon />
-      </li>
-      <li className="list-inline-item">
-        <LinkedInIcon />
-      </li>
-      <li className="list-inline-item">
-        <InstagramIcon />
-      </li>
-    </ul>
+const ShareContent = ({ title }) => (
+  <div className="share-content text-end">
+    <Sharer
+      shareText={<p className="text-muted">Share Project: </p>}
+      shareUrl={`https://highrachy.com/projects/${title}`}
+    />
   </div>
 );
 

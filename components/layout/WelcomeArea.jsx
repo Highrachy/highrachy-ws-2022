@@ -41,7 +41,7 @@ const WelcomeArea = () => (
             primarily to meet your real estate needs.
           </p>
           <Button color="primary" href="/contact-us" className="mb-6">
-            Let’s Work Together
+            See It In Action
           </Button>
         </div>
         <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center">

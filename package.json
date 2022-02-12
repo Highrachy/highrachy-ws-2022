@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
   },
@@ -26,6 +27,7 @@
     "react-icons": "^4.3.1",
     "react-ityped": "^1.0.2",
     "react-number-format": "^4.9.1",
+    "react-share": "^4.4.0",
     "react-tilt": "^0.1.4",
     "react-toastify": "^8.1.0",
     "sass": "^1.46.0",

@@ -38,8 +38,8 @@ const ClientCard = ({ client }) => (
       <Image
         src={`/assets/img/clients/${client}.png`}
         className="d-block mx-auto my-2"
-        width="285"
-        height="85"
+        width="400"
+        height="300"
         alt={client}
       />
     </div>
