@@ -6,7 +6,7 @@ const { PassionIcon } = require('@/components/common/Icons');
 const { FamilyIcon } = require('@/components/common/Icons');
 
 export const welcomeNote =
-  'Highrachy is a 21st century project-oriented organization setup primarily to meet your real estate needs. Experience top notch processes and solutions that are deliberately designed to guarantee your Real Estate goals are met, constantly';
+  'Highrachy is a 21st century project-oriented organization setup primarily to meet your real estate needs. Experience top notch processes and solutions that are deliberately designed to guarantee your real estate goals are met consistently.';
 export const welcomeNoteLeadText =
   'Give yourself the gift of true value driven by quality for a better tomorrow with us.';
 

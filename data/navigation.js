@@ -7,7 +7,7 @@ export const home = {
   children: {},
 };
 
-const servicesDropDown = Object.values(servicesText).reduce(
+export const currentServices = Object.values(servicesText).reduce(
   (acc, { title }) => {
     acc[`services#${convertToSlug(title)}`] = title;
     return acc;
@@ -20,7 +20,7 @@ export const services = {
   url: 'services',
   children: {
     services: 'Our Services',
-    ...servicesDropDown,
+    ...currentServices,
   },
 };
 

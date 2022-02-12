@@ -74,8 +74,8 @@ const MissionAndVision = () => (
         <div className="offset-lg-1 col-lg-10">
           <div className="row">
             <FeatureCard icon={<VisionIcon />} title="Our Vision">
-              To be a globally known one-stop-shop for value within the real and
-              technology industries.
+              To be one of the best performing, most trusted and respected real
+              estate company in the world.
             </FeatureCard>
             <FeatureCard icon={<MissionIcon />} title="Our Mission">
               To continuously enhance your lives be it home or work by providing

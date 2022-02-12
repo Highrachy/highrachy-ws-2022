@@ -1,20 +1,10 @@
-import services from '@/data/services';
-import { LinkedInIcon } from '../common/Icons';
-import { TwitterIcon } from '../common/Icons';
-import { InstagramIcon } from '../common/Icons';
-import { FacebookIcon } from '../common/Icons';
+import { footerLinks, socialMediaLinks } from '@/data/index';
+import { currentServices } from '@/data/navigation';
+
+import Link from 'next/link';
 import { RightAngleIcon } from '../common/Icons';
 import NeedConsultation from '../common/NeedConsultation';
 import Section from '../common/Section';
-
-const helpfulLinks = [
-  'Highrachy WeProtect',
-  'Careers',
-  'Sitemap',
-  'Our Projects',
-  'Download Brochure',
-  'Existing Business Relationships',
-];
 
 const Footer = ({ hideConsultation }) => (
   <>
@@ -30,11 +20,13 @@ const Footer = ({ hideConsultation }) => (
                 in line with our core competencies. These competencies are;
               </p>
               <ul className="text-white list-unstyled">
-                {Object.values(services).map(({ title }) => (
+                {Object.entries(currentServices).map(([url, title]) => (
                   <li key={title}>
-                    <a className="text-reset small" href="#">
-                      <RightAngleIcon /> {title}
-                    </a>
+                    <Link href={`/${url}`} passHref>
+                      <a className="text-reset small">
+                        <RightAngleIcon /> {title}
+                      </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -42,11 +34,13 @@ const Footer = ({ hideConsultation }) => (
             <div className="col-md-4 col-sm-6 col-6">
               <h6 className="text-white">Helpful Links</h6>
               <ul className="text-white list-unstyled">
-                {helpfulLinks.map((text) => (
-                  <li key={text}>
-                    <a className="text-reset small" href="#">
-                      <RightAngleIcon /> {text}
-                    </a>
+                {footerLinks.map(({ title, url }) => (
+                  <li key={title}>
+                    <Link href={url} passHref>
+                      <a className="text-reset small">
+                        <RightAngleIcon /> {title}
+                      </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -65,32 +59,22 @@ const Footer = ({ hideConsultation }) => (
                 </p>
               </div>
               <ul className="list-inline text-white ms-auto">
-                <li className="list-inline-item">
-                  <a className="text-reset" href="#">
-                    <FacebookIcon />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a className="text-reset" href="#">
-                    <TwitterIcon />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a className="text-reset" href="#">
-                    <LinkedInIcon />
-                  </a>
-                </li>
-                <li className="list-inline-item">
-                  <a className="text-reset" href="#">
-                    <InstagramIcon />
-                  </a>
-                </li>
+                {socialMediaLinks.map(({ icon, url }, index) => (
+                  <li key={`social-link-${index}`} className="list-inline-item">
+                    <Link href={url} passHref>
+                      <a className="text-reset icon-md">{icon}</a>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
           <div className="row mt-5 pt-5 pb-3">
             <div className="col-12 text-center">
-              <p>&copy; 2022 Highrachy. All Rights Reserved.</p>
+              <p>
+                &copy; {new Date().getFullYear()} Highrachy. All Rights
+                Reserved.
+              </p>
             </div>
           </div>
         </div>

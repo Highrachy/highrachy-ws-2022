@@ -227,3 +227,13 @@
     display: block;
   }
 }
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+  line-height: 2;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

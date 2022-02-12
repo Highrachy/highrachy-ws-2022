@@ -33,7 +33,7 @@ const SingleProject = ({ project }) => {
   );
 };
 
-const Project = ({ content, image, title }) => (
+const Project = ({ content, image, title, externalLink }) => (
   <Section>
     <div className="container">
       <div className="row justify-content-center">
@@ -47,9 +47,11 @@ const Project = ({ content, image, title }) => (
             width="1200"
           />
           <p className="">{content}</p>
-          <Button color="primary" className="mt-3 mb-6">
-            More Details
-          </Button>
+          {externalLink && (
+            <Button color="primary" href={externalLink} className="mt-3 mb-6">
+              More Details
+            </Button>
+          )}
           <ShareContent />
         </div>
       </div>
