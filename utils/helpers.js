@@ -70,3 +70,6 @@ export const generateNumOptions = (
 
 export const dashedLowerCase = (text) =>
   text && text.toString().replace(/\s+/g, '-').toLowerCase();
+
+export const moneyFormat = (value) => Humanize.formatNumber(value, 2);
+export const moneyFormatInNaira = (value) => commaNumber(value, true);
