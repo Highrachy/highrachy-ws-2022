@@ -17,8 +17,10 @@ import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
 import services from '@/data/services';
 import { valuesToOptions } from '@/utils/helpers';
+import Link from 'next/link';
 import React from 'react';
 import { toast } from 'react-toastify';
+import { socialMediaLinks } from '../data';
 
 const careers = () => {
   return (
@@ -92,11 +94,17 @@ const ContactInfo = () => (
                         <WebsiteIcon />
                       </span>
                       <p>
-                        <a href="#" className="text-reset">
+                        <a
+                          href="mailto:info@highrachy.com"
+                          className="text-reset"
+                        >
                           info@highrachy.com
                         </a>
                         <br />
-                        <a href="#" className="text-reset">
+                        <a
+                          href="https://www.highrachy.com"
+                          className="text-reset"
+                        >
                           www.highrachy.com
                         </a>
                       </p>
@@ -115,27 +123,17 @@ const ContactInfo = () => (
                     </div>
                   </li>
                 </ul>
-                <ul className="list-inline icon-md">
-                  <li className="list-inline-item">
-                    <a className="text-reset" href="#">
-                      <FacebookIcon />
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a className="text-reset" href="#">
-                      <TwitterIcon />
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a className="text-reset" href="#">
-                      <LinkedInIcon />
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a className="text-reset" href="#">
-                      <InstagramIcon />
-                    </a>
-                  </li>
+                <ul className="list-inline icon-md2">
+                  {socialMediaLinks.map(({ url, icon }, index) => (
+                    <li
+                      className="list-inline-item"
+                      key={`contact-social-media-${index}`}
+                    >
+                      <Link href={url} passHref>
+                        <a className="text-reset">{icon}</a>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

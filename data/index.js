@@ -10,7 +10,7 @@ export const footerLinks = [
   },
   {
     title: 'Sitemap',
-    url: '/sitemap',
+    url: '/sitemap-0.xml',
   },
   {
     title: 'Our Projects',
