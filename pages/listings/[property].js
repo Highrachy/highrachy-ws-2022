@@ -47,12 +47,17 @@ const SingleListing = ({ property }) => {
 };
 
 const AlertStatus = ({ listing }) =>
-  listing?.availableUnits === 0 && (
-    <div className="alert alert-danger my-4" role="alert">
+  listing?.availableUnits === 0 &&
+  (listing?.availableSoon ? (
+    <div className="alert alert-info my-4" role="alert">
       This property will be <strong>available soon</strong>. You can submit an
       application to join the waiting list.
     </div>
-  );
+  ) : (
+    <div className="alert alert-danger my-4" role="alert">
+      Property not available
+    </div>
+  ));
 
 const IntroText = ({ listing }) => (
   <div className="col-sm-12">
@@ -194,7 +199,8 @@ const TenantForm = ({ listing }) => {
                   {!isLastStep && (
                     <Button color="danger" onClick={() => setStep(step + 1)}>
                       {isFirstStep ? (
-                        listing?.availableUnits === 0 ? (
+                        listing?.availableUnits === 0 &&
+                        listing?.availableSoon ? (
                           'Join the waiting list'
                         ) : (
                           'Apply Now'
@@ -547,16 +553,23 @@ const DependantsInformation = () => (
 );
 
 export async function getStaticProps({ params }) {
-  return { props: { property: allListings[params.property] } };
+  const res = await fetch(
+    `${process.env.API_URL}/api/apartments?filters[slug][$eq]=${params.property}`
+  );
+
+  const { data } = await res.json();
+
+  return { props: { property: data[0]['attributes'] } };
 }
 
 export async function getStaticPaths() {
-  const propertyLists = Object.keys(allListings);
+  const res = await fetch(`${process.env.API_URL}/api/apartments`);
+  const { data: propertyLists } = await res.json();
   return {
     paths: propertyLists.map((propertyList) => {
       return {
         params: {
-          property: propertyList,
+          property: propertyList['attributes']['slug'],
         },
       };
     }),

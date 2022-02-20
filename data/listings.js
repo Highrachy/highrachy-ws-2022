@@ -13,7 +13,7 @@ export const allListings = {
   },
   'quiver-court-1-bedroom-flat': {
     name: 'Quiver court',
-    type: '2 bedroom flat',
+    type: '1 bedroom flat',
     description: '1 bath, 2 toilets',
     address: '12 Toyin Adefala street, Oke Ire Nla, Ajah.',
     totalUnits: 1,

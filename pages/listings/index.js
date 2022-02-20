@@ -6,17 +6,15 @@ import Section from '@/components/common/Section';
 import FormikForm from '@/components/forms/FormikForm';
 import Label from '@/components/forms/Label';
 import Select from '@/components/forms/Select';
-import Switch from '@/components/forms/Switch';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { allListings } from '@/data/listings';
 import { valuesToOptions } from '@/utils/helpers';
 import humanize from 'humanize-plus';
 import Link from 'next/link';
 import React from 'react';
 
-const Listings = () => {
+const Listings = ({ apartments }) => {
   return (
     <>
       <Navigation />
@@ -24,39 +22,41 @@ const Listings = () => {
         title="Find Apartments"
         bgImage="/assets/img/bg/listings.jpg"
       />
-      <AvailableListings />
+      <AvailableListings apartments={apartments} />
       <Footer />
     </>
   );
 };
 
-const AvailableListings = () => {
-  const currentListings = Object.entries(allListings);
+const AvailableListings = ({ apartments }) => {
+  const currentListings = apartments;
   const filterType = ['name', 'type', 'baths', 'beds', 'toilets', 'location'];
 
-  const filters = Object.values(allListings).reduce((acc, item) => {
-    filterType.forEach((type) => {
-      acc[type] = acc[type]
-        ? acc[type].add(item[type])
-        : new Set().add(item[type]);
-    });
-    return acc;
-  }, {});
+  const filters = Object.values(currentListings).reduce(
+    (acc, { attributes: listing }) => {
+      filterType.forEach((type) => {
+        acc[type] = acc[type]
+          ? acc[type].add(listing[type])
+          : new Set().add(listing[type]);
+      });
+      return acc;
+    },
+    {}
+  );
 
   const [listings, setListings] = React.useState(currentListings);
   const [showOccupied, setShowOccupied] = React.useState(true);
+
   const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      setListings(() =>
-        currentListings.filter(([_, listing]) => {
-          return Object.keys(values).every((key) => {
-            if (!values[key] && values[key] !== 0) return true;
-            return listing[key].toString() === values[key].toString();
-          });
-        })
-      );
-      actions.setSubmitting(false);
-    }, 100);
+    setListings(() =>
+      currentListings.filter(({ attributes: listing }) => {
+        return Object.keys(values).every((key) => {
+          if (!values[key] && values[key] !== 0) return true;
+          return listing[key].toString() === values[key].toString();
+        });
+      })
+    );
+    actions.setSubmitting(false);
   };
 
   const handleShowOccupied = () => {
@@ -118,9 +118,9 @@ const AvailableListings = () => {
         </FormikForm>
         <ul className="list-group mt-5">
           {listings.map(
-            ([key, listing], index) =>
+            ({ id: key, attributes: listing }) =>
               (listing.availableUnits > 0 || showOccupied) && (
-                <li key={index} className="list-group-item">
+                <li key={key} className="list-group-item">
                   <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
                     <div>
                       <h5 className="mb-0">
@@ -145,17 +145,17 @@ const AvailableListings = () => {
                       passHref
                       href={{
                         pathname: '/listings/[property]',
-                        query: { property: key },
+                        query: { property: listing.slug },
                       }}
                     >
-                      {listing.availableUnits > 0 ? (
-                        <a className="btn btn-dark btn-wide text-uppercase stretched-link">
-                          Apply Now
-                        </a>
-                      ) : (
+                      {listing.availableUnits === 0 && listing.availableSoon ? (
                         <span className="btn text-danger btn-wide text-uppercase stretched-link">
                           Available Soon
                         </span>
+                      ) : (
+                        <a className="btn btn-dark btn-wide text-uppercase stretched-link">
+                          Apply Now
+                        </a>
                       )}
                     </Link>
                   </div>
@@ -167,4 +167,17 @@ const AvailableListings = () => {
     </Section>
   );
 };
+
+export async function getStaticProps() {
+  const res = await fetch(`${process.env.API_URL}/api/apartments`);
+  const { data } = await res.json();
+
+  return {
+    props: {
+      apartments: data,
+    },
+    revalidate: 10,
+  };
+}
+
 export default Listings;
