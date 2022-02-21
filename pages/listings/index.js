@@ -119,7 +119,8 @@ const AvailableListings = ({ apartments }) => {
         <ul className="list-group mt-5">
           {listings.map(
             ({ id: key, attributes: listing }) =>
-              (listing.availableUnits > 0 || showOccupied) && (
+              (listing.availableUnits > 0 ||
+                (showOccupied && listing.availableSoon)) && (
                 <li key={key} className="list-group-item">
                   <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
                     <div>
