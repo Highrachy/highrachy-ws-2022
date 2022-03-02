@@ -17,6 +17,7 @@ import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
 import services from '@/data/services';
 import { valuesToOptions } from '@/utils/helpers';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -25,6 +26,12 @@ import { socialMediaLinks } from '../data';
 const careers = () => {
   return (
     <>
+      <NextSeo
+        title="Contact Us"
+        description=" If you want to reach out, discuss opportunities or plan your property
+        strategy, we’d love to hear from you."
+        canonical="https://www.highrahcy.com/contact-us"
+      />
       <Navigation parentPage={about.url} />
       <Map />
       <ContactInfo />

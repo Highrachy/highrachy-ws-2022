@@ -10,6 +10,7 @@ import Navigation from '@/components/layout/Navigation';
 import { aboutUsLeadText, theCulture } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import { our_team } from '@/data/team';
+import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import React from 'react';
 
@@ -21,6 +22,12 @@ const breadcrumb = [
 const OurCulture = () => {
   return (
     <>
+      <NextSeo
+        title="Our Culture"
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+        canonical="https://www.highrahcy.com/our-culture"
+      />
       <Navigation parentPage={about.url} />
       <PageHeader
         breadcrumb={breadcrumb}

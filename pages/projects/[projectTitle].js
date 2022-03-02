@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { projects as projectNav } from '@/data/navigation';
 import React from 'react';
 import Sharer from '@/components/utils/Sharer';
+import { NextSeo } from 'next-seo';
 
 const SingleProject = ({ project }) => {
   const breadcrumb = [
@@ -22,6 +23,12 @@ const SingleProject = ({ project }) => {
 
   return (
     <>
+      <NextSeo
+        title={`Project | ${project.title}`}
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+        canonical="https://www.highrahcy.com/about-us"
+      />
       <Navigation parentPage={projectNav.url} />
       <PageHeader
         title={project.title}

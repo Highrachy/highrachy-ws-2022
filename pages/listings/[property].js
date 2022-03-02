@@ -24,6 +24,7 @@ import { allListings } from '@/data/listings';
 import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
 import { Form, Formik } from 'formik';
 import { Persist } from 'formik-persist';
+import { NextSeo } from 'next-seo';
 import React from 'react';
 
 const SingleListing = ({ property }) => {
@@ -32,15 +33,32 @@ const SingleListing = ({ property }) => {
     { title: property.name },
   ];
 
+  const router = useRouter();
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
+      <NextSeo
+        title={`Listings | ${property.name}`}
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+      />
       <Navigation />
       <PageHeader
         title={`Tenant Application Form`}
         bgImage="/assets/img/bg/listings.jpg"
         breadcrumb={breadcrumb}
       />
-      <TenantForm listing={property} />
+      {router.isFallback ? (
+        <div>Loading</div>
+      ) : (
+        <TenantForm listing={property} />
+      )}
       <Footer hideConsultation />
     </>
   );
@@ -573,7 +591,7 @@ export async function getStaticPaths() {
         },
       };
     }),
-    fallback: false,
+    fallback: true,
   };
 }
 

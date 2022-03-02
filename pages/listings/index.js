@@ -11,12 +11,19 @@ import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { valuesToOptions } from '@/utils/helpers';
 import humanize from 'humanize-plus';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
 
 const Listings = ({ apartments }) => {
   return (
     <>
+      <NextSeo
+        title="Listings | Real Estate"
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+        canonical="https://www.highrahcy.com/listings"
+      />
       <Navigation />
       <PageHeader
         title="Find Apartments"

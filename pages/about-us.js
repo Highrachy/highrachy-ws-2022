@@ -14,12 +14,19 @@ import Navigation from '@/components/layout/Navigation';
 import { welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import projects from '@/data/projects';
+import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import React from 'react';
 
 const AboutUs = () => {
   return (
     <>
+      <NextSeo
+        title="About Highrachy"
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+        canonical="https://www.highrahcy.com/about-us"
+      />
       <Navigation parentPage={about.url} />
       <PageHeader title="About Us" bgImage="/assets/img/bg/about-us.jpg" />
       <OurCompany />

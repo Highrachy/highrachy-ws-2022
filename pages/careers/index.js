@@ -9,6 +9,7 @@ import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { benefits } from '@/data/careers';
 import { about } from '@/data/navigation';
+import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -16,6 +17,12 @@ import React from 'react';
 const Careers = () => {
   return (
     <>
+      <NextSeo
+        title="Careers at Highrachy"
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+        canonical="https://www.highrahcy.com/careers"
+      />
       <Navigation parentPage={about.url} />
       <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />
       <Career />

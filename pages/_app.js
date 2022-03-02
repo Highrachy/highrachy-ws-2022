@@ -3,12 +3,18 @@ import NextNProgress from 'nextjs-progressbar';
 import React from 'react';
 import '../sass/App.scss';
 import { ToastContainer, Slide } from 'react-toastify';
+import { DefaultSeo } from 'next-seo';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
       <NextNProgress color="#ed3237" />
+      <DefaultSeo
+        defaultTitle="Welcome to Highrachy"
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+      />
       <Head>
         <link
           rel="apple-touch-icon"
