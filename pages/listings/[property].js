@@ -1,8 +1,5 @@
-import { BedIcon } from '@/components/common/Icons';
 import { LeftAngleIcon } from '@/components/common/Icons';
 import { RightAngleIcon } from '@/components/common/Icons';
-import { ToiletIcon } from '@/components/common/Icons';
-import { BathIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
 import Button from '@/components/forms/Button';
@@ -25,12 +22,13 @@ import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
 import { Form, Formik } from 'formik';
 import { Persist } from 'formik-persist';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const SingleListing = ({ property }) => {
   const breadcrumb = [
     { title: 'Find Aparments', url: 'listings' },
-    { title: property.name },
+    { title: property?.name },
   ];
 
   const router = useRouter();
@@ -44,7 +42,7 @@ const SingleListing = ({ property }) => {
   return (
     <>
       <NextSeo
-        title={`Listings | ${property.name}`}
+        title={`Listings | ${property?.name}`}
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
       />
