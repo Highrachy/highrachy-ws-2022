@@ -1,10 +1,6 @@
-import { TwitterIcon } from '@/components/common/Icons';
-import { InstagramIcon } from '@/components/common/Icons';
 import { PhoneIcon } from '@/components/common/Icons';
 import { WebsiteIcon } from '@/components/common/Icons';
-import { LinkedInIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
-import { FacebookIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
 import FormikForm from '@/components/forms/FormikForm';
 import Input from '@/components/forms/Input';
@@ -23,7 +19,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { socialMediaLinks } from '../data';
 
-const careers = () => {
+const contactUs = () => {
   return (
     <>
       <NextSeo
@@ -154,13 +150,43 @@ const ContactInfo = () => (
 const ContactUsForm = () => {
   const allServices = Object.values(services).map((service) => service.title);
   const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
-  const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      console.log('values', values);
+  const handleSubmit = async (values, actions) => {
+    const fetchOptions = {
+      /**
+       * The default method for a request with fetch is GET,
+       * so we must tell it to use the POST HTTP method.
+       */
+      method: 'POST',
+      /**
+       * These headers will be added to the request and tell
+       * the API that the request body is JSON and that we can
+       * accept JSON responses.
+       */
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      /**
+       * The body of our POST request is the JSON string that
+       * we created above.
+       */
+      body: JSON.stringify({ data: values }),
+    };
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/contacts`,
+      fetchOptions
+    );
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      toast.error(errorMessage);
+    } else {
       toast.success('Information sent successfully');
-      actions.setSubmitting(false);
-    }, 4000);
+    }
+    actions.setSubmitting(false);
   };
+
   return (
     <FormikForm
       schema={contactUsSchema}
@@ -169,7 +195,7 @@ const ContactUsForm = () => {
       butttonText="Send Message"
       persistForm
     >
-      <Input name="fullName" label="Full Name" />
+      <Input name="name" label="Full Name" />
       <Input name="email" type="email" label="Email Address" />
       <Input name="phone" label="Phone Number" optional />
       <Select
@@ -181,4 +207,5 @@ const ContactUsForm = () => {
     </FormikForm>
   );
 };
-export default careers;
+
+export default contactUs;

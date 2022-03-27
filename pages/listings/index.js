@@ -177,7 +177,7 @@ const AvailableListings = ({ apartments }) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch(`${process.env.API_URL}/api/apartments`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/apartments`);
   const { data } = await res.json();
 
   return {
