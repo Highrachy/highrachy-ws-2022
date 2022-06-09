@@ -1,5 +1,6 @@
 import { FiChevronRight } from 'react-icons/fi';
 import { FiChevronLeft } from 'react-icons/fi';
+import { FiUploadCloud } from 'react-icons/fi';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FaTwitterSquare } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
@@ -228,6 +229,7 @@ export const LocationIcon = () => <HiLocationMarker />;
 export const PhoneIcon = () => <FaPhone />;
 export const WebsiteIcon = () => <FaGlobe />;
 export const MarkerIcon = () => <FaMapMarker />;
+export const UploadIcon = () => <FiUploadCloud />;
 
 export const FamilyIcon = () => (
   <svg

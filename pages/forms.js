@@ -9,14 +9,17 @@ import { stringValidation } from '@/components/forms/schemas/schema-helpers';
 import Select from '@/components/forms/Select';
 import Switch from '@/components/forms/Switch';
 import Textarea from '@/components/forms/Textarea';
+import Upload from '@/components/forms/Upload';
 import Footer from '@/components/layout/Footer';
 import Navigation from '@/components/layout/Navigation';
 import { generateNumOptions } from '@/utils/helpers';
+import React from 'react';
 import { toast } from 'react-toastify';
 
 const registerSchema = {
   firstName: stringValidation('First Name'),
   lastName: stringValidation('Last Name'),
+  profile: stringValidation('Profile Image'),
 };
 
 export default function Forms() {
@@ -46,12 +49,29 @@ const FormComponents = () => {
     }, 4000);
   };
 
+  const [image, setImage] = React.useState('');
+
   return (
     <FormikForm
       schema={registerSchema}
       handleSubmit={handleSubmit}
       name="test-form"
+      showFormikState
     >
+      <div>
+        <Upload
+          afterUpload={(image) => {
+            setImage(image);
+            // setFieldValue('image', image);
+          }}
+          changeText={`Update Form Image`}
+          defaultImage="assets/img/placeholder/image.png"
+          imgOptions={{ className: 'mb-3 icon-md', width: 200, height: 200 }}
+          name="profile"
+          // oldImage={badge?.image}
+          uploadText={`Upload Form Image`}
+        />
+      </div>
       <div className="row">
         <Input
           formGroupClassName="col-md-6"
