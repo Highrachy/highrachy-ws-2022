@@ -1,100 +1,102 @@
 import Section from '@/components/common/Section';
+import Button from '@/components/forms/Button';
+import FormikForm from '@/components/forms/FormikForm';
+import Input from '@/components/forms/Input';
+import {
+  email,
+  phoneNumber,
+  stringValidation,
+} from '@/components/forms/schemas/schema-helpers';
+import Upload from '@/components/forms/Upload';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import { JobInfo } from '.';
+import { toast } from 'react-toastify';
 
-const SingleCareer = () => {
+const SingleCareer = ({ job }) => {
   const router = useRouter();
-  const { job } = router.query;
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+  const { title, minimumRequirements, desiredSkills, softwareProficiency } =
+    job;
+  const breadcrumb = [{ title: 'Careers', url: 'careers' }, { title: title }];
   return (
     <>
+      <NextSeo
+        title={`Careers | ${title}`}
+        description="Highrachy is a 21st century project-oriented organization setup
+        primarily to meet your real estate needs."
+      />
       <Navigation parentPage={about.url} />
       <PageHeader
-        title={`Career - ${job}`}
+        title={`Career - ${title}`}
         bgImage="/assets/img/bg/careers.jpg"
+        breadcrumb={breadcrumb}
       />
 
       <Section>
+        <Intro job={job} />
         <WhoWeAre />
-        <YourRole />
-        <IdealCandidate />
+        <RichTextSection
+          title="Minimum Requirements"
+          text={minimumRequirements}
+        />
+        <RichTextSection title="Desired Skills" text={desiredSkills} />
+        <RichTextSection
+          title="Software Proficiency"
+          text={softwareProficiency}
+        />
       </Section>
-      <Form />
+      <ApplicationForm job={job} />
       <Footer hideConsultation />
     </>
   );
 };
 
+const Intro = ({ job: { title, remote, contract, location } }) => (
+  <PaddedSection>
+    <Link passHref href={'#apply-now'}>
+      <a className="float-end btn btn-primary text-uppercase stretched-link">
+        Apply Now
+      </a>
+    </Link>
+    <h3 className="mb-0">{title}</h3>
+    <p className="mb-1">at Highrachy (View all Jobs)</p>
+    <JobInfo location={location} remote={remote} contract={contract} />
+  </PaddedSection>
+);
+
 const WhoWeAre = () => (
   <PaddedSection title="Who we are">
     <p>
-      We&apos;re one of the leading digital agencies in Chicago and we&apos;re
-      looking to add a new frontend developer to our brilliant team.
+      We&apos;re one of the leading 21st century project-oriented organization
+      setup primarily to meet real estate needs.
     </p>
     <p>
-      We love new technologies and we have embraced many modern frontend tools
-      to make our code more maintainable such as SASS, flexbox and webpack. When
-      it comes to our more bespoke systems with large amounts of interface to
-      build, you may also find yourself working with React and ES6+ as well as
-      collaborating...
+      Experience top notch processes and solutions that are deliberately
+      designed to guarantee your real estate goals are met consistently.
     </p>
-    <p>
-      We are proud to have a well respected team of frontend developers who work
-      closely with our inhouse designers to to create intuitive and compelling
-      user experiences, and would love to find the right person to join us as we
-      line up a number of brand new big name clients.
+    <p className="lead">
+      Give yourself the gift of true value driven by quality for a better
+      tomorrow with us.
     </p>
   </PaddedSection>
 );
 
-const YourRole = () => (
-  <PaddedSection title="Your role">
-    <p>
-      You will play an important part in maintaining the existing product and to
-      help design, create and develop critical improvements and innovative new
-      offerings for a new version soon to be launched in 2019. This is an
-      exciting opportunity to join them at a key milestone in the growth of the
-      business where they plan to fully globalise the product.
-    </p>
-    <p>
-      We&apos;re one of the leading digital agencies in Chicago and we&apos;re
-      looking to add a new frontend developer to our brilliant team.
-    </p>
-  </PaddedSection>
-);
-
-const IdealCandidate = () => (
-  <PaddedSection title="Ideal candidate">
-    <ul>
-      <li>Creative problem solver</li>
-      <li>ability to learn API programming</li>
-      <li>
-        desirable to have coding skills in languages such as PHP, .NET, Java,
-        Ruby and Python
-      </li>
-      <li>previous experience of working remotely is highly desirable</li>
-      <li>
-        previous experience of working in a startup/scaleup is highly desirable
-      </li>
-      <li>
-        previous experience of working evening/night shift is highly desirable
-      </li>
-      <li>
-        you love helping people &apos; enjoy working in a truly fast paced
-        culture and thrive in small teams
-      </li>
-      <li>you&apos;re organised, reliable, diligent and attentive to detail</li>
-      <li>you learn quickly and are comfortable with complexity</li>
-      <li>you are able to work independently and under minimal supervision</li>
-      <li>
-        you have a flawless command of English and communicate with clarity,
-        whether written or over the phone
-      </li>
-    </ul>
+const RichTextSection = ({ title, text }) => (
+  <PaddedSection title={title}>
+    <ReactMarkdown>{text}</ReactMarkdown>
   </PaddedSection>
 );
 
@@ -103,7 +105,7 @@ const PaddedSection = ({ children, title }) => (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-9 col-sm-10">
-          <SectionHeader small>{title}</SectionHeader>
+          {title && <SectionHeader small>{title}</SectionHeader>}
           {children}
         </div>
       </div>
@@ -111,58 +113,133 @@ const PaddedSection = ({ children, title }) => (
   </section>
 );
 
-const Form = () => (
-  <Section title="Apply Now" centered altBg>
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-10 col-sm-8 col-lg-7 col-xl-6">
-          <div className="form-floating mb-3">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Full name"
-              aria-label="Full name"
-              id="floatingInput"
-            />
-            <label htmlFor="floatingInput">Full Name</label>
-          </div>
+const jobApplicationSchema = {
+  fullName: stringValidation('Full Name'),
+  email,
+  phoneNumber,
+  resume: stringValidation('Resume'),
+};
 
-          <div className="form-floating mb-3">
-            <input
-              type="email"
-              className="form-control"
-              id="floatingEmail"
-              placeholder="name@example.com"
-            />
-            <label htmlFor="floatingEmail">Email address</label>
+const ApplicationForm = ({ job }) => {
+  const handleSubmit = async (values, actions) => {
+    console.log('submitting', values, actions);
+    const fetchOptions = {
+      /**
+       * The default method for a request with fetch is GET,
+       * so we must tell it to use the POST HTTP method.
+       */
+      method: 'POST',
+      /**
+       * These headers will be added to the request and tell
+       * the API that the request body is JSON and that we can
+       * accept JSON responses.
+       */
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      /**
+       * The body of our POST request is the JSON string that
+       * we created above.
+       */
+      body: JSON.stringify({ data: values }),
+    };
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/applicants`,
+      fetchOptions
+    );
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      toast.error(errorMessage);
+    } else {
+      toast.success('Information sent successfully');
+    }
+    actions.setSubmitting(false);
+    actions.resetForm();
+  };
+
+  return (
+    <div id="apply-now">
+      <Section title="Apply for this Job" centered altBg>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-10 col-sm-8 col-lg-7 col-xl-6">
+              <FormikForm
+                schema={jobApplicationSchema}
+                handleSubmit={handleSubmit}
+                name="job-application-form"
+                showFormikState
+                showAllFormikState
+                persistForm
+              >
+                <Input floatingLabel label="Full Name" name="fullName" />
+                <Input
+                  floatingLabel
+                  label="Email"
+                  name="email"
+                  placeholder="Valid Email"
+                />
+                <Input
+                  floatingLabel
+                  label="Phone Number"
+                  name="phoneNumber"
+                  optional
+                />
+                <Upload
+                  changeText="Update Resume"
+                  customFormats={['pdf']}
+                  defaultImage="/assets/img/placeholder/document.png"
+                  imgOptions={{
+                    className: 'mb-3 icon-md',
+                    width: 200,
+                    height: 200,
+                  }}
+                  name="resume"
+                  uploadText={`Upload Resume`}
+                  folder={`cv/${job?.slug}`}
+                />
+                {/* <Button color="primary" formikButton>
+                  Another Submit
+                </Button> */}
+              </FormikForm>
+              <p className="small text-muted mb-0 font-italic">
+                All applications will remain private
+              </p>
+            </div>
           </div>
-          <div className="form-floating mb-3">
-            <input
-              type="text"
-              className="form-control"
-              id="floatingPhone"
-              placeholder="name@example.com"
-            />
-            <label htmlFor="floatingPhone">Phone Number</label>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="formFile2" className="form-label">
-              Resume
-            </label>
-            <input className="form-control" type="file" id="formFile2" />
-          </div>
-          <div className="form-group mb-1">
-            <button type="button" className="btn btn-primary text-uppercase">
-              Submit
-            </button>
-          </div>
-          <p className="small text-muted mb-0 font-italic">
-            All applications will remain private
-          </p>
         </div>
-      </div>
+      </Section>
     </div>
-  </Section>
-);
+  );
+};
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[slug][$eq]=${params.job}`
+  );
+
+  const { data } = await res.json();
+
+  console.log('data', data);
+
+  return { props: { job: data[0]['attributes'] } };
+}
+
+export async function getStaticPaths() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  const { data: jobs } = await res.json();
+  return {
+    paths: jobs.map((job) => {
+      return {
+        params: {
+          job: job['attributes']['slug'],
+        },
+      };
+    }),
+    fallback: true,
+  };
+}
 
 export default SingleCareer;

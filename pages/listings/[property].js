@@ -17,7 +17,6 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { allListings } from '@/data/listings';
 import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
 import { Form, Formik } from 'formik';
 import { Persist } from 'formik-persist';

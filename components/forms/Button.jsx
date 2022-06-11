@@ -4,12 +4,14 @@ import classNames from 'classnames';
 import { COLOR_STYLE } from 'utils/constants';
 import Spinner from 'components/utils/Spinner';
 import Link from 'next/link';
+import { useFormikContext } from 'formik';
 
 const Button = ({
   className,
   loading,
   loadingText,
   showLoadingText,
+  formikButton,
   children,
   onClick,
   color,
@@ -19,6 +21,9 @@ const Button = ({
 }) => {
   const isLink = !!href;
   const btnClassName = classNames('btn', `btn-${color}`, className);
+  const formikProps = useFormikContext();
+  const isLoading = formikButton ? formikProps.isSubmitting : loading;
+  const handleClick = formikButton ? formikProps.handleSubmit : onClick;
   return isLink ? (
     <Link href={href} passHref>
       <a className={btnClassName} role="button" {...props}>
@@ -26,8 +31,13 @@ const Button = ({
       </a>
     </Link>
   ) : (
-    <button className={btnClassName} onClick={onClick} type="button" {...props}>
-      {loading ? (
+    <button
+      className={btnClassName}
+      onClick={handleClick}
+      type="button"
+      {...props}
+    >
+      {isLoading ? (
         <>
           <Spinner small /> &nbsp;
           {showLoadingText && (loadingText || children)}

@@ -14,7 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const Careers = () => {
+const Careers = ({ jobs }) => {
   return (
     <>
       <NextSeo
@@ -27,10 +27,9 @@ const Careers = () => {
       <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />
       <Career />
       <Perks />
-      <AvailablePositions />
+      <AvailablePositions jobs={jobs} />
       <NeedConsultation
-        header="We're always on the hunt for talented designers and
-              developers to join our team"
+        header="We're always on the hunt for talented individuals to join our team"
         text="Didn't see your job"
         buttonText="Get in Touch"
       />
@@ -45,7 +44,6 @@ const Career = () => (
       <div className="row">
         <div className="col-lg-7 col-md-6 pe-lg-6">
           <p className="text lead pt-3 mb-4">
-            {' '}
             Careers at Highrachy is truly one of a kind experience. We are
             committed to making your life as rewarding as your job. You get the
             opportunity to build a successful career and be the change you want
@@ -95,60 +93,64 @@ const Perks = () => (
   </Section>
 );
 
-const AvailablePositions = () => (
-  <Section title="Available Positions" centered id="available-positions">
-    <div className="container">
-      <ul className="list-group">
-        <li className="list-group-item">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
-            <div>
-              <h5 className="mb-0">Front End Engineer - Payment Interfaces</h5>
-              <span className="badge rounded-pill bg-light-red text-color">
-                Lagos
-              </span>{' '}
-              <span className="badge rounded-pill bg-light-red text-color">
-                Permanent, Full-time
-              </span>
-            </div>
-            <Link
-              passHref
-              href={{
-                pathname: '/careers/[job]',
-                query: { job: 'Front End Engineer' },
-              }}
-            >
-              <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
-                Apply Now
-              </a>
-            </Link>
-          </div>
-        </li>
-        <li className="list-group-item">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
-            <div>
-              <h5 className="mb-0">Backend Designer </h5>
-              <span className="badge rounded-pill bg-light-red text-color">
-                Remote
-              </span>{' '}
-              <span className="badge rounded-pill bg-light-red text-color">
-                Contract
-              </span>
-            </div>
-            <Link
-              passHref
-              href={{
-                pathname: '/careers/[job]',
-                query: { job: 'Backend Designer' },
-              }}
-            >
-              <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
-                Apply Now
-              </a>
-            </Link>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </Section>
+const AvailablePositions = ({ jobs }) =>
+  jobs.length > 0 && (
+    <Section title="Available Positions" centered id="available-positions">
+      <div className="container">
+        <ul className="list-group">
+          {jobs.map(
+            ({ attributes: { slug, title, location, remote, contract } }) => (
+              <li className="list-group-item" key={slug}>
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
+                  <div>
+                    <h5 className="mb-0">{title}</h5>
+                    <JobInfo
+                      location={location}
+                      remote={remote}
+                      contract={contract}
+                    />
+                  </div>
+                  <Link
+                    passHref
+                    href={{
+                      pathname: '/careers/[job]',
+                      query: { job: slug },
+                    }}
+                  >
+                    <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
+                      Apply Now
+                    </a>
+                  </Link>
+                </div>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
+    </Section>
+  );
+
+export const JobInfo = ({ location, remote, contract }) => (
+  <>
+    <span className="badge rounded-pill bg-light-red text-color">
+      {remote ? 'Remote' : location}
+    </span>{' '}
+    <span className="badge rounded-pill bg-light-red text-color">
+      {contract ? 'Contract' : 'Permanent, Full-time'}
+    </span>
+  </>
 );
+
+export async function getStaticProps() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  const { data } = await res.json();
+
+  return {
+    props: {
+      jobs: data,
+    },
+    revalidate: 10,
+  };
+}
+
 export default Careers;

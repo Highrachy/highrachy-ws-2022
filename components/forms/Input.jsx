@@ -47,7 +47,7 @@ const Input = ({
   );
   return (
     <div
-      className={classNames('mb-4', formGroupClassName, {
+      className={classNames(formGroupClassName, {
         'form-floating': floatingLabel,
       })}
     >
@@ -68,7 +68,6 @@ const Input = ({
       />
       {floatingLabel && inputLabel}
       <FeedbackMessage
-        formik={formik}
         helpText={helpText}
         name={name}
         showFeedback={showFeedback}

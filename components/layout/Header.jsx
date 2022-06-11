@@ -9,7 +9,7 @@ import { SectionHeader as SHeader } from '../common/Section';
 export const SectionHeader = (props) => <SHeader {...props} />;
 
 export const HeaderUnderBlock = ({ small, className }) => (
-  <div className={classNames(className, 'header-block', { small })}>
+  <div className={classNames(className, 'header-block mb-1', { small })}>
     <span className="header-block__1"></span>
     <span className="header-block__2"></span>
     <span className="header-block__3"></span>
