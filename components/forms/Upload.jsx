@@ -36,6 +36,8 @@ const Upload = ({
 }) => {
   const [loading, setLoading] = React.useState(false);
   const [uploadedFile, setUploadedFile] = React.useState(null);
+  const [progress, setProgress] = React.useState(0);
+
   const AWS_BUCKET = 'highrachy';
   let allowedFormats =
     customFormats.length > 0 ? customFormats : ['jpg', 'jpeg', 'gif', 'png'];
@@ -102,7 +104,7 @@ const Upload = ({
             var percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            console.log(percentCompleted);
+            setProgress(percentCompleted);
           },
         })
           .then(() => {
@@ -124,10 +126,10 @@ const Upload = ({
     }
   };
 
-  const currentOldImage = oldImage || formikProps?.values?.[name];
-  const currentImage = uploadedFile || currentOldImage || defaultImage;
-  const inputHasAnImage = !!currentImage;
-  const hasUploadedFile = !!uploadedFile || !!currentOldImage;
+  const formikImage = formikProps?.values?.[name];
+  const currentImage = uploadedFile || oldImage;
+  const inputHasAnImage = !!currentImage || !!formikImage || !!defaultImage;
+  const hasUploadedFile = !!uploadedFile || !!oldImage;
 
   const supportedFormats = allowedFormats.map((extension) => '.' + extension);
   const helpText = `Supported Formats: ${Humanize.oxford(
@@ -149,7 +151,7 @@ const Upload = ({
           (inputHasAnImage && (
             <Image
               defaultImage={defaultImage}
-              src={uploadedFile || currentOldImage}
+              src={formikImage ? formikImage : uploadedFile || oldImage}
               name={name || 'uploaded-image'}
               alt={name}
               {...imgOptions}
@@ -180,6 +182,16 @@ const Upload = ({
             )}
           </label>
         </div>
+      </div>
+      <div className="progress" style={{ height: '2px' }}>
+        <div
+          className="progress-bar progress-bar-striped bg-success"
+          role="progressbar"
+          style={{ width: `${progress}%` }}
+          aria-valuenow={progress}
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
       </div>
       {formikProps ? (
         <FeedbackMessage

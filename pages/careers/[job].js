@@ -20,6 +20,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { JobInfo } from '.';
 import { toast } from 'react-toastify';
+import FormikButton from '@/components/forms/FormikButton';
 
 const SingleCareer = ({ job }) => {
   const router = useRouter();
@@ -142,7 +143,7 @@ const ApplicationForm = ({ job }) => {
        * The body of our POST request is the JSON string that
        * we created above.
        */
-      body: JSON.stringify({ data: values }),
+      body: JSON.stringify({ data: { ...values, job: job.id } }),
     };
 
     const response = await fetch(
@@ -170,9 +171,9 @@ const ApplicationForm = ({ job }) => {
                 schema={jobApplicationSchema}
                 handleSubmit={handleSubmit}
                 name="job-application-form"
-                showFormikState
                 showAllFormikState
                 persistForm
+                useCustomButton
               >
                 <Input floatingLabel label="Full Name" name="fullName" />
                 <Input
@@ -200,9 +201,7 @@ const ApplicationForm = ({ job }) => {
                   uploadText={`Upload Resume`}
                   folder={`cv/${job?.slug}`}
                 />
-                {/* <Button color="primary" formikButton>
-                  Another Submit
-                </Button> */}
+                <FormikButton color="primary">Submit Application</FormikButton>
               </FormikForm>
               <p className="small text-muted mb-0 font-italic">
                 All applications will remain private
@@ -222,9 +221,7 @@ export async function getStaticProps({ params }) {
 
   const { data } = await res.json();
 
-  console.log('data', data);
-
-  return { props: { job: data[0]['attributes'] } };
+  return { props: { job: { id: data[0].id, ...data[0]['attributes'] } } };
 }
 
 export async function getStaticPaths() {

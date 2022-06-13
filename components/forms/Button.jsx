@@ -11,7 +11,6 @@ const Button = ({
   loading,
   loadingText,
   showLoadingText,
-  formikButton,
   children,
   onClick,
   color,
@@ -21,9 +20,7 @@ const Button = ({
 }) => {
   const isLink = !!href;
   const btnClassName = classNames('btn', `btn-${color}`, className);
-  const formikProps = useFormikContext();
-  const isLoading = formikButton ? formikProps.isSubmitting : loading;
-  const handleClick = formikButton ? formikProps.handleSubmit : onClick;
+
   return isLink ? (
     <Link href={href} passHref>
       <a className={btnClassName} role="button" {...props}>
@@ -31,13 +28,8 @@ const Button = ({
       </a>
     </Link>
   ) : (
-    <button
-      className={btnClassName}
-      onClick={handleClick}
-      type="button"
-      {...props}
-    >
-      {isLoading ? (
+    <button className={btnClassName} onClick={onClick} type="button" {...props}>
+      {loading ? (
         <>
           <Spinner small /> &nbsp;
           {showLoadingText && (loadingText || children)}
