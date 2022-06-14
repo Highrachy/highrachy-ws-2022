@@ -9,15 +9,10 @@ import { LocationIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
 import Button from '@/components/forms/Button';
 import DatePicker from '@/components/forms/DatePicker';
-import {
-  DisplayFormikState,
-  setInitialValues,
-} from '@/components/forms/form-helper';
 import FormikButton from '@/components/forms/FormikButton';
 import FormikForm from '@/components/forms/FormikForm';
 import Input from '@/components/forms/Input';
 import { tenantSchema } from '@/components/forms/schemas/page-schema';
-import { createSchema } from '@/components/forms/schemas/schema-helpers';
 import Select from '@/components/forms/Select';
 import Switch from '@/components/forms/Switch';
 import Textarea from '@/components/forms/Textarea';
@@ -651,7 +646,7 @@ const DependantsInformation = () => (
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/apartments?filters[slug][$eq]=${params.property}`
+    `https://highrachy-strapi.herokuapp.com/api/apartments?filters[slug][$eq]=${params.property}`
   );
 
   const { data } = await res.json();
@@ -660,7 +655,9 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/apartments`);
+  const res = await fetch(
+    `https://highrachy-strapi.herokuapp.com/api/apartments`
+  );
   const { data: propertyLists } = await res.json();
   return {
     paths: propertyLists.map((propertyList) => {
