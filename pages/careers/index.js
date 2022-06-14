@@ -142,7 +142,7 @@ export const JobInfo = ({ location, remote, contract }) => (
 );
 
 export async function getStaticProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  const res = await fetch(`https://highrachy-strapi.herokuapp.com/api/jobs`);
   const { data } = await res.json();
 
   return {
