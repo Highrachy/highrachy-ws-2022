@@ -646,7 +646,7 @@ const DependantsInformation = () => (
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `https://highrachy-strapi.herokuapp.com/api/apartments?filters[slug][$eq]=${params.property}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/apartments?filters[slug][$eq]=${params.property}`
   );
 
   const { data } = await res.json();
@@ -655,9 +655,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(
-    `https://highrachy-strapi.herokuapp.com/api/apartments`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/apartments`);
   const { data: propertyLists } = await res.json();
   return {
     paths: propertyLists.map((propertyList) => {

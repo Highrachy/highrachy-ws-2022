@@ -178,9 +178,7 @@ const AvailableListings = ({ apartments }) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch(
-    `https://highrachy-strapi.herokuapp.com/api/apartments`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/apartments`);
   const { data } = await res.json();
 
   return {

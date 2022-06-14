@@ -121,7 +121,6 @@ const PaddedSection = ({ children, title }) => (
 
 const ApplicationForm = ({ job }) => {
   const handleSubmit = async (values, actions) => {
-    console.log('submitting', values, actions);
     const fetchOptions = {
       /**
        * The default method for a request with fetch is GET,
@@ -174,7 +173,7 @@ const ApplicationForm = ({ job }) => {
               <FormikForm
                 schema={jobApplicationSchema}
                 handleSubmit={handleSubmit}
-                name="job-application-form"
+                name={`${job.slug}-form`}
                 showFormikState
                 showAllFormikState
                 persistForm
@@ -220,7 +219,7 @@ const ApplicationForm = ({ job }) => {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `https://highrachy-strapi.herokuapp.com/api/jobs?filters[slug][$eq]=${params.job}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[slug][$eq]=${params.job}`
   );
 
   const { data } = await res.json();
@@ -229,7 +228,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`https://highrachy-strapi.herokuapp.com/api/jobs`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
   const { data: jobs } = await res.json();
   return {
     paths: jobs.map((job) => {

@@ -93,10 +93,10 @@ const Perks = () => (
   </Section>
 );
 
-const AvailablePositions = ({ jobs }) =>
-  jobs.length > 0 && (
-    <Section title="Available Positions" centered id="available-positions">
-      <div className="container">
+const AvailablePositions = ({ jobs }) => (
+  <Section title="Available Positions" centered id="available-positions">
+    <div className="container">
+      {jobs.length > 0 ? (
         <ul className="list-group">
           {jobs.map(
             ({ attributes: { slug, title, location, remote, contract } }) => (
@@ -126,9 +126,14 @@ const AvailablePositions = ({ jobs }) =>
             )
           )}
         </ul>
-      </div>
-    </Section>
-  );
+      ) : (
+        <h4 className="text-center text-muted">
+          No available position at the moment
+        </h4>
+      )}
+    </div>
+  </Section>
+);
 
 export const JobInfo = ({ location, remote, contract }) => (
   <>
@@ -142,7 +147,9 @@ export const JobInfo = ({ location, remote, contract }) => (
 );
 
 export async function getStaticProps() {
-  const res = await fetch(`https://highrachy-strapi.herokuapp.com/api/jobs`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[available][$eq]=true`
+  );
   const { data } = await res.json();
 
   return {

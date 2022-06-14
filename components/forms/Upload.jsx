@@ -48,11 +48,11 @@ const Upload = ({
   const formikProps = useFormikContext();
 
   const setErrorMessage = (errorMessage) => {
-    console.log('formikProps', formikProps);
     formikProps && formikProps.setFieldTouched(name, true, false);
     formikProps && formikProps.setFieldError(name, errorMessage);
     toast.error(errorMessage);
     setLoading(false);
+    setProgress(0);
     return null;
   };
 
@@ -99,7 +99,6 @@ const Upload = ({
       });
 
       if (uploadConfig) {
-        console.log('uploadConfig', uploadConfig);
         Axios.put(uploadConfig.data.url, fileToUpload, {
           headers: { 'Content-Type': type },
           onUploadProgress: function (progressEvent) {
