@@ -220,7 +220,7 @@ const ApplicationForm = ({ job }) => {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[slug][$eq]=${params.job}`
+    `https://highrachy-strapi.herokuapp.com/api/jobs?filters[slug][$eq]=${params.job}`
   );
 
   const { data } = await res.json();
@@ -229,7 +229,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs`);
+  const res = await fetch(`https://highrachy-strapi.herokuapp.com/api/jobs`);
   const { data: jobs } = await res.json();
   return {
     paths: jobs.map((job) => {
