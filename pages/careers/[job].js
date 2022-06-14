@@ -21,6 +21,7 @@ import ReactMarkdown from 'react-markdown';
 import { JobInfo } from '.';
 import { toast } from 'react-toastify';
 import FormikButton from '@/components/forms/FormikButton';
+import { jobApplicationSchema } from '@/components/forms/schemas/page-schema';
 
 const SingleCareer = ({ job }) => {
   const router = useRouter();
@@ -68,12 +69,16 @@ const SingleCareer = ({ job }) => {
 const Intro = ({ job: { title, remote, contract, location } }) => (
   <PaddedSection>
     <Link passHref href={'#apply-now'}>
-      <a className="float-end btn btn-primary text-uppercase stretched-link">
-        Apply Now
-      </a>
+      <a className="float-end btn btn-primary text-uppercase">Apply Now</a>
     </Link>
     <h3 className="mb-0">{title}</h3>
-    <p className="mb-1">at Highrachy (View all Jobs)</p>
+    <p className="mb-1">
+      at Highrachy (
+      <Link href="/careers" passHref>
+        <a>View all Jobs</a>
+      </Link>
+      )
+    </p>
     <JobInfo location={location} remote={remote} contract={contract} />
   </PaddedSection>
 );
@@ -114,13 +119,6 @@ const PaddedSection = ({ children, title }) => (
   </section>
 );
 
-const jobApplicationSchema = {
-  fullName: stringValidation('Full Name'),
-  email,
-  phoneNumber,
-  resume: stringValidation('Resume'),
-};
-
 const ApplicationForm = ({ job }) => {
   const handleSubmit = async (values, actions) => {
     console.log('submitting', values, actions);
@@ -152,7 +150,13 @@ const ApplicationForm = ({ job }) => {
     );
 
     if (!response.ok) {
+      if (response.status === 403) {
+        toast.info('You have already submitted an application for this job');
+        return;
+      }
+
       const errorMessage = await response.text();
+
       toast.error(errorMessage);
     } else {
       toast.success('Information sent successfully');
@@ -163,7 +167,7 @@ const ApplicationForm = ({ job }) => {
 
   return (
     <div id="apply-now">
-      <Section title="Apply for this Job" centered altBg>
+      <Section title={`Apply for ${job.title}`} centered altBg>
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-10 col-sm-8 col-lg-7 col-xl-6">
@@ -171,9 +175,9 @@ const ApplicationForm = ({ job }) => {
                 schema={jobApplicationSchema}
                 handleSubmit={handleSubmit}
                 name="job-application-form"
+                showFormikState
                 showAllFormikState
                 persistForm
-                useCustomButton
               >
                 <Input floatingLabel label="Full Name" name="fullName" />
                 <Input

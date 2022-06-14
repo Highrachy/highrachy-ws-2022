@@ -16,7 +16,7 @@ const FormikForm = ({
   showFormikState,
   persistForm,
   showAllFormikState,
-  useCustomButton,
+  useSubmitButton,
 }) => {
   return (
     <Formik
@@ -28,7 +28,7 @@ const FormikForm = ({
         <Form>
           {children}
 
-          {!useCustomButton && (
+          {useSubmitButton && (
             <Button
               color={buttonColor}
               loading={isSubmitting}
@@ -51,7 +51,7 @@ const FormikForm = ({
 FormikForm.defaultProps = {
   buttonText: 'Submit',
   buttonColor: 'danger',
-  useCustomButton: false,
+  useSubmitButton: false,
 };
 
 export default FormikForm;

@@ -55,7 +55,7 @@ Button.propTypes = {
 Button.defaultProps = {
   children: 'Submit',
   className: null,
-  color: COLOR_STYLE[2],
+  color: COLOR_STYLE[1],
   href: null,
   loading: false,
   loadingText: null,

@@ -1,4 +1,9 @@
-import { LeftAngleIcon } from '@/components/common/Icons';
+import {
+  BathIcon,
+  BedIcon,
+  LeftAngleIcon,
+  ToiletIcon,
+} from '@/components/common/Icons';
 import { RightAngleIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
@@ -8,21 +13,24 @@ import {
   DisplayFormikState,
   setInitialValues,
 } from '@/components/forms/form-helper';
+import FormikButton from '@/components/forms/FormikButton';
+import FormikForm from '@/components/forms/FormikForm';
 import Input from '@/components/forms/Input';
+import { tenantSchema } from '@/components/forms/schemas/page-schema';
 import { createSchema } from '@/components/forms/schemas/schema-helpers';
 import Select from '@/components/forms/Select';
 import Switch from '@/components/forms/Switch';
 import Textarea from '@/components/forms/Textarea';
+import Upload from '@/components/forms/Upload';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
-import { Form, Formik } from 'formik';
-import { Persist } from 'formik-persist';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 const SingleListing = ({ property }) => {
   const breadcrumb = [
@@ -77,6 +85,8 @@ const AlertStatus = ({ listing }) =>
 const IntroText = ({ listing }) => (
   <div className="col-sm-12">
     <AlertStatus listing={listing} />
+
+    <SectionHeader small>Tenant Application Form</SectionHeader>
     <p className="lead fw-normal mt-3">
       Thank you for your request to rent one of our properties. The process to
       secure the flat/house is as follows:
@@ -116,7 +126,7 @@ const PaddedSection = ({ children, title }) => (
   <section className="pb-5">
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-lg-8 col-md-9 col-sm-10">
+        <div className="col-lg-9 col-md-10 col-sm-11">
           {title && <SectionHeader>{title}</SectionHeader>}
           {children}
         </div>
@@ -125,140 +135,208 @@ const PaddedSection = ({ children, title }) => (
   </section>
 );
 
-const PropertyListing = ({ listing }) => (
-  <>
-    <div className="list-group-item mt-5">
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
-        <div>
-          <h4 className="mb-0">
-            {listing.type} - {listing.name}
-          </h4>
-          <div className="text-muted">
-            <LocationIcon /> {listing.address}
-          </div>
-        </div>
+const IntroSection = ({ listing }) => (
+  <section>
+    <div className="position-relative mb-5">
+      <h2 className="mb-0 text-gray">
+        {listing.type} - {listing.name}
+      </h2>
+      <div className="text-muted">
+        <LocationIcon /> {listing.address}
       </div>
+      <ul className="list-inline text-muted">
+        <li className="list-inline-item pe-4">
+          <BedIcon /> Bed: {listing.beds}
+        </li>
+        <li className="list-inline-item pe-4">
+          <BathIcon /> Bath: {listing.baths}
+        </li>
+        <li className="list-inline-item pe-4">
+          <ToiletIcon /> Toilet: {listing.toilets}
+        </li>
+      </ul>
     </div>
-
-    <table className="table table-bordered">
-      <tbody>
-        <tr>
-          <td className="fw-bold">Property Name</td>
-          <td className="lead">{listing.name}</td>
-        </tr>
-        <tr>
-          <td className="fw-bold">Property Type</td>
-          <td className="lead">{listing.type}</td>
-        </tr>
-        <tr>
-          <td className="fw-bold">Address</td>
-          <td className="lead">{listing.address}</td>
-        </tr>
-        <tr>
-          <td className="fw-bold">Beds</td>
-          <td className="lead">{listing.beds}</td>
-        </tr>
-        <tr>
-          <td className="fw-bold">Baths</td>
-          <td className="lead">{listing.baths}</td>
-        </tr>
-        <tr>
-          <td className="fw-bold">Toilets</td>
-          <td className="lead">{listing.toilets}</td>
-        </tr>
-      </tbody>
-    </table>
-  </>
+  </section>
 );
 
 const TenantForm = ({ listing }) => {
   const [step, setStep] = React.useState(0);
-  const handleSubmit = (values, actions) => {
-    setTimeout(() => {
+  const handleSubmit = async (values, actions) => {
+    console.log('submitting', values, actions);
+    const fetchOptions = {
+      /**
+       * The default method for a request with fetch is GET,
+       * so we must tell it to use the POST HTTP method.
+       */
+      method: 'POST',
+      /**
+       * These headers will be added to the request and tell
+       * the API that the request body is JSON and that we can
+       * accept JSON responses.
+       */
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      /**
+       * The body of our POST request is the JSON string that
+       * we created above.
+       */
+      body: JSON.stringify({ data: { ...values, apartment: apartment.id } }),
+    };
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/tenants`,
+      fetchOptions
+    );
+
+    if (!response.ok) {
+      if (response.status === 403) {
+        toast.info(
+          'You have already submitted an application for this property'
+        );
+        return;
+      }
+
+      const errorMessage = await response.text();
+
+      toast.error(errorMessage);
+    } else {
       toast.success('Information sent successfully');
-      actions.setSubmitting(false);
-    }, 4000);
+    }
+    actions.setSubmitting(false);
+    actions.resetForm();
   };
 
   const ALL_STEPS = [
-    <div key="1">
-      <SectionHeader small>Tenant Application Form</SectionHeader>
-      <IntroText listing={listing} />
-      <PropertyListing listing={listing} />
-    </div>,
-    <PersonalInformation key="2" />,
-    <EmergencyContact key="3" />,
-    <LandlordInformation key="4" />,
-    <EmploymentDetails key="5" />,
-    <DependantsInformation key="6" />,
+    <IntroText listing={listing} key="1" />,
+    <ProfileInformation key="2" />,
+    <PersonalInformation key="3" />,
+    <EmergencyContact key="4" />,
+    <LandlordInformation key="5" />,
+    <EmploymentDetails key="6" />,
+    // <DependantsInformation key="7" />,
   ];
 
+  const lastStep = ALL_STEPS.length - 1;
   const isFirstStep = step === 0;
-  const isLastStep = step === ALL_STEPS.length - 1;
-  // const progress = Math.round((step / ALL_STEPS.length) * 100);
+  const isLastStep = step === lastStep;
 
   return (
     <Section>
-      <div className="container">
-        <Formik
-          initialValues={setInitialValues({})}
-          onSubmit={handleSubmit}
-          validationSchema={createSchema({})}
-        >
-          {({ isSubmitting, handleSubmit, ...props }) => (
-            <Form>
-              <PaddedSection>
-                <>
-                  {ALL_STEPS[step]}
+      <FormikForm
+        schema={tenantSchema}
+        handleSubmit={handleSubmit}
+        name="tenant-application-form"
+        showFormikState
+        showAllFormikState
+        persistForm
+      >
+        <PaddedSection>
+          <>
+            <IntroSection listing={listing} />
+            <div className="bg-light py-5 px-6 mb-4">
+              {!isFirstStep && (
+                <p className="muted fw-bold mb-0 small">
+                  Step {step}/{lastStep}
+                </p>
+              )}
+              {ALL_STEPS[step]}
+              <StepNavigation
+                step={step}
+                setStep={setStep}
+                isFirstStep={isFirstStep}
+                isLastStep={isLastStep}
+              />
+            </div>
 
-                  {!isLastStep && (
-                    <Button color="danger" onClick={() => setStep(step + 1)}>
-                      {isFirstStep ? (
-                        listing?.availableUnits === 0 &&
-                        listing?.availableSoon ? (
-                          'Join the waiting list'
-                        ) : (
-                          'Apply Now'
-                        )
-                      ) : (
-                        <>Continue</>
-                      )}
-                    </Button>
-                  )}
-                  <div className="mt-6 float-end">
-                    {!isFirstStep && (
-                      <Button
-                        color="dark"
-                        className="btn-outline-dark"
-                        onClick={() => setStep(step - 1)}
-                      >
-                        Previous <LeftAngleIcon />
-                      </Button>
-                    )}
-                    &nbsp; &nbsp; &nbsp;
-                    {!isLastStep && !isFirstStep && (
-                      <Button
-                        color={isFirstStep ? 'danger' : 'none'}
-                        className="btn-outline-dark"
-                        onClick={() => setStep(step + 1)}
-                      >
-                        <>
-                          Next <RightAngleIcon />
-                        </>
-                      </Button>
-                    )}
-                  </div>
-                  <Persist name={'tenant-application-form'} />
-                  <DisplayFormikState {...props} showAll />
-                </>
-              </PaddedSection>
-            </Form>
-          )}
-        </Formik>
-      </div>
+            {isLastStep ? (
+              <FormikButton>Submit Application</FormikButton>
+            ) : (
+              <Button color="dark" onClick={() => setStep(step + 1)}>
+                {isFirstStep ? (
+                  listing?.availableUnits === 0 && listing?.availableSoon ? (
+                    'Join the waiting list'
+                  ) : (
+                    'Start Tenant Application'
+                  )
+                ) : (
+                  <>Continue</>
+                )}
+              </Button>
+            )}
+          </>
+        </PaddedSection>
+      </FormikForm>
     </Section>
   );
 };
+
+const StepNavigation = ({ step, setStep, isFirstStep, isLastStep }) => {
+  return step === 1 ? null : (
+    <div className="d-flex flex-column flex-md-row justify-content-end align-items-end mb-3 mt-5">
+      <div>
+        {!isFirstStep && (
+          <Button
+            color="none"
+            className="btn-outline-dark btn-sm"
+            onClick={() => setStep(step - 1)}
+          >
+            <LeftAngleIcon /> Previous Step
+          </Button>
+        )}
+      </div>
+      &nbsp;&nbsp;&nbsp;
+      <div>
+        {!isLastStep && !isFirstStep && (
+          <Button
+            color={isFirstStep ? 'danger' : 'none'}
+            className="btn-outline-dark btn-sm"
+            onClick={() => setStep(step + 1)}
+          >
+            <>
+              Next Step <RightAngleIcon />
+            </>
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const ProfileInformation = () => (
+  <>
+    <SectionHeader small>Tenant Application</SectionHeader>
+    <p className="lead">
+      Please do not fill the information on behalf of another person. Applicants
+      may not fraudulently present their information on behalf of another.
+      Highrachy reserves the right to revoke a person&sbquo;s tenancy where the
+      person resident on the property is not the original applicant.
+    </p>
+    <div className="mt-3">
+      <Input name="tenantFullName" label="Tenant Full Name" />
+      <Upload
+        changeText="Update Picture"
+        defaultImage="/assets/img/placeholder/image.png"
+        imgOptions={{
+          className: 'mb-3 icon-md',
+          width: 200,
+          height: 300,
+        }}
+        name="tenantProfileImage"
+        uploadText={`Upload Picture`}
+        folder={`tenants/picture`}
+      />
+      <p className="small mt-4">
+        Note that the individual whose information is filled herein will be
+        responsible for making all payments (including rent, Service charges and
+        levies). Kindly specify if the property will be occupied by multiple
+        persons and specify the number and provide details of other occupants in
+        the space provided below.
+      </p>
+    </div>
+  </>
+);
 
 const PersonalInformation = () => (
   <>
@@ -307,6 +385,7 @@ const PersonalInformation = () => (
         name="workEmail"
         type="email"
         label="Work Email"
+        optional
       />
     </div>
     <div className="row">
@@ -352,6 +431,7 @@ const PersonalInformation = () => (
         formGroupClassName="col-md-6"
         name="timeAtCurrentAddress"
         label="Time at Current Address"
+        helpText="Time in Years and Month"
         optional
       />
     </div>
@@ -381,76 +461,76 @@ const PersonalInformation = () => (
 const EmergencyContact = () => (
   <>
     <SectionHeader small>Emergency Contact</SectionHeader>
-    <Input name="emergency['fullName']" label="Full Name" />
+    <Input name="emergencyFullName" label="Full Name" />
 
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="emergency['email']"
+        name="emergencyEmail"
         type="email"
         label="Emergency Contact Email"
       />
       <Input
         formGroupClassName="col-md-6"
-        name="emergency['relationship']"
+        name="emergencyRelationship"
         label="Relationship"
       />
     </div>
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="emergency['telephone1']"
+        name="emergencyTelephone1"
         label="Telephone 1"
       />
       <Input
         formGroupClassName="col-md-6"
-        name="emergency['telephone2']"
+        name="emergencyTelephone2"
         label="Telephone 2"
         optional
       />
     </div>
 
-    <Textarea name="emergency['address']" label="Address" />
+    <Textarea name="emergencyAddress" label="Address" />
   </>
 );
 
 const LandlordInformation = () => (
   <>
     <SectionHeader small>Landlord Information</SectionHeader>
-    <Input name="landlord['fullName']" label="Landlord Full Name" />
+    <Input name="landlordFullName" label="Landlord Full Name" />
 
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="landlord['email']"
+        name="landlordEmail"
         type="email"
         label="Landlord Contact Email"
       />
       <Input
         formGroupClassName="col-md-6"
-        name="landlord['telephone']"
+        name="landlordTelephone"
         label="Landlord Telephone"
       />
     </div>
-    <Textarea name="landlord['address']" label="Landlord Address" />
-    <Input name="landlord['postCode']" label="Landlord Post Code" />
+    <Textarea name="landlordAddress" label="Landlord Address" />
+    <Input name="landlordPostcode" label="Landlord Post Code" />
   </>
 );
 
 const EmploymentDetails = () => (
   <>
     <SectionHeader small>Employment Details</SectionHeader>
-    <Input name="employment['companyName']" label="Company Name" />
+    <Input name="employmentCompanyName" label="Company Name" />
 
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="employment['positionTitle']"
+        name="employmentPositionTitle"
         label="Position Title"
       />
       <Select
         formGroupClassName="col-md-6"
-        name="employment['contractType']"
+        name="employmentContractType"
         label="Contract Type"
         options={valuesToOptions(
           [
@@ -467,18 +547,18 @@ const EmploymentDetails = () => (
         )}
       />
     </div>
-    <Textarea name="employment['address']" label="Company Address" />
+    <Textarea name="employmentAddress" label="Company Address" />
 
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="employment['postCode']"
+        name="employmentPostcode"
         label="Company Address Post Code"
       />
       <DatePicker
         formGroupClassName="col-md-6"
         label="Appox. Start Date"
-        name="employment['startDate']"
+        name="employmentStartDate"
         placeholder="Approx. Start Date"
       />
     </div>
@@ -486,12 +566,12 @@ const EmploymentDetails = () => (
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="employment['managerName']"
+        name="employmentManagerName"
         label="Contract/Manager's Name"
       />
       <Input
         formGroupClassName="col-md-6"
-        name="employment['managerPosition']"
+        name="employmentManagerPosition"
         label="Manager Position"
       />
     </div>
@@ -499,24 +579,26 @@ const EmploymentDetails = () => (
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="employment['managerEmail']"
+        name="employmentManagerEmail"
         type="email"
         label="Manager Email"
       />
       <Input
         formGroupClassName="col-md-6"
-        name="employment['managerTelephone']"
+        name="employmentManagerTelephone"
         label="Manager Telephone"
         optional
       />
     </div>
 
     <Textarea
-      name="employment['moreDetails']"
+      name="employmentMoreDetails"
       label="More Employment Details"
+      optional
     />
   </>
 );
+
 const DependantsInformation = () => (
   <>
     <SectionHeader small>Dependants/Co-residents</SectionHeader>
@@ -574,7 +656,7 @@ export async function getStaticProps({ params }) {
 
   const { data } = await res.json();
 
-  return { props: { property: data[0]['attributes'] } };
+  return { props: { property: { id: data[0].id, ...data[0]['attributes'] } } };
 }
 
 export async function getStaticPaths() {

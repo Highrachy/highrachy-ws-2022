@@ -59,6 +59,8 @@ const Upload = ({
   const onFileChange = async (event) => {
     const fileToUpload = event?.target?.files?.[0];
 
+    setProgress(1);
+
     setLoading(true);
     if (!fileToUpload) return null;
 
@@ -165,6 +167,7 @@ const Upload = ({
             accept={accept}
             onChange={onFileChange}
           />
+
           <label htmlFor={id}>
             {loading ? (
               <>
@@ -181,17 +184,19 @@ const Upload = ({
               </>
             )}
           </label>
+          {progress > 0 && progress < 100 && (
+            <div className="progress mt-2" style={{ height: '10px' }}>
+              <div
+                className="progress-bar progress-bar-striped bg-success"
+                role="progressbar"
+                style={{ width: `${progress}%` }}
+                aria-valuenow={progress}
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className="progress" style={{ height: '2px' }}>
-        <div
-          className="progress-bar progress-bar-striped bg-success"
-          role="progressbar"
-          style={{ width: `${progress}%` }}
-          aria-valuenow={progress}
-          aria-valuemin="0"
-          aria-valuemax="100"
-        ></div>
       </div>
       {formikProps ? (
         <FeedbackMessage

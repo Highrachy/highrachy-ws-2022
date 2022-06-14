@@ -57,6 +57,7 @@ const FormComponents = () => {
       handleSubmit={handleSubmit}
       name="test-form"
       showFormikState
+      useSubmitButton
     >
       <div>
         <Upload

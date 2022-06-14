@@ -194,6 +194,7 @@ const ContactUsForm = () => {
       name="contact-us-form"
       butttonText="Send Message"
       persistForm
+      useSubmitButton
     >
       <Input name="name" label="Full Name" />
       <Input name="email" type="email" label="Email Address" />

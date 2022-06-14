@@ -85,6 +85,7 @@ const AvailableListings = ({ apartments }) => {
           showFormikState
           buttonText="Find Apartments"
           buttonColor="dark"
+          useSubmitButton
         >
           <div className="row">
             {filterType.map((key) => (

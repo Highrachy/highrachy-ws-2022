@@ -47,7 +47,7 @@ const Input = ({
   );
   return (
     <div
-      className={classNames(formGroupClassName, {
+      className={classNames('mb-4', formGroupClassName, {
         'form-floating': floatingLabel,
       })}
     >

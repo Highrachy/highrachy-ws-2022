@@ -31,6 +31,13 @@ export const email = yup
   .email('Seems like an invalid email address')
   .required('Email is required');
 
+export const emailValidation = (label) =>
+  yup
+    .string()
+    .label(label)
+    .email(`Enter a valid email address for ${label}`)
+    .required(`Email is required for ${label}`);
+
 export const password = yup
   .string()
   .label('Password')
@@ -50,6 +57,20 @@ export const phoneNumber = yup
   .min(6, `Only mobile is allowed. It should be more than 5 characters`)
   .max(14, `Only mobile is allowed. It should be less than 14 characters`)
   .required('Phone is required');
+
+export const phoneValidation = (label) =>
+  yup
+    .string()
+    .label(label)
+    .min(
+      6,
+      `Only mobile is allowed for ${label}. It should be more than 5 characters`
+    )
+    .max(
+      14,
+      `Only mobile is allowed for ${label}. It should be less than 14 characters`
+    )
+    .required(`Phone is required for ${label}`);
 
 export const OptionalPhoneNumber = optionalValidation(phoneNumber);
 
