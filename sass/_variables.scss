@@ -77,7 +77,7 @@ $cyan: #0dcaf0;
 
 // // scss-docs-start theme-color-variables
 $primary: darken(#ed3237, 10%);
-// $secondary: $gray-600;
+$secondary: $gray-600;
 // $success: $green;
 // $info: $cyan;
 // $warning: $yellow;
@@ -1240,8 +1240,8 @@ $dropdown-link-active-bg: transparent;
 // $pagination-padding-y-lg: 0.75rem;
 // $pagination-padding-x-lg: 1.5rem;
 
-// $pagination-color: $link-color;
-// $pagination-bg: $white;
+$pagination-color: lighten($text-color, 5%);
+$pagination-bg: $gray-100;
 // $pagination-border-width: $border-width;
 // $pagination-border-radius: $border-radius;
 // $pagination-margin-start: -$pagination-border-width;

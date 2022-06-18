@@ -9,8 +9,8 @@ const TopTitle = ({ children, buttonText, to }) => {
       <h4>
         {children}
         {buttonText && to && (
-          <div className="float-end">
-            <Button color="primary" to={to}>
+          <div className="text-end">
+            <Button color="secondary" to={to}>
               {<FiPlus />} {buttonText}
             </Button>
           </div>

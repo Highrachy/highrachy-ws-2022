@@ -1,24 +1,22 @@
 import React from 'react';
 import PaginatedContent from '@/components/admin/PaginatedContent';
-import { FiYoutube } from 'react-icons/fi';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
+import { adminMenu } from '@/data/adminMenu';
 
-const Dashboard = () => (
+const Applicants = () => (
   <Backend>
     <PaginatedContent
-      addNewUrl="/admin/badges/new"
-      endpoint="applicants"
-      pageName="Badge"
-      pluralPageName="Badges"
-      DataComponent={BadgesRowList}
-      PageIcon={<FiYoutube />}
+      endpoint={'api/applicants'}
+      pageName="Applicant"
+      DataComponent={ApplicantsRowList}
+      PageIcon={adminMenu['Applicants']}
+      sort="createdAt:asc"
     />
   </Backend>
 );
 
-const BadgesRowList = ({ results, offset }) => {
-  console.log('resussss', results);
+const ApplicantsRowList = ({ results, offset }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">
@@ -28,11 +26,13 @@ const BadgesRowList = ({ results, offset }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
               </tr>
             </thead>
             <tbody>
               {results.map(({ id, attributes }, index) => (
-                <BadgesRow
+                <ApplicantsSingleRow
                   key={index}
                   number={offset + index + 1}
                   id={id}
@@ -47,13 +47,15 @@ const BadgesRowList = ({ results, offset }) => {
   );
 };
 
-const BadgesRow = ({ number, fullName }) => {
+const ApplicantsSingleRow = ({ number, fullName, email, phoneNumber }) => {
   return (
     <tr>
       <td>{number}</td>
       <td>{fullName}</td>
+      <td>{email}</td>
+      <td>{phoneNumber}</td>
     </tr>
   );
 };
 
-export default Dashboard;
+export default Applicants;

@@ -1,23 +1,23 @@
 import React from 'react';
 import PaginatedContent from '@/components/admin/PaginatedContent';
-import { FiYoutube } from 'react-icons/fi';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
+import { adminMenu } from '@/data/adminMenu';
 
-const Dashboard = () => (
+const Jobs = () => (
   <Backend>
     <PaginatedContent
-      addNewUrl="/admin/dashboard/new"
-      endpoint="api/applicants"
-      pageName="Badge"
-      pluralPageName="Dashboard"
-      DataComponent={DashboardRowList}
-      PageIcon={<FiYoutube />}
+      addNewUrl={'/admin/jobs/new'}
+      endpoint={'api/jobs'}
+      pageName="Job"
+      DataComponent={JobsRowList}
+      PageIcon={adminMenu['Jobs']}
+      sort="title"
     />
   </Backend>
 );
 
-const DashboardRowList = ({ results, offset }) => {
+const JobsRowList = ({ results, offset }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">
@@ -31,7 +31,7 @@ const DashboardRowList = ({ results, offset }) => {
             </thead>
             <tbody>
               {results.map(({ id, attributes }, index) => (
-                <DashboardRow
+                <JobsSingleRow
                   key={index}
                   number={offset + index + 1}
                   id={id}
@@ -46,7 +46,7 @@ const DashboardRowList = ({ results, offset }) => {
   );
 };
 
-const DashboardRow = ({ number, title }) => {
+const JobsSingleRow = ({ number, title }) => {
   return (
     <tr>
       <td>{number}</td>
@@ -55,4 +55,4 @@ const DashboardRow = ({ number, title }) => {
   );
 };
 
-export default Dashboard;
+export default Jobs;

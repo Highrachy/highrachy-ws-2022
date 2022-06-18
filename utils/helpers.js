@@ -80,3 +80,5 @@ export const getError = (error) =>
       JSON.stringify(error?.response?.data?.message) ||
       JSON.stringify(error)
     : 'An error has occured. Please try again later.';
+
+export const statusIsSuccessful = (status) => status >= 200 && status <= 204;

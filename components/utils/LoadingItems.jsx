@@ -32,7 +32,11 @@ LoadItems.defaultProps = {
 };
 
 export const Loading = ({ Icon, text, size }) => (
-  <div className={`text-center mt-5 w-100 loading-icon ${size ? size : ''}`}>
+  <div
+    className={`text-center mt-5 w-100 loading-icon icon-lg ${
+      size ? size : ''
+    }`}
+  >
     {Icon && Icon}
     {text && <h5 className="my-4">{text} &nbsp;</h5>}
     <Spinner small={size === 'small'} />{' '}
@@ -41,29 +45,33 @@ export const Loading = ({ Icon, text, size }) => (
 
 export const ContentLoader = ({
   children,
-  hasContent,
+  query,
   results,
   Icon,
   loadingText,
   noContentText,
   hideNoContent,
+  showFetching = false,
   name,
-}) => (
-  <>
-    {!results && (
-      <div className="updating-spinner">
-        <Spinner small />
-      </div>
-    )}
-    {!results ? (
-      <Loading text={loadingText || `Loading ${name}`} Icon={Icon} />
-    ) : hasContent ? (
-      children
-    ) : (
-      !hideNoContent && (
-        <NoContent text={noContentText || `${name} not found`} Icon={Icon} />
-      )
-    )}
-  </>
-);
+}) => {
+  const hasContent = results?.length > 0;
+  return (
+    <>
+      {query.isValidating && hasContent && showFetching && (
+        <div className="updating-spinner">
+          <Spinner small />
+        </div>
+      )}
+      {!results ? (
+        <Loading text={loadingText || `Loading ${name}`} Icon={Icon} />
+      ) : hasContent ? (
+        children
+      ) : (
+        !hideNoContent && (
+          <NoContent text={noContentText || `${name} not found`} Icon={Icon} />
+        )
+      )}
+    </>
+  );
+};
 export default LoadItems;

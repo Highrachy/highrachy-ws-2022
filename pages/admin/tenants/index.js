@@ -1,23 +1,21 @@
 import React from 'react';
 import PaginatedContent from '@/components/admin/PaginatedContent';
-import { FiYoutube } from 'react-icons/fi';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
+import { adminMenu } from '@/data/adminMenu';
 
-const Dashboard = () => (
+const Tenants = () => (
   <Backend>
     <PaginatedContent
-      addNewUrl="/admin/dashboard/new"
-      endpoint="api/applicants"
-      pageName="Badge"
-      pluralPageName="Dashboard"
-      DataComponent={DashboardRowList}
-      PageIcon={<FiYoutube />}
+      endpoint={'api/tenants'}
+      pageName="Tenant"
+      DataComponent={TenantsRowList}
+      PageIcon={adminMenu['Tenants']}
     />
   </Backend>
 );
 
-const DashboardRowList = ({ results, offset }) => {
+const TenantsRowList = ({ results, offset }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">
@@ -31,7 +29,7 @@ const DashboardRowList = ({ results, offset }) => {
             </thead>
             <tbody>
               {results.map(({ id, attributes }, index) => (
-                <DashboardRow
+                <TenantsSingleRow
                   key={index}
                   number={offset + index + 1}
                   id={id}
@@ -46,13 +44,15 @@ const DashboardRowList = ({ results, offset }) => {
   );
 };
 
-const DashboardRow = ({ number, title }) => {
+const TenantsSingleRow = ({ number, name, type }) => {
   return (
     <tr>
       <td>{number}</td>
-      <td>{title}</td>
+      <td>
+        {name} - {type}
+      </td>
     </tr>
   );
 };
 
-export default Dashboard;
+export default Tenants;

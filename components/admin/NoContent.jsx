@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Button from '../forms/Button';
 // import { Link } from '@reach/router';
 
 const NoContent = ({
@@ -15,14 +16,14 @@ const NoContent = ({
   <section
     className={classNames(
       className,
-      'no-content text-center text-muted w-100',
+      'no-content text-center icon-xl text-muted w-100',
       size
     )}
   >
     {Icon && Icon}
     <h4 className={classNames('text-muted pt-3', size)}>{text}</h4>
-    {/* {linkText && linkTo && (
-      <Link
+    {linkText && linkTo && (
+      <Button
         className={classNames(
           { 'text-muted d-block': !isButton },
           {
@@ -33,8 +34,8 @@ const NoContent = ({
         to={linkTo}
       >
         {linkText}
-      </Link>
-    )} */}
+      </Button>
+    )}
   </section>
 );
 

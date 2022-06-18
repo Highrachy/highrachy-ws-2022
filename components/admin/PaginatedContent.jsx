@@ -1,14 +1,10 @@
 import React from 'react';
 import Humanize from 'humanize-plus';
-// import { usePaginationQuery } from 'hooks/useQuery';
 import { ContentLoader } from 'components/utils/LoadingItems';
 import TopTitle from './TopTitle';
 import { FiUser } from 'react-icons/fi';
 import Pagination from '../utils/Pagination';
-import useSWR from 'swr';
-import axios from 'axios';
-
-const fetcher = (url) => axios.get(url).then((res) => res.data);
+import { useSWRQuery } from '@/hooks/useSWRQuery';
 
 const PaginatedContent = ({
   addNewUrl,
@@ -21,6 +17,7 @@ const PaginatedContent = ({
   PageIcon,
   pageName,
   pluralPageName,
+  sort,
   endpoint,
   hidePagination,
   hideNoContent,
@@ -30,38 +27,24 @@ const PaginatedContent = ({
 }) => {
   // const [filters, setFilters] = React.useState({});
   const [currentPage, setCurrentPage] = React.useState(1);
-  // const [toast, setToast] = useToast();
 
   const pluralizePageName = pluralPageName || Humanize.pluralize(2, pageName);
   const Icon = PageIcon || <FiUser />;
 
-  const { data: response, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/${endpoint}`,
-    fetcher
-  );
+  const [query, results, setResults] = useSWRQuery({
+    name: [pageName.toLowerCase(), currentPage],
+    endpoint,
+    axiosOptions: {
+      params: {
+        'pagination[page]': currentPage,
+        'pagination[pageSize]': limit || 10,
+        sort: sort || 'createdAt:desc',
+      },
+    },
+  });
 
-  if (error) return <div>failed to load</div>;
-  if (!response) return <div>loading...</div>;
-
-  const { data: results, meta } = response;
-
-  // const [query, results] = usePaginationQuery({
-  //   axiosOptions: {
-  //     params: { limit, page: currentPage, ...filters, ...initialFilter },
-  //   },
-  //   key: 'result',
-  //   name: queryName || pageName.toLowerCase(),
-  //   setToast,
-  //   endpoint,
-  //   childrenKey: childrenKey || queryName,
-  //   refresh: true,
-  // });
-
-  const pagination = meta?.pagination;
-  //   page: 1
-  // pageCount: 1
-  // pageSize: 25
-  // total: 3
+  const pagination = query?.data?.meta?.pagination;
+  const offset = (currentPage - 1) * (pagination?.pageSize || 0);
 
   const showTitle = !hideTitle && !(hideNoContent && results?.length === 0);
 
@@ -83,24 +66,20 @@ const PaginatedContent = ({
       )} */}
 
       <ContentLoader
-        hasContent={results?.length > 0}
         Icon={Icon}
         name={pageName}
         noContentText={`No ${pluralizePageName} found`}
         hideNoContent={hideNoContent}
+        query={query}
         results={results}
-        // showFetching={showFetching || Object.keys(filters)?.length > 0}
+        showFetching={showFetching}
       >
-        <DataComponent
-          results={results || []}
-          offset={pagination?.offset || 0}
-          {...props}
-        />
+        <DataComponent results={results || []} offset={offset} {...props} />
 
         {!hidePagination && (
           <Pagination
-            currentPage={pagination?.currentPage}
-            lastPage={pagination?.totalPage}
+            currentPage={pagination?.page}
+            lastPage={pagination?.pageCount}
             setCurrentPage={setCurrentPage}
           />
         )}
