@@ -1,23 +1,20 @@
-import Sidebar from '@/components/admin/Sidebar';
-import Button from '@/components/forms/Button';
-import Overlay from '@/components/common/Overlay';
 import React from 'react';
-import useWindowSize from '@/hooks/useWindowSize';
 import PaginatedContent from '@/components/admin/PaginatedContent';
-import { FiSettings, FiYoutube } from 'react-icons/fi';
+import { FiYoutube } from 'react-icons/fi';
 import { Card } from 'react-bootstrap';
+import Backend from '@/components/admin/Backend';
 
 const Dashboard = () => (
-  <Container>
+  <Backend>
     <PaginatedContent
       addNewUrl="/admin/badges/new"
-      endpoint="jobs"
+      endpoint="applicants"
       pageName="Badge"
       pluralPageName="Badges"
       DataComponent={BadgesRowList}
       PageIcon={<FiYoutube />}
     />
-  </Container>
+  </Backend>
 );
 
 const BadgesRowList = ({ results, offset }) => {
@@ -50,49 +47,13 @@ const BadgesRowList = ({ results, offset }) => {
   );
 };
 
-const BadgesRow = ({ number, title }) => {
+const BadgesRow = ({ number, fullName }) => {
   return (
     <tr>
       <td>{number}</td>
-      <td>{title}</td>
+      <td>{fullName}</td>
     </tr>
   );
 };
-
-const Container = ({ children }) => {
-  const { width } = useWindowSize();
-  const isDesktop = width > 991;
-
-  const [isFolded, setIsFolded] = React.useState(!isDesktop);
-
-  React.useEffect(() => {
-    setIsFolded(!isDesktop);
-  }, [isDesktop]);
-
-  return (
-    <section className="admin-container">
-      {!isDesktop && !isFolded && <Overlay />}
-      <Sidebar
-        isFolded={isFolded}
-        setIsFolded={setIsFolded}
-        isDesktop={isDesktop}
-      />
-      <Content
-        isFolded={isFolded}
-        setIsFolded={setIsFolded}
-        isDesktop={isDesktop}
-      >
-        {children}
-      </Content>
-    </section>
-  );
-};
-
-const Content = ({ isFolded, setIsFolded, isDesktop, children }) => (
-  <div className={`content-wrapper ${isFolded ? 'content-folded' : ''}`}>
-    {!isDesktop && <Button onClick={() => setIsFolded(!isFolded)}>Menu</Button>}
-    {children}
-  </div>
-);
 
 export default Dashboard;
