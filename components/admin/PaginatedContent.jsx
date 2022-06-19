@@ -8,6 +8,7 @@ import { useSWRQuery } from '@/hooks/useSWRQuery';
 
 const PaginatedContent = ({
   addNewUrl,
+  axiosOptions,
   childrenKey,
   DataComponent,
   initialFilter = {},
@@ -17,6 +18,7 @@ const PaginatedContent = ({
   PageIcon,
   pageName,
   pluralPageName,
+  populate,
   sort,
   endpoint,
   hidePagination,
@@ -31,15 +33,17 @@ const PaginatedContent = ({
   const pluralizePageName = pluralPageName || Humanize.pluralize(2, pageName);
   const Icon = PageIcon || <FiUser />;
 
-  const [query, results, setResults] = useSWRQuery({
-    name: [pageName.toLowerCase(), currentPage],
+  const [query, results] = useSWRQuery({
+    name: ['paginated', pageName.toLowerCase(), currentPage],
     endpoint,
     axiosOptions: {
       params: {
         'pagination[page]': currentPage,
         'pagination[pageSize]': limit || 10,
         sort: sort || 'createdAt:desc',
+        populate: populate || '*',
       },
+      ...axiosOptions,
     },
   });
 

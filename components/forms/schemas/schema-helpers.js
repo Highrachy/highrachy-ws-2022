@@ -25,6 +25,20 @@ export const stringValidation = (label, length = 2) =>
     .min(length, `${label} should be more than ${length - 1} characters`)
     .required(`${label} is required`);
 
+export const booleanValidation = (label, defaultValue = false) =>
+  yup
+    .bool()
+    .label(label)
+    .default(defaultValue)
+    .required(`${label} is required`);
+
+export const mustBeTrue = (label, message = `You must select ${label}`) =>
+  yup
+    .bool()
+    .label(label)
+    .required(`${label} is required`)
+    .oneOf([true], message);
+
 export const email = yup
   .string()
   .label('Email')
@@ -193,6 +207,23 @@ export const lengthValidation = (label, length = 10) =>
 //     });
 //   }
 //   return yup.mixed().notRequired();
+// });
+
+// Yup.object().shape({
+//   aCheckbox: Yup.boolean('Select this checkbox a please'),
+//   bCheckbox: Yup.boolean('Select this checkbox b please'),
+//   anotherField: Yup.string().when(["aCheckbox", "bCheckbox"], {
+//       is: (aCheckbox, bCheckbox) => aCheckbox === true && bCheckbox === true,
+//       then: Yup.string().required('I am required now that both checkboxes are checked')
+//   })
+// });
+
+// Yup.object().shape({
+//   aCheckbox: Yup.boolean('Select this checkbox please'),
+//   anotherField: Yup.string().when("aCheckbox", {
+//       is: (aCheckbox) => aCheckbox === true,
+//       then: Yup.string().required('I am required now the checkbox is checked')
+//   })
 // });
 
 export const createSchema = (object) => {

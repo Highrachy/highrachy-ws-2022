@@ -1,12 +1,6 @@
 import Section from '@/components/common/Section';
-import Button from '@/components/forms/Button';
 import FormikForm from '@/components/forms/FormikForm';
 import Input from '@/components/forms/Input';
-import {
-  email,
-  phoneNumber,
-  stringValidation,
-} from '@/components/forms/schemas/schema-helpers';
 import Upload from '@/components/forms/Upload';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';

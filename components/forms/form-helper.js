@@ -135,7 +135,8 @@ export const setInitialValues = (
     if (initialValues?.[key] || initialValues?.[key] === 0) {
       values[key] = initialValues[key];
     } else {
-      values[key] = keepInitial ? schema[key] : '';
+      values[key] =
+        initialValues?.[key] !== undefined ? initialValues?.[key] : '';
     }
   });
   return values;

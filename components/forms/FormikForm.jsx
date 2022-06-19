@@ -10,6 +10,7 @@ const FormikForm = ({
   buttonText,
   buttonColor,
   children,
+  initialValues,
   handleSubmit,
   name,
   schema,
@@ -20,7 +21,7 @@ const FormikForm = ({
 }) => {
   return (
     <Formik
-      initialValues={setInitialValues(schema)}
+      initialValues={setInitialValues(schema, initialValues)}
       onSubmit={handleSubmit}
       validationSchema={createSchema(schema)}
     >
@@ -51,6 +52,7 @@ const FormikForm = ({
 FormikForm.defaultProps = {
   buttonText: 'Submit',
   buttonColor: 'danger',
+  initialValues: {},
   useSubmitButton: false,
 };
 

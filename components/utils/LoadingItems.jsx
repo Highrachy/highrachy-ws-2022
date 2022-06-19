@@ -54,7 +54,7 @@ export const ContentLoader = ({
   showFetching = false,
   name,
 }) => {
-  const hasContent = results?.length > 0;
+  const hasContent = results || results?.length > 0;
   return (
     <>
       {query.isValidating && hasContent && showFetching && (

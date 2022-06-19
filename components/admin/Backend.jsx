@@ -25,7 +25,11 @@ const Backend = ({ children }) => {
         setIsFolded={setIsFolded}
         isDesktop={isDesktop}
       />
-      <div className={`content-wrapper ${isFolded ? 'content-folded' : ''}`}>
+      <div
+        className={`content-wrapper px-6 py-5 min-vh-100 bg-light ${
+          isFolded ? 'content-folded' : ''
+        }`}
+      >
         {!isDesktop && (
           <Button onClick={() => setIsFolded(!isFolded)}>Menu</Button>
         )}

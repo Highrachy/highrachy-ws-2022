@@ -6,10 +6,16 @@ import { toast } from 'react-toastify';
 import useSWR, { useSWRConfig } from 'swr';
 
 const fetchQuery =
-  ({ currentEndpoint, key, setResult, axiosOptions }) =>
+  ({ currentEndpoint, key, setResult, axiosOptions, processRequest }) =>
   async () => {
+    if (!processRequest)
+      return new Promise((success) => {
+        success(null);
+      });
+
     const source = CancelToken.source();
 
+    // Slow down request
     // await new Promise((resolve) => setTimeout(resolve, 10_000));
     const promise = Axios.get(currentEndpoint, {
       cancelToken: source.token,
@@ -26,10 +32,7 @@ const fetchQuery =
         toast.error('Request was not successful. Please try again later');
       })
       .catch((error) => {
-        toast.error({
-          message: getError(error),
-        });
-        throw new Error(getError(error));
+        toast.error(getError(error));
       });
 
     promise.cancel = () => {
@@ -61,11 +64,10 @@ export const useSWRQuery = ({
   // childrenKey,
   queryOptions = {},
   axiosOptions = {},
+  processRequest = true,
 }) => {
   const [result, setResult] = React.useState(null);
-  const currentEndpoint = `${process.env.NEXT_PUBLIC_API_URL}/${
-    endpoint || `api/${name}`
-  }`;
+  const currentEndpoint = `${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`;
 
   const queryResult = useSWR(
     name,
@@ -74,11 +76,12 @@ export const useSWRQuery = ({
       key,
       setResult,
       axiosOptions,
+      processRequest,
     }),
     getQueryOptions(queryOptions)
   );
 
-  const output = result || queryResult?.[key];
+  const output = result || queryResult?.data?.[key];
 
   console.log(`[${name}] Query: `, queryResult);
   console.log(`[${name}] Result: `, output);

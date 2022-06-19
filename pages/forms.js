@@ -44,7 +44,6 @@ const options = [
 const FormComponents = () => {
   const handleSubmit = (values, actions) => {
     setTimeout(() => {
-      console.log('values', values);
       actions.setSubmitting(false);
     }, 4000);
   };

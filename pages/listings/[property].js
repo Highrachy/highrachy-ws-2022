@@ -157,7 +157,6 @@ const IntroSection = ({ listing }) => (
 const TenantForm = ({ listing }) => {
   const [step, setStep] = React.useState(0);
   const handleSubmit = async (values, actions) => {
-    console.log('submitting', values, actions);
     const fetchOptions = {
       /**
        * The default method for a request with fetch is GET,

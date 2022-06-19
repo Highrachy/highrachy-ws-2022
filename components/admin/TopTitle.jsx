@@ -10,7 +10,7 @@ const TopTitle = ({ children, buttonText, to }) => {
         {children}
         {buttonText && to && (
           <div className="text-end">
-            <Button color="secondary" to={to}>
+            <Button color="secondary" href={to}>
               {<FiPlus />} {buttonText}
             </Button>
           </div>
