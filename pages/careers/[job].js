@@ -94,7 +94,7 @@ const WhoWeAre = () => (
   </PaddedSection>
 );
 
-const RichTextSection = ({ title, text }) => (
+export const RichTextSection = ({ title, text }) => (
   <PaddedSection title={title}>
     <ReactMarkdown>{text}</ReactMarkdown>
   </PaddedSection>

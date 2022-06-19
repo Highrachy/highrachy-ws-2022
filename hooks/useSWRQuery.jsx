@@ -6,13 +6,8 @@ import { toast } from 'react-toastify';
 import useSWR, { useSWRConfig } from 'swr';
 
 const fetchQuery =
-  ({ currentEndpoint, key, setResult, axiosOptions, processRequest }) =>
+  ({ currentEndpoint, key, setResult, axiosOptions }) =>
   async () => {
-    if (!processRequest)
-      return new Promise((success) => {
-        success(null);
-      });
-
     const source = CancelToken.source();
 
     // Slow down request
@@ -61,10 +56,8 @@ export const useSWRQuery = ({
   name,
   endpoint,
   key = 'data',
-  // childrenKey,
   queryOptions = {},
   axiosOptions = {},
-  processRequest = true,
 }) => {
   const [result, setResult] = React.useState(null);
   const currentEndpoint = `${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`;
@@ -76,7 +69,6 @@ export const useSWRQuery = ({
       key,
       setResult,
       axiosOptions,
-      processRequest,
     }),
     getQueryOptions(queryOptions)
   );
@@ -85,12 +77,6 @@ export const useSWRQuery = ({
 
   console.log(`[${name}] Query: `, queryResult);
   console.log(`[${name}] Result: `, output);
-
-  // // if (childrenKey && output?.length > 0) {
-  // //   output.forEach((item) =>
-  // //     setQueryCache([name, item._id], { [childrenKey]: item })
-  // //   );
-  // // }
 
   return [queryResult, output, setResult];
 };

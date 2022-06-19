@@ -21,6 +21,7 @@ const FormikForm = ({
 }) => {
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={setInitialValues(schema, initialValues)}
       onSubmit={handleSubmit}
       validationSchema={createSchema(schema)}

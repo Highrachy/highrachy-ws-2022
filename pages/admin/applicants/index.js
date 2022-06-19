@@ -16,7 +16,7 @@ const Applicants = () => (
   </Backend>
 );
 
-const ApplicantsRowList = ({ results, offset }) => {
+export const ApplicantsRowList = ({ results, offset }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">

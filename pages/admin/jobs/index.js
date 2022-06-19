@@ -3,20 +3,21 @@ import PaginatedContent from '@/components/admin/PaginatedContent';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
-import Link from 'next/link';
 import Button from '@/components/forms/Button';
 
-const Jobs = () => (
-  <Backend>
-    <PaginatedContent
-      addNewUrl={'/admin/jobs/new'}
-      endpoint={'api/jobs'}
-      pageName="Job"
-      DataComponent={JobsRowList}
-      PageIcon={adminMenu['Jobs']}
-    />
-  </Backend>
-);
+const Jobs = () => {
+  return (
+    <Backend>
+      <PaginatedContent
+        addNewUrl={'/admin/jobs/new'}
+        endpoint={'api/jobs'}
+        pageName="Job"
+        DataComponent={JobsRowList}
+        PageIcon={adminMenu['Jobs']}
+      />
+    </Backend>
+  );
+};
 
 const JobsRowList = ({ results, offset }) => {
   return (
@@ -29,6 +30,7 @@ const JobsRowList = ({ results, offset }) => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Applicants</th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
@@ -49,12 +51,19 @@ const JobsRowList = ({ results, offset }) => {
   );
 };
 
-const JobsSingleRow = ({ number, applicants, slug, title, id }) => {
+const JobsSingleRow = ({ number, applicants, slug, title, id, available }) => {
   return (
     <tr>
       <td>{number}</td>
       <td>{title}</td>
       <td>{applicants.data.length}</td>
+      <td>
+        <span
+          className={`badge rounded-pill bg-${available ? 'success' : 'dark'}`}
+        >
+          {available ? 'Open' : 'Closed'}
+        </span>
+      </td>
       <td>
         <Button
           color="none"

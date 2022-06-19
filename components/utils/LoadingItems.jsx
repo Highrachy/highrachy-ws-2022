@@ -57,7 +57,7 @@ export const ContentLoader = ({
   const hasContent = results || results?.length > 0;
   return (
     <>
-      {query.isValidating && hasContent && showFetching && (
+      {query?.isValidating && hasContent && showFetching && (
         <div className="updating-spinner">
           <Spinner small />
         </div>
