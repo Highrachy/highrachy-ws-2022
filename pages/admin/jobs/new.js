@@ -37,18 +37,17 @@ const New = () => {
 
 const ProcessJobForm = ({ action, id, job }) => {
   const testInitialValues = {
-    title: 'Testing 123',
+    title: '',
     location: 'Lagos',
     remote: true,
     contract: false,
-    desiredSkills: '- desired Skills test \n-testing 2',
-    minimumRequirements: '- testing minimum requirements',
-    softwareProficiency: '- Software Skills test \n-testing 2',
+    desiredSkills: '- Desired Skills 1 test \n- Desired Skills 2',
+    minimumRequirements: '- Minimum requirements 1',
+    softwareProficiency: '- Google Docs \n-Google Sheets',
   };
   const currentAction = action ? Humanize.capitalize(action) : 'New';
   const initialValues = job ? job.attributes : { ...testInitialValues };
-
-  console.log('current Action', currentAction);
+  const isEdit = currentAction === 'Edit';
 
   const handleSubmit = async (values, actions) => {
     const payload = {
@@ -59,16 +58,14 @@ const ProcessJobForm = ({ action, id, job }) => {
     };
 
     try {
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`,
-          { data: payload },
-          {
-            headers: {
-              Authorization: getTokenFromStore(),
-            },
-          }
-        )
+      axios({
+        method: isEdit ? 'put' : 'post',
+        url: isEdit
+          ? `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/api/jobs`,
+        data: { data: payload },
+        headers: { Authorization: getTokenFromStore() },
+      })
         .then(function (response) {
           const { status } = response;
           if (statusIsSuccessful(status)) {
@@ -88,12 +85,16 @@ const ProcessJobForm = ({ action, id, job }) => {
 
   return (
     <Section title={`${currentAction} Job`} noPaddingTop>
-      <JobForm handleSubmit={handleSubmit} initialValues={initialValues} />
+      <JobForm
+        handleSubmit={handleSubmit}
+        initialValues={initialValues}
+        isEdit={isEdit}
+      />
     </Section>
   );
 };
 
-const JobForm = ({ handleSubmit, initialValues }) => (
+const JobForm = ({ handleSubmit, initialValues, isEdit }) => (
   <div className="container">
     <div className="row">
       <div className="col-12 col-sm-11 col-lg-10 col-xl-9">
@@ -105,7 +106,9 @@ const JobForm = ({ handleSubmit, initialValues }) => (
           showFormikState
           showAllFormikState
         >
-          <Input floatingLabel label="Job Title" name="title" />
+          <Input label="Job Title" name="title" />
+
+          <Input label="Location" name="location" />
 
           <div className="row">
             <Switch
@@ -123,8 +126,6 @@ const JobForm = ({ handleSubmit, initialValues }) => (
             />
           </div>
 
-          <Input floatingLabel label="Location" name="location" />
-
           <MdEditor label="Minimum Requirements" name="minimumRequirements" />
           <MdEditor label="Desired Skills" name="desiredSkills" />
           <MdEditor label="Software Proficiency" name="softwareProficiency" />
@@ -137,7 +138,9 @@ const JobForm = ({ handleSubmit, initialValues }) => (
             optional
           />
 
-          <FormikButton color="primary">Save Job</FormikButton>
+          <FormikButton color="primary">
+            {isEdit ? 'Edit' : 'Save'} Job
+          </FormikButton>
         </FormikForm>
       </div>
     </div>

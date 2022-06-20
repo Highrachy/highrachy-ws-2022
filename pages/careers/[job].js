@@ -24,8 +24,14 @@ const SingleCareer = ({ job }) => {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  const { title, minimumRequirements, desiredSkills, softwareProficiency } =
-    job;
+  const {
+    available,
+    title,
+    minimumRequirements,
+    desiredSkills,
+    softwareProficiency,
+    note,
+  } = job;
   const breadcrumb = [{ title: 'Careers', url: 'careers' }, { title: title }];
   return (
     <>
@@ -42,6 +48,7 @@ const SingleCareer = ({ job }) => {
       />
 
       <Section>
+        {!available && <JobNotAvailableAlert />}
         <Intro job={job} />
         <WhoWeAre />
         <RichTextSection
@@ -53,13 +60,21 @@ const SingleCareer = ({ job }) => {
           title="Software Proficiency"
           text={softwareProficiency}
         />
+        {note && <RichTextSection title="Note" text={note} />}
+        {!available && <JobNotAvailableAlert />}
       </Section>
-      <ApplicationForm job={job} />
+
+      {available && <ApplicationForm job={job} />}
       <Footer hideConsultation />
     </>
   );
 };
 
+const JobNotAvailableAlert = () => (
+  <PaddedSection>
+    <div className="alert alert-info">This job is currently not available</div>
+  </PaddedSection>
+);
 const Intro = ({ job: { title, remote, contract, location } }) => (
   <PaddedSection>
     <Link passHref href={'#apply-now'}>

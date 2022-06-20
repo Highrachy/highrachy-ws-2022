@@ -12,7 +12,7 @@ import { MdOutlineWork } from 'react-icons/md';
 export const adminMenu = {
   Dashboard: <RiDashboard3Fill />,
   Apartments: <RiCommunityFill />,
-  Tenants: <FaHouseUser />,
+  // Tenants: <FaHouseUser />,
   Jobs: <MdOutlineWork />,
   Applicants: <RiFileUserFill />,
   Messages: <RiMessage2Fill />,

@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
+import Link from 'next/link';
 
 const Jobs = () => {
   return (
@@ -29,8 +30,8 @@ const JobsRowList = ({ results, offset }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
-                <th>Applicants</th>
                 <th>Status</th>
+                <th className="text-center">Applicants</th>
                 <th></th>
               </tr>
             </thead>
@@ -55,14 +56,24 @@ const JobsSingleRow = ({ number, applicants, slug, title, id, available }) => {
   return (
     <tr>
       <td>{number}</td>
-      <td>{title}</td>
-      <td>{applicants.data.length}</td>
       <td>
-        <span
-          className={`badge rounded-pill bg-${available ? 'success' : 'dark'}`}
+        <Link
+          href={{
+            pathname: '/careers/[job]',
+            query: { job: slug },
+          }}
+          passHref
         >
+          <a className="text-reset text-decoration-none">{title}</a>
+        </Link>
+      </td>
+      <td>
+        <span className={`badge bg-${available ? 'success' : 'dark'}`}>
           {available ? 'Open' : 'Closed'}
         </span>
+      </td>
+      <td className="text-center">
+        <strong>{applicants.data.length}</strong>
       </td>
       <td>
         <Button

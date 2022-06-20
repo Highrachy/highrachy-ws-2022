@@ -60,6 +60,7 @@ const JobDetail = ({
   minimumRequirements,
   softwareProficiency,
   desiredSkills,
+  note,
   query,
 }) => (
   <div className="container-fluid">
@@ -90,8 +91,8 @@ const JobDetail = ({
           color="none"
           className="btn-xs btn-outline-primary"
           href={{
-            pathname: '/admin/jobs/[id]',
-            query: { id },
+            pathname: '/admin/jobs/new',
+            query: { id, action: 'edit' },
           }}
         >
           Edit Job
@@ -129,6 +130,7 @@ const JobDetail = ({
         title="Software Proficiency"
         text={softwareProficiency}
       />
+      <RichTextSection title="Note" text={note} />
     </section>
   </div>
 );
@@ -152,7 +154,6 @@ export const ProcessJob = ({ available, id, query }) => {
       )
       .then(function (response) {
         const { status, data } = response;
-        console.log('data', data);
         if (statusIsSuccessful(status)) {
           toast.success('The job has been successfully closed');
           setLoading(false);
