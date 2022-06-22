@@ -3,6 +3,7 @@ import PaginatedContent from '@/components/admin/PaginatedContent';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
+import Button from '@/components/forms/Button';
 
 const Apartments = () => (
   <Backend>
@@ -26,6 +27,7 @@ const ApartmentsRowList = ({ results, offset }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -45,12 +47,35 @@ const ApartmentsRowList = ({ results, offset }) => {
   );
 };
 
-const ApartmentsSingleRow = ({ number, name, type }) => {
+const ApartmentsSingleRow = ({ id, slug, number, name, type }) => {
   return (
     <tr>
       <td>{number}</td>
       <td>
-        {name} - {type}
+        {name} - <strong>{type}</strong>
+      </td>
+      <td>
+        <Button
+          color="none"
+          className="btn-xs btn-outline-dark"
+          href={{
+            pathname: '/listings/[property]',
+            query: { property: slug },
+          }}
+        >
+          Website
+        </Button>
+        &nbsp;&nbsp;&nbsp;
+        <Button
+          color="primary"
+          className="btn-xs"
+          href={{
+            pathname: '/admin/apartments/[id]',
+            query: { id },
+          }}
+        >
+          Manage Aparment
+        </Button>
       </td>
     </tr>
   );

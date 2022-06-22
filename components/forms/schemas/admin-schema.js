@@ -1,10 +1,11 @@
 import {
   booleanValidation,
   optionalValidation,
+  positiveNumberValidation,
   stringValidation,
 } from './schema-helpers';
 
-export const newJobSchema = {
+export const jobSchema = {
   title: stringValidation('Title'),
   remote: booleanValidation('Remote'),
   contract: booleanValidation('Contract'),
@@ -14,4 +15,18 @@ export const newJobSchema = {
   softwareProficiency: stringValidation('Software Proficiency'),
   note: optionalValidation(stringValidation('Note')),
   available: booleanValidation('Available'),
+};
+
+export const apartmentSchema = {
+  name: stringValidation('Name'),
+  type: stringValidation('Type'),
+  location: stringValidation('Location'),
+  description: stringValidation('Description'),
+  address: stringValidation('Address'),
+  totalUnits: positiveNumberValidation('Total Units'),
+  availableUnits: positiveNumberValidation('Available Units'),
+  baths: positiveNumberValidation('Baths'),
+  beds: positiveNumberValidation('Beds'),
+  toilets: positiveNumberValidation('Toilets'),
+  availableSoon: optionalValidation(booleanValidation('Available soon')),
 };

@@ -74,11 +74,15 @@ export const dashedLowerCase = (text) =>
 export const moneyFormat = (value) => Humanize.formatNumber(value, 2);
 export const moneyFormatInNaira = (value) => commaNumber(value, true);
 
-export const getError = (error) =>
-  error?.response?.data
-    ? JSON.stringify(error?.response?.data?.error) ||
-      JSON.stringify(error?.response?.data?.message) ||
-      JSON.stringify(error)
-    : 'An error has occured. Please try again later.';
-
+export const getError = (error, policyError = 'Record exists') => {
+  if (error?.response?.status === 403) {
+    return policyError;
+  } else {
+    return error?.response?.data
+      ? JSON.stringify(error?.response?.data?.error) ||
+          JSON.stringify(error?.response?.data?.message) ||
+          JSON.stringify(error)
+      : 'An error has occured. Please try again later.';
+  }
+};
 export const statusIsSuccessful = (status) => status >= 200 && status <= 204;

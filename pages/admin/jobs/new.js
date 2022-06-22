@@ -5,7 +5,7 @@ import Section from '@/components/common/Section';
 import FormikForm from '@/components/forms/FormikForm';
 import Input from '@/components/forms/Input';
 import FormikButton from '@/components/forms/FormikButton';
-import { newJobSchema } from '@/components/forms/schemas/admin-schema';
+import { jobSchema } from '@/components/forms/schemas/admin-schema';
 import MdEditor from '@/components/forms/MdEditor';
 import Switch from '@/components/forms/Switch';
 import { getTokenFromStore } from '@/utils/localStorage';
@@ -99,7 +99,7 @@ const JobForm = ({ handleSubmit, initialValues, isEdit }) => (
     <div className="row">
       <div className="col-12 col-sm-11 col-lg-10 col-xl-9">
         <FormikForm
-          schema={newJobSchema}
+          schema={jobSchema}
           handleSubmit={handleSubmit}
           initialValues={initialValues}
           name={`new-job-form`}

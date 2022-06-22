@@ -16,16 +16,20 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
   return (
     <div className={` ${isFolded ? 'sidebar-folded' : 'sidebar-open'}`}>
       <nav className="dashboard-sidebar">
-        <div className="sidebar-header" onClick={handleMenuState}>
+        <div className="sidebar-header">
           {!isFolded && (
-            <Image
-              src="/logo.png"
-              alt="Highrachy"
-              width={isDesktop ? '142' : '71'}
-              height={isDesktop ? '42' : '21'}
-            />
+            <Link href="/" passHref>
+              <a>
+                <Image
+                  src="/logo.png"
+                  alt="Highrachy"
+                  width={isDesktop ? '142' : '71'}
+                  height={isDesktop ? '42' : '21'}
+                />
+              </a>
+            </Link>
           )}
-          <div className={'sidebar-toggler'}>
+          <div className={'sidebar-toggler'} onClick={handleMenuState}>
             {isFolded ? <FiMenu /> : <FiX />}
           </div>
         </div>

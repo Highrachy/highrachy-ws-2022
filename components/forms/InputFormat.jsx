@@ -24,7 +24,6 @@ const InputFormat = ({
   labelLink,
   labelClassName,
   name,
-  nairaFormat,
   optional,
   placeholder,
   prefix,
