@@ -79,8 +79,8 @@ const ApartmentDetail = ({
           color="none"
           className="btn-xs btn-outline-dark"
           href={{
-            pathname: '/listings/[property]',
-            query: { property: slug },
+            pathname: '/apartments/[slug]',
+            query: { slug },
           }}
         >
           View on Website

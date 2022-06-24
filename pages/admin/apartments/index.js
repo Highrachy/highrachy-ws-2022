@@ -59,7 +59,7 @@ const ApartmentsSingleRow = ({ id, slug, number, name, type }) => {
           color="none"
           className="btn-xs btn-outline-dark"
           href={{
-            pathname: '/listings/[property]',
+            pathname: '/apartments/[slug]',
             query: { property: slug },
           }}
         >

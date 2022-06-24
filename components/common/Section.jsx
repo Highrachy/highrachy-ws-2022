@@ -61,4 +61,17 @@ export const SectionHeader = ({
   </header>
 );
 
+export const PaddedSection = ({ children, title }) => (
+  <section className="pb-5">
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-lg-9 col-md-10 col-sm-11">
+          {title && <SectionHeader>{title}</SectionHeader>}
+          {children}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 export default Section;

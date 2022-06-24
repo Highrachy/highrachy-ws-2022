@@ -80,8 +80,8 @@ const JobDetail = ({
           color="none"
           className="btn-xs btn-outline-dark"
           href={{
-            pathname: '/careers/[job]',
-            query: { job: slug },
+            pathname: '/careers/[slug]',
+            query: { slug },
           }}
         >
           View on Website

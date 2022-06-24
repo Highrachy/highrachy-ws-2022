@@ -14,18 +14,18 @@ import {
 import ActiveLink from '../utils/ActiveLink';
 import useWindowSize from '@/hooks/useWindowSize';
 
-const DesktopNavigation = ({ MENU, Listings }) => {
+const DesktopNavigation = ({ MENU, Apartments }) => {
   return (
     <>
       <Navbar.Collapse id="highrachy-navbar">
         <Nav className="me-auto">{MENU}</Nav>
-        <Nav>{Listings}</Nav>
+        <Nav>{Apartments}</Nav>
       </Navbar.Collapse>
     </>
   );
 };
 
-const MobileNavigation = ({ MENU, Listings }) => (
+const MobileNavigation = ({ MENU, Apartments }) => (
   <>
     <Navbar.Offcanvas
       id="highrachy-navbar"
@@ -37,7 +37,7 @@ const MobileNavigation = ({ MENU, Listings }) => (
       </Offcanvas.Header>
       <Offcanvas.Body>
         {MENU}
-        <div className="px-4 mt-5">{Listings}</div>
+        <div className="px-4 mt-5">{Apartments}</div>
       </Offcanvas.Body>
     </Navbar.Offcanvas>
   </>
@@ -101,11 +101,11 @@ const Navigation = ({ parentPage }) => {
     </React.Fragment>
   ));
 
-  const Listings = (
-    <ActiveLink href={`/listings`} passHref>
+  const Apartments = (
+    <ActiveLink href={`/apartments`} passHref>
       <Nav.Link
         aria-current="page"
-        className={`btn btn-sm btn-outline-dark btn-listings`}
+        className={`btn btn-sm btn-outline-dark btn-apartments`}
       >
         Find Apartments
       </Nav.Link>
@@ -115,9 +115,9 @@ const Navigation = ({ parentPage }) => {
   const isDesktop = width > 991;
 
   const currentNavigation = isDesktop ? (
-    <DesktopNavigation MENU={MENU} Listings={Listings} />
+    <DesktopNavigation MENU={MENU} Apartments={Apartments} />
   ) : (
-    <MobileNavigation MENU={MENU} Listings={Listings} />
+    <MobileNavigation MENU={MENU} Apartments={Apartments} />
   );
 
   return (

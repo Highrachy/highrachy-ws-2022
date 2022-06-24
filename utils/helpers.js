@@ -86,3 +86,6 @@ export const getError = (error, policyError = 'Record exists') => {
   }
 };
 export const statusIsSuccessful = (status) => status >= 200 && status <= 204;
+
+// Async Validation
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

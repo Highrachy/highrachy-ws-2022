@@ -59,8 +59,8 @@ const JobsSingleRow = ({ number, applicants, slug, title, id, available }) => {
       <td>
         <Link
           href={{
-            pathname: '/careers/[job]',
-            query: { job: slug },
+            pathname: '/careers/[slug]',
+            query: { slug },
           }}
           passHref
         >
@@ -80,8 +80,8 @@ const JobsSingleRow = ({ number, applicants, slug, title, id, available }) => {
           color="none"
           className="btn-xs btn-outline-dark"
           href={{
-            pathname: '/careers/[job]',
-            query: { job: slug },
+            pathname: '/careers/[slug]',
+            query: { slug },
           }}
         >
           Website

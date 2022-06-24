@@ -113,8 +113,8 @@ const AvailablePositions = ({ jobs }) => (
                   <Link
                     passHref
                     href={{
-                      pathname: '/careers/[job]',
-                      query: { job: slug },
+                      pathname: '/careers/[slug]',
+                      query: { slug },
                     }}
                   >
                     <a className="btn btn-secondary btn-wide text-uppercase stretched-link">

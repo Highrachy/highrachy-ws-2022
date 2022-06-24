@@ -228,7 +228,7 @@ const ApplicationForm = ({ job }) => {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[slug][$eq]=${params.job}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/jobs?filters[slug][$eq]=${params.slug}`
   );
 
   const { data } = await res.json();
@@ -246,7 +246,7 @@ export async function getStaticPaths() {
     paths: jobs.map((job) => {
       return {
         params: {
-          job: job['attributes']['slug'],
+          slug: job['attributes']['slug'],
         },
       };
     }),

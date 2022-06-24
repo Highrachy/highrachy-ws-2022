@@ -8,6 +8,7 @@ import {
   optionalValidation,
   required,
   OptionalPhoneNumber,
+  urlValidation,
 } from './schema-helpers';
 
 export const contactUsSchema = {
@@ -51,6 +52,10 @@ export const tenantSchema = {
   stateOfOrigin: optionalValidation(stringValidation('State of Origin')),
   maritalStatus: stringValidation('Marital Status'),
   previousAddress: stringValidation('Previous Address'),
+  facebook: optionalValidation(urlValidation('Facebook')),
+  twitter: optionalValidation(urlValidation('Twitter')),
+  instagram: optionalValidation(urlValidation('Instragram')),
+  twitter: optionalValidation(urlValidation('Twitter')),
 
   // step 3 - Emergency
   emergencyFullName: stringValidation('Emergency Full Name'),
@@ -86,3 +91,5 @@ export const tenantSchema = {
     stringValidation('Employment More Details')
   ),
 };
+
+// status => waiting list, applied, confirmed, leaving soon, Moved Out

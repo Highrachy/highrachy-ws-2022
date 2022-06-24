@@ -15,51 +15,51 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
 
-const Listings = ({ apartments }) => {
+const Apartments = ({ apartments }) => {
   return (
     <>
       <NextSeo
-        title="Listings | Real Estate"
+        title="Apartments | Real Estate"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/listings"
+        canonical="https://www.highrahcy.com/apartments"
       />
       <Navigation />
       <PageHeader
         title="Find Apartments"
-        bgImage="/assets/img/bg/listings.jpg"
+        bgImage="/assets/img/bg/apartments.jpg"
       />
-      <AvailableListings apartments={apartments} />
+      <AvailableApartments apartments={apartments} />
       <Footer />
     </>
   );
 };
 
-const AvailableListings = ({ apartments }) => {
-  const currentListings = apartments;
+const AvailableApartments = (props) => {
+  const currentApartments = props.apartments;
   const filterType = ['name', 'type', 'baths', 'beds', 'toilets', 'location'];
 
-  const filters = Object.values(currentListings).reduce(
-    (acc, { attributes: listing }) => {
+  const filters = Object.values(currentApartments).reduce(
+    (acc, { attributes: apartment }) => {
       filterType.forEach((type) => {
         acc[type] = acc[type]
-          ? acc[type].add(listing[type])
-          : new Set().add(listing[type]);
+          ? acc[type].add(apartment[type])
+          : new Set().add(apartment[type]);
       });
       return acc;
     },
     {}
   );
 
-  const [listings, setListings] = React.useState(currentListings);
+  const [apartments, setApartments] = React.useState(currentApartments);
   const [showOccupied, setShowOccupied] = React.useState(true);
 
   const handleSubmit = (values, actions) => {
-    setListings(() =>
-      currentListings.filter(({ attributes: listing }) => {
+    setApartments(() =>
+      currentApartments.filter(({ attributes: apartment }) => {
         return Object.keys(values).every((key) => {
           if (!values[key] && values[key] !== 0) return true;
-          return listing[key].toString() === values[key].toString();
+          return apartment[key].toString() === values[key].toString();
         });
       })
     );
@@ -81,7 +81,7 @@ const AvailableListings = ({ apartments }) => {
         <FormikForm
           schema={{}}
           handleSubmit={handleSubmit}
-          name="listings-form"
+          name="apartments-form"
           showFormikState
           buttonText="Find Apartments"
           buttonColor="dark"
@@ -117,7 +117,7 @@ const AvailableListings = ({ apartments }) => {
                   className="form-check-label"
                   hideOptionalText
                   optional
-                  text="Hide property that will be available soon"
+                  text="Hide apartments that will be available soon"
                   floatingLabel
                 />
               </div>
@@ -125,39 +125,40 @@ const AvailableListings = ({ apartments }) => {
           </div>
         </FormikForm>
         <ul className="list-group mt-5">
-          {listings.map(
-            ({ id: key, attributes: listing }) =>
-              (listing.availableUnits > 0 ||
-                (showOccupied && listing.availableSoon)) && (
+          {apartments.map(
+            ({ id: key, attributes: apartment }) =>
+              (apartment.availableUnits > 0 ||
+                (showOccupied && apartment.availableSoon)) && (
                 <li key={key} className="list-group-item">
                   <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
                     <div>
                       <h5 className="mb-0">
-                        {listing.type} - {listing.name}
+                        {apartment.type} - {apartment.name}
                       </h5>
                       <div className="text-muted">
-                        <LocationIcon /> {listing.address}
+                        <LocationIcon /> {apartment.address}
                       </div>
                       <ul className="list-inline text-muted">
                         <li className="list-inline-item pe-4">
-                          <BedIcon /> {listing.beds}
+                          <BedIcon /> {apartment.beds}
                         </li>
                         <li className="list-inline-item pe-4">
-                          <BathIcon /> {listing.baths}
+                          <BathIcon /> {apartment.baths}
                         </li>
                         <li className="list-inline-item pe-4">
-                          <ToiletIcon /> {listing.toilets}
+                          <ToiletIcon /> {apartment.toilets}
                         </li>
                       </ul>
                     </div>
                     <Link
                       passHref
                       href={{
-                        pathname: '/listings/[property]',
-                        query: { property: listing.slug },
+                        pathname: '/apartments/[slug]',
+                        query: { slug: apartment.slug },
                       }}
                     >
-                      {listing.availableUnits === 0 && listing.availableSoon ? (
+                      {apartment.availableUnits === 0 &&
+                      apartment.availableSoon ? (
                         <span className="btn text-danger btn-wide text-uppercase stretched-link">
                           Available Soon
                         </span>
@@ -189,4 +190,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Listings;
+export default Apartments;

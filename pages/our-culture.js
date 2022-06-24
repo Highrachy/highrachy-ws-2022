@@ -1,10 +1,8 @@
 import FeatureCard from '@/components/common/FeatureCard';
-import ImageBlock from '@/components/common/ImageBlock';
 import Section from '@/components/common/Section';
 import Shape from '@/components/common/Shape';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import Footer from '@/components/layout/Footer';
-import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { aboutUsLeadText, theCulture } from '@/data/about-us';

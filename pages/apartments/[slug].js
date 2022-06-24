@@ -6,7 +6,7 @@ import {
 } from '@/components/common/Icons';
 import { RightAngleIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
-import Section from '@/components/common/Section';
+import Section, { PaddedSection } from '@/components/common/Section';
 import Button from '@/components/forms/Button';
 import DatePicker from '@/components/forms/DatePicker';
 import FormikButton from '@/components/forms/FormikButton';
@@ -27,10 +27,10 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
 
-const SingleListing = ({ property }) => {
+const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
-    { title: 'Find Aparments', url: 'listings' },
-    { title: property?.name },
+    { title: 'Find Aparments', url: 'apartments' },
+    { title: apartment?.name },
   ];
 
   const router = useRouter();
@@ -44,29 +44,27 @@ const SingleListing = ({ property }) => {
   return (
     <>
       <NextSeo
-        title={`Listings | ${property?.name}`}
+        title={`Apartments | ${apartment?.name}`}
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
       />
       <Navigation />
       <PageHeader
         title={`Tenant Application Form`}
-        bgImage="/assets/img/bg/listings.jpg"
+        bgImage="/assets/img/bg/apartments.jpg"
         breadcrumb={breadcrumb}
       />
-      {router.isFallback ? (
-        <div>Loading</div>
-      ) : (
-        <TenantForm listing={property} />
-      )}
+
+      <TenantForm apartment={apartment} />
+
       <Footer hideConsultation />
     </>
   );
 };
 
-const AlertStatus = ({ listing }) =>
-  listing?.availableUnits === 0 &&
-  (listing?.availableSoon ? (
+const AlertStatus = ({ apartment }) =>
+  apartment?.availableUnits === 0 &&
+  (apartment?.availableSoon ? (
     <div className="alert alert-info my-4" role="alert">
       This property will be <strong>available soon</strong>. You can submit an
       application to join the waiting list.
@@ -77,9 +75,9 @@ const AlertStatus = ({ listing }) =>
     </div>
   ));
 
-const IntroText = ({ listing }) => (
+const IntroText = ({ apartment }) => (
   <div className="col-sm-12">
-    <AlertStatus listing={listing} />
+    <AlertStatus apartment={apartment} />
 
     <SectionHeader small>Tenant Application Form</SectionHeader>
     <p className="lead fw-normal mt-3">
@@ -117,44 +115,31 @@ const IntroText = ({ listing }) => (
   </div>
 );
 
-const PaddedSection = ({ children, title }) => (
-  <section className="pb-5">
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-lg-9 col-md-10 col-sm-11">
-          {title && <SectionHeader>{title}</SectionHeader>}
-          {children}
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-const IntroSection = ({ listing }) => (
+const IntroSection = ({ apartment }) => (
   <section>
     <div className="position-relative mb-5">
       <h2 className="mb-0 text-gray">
-        {listing.type} - {listing.name}
+        {apartment.type} - {apartment.name}
       </h2>
       <div className="text-muted">
-        <LocationIcon /> {listing.address}
+        <LocationIcon /> {apartment.address}
       </div>
       <ul className="list-inline text-muted">
         <li className="list-inline-item pe-4">
-          <BedIcon /> Bed: {listing.beds}
+          <BedIcon /> Bed: {apartment.beds}
         </li>
         <li className="list-inline-item pe-4">
-          <BathIcon /> Bath: {listing.baths}
+          <BathIcon /> Bath: {apartment.baths}
         </li>
         <li className="list-inline-item pe-4">
-          <ToiletIcon /> Toilet: {listing.toilets}
+          <ToiletIcon /> Toilet: {apartment.toilets}
         </li>
       </ul>
     </div>
   </section>
 );
 
-const TenantForm = ({ listing }) => {
+const TenantForm = ({ apartment }) => {
   const [step, setStep] = React.useState(0);
   const handleSubmit = async (values, actions) => {
     const fetchOptions = {
@@ -203,7 +188,7 @@ const TenantForm = ({ listing }) => {
   };
 
   const ALL_STEPS = [
-    <IntroText listing={listing} key="1" />,
+    <IntroText apartment={apartment} key="1" />,
     <ProfileInformation key="2" />,
     <PersonalInformation key="3" />,
     <EmergencyContact key="4" />,
@@ -228,7 +213,7 @@ const TenantForm = ({ listing }) => {
       >
         <PaddedSection>
           <>
-            <IntroSection listing={listing} />
+            <IntroSection apartment={apartment} />
             <div className="bg-light py-5 px-6 mb-4">
               {!isFirstStep && (
                 <p className="muted fw-bold mb-0 small">
@@ -249,7 +234,8 @@ const TenantForm = ({ listing }) => {
             ) : (
               <Button color="dark" onClick={() => setStep(step + 1)}>
                 {isFirstStep ? (
-                  listing?.availableUnits === 0 && listing?.availableSoon ? (
+                  apartment?.availableUnits === 0 &&
+                  apartment?.availableSoon ? (
                     'Join the waiting list'
                   ) : (
                     'Start Tenant Application'
@@ -645,12 +631,12 @@ const DependantsInformation = () => (
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/apartments?filters[slug][$eq]=${params.property}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/apartments?filters[slug][$eq]=${params.slug}`
   );
 
   const { data } = await res.json();
 
-  return { props: { property: { id: data[0].id, ...data[0]['attributes'] } } };
+  return { props: { apartment: { id: data[0].id, ...data[0]['attributes'] } } };
 }
 
 export async function getStaticPaths() {
@@ -660,7 +646,7 @@ export async function getStaticPaths() {
     paths: propertyLists.map((propertyList) => {
       return {
         params: {
-          property: propertyList['attributes']['slug'],
+          slug: propertyList['attributes']['slug'],
         },
       };
     }),
@@ -668,4 +654,4 @@ export async function getStaticPaths() {
   };
 }
 
-export default SingleListing;
+export default SingleApartment;
