@@ -3,6 +3,29 @@ import { parseISO } from 'date-fns';
 import { moneyFormatInNaira } from 'utils/helpers';
 import { getDateTime } from 'utils/date-helpers';
 
+yup.addMethod(yup.string, 'requiredIf', function (list, message) {
+  return this.test(
+    'requiredIf',
+    'At least a social media field is required',
+    function (value) {
+      const { path, createError } = this;
+
+      // check if any in list contain value
+      // true : one or more are contains a value
+      // false: none contain a value
+      var anyHasValue = list.some((value) => {
+        // return `true` if value is not empty, return `false` if value is empty
+        return Boolean(document.querySelector(`input[name="${value}"]`).value);
+      });
+
+      // returns `CreateError` current value is empty and no value is found, returns `false` if current value is not empty and one other field is not empty.
+      return !value && !anyHasValue ? createError({ path, message }) : true;
+    }
+  );
+});
+
+export const requiredIf = (arr) => yup.string().requiredIf(arr);
+
 export const required = (label) =>
   yup.string().required(`${label} is required`);
 
@@ -247,3 +270,19 @@ export const addressSchema = {
   state: required('State'),
   country: defaultValidation('Country', 'Nigeria'),
 };
+
+export const conditionalValidation = (
+  validation,
+  dependentField,
+  value = false,
+  otherwiseValidation = null
+) =>
+  yup.string().when(dependentField, {
+    is: value,
+    then: validation,
+    otherwise: otherwiseValidation,
+  });
+
+// .when('isBig', ([isBig], schema) => {
+//   return isBig ? schema.min(5) : schema.min(0);
+// })

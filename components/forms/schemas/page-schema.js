@@ -9,6 +9,9 @@ import {
   required,
   OptionalPhoneNumber,
   urlValidation,
+  booleanValidation,
+  conditionalValidation,
+  requiredIf,
 } from './schema-helpers';
 
 export const contactUsSchema = {
@@ -25,6 +28,33 @@ export const jobApplicationSchema = {
   phoneNumber,
   resume: stringValidation('Resume'),
 };
+
+const dependantSchema = (number) => ({
+  [`dependantName${number}`]: optionalValidation(
+    stringValidation(`Dependant Name ${number}`)
+  ),
+  [`dependantAge${number}`]: conditionalValidation(
+    required(`Dependant Age ${number}`),
+    `dependantName${number}`,
+    (name) => !!name
+  ),
+
+  [`dependantRelationship${number}`]: conditionalValidation(
+    stringValidation(`Dependant Relationship ${number}`),
+    `dependantName${number}`,
+    (name) => !!name
+  ),
+  [`dependantOccupation${number}`]: conditionalValidation(
+    stringValidation(`Dependant Occupation ${number}`),
+    `dependantName${number}`,
+    (name) => !!name
+  ),
+  [`dependantIdentification${number}`]: conditionalValidation(
+    stringValidation(`Dependant ${number} Identification`),
+    [`dependantAge${number}`, `dependantRelationship${number}`],
+    (age, relationship) => age > 18 && relationship === 'Dependants'
+  ),
+});
 
 export const tenantSchema = {
   // step 1 - start
@@ -51,13 +81,13 @@ export const tenantSchema = {
   ),
   stateOfOrigin: optionalValidation(stringValidation('State of Origin')),
   maritalStatus: stringValidation('Marital Status'),
-  previousAddress: stringValidation('Previous Address'),
+  previousEmployment: stringValidation('Previous Employment'),
   facebook: optionalValidation(urlValidation('Facebook')),
   twitter: optionalValidation(urlValidation('Twitter')),
   instagram: optionalValidation(urlValidation('Instragram')),
-  twitter: optionalValidation(urlValidation('Twitter')),
+  linkedIn: optionalValidation(urlValidation('LinkedIn')),
 
-  // step 3 - Emergency
+  // // step 3 - Emergency and Landlord
   emergencyFullName: stringValidation('Emergency Full Name'),
   emergencyEmail: emailValidation('Emergency Email'),
   emergencyRelationship: stringValidation('Emergency Relationship'),
@@ -66,15 +96,34 @@ export const tenantSchema = {
     phoneValidation('Emergency Telephone 2')
   ),
   emergencyAddress: stringValidation('Current Address'),
-
-  // step 4 - Landlord
-  landlordFullName: stringValidation('Landlord Full Name'),
-  landlordEmail: emailValidation('Landlord Email'),
-  landlordTelephone: phoneValidation('Landlord Telephone'),
+  ownLastProperty: optionalValidation(booleanValidation('Own Last Property')),
+  landlordFullName: conditionalValidation(
+    stringValidation('Landlord/Guardian Full Name'),
+    'ownLastProperty'
+  ),
+  landlordEmail: conditionalValidation(
+    emailValidation('Landlord Email'),
+    'ownLastProperty'
+  ),
+  landlordTelephone: conditionalValidation(
+    phoneValidation('Landlord Telephone'),
+    'ownLastProperty'
+  ),
   landlordAddress: stringValidation('Landlord Address'),
   landlordPostcode: stringValidation('Landlord Postcode'),
+  neverRentedBefore: optionalValidation(
+    booleanValidation('Never Rented Before')
+  ),
+  propertyEvidenceURL: optionalValidation(
+    stringValidation('Property Evidence')
+  ),
 
-  // step 5 - Employment Details
+  // ownLastProperty (hide the following fields if true)
+  // - landlordFullName, landlordEmail, landlordTelephone
+  // show mortgage Statement field
+
+  // step 4 - Employment Details
+  isSelfEmployed: optionalValidation(booleanValidation('Self Employed')),
   employmentCompanyName: stringValidation('Employment Company Name'),
   employmentPositionTitle: stringValidation('EmploymentPositionTitle'),
   employmentContractType: stringValidation('Employment Contract Type'),
@@ -87,9 +136,53 @@ export const tenantSchema = {
   employmentManagerTelephone: optionalValidation(
     phoneValidation('Employment Manager Phone')
   ),
+  companyFacebook: requiredIf([
+    'companyTwitter',
+    'companyInstagram',
+    'companyLinkedIn',
+  ]),
+  companyTwitter: requiredIf([
+    'companyFacebook',
+    'companyInstagram',
+    'companyLinkedIn',
+  ]),
+  companyInstagram: requiredIf([
+    'companyFacebook',
+    'companyTwitter',
+    'companyLinkedIn',
+  ]),
+  companyLinkedIn: requiredIf([
+    'companyFacebook',
+    'companyTwitter',
+    'companyInstagram',
+  ]),
   employmentMoreDetails: optionalValidation(
     stringValidation('Employment More Details')
   ),
+  changeEmployerSoon: optionalValidation(
+    booleanValidation('Change Employer Soon')
+  ),
+  offerLetterURL: optionalValidation(stringValidation('Offer Letter')),
+
+  // isSelfEmployed (hide the following fields if true)
+  // - Position Title = CEO,contractype = self employed (Hidden)
+  // manager name, manager position, manager email, manager telephone (hidden)
+  // companyFacebook, companyTwitter, companyInstagram, companyLinkedIn (only one is allowed)
+  // - changing employment (move down, show offer letter upload)
+
+  // step 5 - Dependabots
+  ...dependantSchema(1),
+  ...dependantSchema(2),
+  ...dependantSchema(3),
+  ...dependantSchema(4),
+  ...dependantSchema(5),
+  hasPersonsWithSpecialNeed: optionalValidation(
+    booleanValidation('Has Special Needs')
+  ),
+  specialNeedDetails: optionalValidation(
+    stringValidation('Special Needs Details')
+  ),
+  pets: optionalValidation(stringValidation('List of Pets')),
 };
 
 // status => waiting list, applied, confirmed, leaving soon, Moved Out

@@ -91,7 +91,8 @@ const CheckboxGroup = ({
   const checkedGroup = options.map(({ label, value }) => {
     if (!(label || value)) return null;
     const optionValue = value || dashedLowerCase(label);
-    const optionLabel = label || Humanize.capitalize(value);
+    const optionLabel =
+      label || Humanize.capitalize(typeof value === 'string' ? value : '');
     return (
       <Checkbox
         formGroupLabelClassName={formGroupLabelClassName}

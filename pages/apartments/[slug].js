@@ -8,6 +8,7 @@ import { RightAngleIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import Section, { PaddedSection } from '@/components/common/Section';
 import Button from '@/components/forms/Button';
+import CheckboxGroup from '@/components/forms/CheckboxGroup';
 import DatePicker from '@/components/forms/DatePicker';
 import FormikButton from '@/components/forms/FormikButton';
 import FormikForm from '@/components/forms/FormikForm';
@@ -22,6 +23,7 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
+import { useFormikContext } from 'formik';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -192,9 +194,8 @@ const TenantForm = ({ apartment }) => {
     <ProfileInformation key="2" />,
     <PersonalInformation key="3" />,
     <EmergencyContact key="4" />,
-    <LandlordInformation key="5" />,
-    <EmploymentDetails key="6" />,
-    // <DependantsInformation key="7" />,
+    <EmploymentDetails key="5" />,
+    <DependantsInformation key="6" />,
   ];
 
   const lastStep = ALL_STEPS.length - 1;
@@ -434,200 +435,426 @@ const PersonalInformation = () => (
       />
     </div>
 
-    <Textarea name="previousAddress" label="Previous Address" />
-  </>
-);
-
-const EmergencyContact = () => (
-  <>
-    <SectionHeader small>Emergency Contact</SectionHeader>
-    <Input name="emergencyFullName" label="Full Name" />
+    <Textarea
+      name="previousEmployment"
+      label="Previous Employment"
+      helpText="Please provide sufficient information as to the name, location, position held and number of years spent at the organization"
+    />
 
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="emergencyEmail"
-        type="email"
-        label="Emergency Contact Email"
+        name="facebook"
+        type="url"
+        label="Facebook"
+        optional
       />
       <Input
         formGroupClassName="col-md-6"
-        name="emergencyRelationship"
-        label="Relationship"
-      />
-    </div>
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="emergencyTelephone1"
-        label="Telephone 1"
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="emergencyTelephone2"
-        label="Telephone 2"
+        name="twitter"
+        label="Twitter"
+        type="url"
         optional
       />
     </div>
 
-    <Textarea name="emergencyAddress" label="Address" />
-  </>
-);
-
-const LandlordInformation = () => (
-  <>
-    <SectionHeader small>Landlord Information</SectionHeader>
-    <Input name="landlordFullName" label="Landlord Full Name" />
-
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
-        name="landlordEmail"
-        type="email"
-        label="Landlord Contact Email"
+        name="instagram"
+        label="Instagram"
+        type="url"
+        optional
       />
       <Input
         formGroupClassName="col-md-6"
-        name="landlordTelephone"
-        label="Landlord Telephone"
-      />
-    </div>
-    <Textarea name="landlordAddress" label="Landlord Address" />
-    <Input name="landlordPostcode" label="Landlord Post Code" />
-  </>
-);
-
-const EmploymentDetails = () => (
-  <>
-    <SectionHeader small>Employment Details</SectionHeader>
-    <Input name="employmentCompanyName" label="Company Name" />
-
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentPositionTitle"
-        label="Position Title"
-      />
-      <Select
-        formGroupClassName="col-md-6"
-        name="employmentContractType"
-        label="Contract Type"
-        options={valuesToOptions(
-          [
-            'Contractor',
-            'Consultant',
-            'Freelancer',
-            'Full-Time Employee',
-            'Part-Time Employee',
-            'Self Employed',
-            'Temporary Employee',
-            'Temporary Worker',
-          ],
-          'Select Contract Type'
-        )}
-      />
-    </div>
-    <Textarea name="employmentAddress" label="Company Address" />
-
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentPostcode"
-        label="Company Address Post Code"
-      />
-      <DatePicker
-        formGroupClassName="col-md-6"
-        label="Appox. Start Date"
-        name="employmentStartDate"
-        placeholder="Approx. Start Date"
-      />
-    </div>
-
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentManagerName"
-        label="Contract/Manager's Name"
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentManagerPosition"
-        label="Manager Position"
-      />
-    </div>
-
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentManagerEmail"
-        type="email"
-        label="Manager Email"
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="employmentManagerTelephone"
-        label="Manager Telephone"
+        name="linkedIn"
+        label="LinkedIn"
+        type="url"
         optional
       />
     </div>
-
-    <Textarea
-      name="employmentMoreDetails"
-      label="More Employment Details"
-      optional
-    />
   </>
 );
 
-const DependantsInformation = () => (
-  <>
-    <SectionHeader small>Dependants/Co-residents</SectionHeader>
+const EmergencyContact = () => {
+  const { values } = useFormikContext();
+  const ownLastProperty = !!values?.['ownLastProperty'];
+  const neverRentedBefore = !!values?.['neverRentedBefore'];
+  const landlordText = neverRentedBefore ? 'Guardian' : 'Landlord';
 
-    <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="dependant['name']"
-        label="Dependant Name 1"
-      />
-      <Select
-        formGroupClassName="col-md-6"
-        name="dependant['name']"
-        label="Age (In Years)"
-        options={generateNumOptions(100, 'year', {
-          firstOptionText: 'Select Age',
-        })}
-      />
-    </div>
+  return (
+    <>
+      <SectionHeader small>Emergency Contact</SectionHeader>
+      <p className="lead">
+        This can <strong>not</strong> be someone who is also resident in the
+        property with you.
+      </p>
+      <Input name="emergencyFullName" label="Full Name" />
 
-    <div className="row">
-      <Select
-        formGroupClassName="col-md-6"
-        name="dependant['relationship']"
-        label="Relationship Type"
-        options={valuesToOptions(
-          ['Dependants', 'Co-Residents'],
-          'Select Relationship Type'
-        )}
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="dependant['occupation']"
-        label="Occupation"
-      />
-    </div>
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name="emergencyEmail"
+          type="email"
+          label="Emergency Contact Email"
+        />
+        <Input
+          formGroupClassName="col-md-6"
+          name="emergencyRelationship"
+          label="Relationship"
+        />
+      </div>
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name="emergencyTelephone1"
+          label="Telephone 1"
+        />
+        <Input
+          formGroupClassName="col-md-6"
+          name="emergencyTelephone2"
+          label="Telephone 2"
+          optional
+        />
+      </div>
 
-    <Switch
-      name="dependant['specialNeeds']"
-      label="Do you have children or persons with special needs living with you"
-    />
+      <Textarea name="emergencyAddress" label="Address" />
 
-    <Textarea
-      name="employment['specialNeedsMoreDetails']"
-      label="Please provide us with necessary details on the special needs of your dependants"
-    />
-    <Input name="dependant['pets']" label="List your Pets" />
-  </>
-);
+      <div className="mt-5"></div>
+      <SectionHeader small>Landlord Information</SectionHeader>
+
+      <ToggleField
+        name="ownLastProperty"
+        label="Do you own the last property?"
+        note="Please provide us with a copy of your last mortgage statement or any
+          other document confirming ownership"
+      />
+
+      {!ownLastProperty && (
+        <ToggleField
+          name="neverRentedBefore"
+          label="Is this your first rented apartment?"
+          note="Please fill in the details of your last guardian and provide us with proof of address in this case, e.g. utility
+        bill, bank statement, etc."
+        />
+      )}
+
+      {!ownLastProperty && (
+        <Input name="landlordFullName" label={`${landlordText} Full Name`} />
+      )}
+
+      {!ownLastProperty && (
+        <div className="row">
+          <Input
+            formGroupClassName="col-md-6"
+            name="landlordEmail"
+            type="email"
+            label={`${landlordText} Contact Email`}
+          />
+          <Input
+            formGroupClassName="col-md-6"
+            name="landlordTelephone"
+            label={`${landlordText} Telephone`}
+          />
+        </div>
+      )}
+      <Textarea name="landlordAddress" label={`${landlordText} Address`} />
+      <Input name="landlordPostcode" label={`${landlordText} Post Code`} />
+
+      {(ownLastProperty || neverRentedBefore) && (
+        <Upload
+          changeText="Update Picture"
+          defaultImage="/assets/img/placeholder/image.png"
+          imgOptions={{
+            className: 'mb-3 icon-md',
+            width: 200,
+            height: 300,
+          }}
+          name="propertyEvidenceURL"
+          uploadText={`Upload Evidence`}
+          folder={`tenants/picture`}
+        />
+      )}
+    </>
+  );
+};
+
+const EmploymentDetails = () => {
+  const { values } = useFormikContext();
+  const isSelfEmployed = !!values?.['isSelfEmployed'];
+  const changeEmployerSoon = !!values?.['changeEmployerSoon'];
+
+  return (
+    <>
+      <SectionHeader small>Employment Details</SectionHeader>
+
+      <ToggleField
+        name="isSelfEmployed"
+        label="Are you’re self-employed?"
+        note="Please provide us with your last 3 years’ tax returns or a letter from
+        your accountant, confirming your last 3 years of income"
+      />
+
+      <Input name="employmentCompanyName" label="Company Name" />
+
+      {isSelfEmployed && (
+        <div className="row">
+          <Input
+            formGroupClassName="col-md-6"
+            name="employmentPositionTitle"
+            label="Position Title"
+          />
+          <Select
+            formGroupClassName="col-md-6"
+            name="employmentContractType"
+            label="Contract Type"
+            options={valuesToOptions(
+              [
+                'Contractor',
+                'Consultant',
+                'Freelancer',
+                'Full-Time Employee',
+                'Part-Time Employee',
+                'Self Employed',
+                'Temporary Employee',
+                'Temporary Worker',
+              ],
+              'Select Contract Type'
+            )}
+          />
+        </div>
+      )}
+
+      <Textarea name="employmentAddress" label="Company Address" />
+
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name="employmentPostcode"
+          label="Company Address Post Code"
+        />
+        <DatePicker
+          formGroupClassName="col-md-6"
+          label="Appox. Start Date"
+          name="employmentStartDate"
+          placeholder="Approx. Start Date"
+        />
+      </div>
+
+      {isSelfEmployed && (
+        <>
+          <div className="row">
+            <Input
+              formGroupClassName="col-md-6"
+              name="employmentManagerName"
+              label="Contract/Manager's Name"
+            />
+            <Input
+              formGroupClassName="col-md-6"
+              name="employmentManagerPosition"
+              label="Manager Position"
+            />
+          </div>
+
+          <div className="row">
+            <Input
+              formGroupClassName="col-md-6"
+              name="employmentManagerEmail"
+              type="email"
+              label="Manager Email"
+            />
+            <Input
+              formGroupClassName="col-md-6"
+              name="employmentManagerTelephone"
+              label="Manager Telephone"
+              optional
+            />
+          </div>
+        </>
+      )}
+
+      <Textarea
+        name="employmentMoreDetails"
+        label="More Employment Details"
+        optional
+      />
+
+      <h5>Social Media</h5>
+      <p className="text-muted">
+        At least one (1) of the company&apos;s social media handle is required
+      </p>
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name="companyFacebook"
+          type="url"
+          label="Company Facebook"
+          optional
+        />
+        <Input
+          formGroupClassName="col-md-6"
+          name="companyTwitter"
+          label="Twitter"
+          type="url"
+          optional
+        />
+      </div>
+
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name="companyInstagram"
+          label="Instagram"
+          type="url"
+          optional
+        />
+        <Input
+          formGroupClassName="col-md-6"
+          name="companyLinkedIn"
+          label="LinkedIn"
+          type="url"
+          optional
+        />
+      </div>
+
+      <ToggleField
+        name="changeEmployerSoon"
+        label="Are you changing employer between now and the tenancy start date?"
+        note=" Please provide us with your offer letter in this case."
+      />
+
+      {changeEmployerSoon && (
+        <Upload
+          changeText="Update Picture"
+          defaultImage="/assets/img/placeholder/image.png"
+          imgOptions={{
+            className: 'mb-3 icon-md',
+            width: 200,
+            height: 300,
+          }}
+          name="offerLetterURL"
+          uploadText={`Upload Offer Letter`}
+          folder={`tenants/picture`}
+        />
+      )}
+    </>
+  );
+};
+
+const DependantsInformation = () => {
+  const [dependants, setDependants] = React.useState([1]);
+  return (
+    <>
+      <SectionHeader small>Dependants/Co-residents</SectionHeader>
+
+      {dependants.map((number) => (
+        <DependantInfo number={number} key={number} />
+      ))}
+
+      {dependants.length < 5 && (
+        <div className="border-top">
+          <Button
+            color="info"
+            className="my-5 btn-sm"
+            onClick={() =>
+              setDependants([...dependants, dependants.length + 1])
+            }
+          >
+            Add More Dependants
+          </Button>
+        </div>
+      )}
+      <Switch
+        name="hasPersonsWithSpecialNeed"
+        label="Do you have children or persons with special needs living with you"
+      />
+
+      <Textarea
+        name="specialNeedDetails"
+        label="Please provide us with necessary details on the special needs of your dependants"
+      />
+      <Input name="dependant['pets']" label="List your Pets" />
+    </>
+  );
+};
+
+const DependantInfo = ({ number }) => {
+  const { values } = useFormikContext();
+  const age = values?.[`dependantAge${number}`];
+  const relationship = values?.[`dependantRelationship${number}`];
+
+  const showUploadField = age && age >= 18 && relationship === 'Dependants';
+
+  console.log('age', age, relationship);
+
+  return (
+    <section>
+      <div className="row">
+        <Input
+          formGroupClassName="col-md-6"
+          name={`dependantName${number}`}
+          label={`Dependant Name ${number}`}
+        />
+        <Select
+          formGroupClassName="col-md-6"
+          name={`dependantAge${number}`}
+          label={`Age ${number} (In Years)`}
+          options={generateNumOptions(100, 'year', {
+            firstOptionText: 'Select Age',
+          })}
+        />
+      </div>
+
+      <div className="row">
+        <Select
+          formGroupClassName="col-md-6"
+          name={`dependantRelationship${number}`}
+          label={`Relationship Type ${number}`}
+          options={valuesToOptions(
+            ['Dependants', 'Co-Residents'],
+            'Select Relationship Type'
+          )}
+        />
+        <Input
+          formGroupClassName="col-md-6"
+          name={`dependantOccupation${number}`}
+          label={`Occupation ${number}`}
+        />
+      </div>
+
+      {showUploadField && (
+        <Upload
+          changeText="Update Picture"
+          defaultImage="/assets/img/placeholder/image.png"
+          imgOptions={{
+            className: 'mb-3 icon-md',
+            width: 200,
+            height: 300,
+          }}
+          name={`dependantIdentification${number}`}
+          uploadText={`Upload Dependant  ${number} Identification`}
+          folder={`tenants/picture`}
+        />
+      )}
+
+      <div className="my-5"></div>
+    </section>
+  );
+};
+
+const ToggleField = ({ name, label, note }) => {
+  const { values } = useFormikContext();
+
+  return (
+    <section>
+      <div className="mt-4">
+        <Switch name={name} label={label} />
+      </div>
+      {values?.[name] && <p className="lead mb-4">{note}</p>}
+    </section>
+  );
+};
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
