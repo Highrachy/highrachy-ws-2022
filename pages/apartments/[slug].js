@@ -367,6 +367,7 @@ const TenantForm = ({ apartment }) => {
               setStep={setStep}
               isFirstStep={isFirstStep}
               isLastStep={isLastStep}
+              isWaitingList={isWaitingList}
             />
           </>
         </PaddedSection>
@@ -380,7 +381,7 @@ const ActionButtons = ({
   setStep,
   isFirstStep,
   isLastStep,
-  apartment,
+  isWaitingList,
 }) => {
   const { values } = useFormikContext();
   const confirmation = !!values?.['confirmation']?.[0];
