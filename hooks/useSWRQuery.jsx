@@ -75,8 +75,8 @@ export const useSWRQuery = ({
 
   const output = result || queryResult?.data?.[key];
 
-  // console.log(`[${name}] Query: `, queryResult);
-  // console.log(`[${name}] Result: `, output);
+  console.log(`[${name}] Query: `, queryResult);
+  console.log(`[${name}] Result: `, output);
 
   return [queryResult, output, setResult];
 };

@@ -22,12 +22,116 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { generateNumOptions, valuesToOptions } from '@/utils/helpers';
+import {
+  generateNumOptions,
+  getError,
+  statusIsSuccessful,
+  valuesToOptions,
+} from '@/utils/helpers';
+import { getTokenFromStore } from '@/utils/localStorage';
+import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { NextSeo } from 'next-seo';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { FaChevronLeft, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+
+const initialValues = {
+  tenantFullName: 'Haruna Popoola',
+  tenantProfileImage:
+    'https://highrachy.s3.amazonaws.com/tenants/picture/587963b0-f572-11ec-b81b-4f8d0f407070.jpg',
+  title: 'Mr',
+  firstName: 'Popoola',
+  middleName: 'Haruna',
+  lastName: 'Oladayo',
+  mobileTelephone: '+2348028388185',
+  homeTelephone: '+2348028388185',
+  personalEmail: 'harunpopson@gmail.com',
+  workEmail: 'harunpopson2@gmail.com',
+  dateOfBirth: {
+    date: '1987-03-12T23:00:00.000Z',
+    value: '12/03/1987',
+  },
+  bvn: '019808393877',
+  identificationType: "Driver's License",
+  identificationNumber: '1232455323233223',
+  currentAddress: 'No 264,Ikorodu Road, Obanikoro',
+  postCode: '110001',
+  timeAtCurrentAddress: '2 years, 5 months',
+  stateOfOrigin: 'Lagos',
+  maritalStatus: 'Married',
+  previousEmployment: 'I have no previous employment',
+  facebook: 'https://www.facebook.com/',
+  twitter: 'https://www.twitter.com/',
+  instagram: 'https://www.instagram.com/',
+  linkedIn: 'https://www.linkedin.com/',
+  emergencyFullName: 'Oladele Ifemi',
+  emergencyEmail: 'ifeme@gmail.com',
+  emergencyRelationship: 'Brother',
+  emergencyTelephone1: '08023456789',
+  emergencyTelephone2: '080122333',
+  emergencyAddress: 'Yomi Okunaiya Street',
+  ownLastProperty: false,
+  landlordFullName: 'Chief Oga Sabinus',
+  landlordEmail: 'sabinus@me.com',
+  landlordTelephone: '080551232343',
+  landlordAddress: '17 Sample Landlord address',
+  landlordPostcode: '551406',
+  neverRentedBefore: '',
+  propertyEvidenceURL: '',
+  isSelfEmployed: true,
+  employmentCompanyName: 'Highrachy Investment and Technology',
+  employmentPositionTitle: 'IT Officer',
+  employmentContractType: 'Contractor',
+  employmentAddress: 'No 17, Adeolu Odeku, Victoria Island',
+  employmentPostcode: '1140000',
+  employmentStartDate: {
+    date: '2019-12-03T00:00:00.000Z',
+    value: '03/12/2019',
+  },
+  employmentManagerName: 'Mr Nnamdi',
+  employmentManagerPosition: 'CEO',
+  employmentManagerEmail: 'nnamdi@highrachy.com',
+  employmentManagerTelephone: '0802233445566',
+  companyFacebook: 'https://facebook.com/highrachy',
+  companyTwitter: '',
+  companyInstagram: '',
+  companyLinkedIn: '',
+  employmentMoreDetails: 'He is an awesome fellow',
+  changeEmployerSoon: false,
+  offerLetterURL: '',
+  dependantName1: '',
+  dependantAge1: '',
+  dependantRelationship1: '',
+  dependantOccupation1: '',
+  dependantIdentification1: '',
+  dependantName2: '',
+  dependantAge2: '',
+  dependantRelationship2: '',
+  dependantOccupation2: '',
+  dependantIdentification2: '',
+  dependantName3: '',
+  dependantAge3: '',
+  dependantRelationship3: '',
+  dependantOccupation3: '',
+  dependantIdentification3: '',
+  dependantName4: '',
+  dependantAge4: '',
+  dependantRelationship4: '',
+  dependantOccupation4: '',
+  dependantIdentification4: '',
+  dependantName5: '',
+  dependantAge5: '',
+  dependantRelationship5: '',
+  dependantOccupation5: '',
+  dependantIdentification5: '',
+  hasPersonsWithSpecialNeed: false,
+  specialNeedDetails: '',
+  pets: '',
+  confirmation: [],
+};
 
 const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
@@ -143,50 +247,82 @@ const IntroSection = ({ apartment }) => (
 
 const TenantForm = ({ apartment }) => {
   const [step, setStep] = React.useState(0);
+  const isWaitingList =
+    apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
-    const fetchOptions = {
-      /**
-       * The default method for a request with fetch is GET,
-       * so we must tell it to use the POST HTTP method.
-       */
-      method: 'POST',
-      /**
-       * These headers will be added to the request and tell
-       * the API that the request body is JSON and that we can
-       * accept JSON responses.
-       */
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      /**
-       * The body of our POST request is the JSON string that
-       * we created above.
-       */
-      body: JSON.stringify({ data: { ...values, apartment: apartment.id } }),
+    if (
+      !values.companyFacebook &&
+      !values.companyTwitter &&
+      !values.companyInstagram &&
+      !values.companyLinkedIn
+    ) {
+      toast.error(
+        "You need to add at least one of your company's social media account"
+      );
+      actions.setSubmitting(false);
+      return;
+    }
+    const payload = {
+      apartment: apartment.id,
+      ...values,
+      dateOfBirth: values.dateOfBirth.date,
+      employmentStartDate: values.employmentStartDate.date,
+      status: isWaitingList ? 'WAITING LIST' : 'APPLIED',
+
+      // BOOLEAN VALUES_TO_OPTIONS
+      ownLastProperty: !!values?.ownLastProperty,
+      neverRentedBefore: !!values?.neverRentedBefore,
+      isSelfEmployed: !!values?.isSelfEmployed,
+      changeEmployerSoon: !!values?.changeEmployerSoon,
+      hasPersonsWithSpecialNeed: !!values?.hasPersonsWithSpecialNeed,
+      hasPersonsWithSpecialNeed: !!values?.hasPersonsWithSpecialNeed,
+
+      //CONDITION VALUES
+      ...(values?.ownLastProperty
+        ? {}
+        : {
+            landlordFullName: values.tenantFullName,
+            landlordEmail: values.personalEmail,
+            landlordTelephone: values.mobileTelephone,
+          }),
+      ...(values?.isSelfEmployed
+        ? {}
+        : {
+            employmentPositionTitle: 'CEO',
+            employmentContractType: 'Self Employed',
+            employmentManagerName: 'Not Applicable',
+            employmentPosition: 'Not Applicable',
+            employmentManagerEmail: 'Not Applicable',
+            employmentManagerTelephone: 'Not Applicable',
+          }),
     };
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/tenants`,
-      fetchOptions
-    );
+    delete payload.confirmation;
+    console.log('payload', payload);
 
-    if (!response.ok) {
-      if (response.status === 403) {
-        toast.info(
-          'You have already submitted an application for this property'
-        );
-        return;
-      }
-
-      const errorMessage = await response.text();
-
-      toast.error(errorMessage);
-    } else {
-      toast.success('Information sent successfully');
+    try {
+      axios({
+        method: 'post',
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/tenants`,
+        data: { data: payload },
+        headers: { Authorization: getTokenFromStore() },
+      })
+        .then(function (response) {
+          const { status } = response;
+          if (statusIsSuccessful(status)) {
+            toast.success('Information sent successfully');
+            actions.setSubmitting(false);
+            actions.resetForm();
+          }
+        })
+        .catch(function (error) {
+          toast.error(getError(error));
+          actions.setSubmitting(false);
+        });
+    } catch (error) {
+      toast.error(getError(error));
+      actions.setSubmitting(false);
     }
-    actions.setSubmitting(false);
-    actions.resetForm();
   };
 
   const ALL_STEPS = [
@@ -211,6 +347,7 @@ const TenantForm = ({ apartment }) => {
         showFormikState
         showAllFormikState
         persistForm
+        initialValues={initialValues}
       >
         <PaddedSection>
           <>
@@ -222,34 +359,73 @@ const TenantForm = ({ apartment }) => {
                 </p>
               )}
               {ALL_STEPS[step]}
-              <StepNavigation
-                step={step}
-                setStep={setStep}
-                isFirstStep={isFirstStep}
-                isLastStep={isLastStep}
-              />
             </div>
 
-            {isLastStep ? (
-              <FormikButton>Submit Application</FormikButton>
-            ) : (
-              <Button color="dark" onClick={() => setStep(step + 1)}>
-                {isFirstStep ? (
-                  apartment?.availableUnits === 0 &&
-                  apartment?.availableSoon ? (
-                    'Join the waiting list'
-                  ) : (
-                    'Start Tenant Application'
-                  )
-                ) : (
-                  <>Continue</>
-                )}
-              </Button>
-            )}
+            <ActionButtons
+              apartment={apartment}
+              step={step}
+              setStep={setStep}
+              isFirstStep={isFirstStep}
+              isLastStep={isLastStep}
+            />
           </>
         </PaddedSection>
       </FormikForm>
     </Section>
+  );
+};
+
+const ActionButtons = ({
+  step,
+  setStep,
+  isFirstStep,
+  isLastStep,
+  apartment,
+}) => {
+  const { values } = useFormikContext();
+  const confirmation = !!values?.['confirmation']?.[0];
+  const tenantFullName = !!values?.['tenantFullName'];
+  const tenantProfileImage = !!values?.['tenantProfileImage'];
+  const initialData = tenantFullName && tenantProfileImage;
+
+  return (
+    <div className="d-flex justify-content-between">
+      {isLastStep ? (
+        // Submit Button on last step
+        <FormikButton className="px-5" disabled={!confirmation}>
+          Submit Application
+        </FormikButton>
+      ) : (
+        // Show Forward button on all steps except Last Step
+        <Button
+          color="primary"
+          className="px-5"
+          onClick={() => setStep(step + 1)}
+          disabled={!initialData && !isFirstStep}
+        >
+          {isFirstStep ? (
+            isWaitingList ? (
+              'Join the waiting list'
+            ) : (
+              'Start Tenant Application'
+            )
+          ) : (
+            <>Continue</>
+          )}
+        </Button>
+      )}
+
+      {/*  Show Back button on all steps except First Step */}
+      {!isFirstStep && (
+        <Button
+          color="none"
+          className="ms-3 btn-outline-info"
+          onClick={() => setStep(step - 1)}
+        >
+          <FaChevronLeft /> Back
+        </Button>
+      )}
+    </div>
   );
 };
 
@@ -374,7 +550,8 @@ const PersonalInformation = () => (
         formGroupClassName="col-md-6"
         label="Date of Birth"
         name="dateOfBirth"
-        placeholder="Date of Birth"
+        placeholder="YYYY-MM-DD"
+        helpText="YYYY-MM-DD"
       />
       <Input
         formGroupClassName="col-md-6"
@@ -388,7 +565,7 @@ const PersonalInformation = () => (
         name="identificationType"
         label="Identification Type"
         options={valuesToOptions(
-          ["Driver's Licenses", 'International Passpport'],
+          ["Driver's License", 'International Passpport'],
           'Select One...'
         )}
         formGroupClassName="col-md-6"
@@ -399,7 +576,15 @@ const PersonalInformation = () => (
         label="Identification Number"
       />
     </div>
-    <Textarea name="currentAddress" label="Current Address" />
+    <Textarea
+      name="currentAddress"
+      label="Current Address"
+      placeholder="The required information under ‘previous employment’ is to be provided if you are currently self-employed."
+    />
+    <small>
+      Please provide sufficient information as to the name, location, position
+      held and number of years spent at the organization
+    </small>
 
     <div className="row">
       <Input
@@ -447,6 +632,7 @@ const PersonalInformation = () => (
         name="facebook"
         type="url"
         label="Facebook"
+        helpText="https://www.facebook.com/..."
         optional
       />
       <Input
@@ -454,6 +640,7 @@ const PersonalInformation = () => (
         name="twitter"
         label="Twitter"
         type="url"
+        helpText="https://www.twitter.com/..."
         optional
       />
     </div>
@@ -464,12 +651,14 @@ const PersonalInformation = () => (
         name="instagram"
         label="Instagram"
         type="url"
+        helpText="https://www.instagram.com/..."
         optional
       />
       <Input
         formGroupClassName="col-md-6"
         name="linkedIn"
         label="LinkedIn"
+        helpText="https://www.linkedin.com/..."
         type="url"
         optional
       />
@@ -598,7 +787,7 @@ const EmploymentDetails = () => {
 
       <Input name="employmentCompanyName" label="Company Name" />
 
-      {isSelfEmployed && (
+      {!isSelfEmployed && (
         <div className="row">
           <Input
             formGroupClassName="col-md-6"
@@ -638,11 +827,12 @@ const EmploymentDetails = () => {
           formGroupClassName="col-md-6"
           label="Appox. Start Date"
           name="employmentStartDate"
-          placeholder="Approx. Start Date"
+          placeholder="YYYY-MM-DD"
+          helpText="YYYY-MM-DD"
         />
       </div>
 
-      {isSelfEmployed && (
+      {!isSelfEmployed && (
         <>
           <div className="row">
             <Input
@@ -744,6 +934,9 @@ const EmploymentDetails = () => {
 
 const DependantsInformation = () => {
   const [dependants, setDependants] = React.useState([1]);
+  const { values } = useFormikContext();
+  const hasPersonsWithSpecialNeed = !!values?.['hasPersonsWithSpecialNeed'];
+
   return (
     <>
       <SectionHeader small>Dependants/Co-residents</SectionHeader>
@@ -753,28 +946,66 @@ const DependantsInformation = () => {
       ))}
 
       {dependants.length < 5 && (
-        <div className="border-top">
+        <div className="border-bottom">
           <Button
-            color="info"
-            className="my-5 btn-sm"
+            color="secondary"
+            className="mt-2 mb-5 btn-sm py-2 px-4"
             onClick={() =>
               setDependants([...dependants, dependants.length + 1])
             }
           >
-            Add More Dependants
+            <FaPlus /> Add More Dependants
           </Button>
         </div>
       )}
+      <div className="my-5"></div>
       <Switch
         name="hasPersonsWithSpecialNeed"
         label="Do you have children or persons with special needs living with you"
       />
 
-      <Textarea
-        name="specialNeedDetails"
-        label="Please provide us with necessary details on the special needs of your dependants"
+      {hasPersonsWithSpecialNeed && (
+        <Textarea
+          name="specialNeedDetails"
+          label="Please provide us with necessary details on the special needs of your dependants"
+        />
+      )}
+
+      <div className="mt-6"></div>
+      <SectionHeader small>Pets</SectionHeader>
+      <Input
+        name="pets"
+        label="List your Pets"
+        helpText="Please note that the landlord has to give written permission for you to
+        keep a pet at the property and you must abide by the House Rules on
+        keeping pet/s. Examples are cats, dogs, e.t.c"
       />
-      <Input name="dependant['pets']" label="List your Pets" />
+
+      <div className="mt-6"></div>
+      <SectionHeader small>Confirmation</SectionHeader>
+      <CheckboxGroup
+        inline
+        name="confirmation"
+        options={[
+          {
+            label: (
+              <>
+                By submitting this form, I confirm that the information provided
+                on this Tenant Application Form is (to the best of my knowledge)
+                accurate, complete and not misleading and that I have read and
+                agreed to the attached{' '}
+                <Link href="/privacy/data-protection-statement" passHref>
+                  <a target="_blank" className="text-primary">
+                    Data Protection Statement
+                  </a>
+                </Link>
+                .
+              </>
+            ),
+            value: true,
+          },
+        ]}
+      />
     </>
   );
 };
@@ -783,10 +1014,7 @@ const DependantInfo = ({ number }) => {
   const { values } = useFormikContext();
   const age = values?.[`dependantAge${number}`];
   const relationship = values?.[`dependantRelationship${number}`];
-
   const showUploadField = age && age >= 18 && relationship === 'Dependants';
-
-  console.log('age', age, relationship);
 
   return (
     <section>
@@ -837,8 +1065,6 @@ const DependantInfo = ({ number }) => {
           folder={`tenants/picture`}
         />
       )}
-
-      <div className="my-5"></div>
     </section>
   );
 };

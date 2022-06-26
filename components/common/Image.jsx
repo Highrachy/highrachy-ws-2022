@@ -38,7 +38,7 @@ const Image = ({
       'img-thumbnail': bordered,
     },
     {
-      'img-rounded': rounded,
+      rounded: rounded,
     },
     {
       'rounded-circle': circle,
@@ -79,5 +79,8 @@ Image.defaultProps = {
   serveImageFromCloud: true,
   src: null,
 };
+
+// eslint-disable-next-line jsx-a11y/alt-text
+export const LocalImage = (props) => <Image {...props} />;
 
 export default Image;

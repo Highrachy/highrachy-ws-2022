@@ -1,22 +1,13 @@
-import FeatureCard from '@/components/common/FeatureCard';
-import Section, {
-  PaddedSection,
-  SectionHeader,
-} from '@/components/common/Section';
-import Shape from '@/components/common/Shape';
-import BusinessRelationships from '@/components/layout/BusinessRelationships';
+import Section, { PaddedSection } from '@/components/common/Section';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { aboutUsLeadText, theCulture } from '@/data/about-us';
 import { about } from '@/data/navigation';
-import { our_team } from '@/data/team';
 import { NextSeo } from 'next-seo';
-import Image from 'next/image';
 import React from 'react';
 
 const breadcrumb = [
-  { title: 'About Us', url: 'about-us' },
+  { title: 'Privacy', url: 'about-us' },
   { title: 'Data Protection Statement' },
 ];
 
@@ -24,10 +15,10 @@ const DataProtectionStatement = () => {
   return (
     <>
       <NextSeo
-        title="Our Culture"
+        title="Data Protection Statement"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/our-culture"
+        canonical="https://www.highrahcy.com/privacy/data-protection-statement"
       />
       <Navigation parentPage={about.url} />
       <PageHeader

@@ -11,7 +11,6 @@ import {
   urlValidation,
   booleanValidation,
   conditionalValidation,
-  requiredIf,
 } from './schema-helpers';
 
 export const contactUsSchema = {
@@ -125,37 +124,37 @@ export const tenantSchema = {
   // step 4 - Employment Details
   isSelfEmployed: optionalValidation(booleanValidation('Self Employed')),
   employmentCompanyName: stringValidation('Employment Company Name'),
-  employmentPositionTitle: stringValidation('EmploymentPositionTitle'),
-  employmentContractType: stringValidation('Employment Contract Type'),
+  employmentPositionTitle: conditionalValidation(
+    stringValidation('Employment Position Title'),
+    'isSelfEmployed'
+  ),
+  employmentContractType: conditionalValidation(
+    stringValidation('Employment Contract Type'),
+    'isSelfEmployed'
+  ),
   employmentAddress: stringValidation('Employment Address'),
   employmentPostcode: stringValidation('Company Address Post Code'),
   employmentStartDate: requiredDate('Employment State Date'),
-  employmentManagerName: stringValidation('Employment Manager Name'),
-  employmentManagerPosition: stringValidation('Employment Manager Position'),
-  employmentManagerEmail: emailValidation('Employment Manager Email'),
-  employmentManagerTelephone: optionalValidation(
-    phoneValidation('Employment Manager Phone')
+  employmentManagerName: conditionalValidation(
+    stringValidation('Employment Manager Name'),
+    'isSelfEmployed'
   ),
-  companyFacebook: requiredIf([
-    'companyTwitter',
-    'companyInstagram',
-    'companyLinkedIn',
-  ]),
-  companyTwitter: requiredIf([
-    'companyFacebook',
-    'companyInstagram',
-    'companyLinkedIn',
-  ]),
-  companyInstagram: requiredIf([
-    'companyFacebook',
-    'companyTwitter',
-    'companyLinkedIn',
-  ]),
-  companyLinkedIn: requiredIf([
-    'companyFacebook',
-    'companyTwitter',
-    'companyInstagram',
-  ]),
+  employmentManagerPosition: conditionalValidation(
+    stringValidation('Employment Manager Position'),
+    'isSelfEmployed'
+  ),
+  employmentManagerEmail: conditionalValidation(
+    emailValidation('Employment Manager Email'),
+    'isSelfEmployed'
+  ),
+  employmentManagerTelephone: conditionalValidation(
+    optionalValidation(phoneValidation('Employment Manager Phone')),
+    'isSelfEmployed'
+  ),
+  companyFacebook: optionalValidation(stringValidation('Company Facebook')),
+  companyTwitter: optionalValidation(stringValidation('Company Twitter')),
+  companyInstagram: optionalValidation(stringValidation('Company Instagram')),
+  companyLinkedIn: optionalValidation(stringValidation('Company LinedIn')),
   employmentMoreDetails: optionalValidation(
     stringValidation('Employment More Details')
   ),
@@ -183,6 +182,102 @@ export const tenantSchema = {
     stringValidation('Special Needs Details')
   ),
   pets: optionalValidation(stringValidation('List of Pets')),
+  confirmation: booleanValidation('Confirmation'),
 };
 
 // status => waiting list, applied, confirmed, leaving soon, Moved Out
+
+const initialData = {
+  tenantFullName: 'Haruna Popoola',
+  tenantProfileImage:
+    'https://highrachy.s3.amazonaws.com/tenants/picture/587963b0-f572-11ec-b81b-4f8d0f407070.jpg',
+  title: 'Mr',
+  firstName: 'Popoola',
+  middleName: 'Haruna',
+  lastName: 'Oladayo',
+  mobileTelephone: '+2348028388185',
+  homeTelephone: '+2348028388185',
+  personalEmail: 'harunpopson@gmail.com',
+  workEmail: 'harunpopson2@gmail.com',
+  dateOfBirth: {
+    date: '1987-03-12T23:00:00.000Z',
+    value: '12/03/1987',
+  },
+  bvn: '019808393877',
+  identificationType: "Driver's License",
+  identificationNumber: '1232455323233223',
+  currentAddress: 'No 264,Ikorodu Road, Obanikoro',
+  postCode: '110001',
+  timeAtCurrentAddress: '2 years, 5 months',
+  stateOfOrigin: 'Lagos',
+  maritalStatus: 'Married',
+  previousEmployment: 'I have no previous employment',
+  facebook: 'https://www.facebook.com/',
+  twitter: 'https://www.twitter.com/',
+  instagram: 'https://www.instagram.com/',
+  linkedIn: 'https://www.linkedin.com/',
+  emergencyFullName: 'Oladele Ifemi',
+  emergencyEmail: 'ifeme@gmail.com',
+  emergencyRelationship: 'Brother',
+  emergencyTelephone1: '08023456789',
+  emergencyTelephone2: '080122333',
+  emergencyAddress: 'Yomi Okunaiya Street',
+  ownLastProperty: false,
+  landlordFullName: 'Chief Oga Sabinus',
+  landlordEmail: 'sabinus@me.com',
+  landlordTelephone: '080551232343',
+  landlordAddress: '17 Sample Landlord address',
+  landlordPostcode: '551406',
+  neverRentedBefore: '',
+  propertyEvidenceURL: '',
+  isSelfEmployed: true,
+  employmentCompanyName: 'Highrachy Investment and Technology',
+  employmentPositionTitle: 'IT Officer',
+  employmentContractType: 'Contractor',
+  employmentAddress: 'No 17, Adeolu Odeku, Victoria Island',
+  employmentPostcode: '1140000',
+  employmentStartDate: {
+    date: '2019-12-03T00:00:00.000Z',
+    value: '03/12/2019',
+  },
+  employmentManagerName: 'Mr Nnamdi',
+  employmentManagerPosition: 'CEO',
+  employmentManagerEmail: 'nnamdi@highrachy.com',
+  employmentManagerTelephone: '0802233445566',
+  companyFacebook: 'https://facebook.com/highrachy',
+  companyTwitter: '',
+  companyInstagram: '',
+  companyLinkedIn: '',
+  employmentMoreDetails: 'He is an awesome fellow',
+  changeEmployerSoon: false,
+  offerLetterURL: '',
+  dependantName1: '',
+  dependantAge1: '',
+  dependantRelationship1: '',
+  dependantOccupation1: '',
+  dependantIdentification1: '',
+  dependantName2: '',
+  dependantAge2: '',
+  dependantRelationship2: '',
+  dependantOccupation2: '',
+  dependantIdentification2: '',
+  dependantName3: '',
+  dependantAge3: '',
+  dependantRelationship3: '',
+  dependantOccupation3: '',
+  dependantIdentification3: '',
+  dependantName4: '',
+  dependantAge4: '',
+  dependantRelationship4: '',
+  dependantOccupation4: '',
+  dependantIdentification4: '',
+  dependantName5: '',
+  dependantAge5: '',
+  dependantRelationship5: '',
+  dependantOccupation5: '',
+  dependantIdentification5: '',
+  hasPersonsWithSpecialNeed: false,
+  specialNeedDetails: '',
+  pets: '',
+  confirmation: [],
+};
