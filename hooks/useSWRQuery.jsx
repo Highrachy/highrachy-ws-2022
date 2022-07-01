@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import useSWR, { useSWRConfig } from 'swr';
 
 const fetchQuery =
-  ({ currentEndpoint, key, setResult, axiosOptions }) =>
+  ({ currentEndpoint, axiosOptions }) =>
   async () => {
     const source = CancelToken.source();
 
@@ -21,7 +21,6 @@ const fetchQuery =
     })
       .then((res) => {
         if (statusIsSuccessful(res.status)) {
-          setResult && setResult(res?.data?.[key]);
           return res?.data;
         }
         toast.error('Request was not successful. Please try again later');
@@ -58,25 +57,27 @@ export const useSWRQuery = ({
   key = 'data',
   queryOptions = {},
   axiosOptions = {},
+  showQuery,
+  showResult,
+  showLogs,
 }) => {
-  const [result, setResult] = React.useState(null);
   const currentEndpoint = `${process.env.NEXT_PUBLIC_API_URL}/${endpoint}`;
 
   const queryResult = useSWR(
     name,
     fetchQuery({
       currentEndpoint,
-      key,
-      setResult,
       axiosOptions,
     }),
     getQueryOptions(queryOptions)
   );
 
-  const output = result || queryResult?.data?.[key];
+  const result = queryResult?.data?.[key];
 
-  console.log(`[${name}] Query: `, queryResult);
-  console.log(`[${name}] Result: `, output);
+  (showLogs || showQuery) &&
+    console.info(`%c[${name}] Query: `, 'color: blue', queryResult);
+  (showLogs || showResult) &&
+    console.info(`%c[${name}] Result: `, 'color: green', result);
 
-  return [queryResult, output, setResult];
+  return [queryResult, result];
 };

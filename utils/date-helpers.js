@@ -15,11 +15,10 @@ import {
  */
 export const getDate = (date) => format(parseISO(date), 'MMMM DD, YYYY');
 export const getDateTime = (date) =>
-  format(parseISO(date), 'ddd, MMM D, YYYY h:mm A');
+  format(parseISO(date), 'ddd, MMM d, YYYY h:mm A');
 export const getShortDateTime = (date) =>
   format(parseISO(date), 'Do MMM YYYY h:mm A');
-export const getShortDate = (date) =>
-  format(parseISO(date), 'ddd, MMM D, YYYY');
+export const getShortDate = (date) => format(parseISO(date), 'E, MMM d, yyyy');
 export const getTinyDate = (date) =>
   isValidDate(date) && format(parseISO(date), 'MMM D, YYYY');
 export const getLongDate = (date) =>

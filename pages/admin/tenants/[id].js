@@ -7,26 +7,29 @@ import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Button from '@/components/forms/Button';
 import ReactMarkdown from 'react-markdown';
 import { SectionHeader } from '@/components/common/Section';
-import { JobInfo } from 'pages/careers';
+import { TenantInfo } from 'pages/careers';
 import { ApplicantsRowList } from '../applicants';
 import Modal from '@/components/ui/Modal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { getTokenFromStore } from '@/utils/localStorage';
 import { getError, statusIsSuccessful } from '@/utils/helpers';
+import { LocalImage } from '@/components/common/Image';
+import { Card } from 'react-bootstrap';
+import { getShortDate } from '@/utils/date-helpers';
 
 const pageOptions = {
-  key: 'job',
-  pageName: 'Job',
+  key: 'tenant',
+  pageName: 'Tenant',
 };
 
-const SingleJob = () => {
+const SingleTenant = () => {
   const router = useRouter();
   const { id } = router.query;
 
   const [query, result] = useSWRQuery({
     name: id ? [pageOptions.key, id] : id,
-    endpoint: `api/jobs/${id}`,
+    endpoint: `api/tenants/${id}`,
     axiosOptions: {
       params: {
         populate: '*',
@@ -37,116 +40,110 @@ const SingleJob = () => {
   return (
     <Backend>
       <ContentLoader
-        Icon={adminMenu['Jobs']}
+        Icon={adminMenu['Tenants']}
         query={query}
         results={result}
         name={pageOptions.pageName}
       >
-        <JobDetail {...result?.attributes} id={id} query={query} />
+        <TenantDetail {...result?.attributes} id={id} query={query} />
       </ContentLoader>
     </Backend>
   );
 };
 
-const JobDetail = ({
-  applicants,
-  available,
-  id,
-  slug,
+const TenantDetail = ({
+  firstName,
+  middleName,
+  lastName,
+  mobileTelephone,
+  homeTelephone,
+  personalEmail,
+  workEmail,
+  dateOfBirth,
+  tenantFullName,
   title,
-  location,
-  remote,
-  contract,
-  minimumRequirements,
-  softwareProficiency,
-  desiredSkills,
-  note,
-  query,
+  tenantProfileImage,
+  status,
 }) => (
   <div className="container-fluid">
     <section className="pb-4 border-bottom">
       <h3 className="text-gray">
-        {title} &nbsp;
+        {tenantFullName} &nbsp;
         <span
-          className={`badge rounded-pill bg-${available ? 'success' : 'dark'}`}
+          className={`badge rounded-pill bg-${
+            status === 'APPLIED' ? 'success' : 'dark'
+          }`}
         >
-          {available ? 'Open' : 'Closed'}
+          {status}
         </span>
       </h3>
-      <JobInfo location={location} remote={remote} contract={contract} />
 
-      <section className="mt-3">
-        <Button
-          color="none"
-          className="btn-xs btn-outline-dark"
-          href={{
-            pathname: '/careers/[slug]',
-            query: { slug },
-          }}
-        >
-          View on Website
-        </Button>
-        &nbsp;&nbsp;&nbsp;
-        <Button
-          color="none"
-          className="btn-xs btn-outline-primary"
-          href={{
-            pathname: '/admin/jobs/new',
-            query: { id, action: 'edit' },
-          }}
-        >
-          Edit Job
-        </Button>
-        &nbsp;&nbsp;&nbsp;
-        <Button
-          color="dark"
-          className="btn-xs"
-          href={{
-            pathname: '/admin/jobs/new',
-            query: { id, action: 'duplicate' },
-          }}
-        >
-          Duplicate Job
-        </Button>
-        &nbsp;&nbsp;&nbsp;
-        <ProcessJob id={id} available={available} query={query} />
-      </section>
-    </section>
-
-    <section className="py-6 border-bottom">
-      <h3>Total applicants: {applicants.data.length}</h3>
-      {applicants.data.length > 0 && (
-        <ApplicantsRowList results={applicants.data} query={query} offset={0} />
-      )}
-    </section>
-
-    <section className="mt-5">
-      <RichTextSection
-        title="Minimum Requirements"
-        text={minimumRequirements}
-      />
-      <RichTextSection title="Desired Skills" text={desiredSkills} />
-      <RichTextSection
-        title="Software Proficiency"
-        text={softwareProficiency}
-      />
-      <RichTextSection title="Note" text={note} />
+      <Card className="mt-4">
+        <div className="text-center my-4">
+          <LocalImage
+            src={tenantProfileImage}
+            name={`${tenantFullName}`}
+            className="icon-md me-2"
+            width="120"
+            rounded
+            height="120"
+          />
+        </div>
+        <div className="table-responsive">
+          <table className="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Tenant Name</td>
+                <td>
+                  {title} {tenantFullName}
+                </td>
+              </tr>
+              <tr>
+                <td>Names</td>
+                <td>
+                  {title} {firstName} {lastName} {middleName}
+                </td>
+              </tr>
+              <tr>
+                <td>Mobile Telephone</td>
+                <td>{mobileTelephone}</td>
+              </tr>
+              <tr>
+                <td>Home Telephone</td>
+                <td>{homeTelephone}</td>
+              </tr>
+              <tr>
+                <td>Personal Email</td>
+                <td>{personalEmail}</td>
+              </tr>
+              <tr>
+                <td>Work Email</td>
+                <td>{workEmail}</td>
+              </tr>
+              <tr>
+                <td>Date of Birth</td>
+                <td>{getShortDate(dateOfBirth)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </section>
   </div>
 );
 
-export default SingleJob;
+export default SingleTenant;
 
-export const ProcessJob = ({ available, id, query }) => {
+export const ProcessTenant = ({ available, id, query }) => {
   const [loading, setLoading] = React.useState(false);
   const [showApprovalModal, setShowApprovalModal] = React.useState(false);
   const currentData = query?.data?.data;
 
-  const processJob = () => {
+  const processTenant = () => {
     setLoading(true);
     axios
       .put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/tenants/${id}`,
         { data: { available: !available } },
         {
           headers: { Authorization: getTokenFromStore() },
@@ -155,7 +152,7 @@ export const ProcessJob = ({ available, id, query }) => {
       .then(function (response) {
         const { status, data } = response;
         if (statusIsSuccessful(status)) {
-          toast.success('The job has been successfully closed');
+          toast.success('The tenant has been successfully closed');
           setLoading(false);
           setShowApprovalModal(false);
           query.mutate({ ...currentData, available: !available });
@@ -177,12 +174,12 @@ export const ProcessJob = ({ available, id, query }) => {
         className="btn-xs"
         onClick={() => setShowApprovalModal(true)}
       >
-        {currentState} Job
+        {currentState} Tenant
       </Button>
 
-      {/* Close Job  Modals */}
+      {/* Close Tenant  Modals */}
       <Modal
-        title={`${currentState} Job`}
+        title={`${currentState} Tenant`}
         show={showApprovalModal}
         onHide={() => setShowApprovalModal(false)}
         showFooter={false}
@@ -190,14 +187,14 @@ export const ProcessJob = ({ available, id, query }) => {
         <section className="row">
           <div className="col-md-12 my-3 text-center">
             <h5 className="my-2 confirmation-text">
-              Are you sure you want to {currentState} this job?
+              Are you sure you want to {currentState} this tenant?
             </h5>
             <Button
               color={currentStateButton}
-              onClick={processJob}
+              onClick={processTenant}
               loading={loading}
             >
-              {currentState} Job
+              {currentState} Tenant
             </Button>
           </div>
         </section>

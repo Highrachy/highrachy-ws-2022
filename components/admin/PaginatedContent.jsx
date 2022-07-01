@@ -45,6 +45,7 @@ const PaginatedContent = ({
       },
       ...axiosOptions,
     },
+    ...props,
   });
 
   const pagination = query?.data?.meta?.pagination;
@@ -78,7 +79,12 @@ const PaginatedContent = ({
         results={results}
         showFetching={showFetching}
       >
-        <DataComponent results={results || []} offset={offset} {...props} />
+        <DataComponent
+          results={results || []}
+          query={query}
+          offset={offset}
+          {...props}
+        />
 
         {!hidePagination && (
           <Pagination

@@ -29,6 +29,7 @@ const TenantsRowList = ({ results, offset }) => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Apartment</th>
+                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
@@ -50,12 +51,10 @@ const TenantsRowList = ({ results, offset }) => {
 };
 
 const TenantsSingleRow = ({ number, ...props }) => {
-  const { id, apartment, title, tenantFullName, tenantProfileImage } = props;
+  const { id, apartment, title, tenantFullName, tenantProfileImage, status } =
+    props;
 
-  console.log(
-    'apartment.data.atributes.name} - {apartment.data.attributes.type} ',
-    apartment?.data?.attributes?.name
-  );
+  const applied = status === 'APPLIED';
   return (
     <tr>
       <td>{number}</td>
@@ -72,6 +71,11 @@ const TenantsSingleRow = ({ number, ...props }) => {
       </td>
       <td>
         {apartment.data.attributes.name} - {apartment.data.attributes.type}
+      </td>
+      <td>
+        <span className={`badge bg-${applied ? 'success' : 'dark'}`}>
+          {status}
+        </span>
       </td>
       <td>
         <Button
