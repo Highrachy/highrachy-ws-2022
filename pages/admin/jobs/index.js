@@ -68,7 +68,9 @@ const JobsSingleRow = ({ number, applicants, slug, title, id, available }) => {
         </Link>
       </td>
       <td>
-        <span className={`badge bg-${available ? 'success' : 'dark'}`}>
+        <span
+          className={`badge badge-dot bg-${available ? 'success' : 'danger'}`}
+        >
           {available ? 'Open' : 'Closed'}
         </span>
       </td>

@@ -4,6 +4,8 @@ import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
+import { BathIcon, BedIcon, ToiletIcon } from '@/components/common/Icons';
+import Humanize from 'humanize-plus';
 
 const Apartments = () => (
   <Backend>
@@ -27,6 +29,7 @@ const ApartmentsRowList = ({ results, offset }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
+                <th>Total Units</th>
                 <th></th>
               </tr>
             </thead>
@@ -47,12 +50,49 @@ const ApartmentsRowList = ({ results, offset }) => {
   );
 };
 
-const ApartmentsSingleRow = ({ id, slug, number, name, type }) => {
+const ApartmentsSingleRow = ({
+  id,
+  slug,
+  number,
+  name,
+  type,
+  beds,
+  baths,
+  toilets,
+  totalUnits,
+  availableUnits,
+  availableSoon,
+}) => {
   return (
     <tr>
       <td>{number}</td>
-      <td>
+      <td className="td-block">
         {name} - <strong>{type}</strong>
+        <span>
+          <ul className="list-inline text-muted mb-0">
+            <li className="list-inline-item pe-3">
+              <BedIcon /> Bed: {beds}
+            </li>
+            <li className="list-inline-item pe-3">
+              <BathIcon /> Baths: {baths}
+            </li>
+            <li className="list-inline-item pe-3">
+              <ToiletIcon /> Toilets: {toilets}
+            </li>
+          </ul>
+        </span>
+      </td>
+      <td className="td-block">
+        {totalUnits} {Humanize.pluralize(totalUnits, 'unit')}
+        {availableUnits > 0 ? (
+          <span className="fw-bold text-success">
+            {availableUnits} {Humanize.pluralize(totalUnits, 'unit')} available
+          </span>
+        ) : availableSoon ? (
+          <span className="fw-bold text-info">Available Soon</span>
+        ) : (
+          <span className="fw-bold text-danger">Not Available</span>
+        )}
       </td>
       <td>
         <Button

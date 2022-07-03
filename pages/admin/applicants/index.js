@@ -5,6 +5,7 @@ import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Link from 'next/link';
 import ProcessButton from '@/components/utils/ProcessButton';
+import Button from '@/components/forms/Button';
 
 const Applicants = () => (
   <Backend>
@@ -30,8 +31,8 @@ export const ApplicantsRowList = ({ results, offset, query }) => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Resume</th>
                 <th className="text-center">Status</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -59,7 +60,7 @@ const applicantStatus = {
   REJECTED: 'rejected',
 };
 
-const getStatus = ({ reviewed, rejected }) => {
+export const getStatus = ({ reviewed, rejected }) => {
   let status = '';
   if (reviewed && !rejected) status = 'active';
   else if (reviewed && rejected) status = 'rejected';
@@ -68,15 +69,15 @@ const getStatus = ({ reviewed, rejected }) => {
   const statusList = {
     [applicantStatus.IS_ACTIVE]: {
       text: 'Still Active',
-      color: 'danger',
+      color: 'success',
     },
     [applicantStatus.AWAITING_REVIEW]: {
       text: 'Awaiting Review',
-      color: 'secondary',
+      color: 'dark',
     },
     [applicantStatus.REJECTED]: {
       text: 'Rejected',
-      color: 'info',
+      color: 'danger',
     },
   };
   return statusList[status];
@@ -99,33 +100,32 @@ const ApplicantsSingleRow = ({
   return (
     <tr>
       <td>{number}</td>
-      <td className="text-block">
+      <td className="td-block">
         {fullName}
         <span>{email}</span>
       </td>
       <td>{phoneNumber}</td>
-      <td>
-        <Link href={resume} passHref>
-          <a className="text-danger">View CV</a>
-        </Link>
-      </td>
       <td className="text-center">
-        <span className={`badge bg-${status.color}`}>{status.text}</span>
+        <span className={`badge  badge-dot bg-${status.color}`}>
+          {status.text}
+        </span>
       </td>
+      <td></td>
       <td>
-        {!rejected && (
-          <ProcessButton
-            afterSuccess={() => query.mutate()}
-            api={`applicants/${id}`}
-            buttonColor={status.color}
-            data={{ [currentState]: true }}
-            modalContent={`Are you sure you want to mark this applicant as ${currentState}`}
-            modalTitle={`Mark as ${currentState}`}
-            successMessage={`The applicant has been successfully ${currentState}`}
-          >
-            Mark as {currentState}
-          </ProcessButton>
-        )}
+        <Button color="none" className="btn-xs btn-outline-dark" href={resume}>
+          View Resume
+        </Button>
+        &nbsp;&nbsp;&nbsp;
+        <Button
+          color="primary"
+          className="btn-xs"
+          href={{
+            pathname: '/admin/applicants/[id]',
+            query: { id },
+          }}
+        >
+          Manage Applicant
+        </Button>
       </td>
     </tr>
   );

@@ -5,7 +5,6 @@ import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Button from '@/components/forms/Button';
-import ReactMarkdown from 'react-markdown';
 import Modal from '@/components/ui/Modal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -17,6 +16,7 @@ import {
   LocationIcon,
   ToiletIcon,
 } from '@/components/common/Icons';
+import { TenantsRowList } from '../tenants';
 
 const pageOptions = {
   key: 'apartment',
@@ -142,9 +142,13 @@ const ApartmentDetail = ({
 
     <section className="py-6 border-bottom">
       <h3>Total tenants: {tenants?.data?.length || 0}</h3>
-      {/* {applicants.data.length > 0 && (
-        <ApplicantsRowList results={applicants.data} offset={0} />
-      )} */}
+      {tenants?.data?.length > 0 && (
+        <TenantsRowList
+          results={tenants.data}
+          offset={0}
+          hideApartments={true}
+        />
+      )}
     </section>
   </div>
 );

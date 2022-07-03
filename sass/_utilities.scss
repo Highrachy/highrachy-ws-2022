@@ -263,3 +263,79 @@ footer a {
     }
   }
 }
+
+.badge-dot {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent !important;
+  border: none;
+  padding-left: 0.75rem;
+  padding-right: 0;
+  font-size: 0.75rem;
+  position: relative;
+  &:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    margin-top: 0;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  &.badge-sm,
+  &.badge-md {
+    padding-left: 1rem;
+  }
+  &.badge-sm:before,
+  &.badge-md:before {
+    height: 8px;
+    width: 8px;
+    margin-top: 0;
+  }
+  &.badge-lg,
+  &.badge-xl {
+    padding-left: 1.5rem;
+  }
+  &.badge-lg:before,
+  &.badge-xl:before {
+    height: 12px;
+    width: 12px;
+    margin-top: 0;
+  }
+
+  &.bg-primary {
+    color: $primary;
+  }
+
+  &.bg-secondary {
+    color: $secondary;
+  }
+
+  &.bg-success {
+    color: $success;
+  }
+
+  &.bg-info {
+    color: $info;
+  }
+
+  &.bg-warning {
+    color: $warning;
+  }
+
+  &.bg-danger {
+    color: $danger;
+  }
+
+  &.bg-light {
+    color: $light;
+  }
+
+  &.bg-dark {
+    color: $dark;
+  }
+}

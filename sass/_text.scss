@@ -61,14 +61,14 @@
 }
 
 td {
-  &.text-block {
+  &.td-block {
     font-weight: bold;
     color: $dark;
     span {
       display: block;
       font-size: 0.75rem;
       font-weight: normal;
-      margin-top: -5px;
+      margin-top: -3px;
     }
   }
 }
