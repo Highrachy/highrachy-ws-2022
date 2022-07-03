@@ -6,6 +6,7 @@ import axios from 'axios';
 import { getTokenFromStore } from '@/utils/localStorage';
 import { toast } from 'react-toastify';
 import { getError, statusIsSuccessful } from '@/utils/helpers';
+import classNames from 'classnames';
 
 const ProcessButton = ({
   afterSuccess,
@@ -16,6 +17,7 @@ const ProcessButton = ({
   data,
   modalContent,
   modalTitle,
+  buttonSizeClassName,
   successMessage,
 }) => {
   const [loading, setLoading] = React.useState(false);
@@ -51,7 +53,7 @@ const ProcessButton = ({
     <>
       <Button
         color={buttonColor}
-        className={buttonClassName}
+        className={classNames(buttonClassName, buttonSizeClassName)}
         onClick={() => setShowModal(true)}
       >
         {children}
@@ -62,7 +64,6 @@ const ProcessButton = ({
         title={modalTitle}
         show={showModal}
         onHide={() => setShowModal(false)}
-        showFooter={false}
       >
         <section className="row">
           <div className="col-md-12 my-3 text-center">
@@ -71,6 +72,7 @@ const ProcessButton = ({
               color={buttonColor}
               onClick={handleProcess}
               loading={loading}
+              className={buttonClassName}
             >
               {children}
             </Button>
@@ -83,7 +85,8 @@ const ProcessButton = ({
 
 ProcessButton.defaultProps = {
   afterSuccess: () => {},
-  buttonClassName: 'btn-xs',
+  buttonClassName: '',
+  buttonSizeClassName: 'btn-xs',
   buttonColor: 'primary',
   data: {},
   modalContent: 'Are you sure you want to continue?',
@@ -95,6 +98,7 @@ ProcessButton.propTypes = {
   afterSuccess: PropTypes.func,
   api: PropTypes.string.isRequired,
   buttonClassName: PropTypes.string,
+  buttonSizeClassName: PropTypes.string,
   buttonColor: PropTypes.string,
   children: PropTypes.node.isRequired,
   data: PropTypes.object,

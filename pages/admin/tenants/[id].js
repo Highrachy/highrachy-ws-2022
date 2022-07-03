@@ -4,14 +4,9 @@ import { adminMenu } from '@/data/adminMenu';
 import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
-import {
-  camelToSentence,
-  getError,
-  processData,
-  statusIsSuccessful,
-} from '@/utils/helpers';
+import { camelToSentence, processData } from '@/utils/helpers';
 import { LocalImage } from '@/components/common/Image';
-import { Tab, Tabs } from 'react-bootstrap';
+import { Tab } from 'react-bootstrap';
 import Link from 'next/link';
 import { MdEmail, MdLocalPhone } from 'react-icons/md';
 import {
@@ -22,9 +17,7 @@ import {
 } from 'react-icons/fa';
 import { RiCommunityFill } from 'react-icons/ri';
 import classNames from 'classnames';
-import Button from '@/components/forms/Button';
 import Humanize from 'humanize-plus';
-import TopTitle from '@/components/admin/TopTitle';
 import { TENANT_STATUS, TENANT_STATUS_COLOR } from '@/utils/constants';
 import ProcessButton from '@/components/utils/ProcessButton';
 
@@ -50,14 +43,13 @@ const SingleTenant = () => {
   });
 
   return (
-    <Backend>
+    <Backend title="Tenant">
       <ContentLoader
         Icon={adminMenu['Tenants']}
         query={query}
         results={result}
         name={pageOptions.pageName}
       >
-        <TopTitle>Single Tenant</TopTitle>
         <TenantHeader
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
@@ -161,20 +153,36 @@ const TenantHeader = ({
                 </div>
                 {/* Action */}
                 <div className="d-flex my-2">
-                  {status !== TENANT_STATUS.MOVED_OUT && (
+                  {nextStatus === TENANT_STATUS.CONFIRMED && (
                     <ProcessButton
                       afterSuccess={() => query.mutate()}
                       api={`tenants/${id}`}
-                      buttonColor={TENANT_STATUS_COLOR[nextStatus]}
-                      buttonClassName="btn-md"
-                      data={{ status: nextStatus }}
-                      modalContent={`Are you sure you want to update this tenant's appllication to ${nextStatus}`}
-                      modalTitle={`Mark as ${nextStatus}`}
-                      successMessage={`The applicant has been successfully updated to  ${nextStatus}`}
+                      buttonClassName="me-3"
+                      buttonSizeClassName="btn-sm"
+                      data={{ status: TENANT_STATUS.REJECTED }}
+                      modalContent={`Are you sure you want to reject this tenant's application`}
+                      modalTitle={`Reject Application`}
+                      successMessage={`The apartment has been successfully rejected`}
                     >
-                      Mark as {nextStatus}
+                      Reject Application
                     </ProcessButton>
                   )}
+
+                  {status !== TENANT_STATUS.MOVED_OUT &&
+                    status !== TENANT_STATUS.REJECTED && (
+                      <ProcessButton
+                        afterSuccess={() => query.mutate()}
+                        api={`tenants/${id}`}
+                        buttonColor={TENANT_STATUS_COLOR[nextStatus]}
+                        buttonSizeClassName="btn-xs"
+                        data={{ status: nextStatus }}
+                        modalContent={`Are you sure you want to update this tenant's application to ${nextStatus}`}
+                        modalTitle={`Mark as ${nextStatus}`}
+                        successMessage={`The apartment has been successfully updated to ${nextStatus}`}
+                      >
+                        Mark as {nextStatus}
+                      </ProcessButton>
+                    )}
                 </div>
               </div>
             </div>
@@ -203,8 +211,6 @@ const TenantHeader = ({
   );
 };
 
-// write get status function
-// upadte action button to work as expected
 // Add pending documents
 
 const getNextTenantStatus = (status) => {

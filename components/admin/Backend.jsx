@@ -4,8 +4,9 @@ import React from 'react';
 import { Overlay } from 'react-bootstrap';
 import Button from '../forms/Button';
 import Sidebar from './Sidebar';
+import TopTitle from './TopTitle';
 
-const Backend = ({ children }) => {
+const Backend = ({ children, title }) => {
   const { width } = useWindowSize();
   const isDesktop = width > 991;
 
@@ -33,6 +34,8 @@ const Backend = ({ children }) => {
         {!isDesktop && (
           <Button onClick={() => setIsFolded(!isFolded)}>Menu</Button>
         )}
+
+        {title && <TopTitle>{title}</TopTitle>}
         {children}
       </div>
     </section>

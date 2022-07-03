@@ -19,7 +19,7 @@ const Tenants = () => (
   </Backend>
 );
 
-export const TenantsRowList = ({ results, offset, hideApartments }) => {
+export const TenantsRowList = ({ results, offset, attachment }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">
@@ -29,7 +29,7 @@ export const TenantsRowList = ({ results, offset, hideApartments }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
-                {!hideApartments && <th>Apartment</th>}
+                {!attachment && <th>Apartment</th>}
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -41,7 +41,7 @@ export const TenantsRowList = ({ results, offset, hideApartments }) => {
                   number={offset + index + 1}
                   id={id}
                   {...attributes}
-                  hideApartments={hideApartments}
+                  attachment={attachment}
                 />
               ))}
             </tbody>
@@ -52,9 +52,11 @@ export const TenantsRowList = ({ results, offset, hideApartments }) => {
   );
 };
 
-const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
+export const TenantsSingleRow = ({ number, attachment, ...props }) => {
   const { id, apartment, title, tenantFullName, tenantProfileImage, status } =
     props;
+
+  console.log(' ->', tenantProfileImage);
   return (
     <tr>
       <td>{number}</td>
@@ -62,14 +64,12 @@ const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
         <LocalImage
           src={tenantProfileImage}
           name={`${tenantFullName}-${number}`}
-          className="icon-md me-2"
-          width="32"
+          className="img-md2 me-2"
           rounded
-          height="32"
         />
         {title} {tenantFullName}
       </td>
-      {!hideApartments && (
+      {!attachment && (
         <td>
           {apartment?.data?.attributes.name} -{' '}
           {apartment?.data?.attributes.type}
@@ -89,7 +89,7 @@ const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
             query: { id },
           }}
         >
-          View Tenant
+          Manage Tenant
         </Button>
       </td>
     </tr>

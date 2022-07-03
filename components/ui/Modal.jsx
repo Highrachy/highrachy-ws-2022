@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal as BModal, Button } from 'react-bootstrap';
+import { Modal as BModal } from 'react-bootstrap';
+import Button from '../forms/Button';
 
 const Modal = ({ showFooter, className, ...props }) => {
   return (
@@ -21,7 +22,11 @@ const Modal = ({ showFooter, className, ...props }) => {
       <BModal.Body>{props.children}</BModal.Body>
       {showFooter && (
         <BModal.Footer>
-          <Button size="sm" onClick={props.onHide}>
+          <Button
+            color="none"
+            className="btn btn-sm btn-outline-secondary"
+            onClick={props.onHide}
+          >
             Close
           </Button>
         </BModal.Footer>

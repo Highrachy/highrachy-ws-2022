@@ -376,3 +376,24 @@ footer a {
 .linkedin-color {
   color: #0077b5;
 }
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: normal;
+}
+
+.Toastify__toast--success {
+  background-color: $success;
+}
+
+.Toastify__toast--error {
+  background-color: $danger;
+}
+
+.Toastify__toast--info {
+  background-color: $info;
+}
+
+.Toastify__toast--warning {
+  background-color: $warning;
+}

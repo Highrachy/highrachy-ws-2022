@@ -126,12 +126,26 @@ export const isValidUrl = (url) => {
 export const camelToSentence = (str) =>
   str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
 
+// check if is valid number or decimal number
+
+export const isValidNumber = (value) => {
+  return !isNaN(value) && isFinite(value);
+};
+
+// convert number to thousandSeparator
+export const numberToThousandSeparator = (value) => {
+  return humanize.formatNumber(value, 0);
+};
+
 export const processData = (data, item) => {
   if (isEmpty(data)) {
     return <em className="text-muted-light">(empty)</em>;
   }
   if (isBoolean(data)) {
     return data ? 'Yes' : 'No';
+  }
+  if (isValidNumber(data)) {
+    return numberToThousandSeparator(data);
   }
   if (isValidDate(data)) {
     return getShortDate(data);
