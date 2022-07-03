@@ -72,3 +72,15 @@ td {
     }
   }
 }
+
+.text-muted-light {
+  color: lighten($text-muted, 25%);
+}
+
+.text-muted-link {
+  color: $text-muted;
+  text-decoration: none;
+  &:hover {
+    color: $primary;
+  }
+}

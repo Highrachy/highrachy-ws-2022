@@ -18,7 +18,7 @@ const Tenants = () => (
   </Backend>
 );
 
-const TenantsRowList = ({ results, offset }) => {
+export const TenantsRowList = ({ results, offset, hideApartments }) => {
   return (
     <div className="container-fluid">
       <Card className="mt-2">
@@ -28,7 +28,7 @@ const TenantsRowList = ({ results, offset }) => {
               <tr>
                 <th>S/N</th>
                 <th>Name</th>
-                <th>Apartment</th>
+                {!hideApartments && <th>Apartment</th>}
                 <th>Status</th>
                 <th></th>
               </tr>
@@ -40,6 +40,7 @@ const TenantsRowList = ({ results, offset }) => {
                   number={offset + index + 1}
                   id={id}
                   {...attributes}
+                  hideApartments={hideApartments}
                 />
               ))}
             </tbody>
@@ -50,7 +51,7 @@ const TenantsRowList = ({ results, offset }) => {
   );
 };
 
-const TenantsSingleRow = ({ number, ...props }) => {
+const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
   const { id, apartment, title, tenantFullName, tenantProfileImage, status } =
     props;
 
@@ -69,11 +70,14 @@ const TenantsSingleRow = ({ number, ...props }) => {
         />
         {title} {tenantFullName}
       </td>
+      {!hideApartments && (
+        <td>
+          {apartment?.data?.attributes.name} -{' '}
+          {apartment?.data?.attributes.type}
+        </td>
+      )}
       <td>
-        {apartment.data.attributes.name} - {apartment.data.attributes.type}
-      </td>
-      <td>
-        <span className={`badge bg-${applied ? 'success' : 'dark'}`}>
+        <span className={`badge badge-dot bg-${applied ? 'success' : 'dark'}`}>
           {status}
         </span>
       </td>

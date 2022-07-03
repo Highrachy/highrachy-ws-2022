@@ -1,4 +1,6 @@
+import { LocalImage } from '@/components/common/Image';
 import humanize from 'humanize-plus';
+import Link from 'next/link';
 
 export const isDevEnvironment = () =>
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -89,3 +91,77 @@ export const statusIsSuccessful = (status) => status >= 200 && status <= 204;
 
 // Async Validation
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// check if undefine or null or empty string
+export const isEmpty = (value) => {
+  return value === undefined || value === null || value === '';
+};
+
+// check if data is a string
+export const isString = (data) => typeof data === 'string';
+
+//check if link is an image link
+export const isImage = (link) => {
+  return link.match(/\.(jpeg|jpg|gif|png)$/);
+};
+
+// check if boolean
+export const isBoolean = (value) => typeof value === 'boolean';
+
+// check if valid date
+export const isValidDate = (date) => {
+  return date instanceof Date && !isNaN(date.getTime());
+};
+
+// check if string is a valid url
+export const isValidUrl = (url) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
+export const camelToSentence = (str) =>
+  str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
+
+export const processData = (data, item) => {
+  if (isEmpty(data)) {
+    return <em className="text-muted-light">(empty)</em>;
+  }
+  if (isBoolean(data)) {
+    return data ? 'Yes' : 'No';
+  }
+  if (isValidDate(data)) {
+    return getShortDate(data);
+  }
+  if (isString(data)) {
+    if (isImage(data)) {
+      return (
+        <Link href={data} passHref>
+          <a target="_blank" rel="noopener noreferrer">
+            <LocalImage
+              src={data}
+              name={item}
+              className="img-cover"
+              height="128"
+              rounded
+            />
+          </a>
+        </Link>
+      );
+    }
+    if (isValidUrl(data)) {
+      return (
+        <Link href={data} passHref>
+          <a target="_blank" rel="noopener noreferrer">
+            {data}
+          </a>
+        </Link>
+      );
+    }
+    return data;
+  }
+  return '-';
+};

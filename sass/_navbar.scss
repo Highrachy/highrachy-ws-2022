@@ -90,3 +90,15 @@
     }
   }
 }
+
+.nav-link {
+  color: $text-muted;
+  font-size: 1.1rem;
+  &.active {
+    color: $text-color;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid $primary;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+}

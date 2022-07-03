@@ -4,19 +4,26 @@ import { adminMenu } from '@/data/adminMenu';
 import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
-import Button from '@/components/forms/Button';
-import ReactMarkdown from 'react-markdown';
-import { SectionHeader } from '@/components/common/Section';
-import { TenantInfo } from 'pages/careers';
-import { ApplicantsRowList } from '../applicants';
-import Modal from '@/components/ui/Modal';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { getTokenFromStore } from '@/utils/localStorage';
-import { getError, statusIsSuccessful } from '@/utils/helpers';
+import {
+  camelToSentence,
+  getError,
+  processData,
+  statusIsSuccessful,
+} from '@/utils/helpers';
 import { LocalImage } from '@/components/common/Image';
-import { Card } from 'react-bootstrap';
-import { getShortDate } from '@/utils/date-helpers';
+import { Tab, Tabs } from 'react-bootstrap';
+import Link from 'next/link';
+import { MdEmail, MdLocalPhone } from 'react-icons/md';
+import {
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaTwitterSquare,
+} from 'react-icons/fa';
+import { RiCommunityFill } from 'react-icons/ri';
+import classNames from 'classnames';
+import Button from '@/components/forms/Button';
+import Humanize from 'humanize-plus';
 
 const pageOptions = {
   key: 'tenant',
@@ -26,6 +33,7 @@ const pageOptions = {
 const SingleTenant = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [currentTab, setCurrentTab] = React.useState(allTenantTabs[0].key);
 
   const [query, result] = useSWRQuery({
     name: id ? [pageOptions.key, id] : id,
@@ -35,6 +43,7 @@ const SingleTenant = () => {
         populate: '*',
       },
     },
+    showResult: true,
   });
 
   return (
@@ -45,176 +54,441 @@ const SingleTenant = () => {
         results={result}
         name={pageOptions.pageName}
       >
-        <TenantDetail {...result?.attributes} id={id} query={query} />
+        <TenantHeader
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          {...result?.attributes}
+          id={id}
+          query={query}
+        />
+        <Tab.Container
+          activeKey={currentTab}
+          id="single-tenant-profile"
+          className="mb-3"
+        >
+          <Tab.Content>
+            {allTenantTabs.map(({ key, title, fields }) => (
+              <Tab.Pane eventKey={key} key={key}>
+                <TabInformation
+                  title={title}
+                  tenant={result?.attributes}
+                  data={fields}
+                />
+              </Tab.Pane>
+            ))}
+          </Tab.Content>
+        </Tab.Container>
       </ContentLoader>
     </Backend>
   );
 };
 
-const TenantDetail = ({
-  firstName,
-  middleName,
-  lastName,
-  mobileTelephone,
-  homeTelephone,
-  personalEmail,
-  workEmail,
-  dateOfBirth,
-  tenantFullName,
-  title,
+const TenantHeader = ({
+  currentTab,
+  setCurrentTab,
+  apartment,
   tenantProfileImage,
+  tenantFullName,
+  mobileTelephone,
+  personalEmail,
+  facebook,
+  twitter,
+  instagram,
+  linkedIn,
   status,
-}) => (
-  <div className="container-fluid">
-    <section className="pb-4 border-bottom">
-      <h3 className="text-gray">
-        {tenantFullName} &nbsp;
-        <span
-          className={`badge rounded-pill bg-${
-            status === 'APPLIED' ? 'success' : 'dark'
-          }`}
-        >
-          {status}
-        </span>
-      </h3>
+}) => {
+  return (
+    <section>
+      <section className="card mb-5">
+        <div className="card-body pb-0">
+          <div className="d-flex flex-wrap flex-sm-nowrap">
+            <div className="mb-4">
+              <div className="d-block me-3 position-relative">
+                <LocalImage
+                  src={tenantProfileImage}
+                  name={tenantFullName}
+                  className="img-xl img-cover"
+                  rounded
+                />
+              </div>
+            </div>
+            <div className="flex-grow-1">
+              <div className="d-flex justify-content-between align-items-start flex-wrap mb-3">
+                <div className="d-flex flex-column">
+                  {/* Tenant Name */}
+                  <h4 className="d-flex align-items-center mb-2">
+                    {tenantFullName}
+                  </h4>
+                  {/* Email and Phone */}
+                  <div className="d-flex flex-wrap fs-6 mb-2 pe-2">
+                    <span className="d-flex align-items-center text-muted small me-3">
+                      <MdLocalPhone /> &nbsp;{mobileTelephone}
+                    </span>
+                    <span className="d-flex align-items-center text-muted small me-3">
+                      <MdEmail /> &nbsp;{personalEmail}
+                    </span>
+                  </div>
+                  {/* Apartment */}
+                  <div className="d-flex flex-wrap fs-6 mb-2">
+                    <Link
+                      href={{
+                        pathname: '/admin/apartments/[id]',
+                        query: { id: apartment.data.attributes.id },
+                      }}
+                      passHref
+                    >
+                      <a className="d-flex align-items-center text-muted-link">
+                        <RiCommunityFill /> &nbsp;
+                        {apartment.data.attributes.name} -{' '}
+                        <strong>&nbsp;{apartment.data.attributes.type}</strong>
+                      </a>
+                    </Link>
+                  </div>
+                  {/* Social Media */}
+                  <div className="d-flex flex-wrap fs-6 mb-2">
+                    <span
+                      className={`badge badge-dot bg-${
+                        status === 'APPLIED' ? 'success' : 'dark'
+                      }`}
+                    >
+                      {status}
+                    </span>
+                  </div>
+                </div>
+                {/* Action */}
+                <div className="d-flex my-2">
+                  <Button onClick={() => {}}>Action</Button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <Card className="mt-4">
-        <div className="text-center my-4">
-          <LocalImage
-            src={tenantProfileImage}
-            name={`${tenantFullName}`}
-            className="icon-md me-2"
-            width="120"
-            rounded
-            height="120"
-          />
+          <ul className="nav fs-5 pt-5 fw-bolder">
+            {allTenantTabs.map(({ key }) => (
+              <li
+                key={key}
+                className="nav-item"
+                onClick={() => setCurrentTab(key)}
+              >
+                <span
+                  className={classNames('nav-link', {
+                    active: currentTab === key,
+                  })}
+                >
+                  {key}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="table-responsive">
-          <table className="table table-bordered">
-            <tbody>
-              <tr>
-                <td>Tenant Name</td>
-                <td>
-                  {title} {tenantFullName}
-                </td>
-              </tr>
-              <tr>
-                <td>Names</td>
-                <td>
-                  {title} {firstName} {lastName} {middleName}
-                </td>
-              </tr>
-              <tr>
-                <td>Mobile Telephone</td>
-                <td>{mobileTelephone}</td>
-              </tr>
-              <tr>
-                <td>Home Telephone</td>
-                <td>{homeTelephone}</td>
-              </tr>
-              <tr>
-                <td>Personal Email</td>
-                <td>{personalEmail}</td>
-              </tr>
-              <tr>
-                <td>Work Email</td>
-                <td>{workEmail}</td>
-              </tr>
-              <tr>
-                <td>Date of Birth</td>
-                <td>{getShortDate(dateOfBirth)}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Card>
+      </section>
     </section>
-  </div>
-);
+  );
+};
+
+const TabInformation = ({ tenant, title, data }) => {
+  return (
+    <section>
+      {title === allTenantTabs[0].title ? (
+        <TenantOverview tenant={tenant} />
+      ) : (
+        <div className="card">
+          <div className="table-responsive">
+            <table className="table table-border">
+              <thead>
+                <tr>
+                  <th colSpan="2">
+                    <h5 className="my-3">{title}</h5>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={index}>
+                    <th width="300">{camelToSentence(item)}</th>
+                    <td>{processData(tenant[item])}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+const TenantOverview = ({ tenant }) => {
+  const getDependantCount = () => {
+    const dependants = [];
+    for (let i = 1; i <= 5; i++) {
+      if (tenant[`dependantName${i}`]) {
+        dependants.push(tenant[`dependantName${i}`]);
+      }
+    }
+    return dependants.length;
+  };
+  const dependantCount = getDependantCount();
+  return (
+    <div className="card">
+      <div className="table-responsive">
+        <table className="table table-border">
+          <thead>
+            <tr>
+              <th colSpan="2">
+                <h5 className="my-3">Overview</h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th width="300">Profile Name matches</th>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <th>Social Media</th>
+              <td>
+                {tenant.facebook && (
+                  <Link href={tenant.facebook} passHref>
+                    <a className="facebook-color icon-md me-2">
+                      <FaFacebookSquare />
+                    </a>
+                  </Link>
+                )}
+                {tenant.twitter && (
+                  <Link href={tenant.twitter} passHref>
+                    <a className="twitter-color icon-md me-2">
+                      <FaTwitterSquare />
+                    </a>
+                  </Link>
+                )}
+                {tenant.linkedIn && (
+                  <Link href={tenant.linkedIn} passHref>
+                    <a className="linkedin-color icon-md me-2">
+                      <FaLinkedin />
+                    </a>
+                  </Link>
+                )}
+                {tenant.instagram && (
+                  <Link href={tenant.instagram} passHref>
+                    <a className="instagram-color icon-md me-2">
+                      <FaInstagramSquare />
+                    </a>
+                  </Link>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <th>Emergency Contact</th>
+              <td>
+                {tenant.emergencyRelationship} - {tenant.emergencyTelephone1} (
+                {tenant.emergencyEmail})
+              </td>
+            </tr>
+            <tr>
+              <th>Last Apartment</th>
+              <td>
+                {tenant.ownLastProperty
+                  ? 'Owns Last Apartment'
+                  : tenant.neverRentedBefore
+                  ? 'Never Rented Before'
+                  : 'Has a previous Landlord'}
+              </td>
+            </tr>
+            <tr>
+              <th>Employment Details</th>
+              <td>
+                <strong>{tenant.employmentPositionTitle}</strong> at{' '}
+                {tenant.employmentCompanyName}
+              </td>
+            </tr>
+            <tr>
+              <th>Employment Social Media</th>
+              <td>
+                {tenant.companyFacebook && (
+                  <Link href={tenant.companyFacebook} passHref>
+                    <a className="facebook-color icon-md me-2">
+                      <FaFacebookSquare />
+                    </a>
+                  </Link>
+                )}
+                {tenant.companyTwitter && (
+                  <Link href={tenant.companyTwitter} passHref>
+                    <a className="twitter-color icon-md me-2">
+                      <FaTwitterSquare />
+                    </a>
+                  </Link>
+                )}
+                {tenant.companyLinkedIn && (
+                  <Link href={tenant.companyLinkedIn} passHref>
+                    <a className="linkedin-color icon-md me-2">
+                      <FaLinkedin />
+                    </a>
+                  </Link>
+                )}
+                {tenant.companyInstagram && (
+                  <Link href={tenant.companyInstagram} passHref>
+                    <a className="instagram-color icon-md me-2">
+                      <FaInstagramSquare />
+                    </a>
+                  </Link>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <th>Has Dependants</th>
+              <td>
+                {dependantCount > 0
+                  ? `Yes (${dependantCount} ${Humanize.pluralize(
+                      dependantCount,
+                      'dependant'
+                    )})`
+                  : 'No'}
+              </td>
+            </tr>
+            <tr>
+              <th>Has persons with Special Needs</th>
+              <td>{tenant.hasPersonsWithSpecialNeed ? 'Yes' : 'No'}</td>
+            </tr>
+            <tr>
+              <th>Has Pets</th>
+              <td>{tenant.pets ? 'Yes' : 'No'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
 export default SingleTenant;
 
-export const ProcessTenant = ({ available, id, query }) => {
-  const [loading, setLoading] = React.useState(false);
-  const [showApprovalModal, setShowApprovalModal] = React.useState(false);
-  const currentData = query?.data?.data;
+const personalInformation = [
+  'title',
+  'firstName',
+  'middleName',
+  'lastName',
+  'mobileTelephone',
+  'homeTelephone',
+  'personalEmail',
+  'workEmail',
+  'dateOfBirth',
+  'tenantFullName',
+  'identificationType',
+  'identificationNumber',
+  'currentAddress',
+  'postCode',
+  'timeAtCurrentAddress',
+  'stateOfOrigin',
+  'maritalStatus',
+  'previousEmployment',
+  'facebook',
+  'twitter',
+  'instagram',
+  'linkedIn',
+];
 
-  const processTenant = () => {
-    setLoading(true);
-    axios
-      .put(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/tenants/${id}`,
-        { data: { available: !available } },
-        {
-          headers: { Authorization: getTokenFromStore() },
-        }
-      )
-      .then(function (response) {
-        const { status, data } = response;
-        if (statusIsSuccessful(status)) {
-          toast.success('The tenant has been successfully closed');
-          setLoading(false);
-          setShowApprovalModal(false);
-          query.mutate({ ...currentData, available: !available });
-        }
-      })
-      .catch(function (error) {
-        toast.error(getError(error));
-        setLoading(false);
-      });
-  };
+const emergencyInfo = [
+  'emergencyFullName',
+  'emergencyEmail',
+  'emergencyRelationship',
+  'emergencyTelephone1',
+  'emergencyTelephone2',
+  'emergencyAddress',
+];
 
-  const currentState = available ? 'Close' : 'Open';
-  const currentStateButton = available ? 'primary' : 'success';
+const landlordInfo = [
+  'ownLastProperty',
+  'landlordFullName',
+  'landlordEmail',
+  'landlordTelephone',
+  'landlordAddress',
+  'landlordPostcode',
+  'neverRentedBefore',
+  'propertyEvidenceURL',
+];
 
-  return (
-    <>
-      <Button
-        color={currentStateButton}
-        className="btn-xs"
-        onClick={() => setShowApprovalModal(true)}
-      >
-        {currentState} Tenant
-      </Button>
+const employmentInfo = [
+  'isSelfEmployed',
+  'employmentCompanyName',
+  'employmentPositionTitle',
+  'employmentContractType',
+  'employmentAddress',
+  'employmentPostcode',
+  'employmentStartDate',
+  'employmentManagerName',
+  'employmentManagerPosition',
+  'employmentManagerEmail',
+  'employmentManagerTelephone',
+  'companyFacebook',
+  'companyTwitter',
+  'companyInstagram',
+  'companyLinkedIn',
+  'employmentMoreDetails',
+  'changeEmployerSoon',
+  'offerLetterURL',
+];
 
-      {/* Close Tenant  Modals */}
-      <Modal
-        title={`${currentState} Tenant`}
-        show={showApprovalModal}
-        onHide={() => setShowApprovalModal(false)}
-        showFooter={false}
-      >
-        <section className="row">
-          <div className="col-md-12 my-3 text-center">
-            <h5 className="my-2 confirmation-text">
-              Are you sure you want to {currentState} this tenant?
-            </h5>
-            <Button
-              color={currentStateButton}
-              onClick={processTenant}
-              loading={loading}
-            >
-              {currentState} Tenant
-            </Button>
-          </div>
-        </section>
-      </Modal>
-    </>
-  );
-};
-export const RichTextSection = ({ title, text }) => (
-  <PaddedSection title={title}>
-    <ReactMarkdown>{text}</ReactMarkdown>
-  </PaddedSection>
-);
+const dependantInfo = [
+  'dependantName1',
+  'dependantAge1',
+  'dependantRelationship1',
+  'dependantOccupation1',
+  'dependantIdentification1',
+  'dependantName2',
+  'dependantAge2',
+  'dependantRelationship2',
+  'dependantOccupation2',
+  'dependantIdentification2',
+  'dependantName3',
+  'dependantAge3',
+  'dependantRelationship3',
+  'dependantOccupation3',
+  'dependantIdentification3',
+  'dependantName4',
+  'dependantAge4',
+  'dependantRelationship4',
+  'dependantOccupation4',
+  'dependantIdentification4',
+  'dependantName5',
+  'dependantAge5',
+  'dependantRelationship5',
+  'dependantOccupation5',
+  'dependantIdentification5',
+  'hasPersonsWithSpecialNeed',
+  'specialNeedDetails',
+  'pets',
+];
 
-const PaddedSection = ({ children, title }) => (
-  <section className="pb-5">
-    <div className="row">
-      <div className="col-sm-12">
-        {title && <SectionHeader small>{title}</SectionHeader>}
-        {children}
-      </div>
-    </div>
-  </section>
-);
+export const allTenantTabs = [
+  {
+    key: 'Overview',
+    title: 'Overview',
+    fields: [],
+  },
+  {
+    key: 'Profile',
+    title: 'Profile',
+    fields: personalInformation,
+  },
+  {
+    key: 'Emergency',
+    title: 'Emergency Contact',
+    fields: emergencyInfo,
+  },
+  {
+    key: 'LandLord',
+    title: 'LandLord Info',
+    fields: landlordInfo,
+  },
+  {
+    key: 'Employment',
+    title: 'Employment Details',
+    fields: employmentInfo,
+  },
+  {
+    key: 'Dependant',
+    title: 'Dependants Information',
+    fields: dependantInfo,
+  },
+];
