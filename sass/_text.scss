@@ -84,3 +84,13 @@ td {
     color: $primary;
   }
 }
+
+a.text-reset,
+.text-link {
+  text-decoration: none !important;
+  cursor: pointer;
+
+  &:hover {
+    color: $primary !important;
+  }
+}

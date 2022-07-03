@@ -22,6 +22,7 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import { TENANT_STATUS } from '@/utils/constants';
 import {
   generateNumOptions,
   getError,
@@ -267,7 +268,9 @@ const TenantForm = ({ apartment }) => {
       ...values,
       dateOfBirth: values.dateOfBirth.date,
       employmentStartDate: values.employmentStartDate.date,
-      status: isWaitingList ? 'WAITING LIST' : 'APPLIED',
+      status: isWaitingList
+        ? TENANT_STATUS.WAITING_LIST
+        : TENANT_STATUS.APPLIED,
 
       // BOOLEAN VALUES_TO_OPTIONS
       ownLastProperty: !!values?.ownLastProperty,

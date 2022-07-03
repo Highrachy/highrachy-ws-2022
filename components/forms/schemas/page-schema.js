@@ -185,8 +185,6 @@ export const tenantSchema = {
   confirmation: booleanValidation('Confirmation'),
 };
 
-// status => waiting list, applied, confirmed, leaving soon, Moved Out
-
 const initialData = {
   tenantFullName: 'Haruna Popoola',
   tenantProfileImage:

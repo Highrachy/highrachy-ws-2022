@@ -5,6 +5,7 @@ import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Image, { LocalImage } from '@/components/common/Image';
 import Button from '@/components/forms/Button';
+import { TENANT_STATUS_COLOR } from '@/utils/constants';
 
 const Tenants = () => (
   <Backend>
@@ -54,8 +55,6 @@ export const TenantsRowList = ({ results, offset, hideApartments }) => {
 const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
   const { id, apartment, title, tenantFullName, tenantProfileImage, status } =
     props;
-
-  const applied = status === 'APPLIED';
   return (
     <tr>
       <td>{number}</td>
@@ -77,7 +76,7 @@ const TenantsSingleRow = ({ number, hideApartments, ...props }) => {
         </td>
       )}
       <td>
-        <span className={`badge badge-dot bg-${applied ? 'success' : 'dark'}`}>
+        <span className={`badge badge-dot bg-${TENANT_STATUS_COLOR[status]}`}>
           {status}
         </span>
       </td>

@@ -3,8 +3,6 @@ import PaginatedContent from '@/components/admin/PaginatedContent';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
-import Link from 'next/link';
-import ProcessButton from '@/components/utils/ProcessButton';
 import Button from '@/components/forms/Button';
 
 const Applicants = () => (

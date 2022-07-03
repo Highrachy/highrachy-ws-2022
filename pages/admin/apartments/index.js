@@ -100,7 +100,7 @@ const ApartmentsSingleRow = ({
           className="btn-xs btn-outline-dark"
           href={{
             pathname: '/apartments/[slug]',
-            query: { property: slug },
+            query: { slug },
           }}
         >
           Website

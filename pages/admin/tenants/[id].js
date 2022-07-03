@@ -24,6 +24,9 @@ import { RiCommunityFill } from 'react-icons/ri';
 import classNames from 'classnames';
 import Button from '@/components/forms/Button';
 import Humanize from 'humanize-plus';
+import TopTitle from '@/components/admin/TopTitle';
+import { TENANT_STATUS, TENANT_STATUS_COLOR } from '@/utils/constants';
+import ProcessButton from '@/components/utils/ProcessButton';
 
 const pageOptions = {
   key: 'tenant',
@@ -54,6 +57,7 @@ const SingleTenant = () => {
         results={result}
         name={pageOptions.pageName}
       >
+        <TopTitle>Single Tenant</TopTitle>
         <TenantHeader
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
@@ -71,8 +75,9 @@ const SingleTenant = () => {
               <Tab.Pane eventKey={key} key={key}>
                 <TabInformation
                   title={title}
-                  tenant={result?.attributes}
+                  tenant={{ id, ...result?.attributes }}
                   data={fields}
+                  setCurrentTab={setCurrentTab}
                 />
               </Tab.Pane>
             ))}
@@ -91,12 +96,11 @@ const TenantHeader = ({
   tenantFullName,
   mobileTelephone,
   personalEmail,
-  facebook,
-  twitter,
-  instagram,
-  linkedIn,
   status,
+  id,
+  query,
 }) => {
+  const nextStatus = getNextTenantStatus(status);
   return (
     <section>
       <section className="card mb-5">
@@ -133,7 +137,7 @@ const TenantHeader = ({
                     <Link
                       href={{
                         pathname: '/admin/apartments/[id]',
-                        query: { id: apartment.data.attributes.id },
+                        query: { id: apartment.data.id },
                       }}
                       passHref
                     >
@@ -148,7 +152,7 @@ const TenantHeader = ({
                   <div className="d-flex flex-wrap fs-6 mb-2">
                     <span
                       className={`badge badge-dot bg-${
-                        status === 'APPLIED' ? 'success' : 'dark'
+                        TENANT_STATUS_COLOR[status] || 'danger'
                       }`}
                     >
                       {status}
@@ -157,7 +161,20 @@ const TenantHeader = ({
                 </div>
                 {/* Action */}
                 <div className="d-flex my-2">
-                  <Button onClick={() => {}}>Action</Button>
+                  {status !== TENANT_STATUS.MOVED_OUT && (
+                    <ProcessButton
+                      afterSuccess={() => query.mutate()}
+                      api={`tenants/${id}`}
+                      buttonColor={TENANT_STATUS_COLOR[nextStatus]}
+                      buttonClassName="btn-md"
+                      data={{ status: nextStatus }}
+                      modalContent={`Are you sure you want to update this tenant's appllication to ${nextStatus}`}
+                      modalTitle={`Mark as ${nextStatus}`}
+                      successMessage={`The applicant has been successfully updated to  ${nextStatus}`}
+                    >
+                      Mark as {nextStatus}
+                    </ProcessButton>
+                  )}
                 </div>
               </div>
             </div>
@@ -186,11 +203,30 @@ const TenantHeader = ({
   );
 };
 
-const TabInformation = ({ tenant, title, data }) => {
+// write get status function
+// upadte action button to work as expected
+// Add pending documents
+
+const getNextTenantStatus = (status) => {
+  switch (status) {
+    case TENANT_STATUS.WAITING_LIST:
+    case TENANT_STATUS.APPLIED:
+      return TENANT_STATUS.CONFIRMED;
+    case TENANT_STATUS.CONFIRMED:
+      return TENANT_STATUS.LEAVING_SOON;
+    case TENANT_STATUS.LEAVING_SOON:
+      return TENANT_STATUS.MOVED_OUT;
+    default:
+      return null;
+  }
+  return null;
+};
+
+const TabInformation = ({ tenant, title, data, setCurrentTab }) => {
   return (
     <section>
       {title === allTenantTabs[0].title ? (
-        <TenantOverview tenant={tenant} />
+        <TenantOverview tenant={tenant} setCurrentTab={setCurrentTab} />
       ) : (
         <div className="card">
           <div className="table-responsive">
@@ -218,7 +254,7 @@ const TabInformation = ({ tenant, title, data }) => {
   );
 };
 
-const TenantOverview = ({ tenant }) => {
+const TenantOverview = ({ tenant, setCurrentTab }) => {
   const getDependantCount = () => {
     const dependants = [];
     for (let i = 1; i <= 5; i++) {
@@ -280,30 +316,47 @@ const TenantOverview = ({ tenant }) => {
             </tr>
             <tr>
               <th>Emergency Contact</th>
-              <td>
-                {tenant.emergencyRelationship} - {tenant.emergencyTelephone1} (
-                {tenant.emergencyEmail})
+              <td className="td-block">
+                <div
+                  onClick={() => setCurrentTab(allTenantTabs[2].key)}
+                  className="text-link"
+                >
+                  {tenant.emergencyFullName} ({tenant.emergencyRelationship})
+                  <span>
+                    {tenant.emergencyTelephone1} - {tenant.emergencyEmail}
+                  </span>
+                </div>
               </td>
             </tr>
             <tr>
               <th>Last Apartment</th>
               <td>
-                {tenant.ownLastProperty
-                  ? 'Owns Last Apartment'
-                  : tenant.neverRentedBefore
-                  ? 'Never Rented Before'
-                  : 'Has a previous Landlord'}
+                <span
+                  onClick={() => setCurrentTab(allTenantTabs[3].key)}
+                  className="text-link"
+                >
+                  {tenant.ownLastProperty
+                    ? 'Owns Last Apartment'
+                    : tenant.neverRentedBefore
+                    ? 'Never Rented Before'
+                    : 'Has a previous Landlord'}
+                </span>
               </td>
             </tr>
             <tr>
               <th>Employment Details</th>
               <td>
-                <strong>{tenant.employmentPositionTitle}</strong> at{' '}
-                {tenant.employmentCompanyName}
+                <span
+                  onClick={() => setCurrentTab(allTenantTabs[4].key)}
+                  className="text-link"
+                >
+                  <strong>{tenant.employmentPositionTitle}</strong>&nbsp;at{' '}
+                  <em>{tenant.employmentCompanyName}</em>
+                </span>
               </td>
             </tr>
             <tr>
-              <th>Employment Social Media</th>
+              <th>Company Social Media</th>
               <td>
                 {tenant.companyFacebook && (
                   <Link href={tenant.companyFacebook} passHref>
@@ -338,21 +391,42 @@ const TenantOverview = ({ tenant }) => {
             <tr>
               <th>Has Dependants</th>
               <td>
-                {dependantCount > 0
-                  ? `Yes (${dependantCount} ${Humanize.pluralize(
-                      dependantCount,
-                      'dependant'
-                    )})`
-                  : 'No'}
+                <span
+                  onClick={() => setCurrentTab(allTenantTabs[5].key)}
+                  className="text-link"
+                >
+                  {dependantCount > 0
+                    ? `${processData(
+                        true
+                      )} (${dependantCount} ${Humanize.pluralize(
+                        dependantCount,
+                        'dependant'
+                      )})`
+                    : processData(false)}
+                </span>
               </td>
             </tr>
             <tr>
               <th>Has persons with Special Needs</th>
-              <td>{tenant.hasPersonsWithSpecialNeed ? 'Yes' : 'No'}</td>
+              <td>
+                <span
+                  onClick={() => setCurrentTab(allTenantTabs[5].key)}
+                  className="text-link"
+                >
+                  {processData(tenant.hasPersonsWithSpecialNeed)}
+                </span>
+              </td>
             </tr>
             <tr>
               <th>Has Pets</th>
-              <td>{tenant.pets ? 'Yes' : 'No'}</td>
+              <td>
+                <span
+                  onClick={() => setCurrentTab(allTenantTabs[5].key)}
+                  className="text-link"
+                >
+                  {processData(!!tenant.pets)}
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -5,8 +5,8 @@ import { FiPlus } from 'react-icons/fi';
 
 const TopTitle = ({ children, buttonText, to }) => {
   return (
-    <div className="container-fluid">
-      <h4>
+    <div className="container-fluid mb-4">
+      <h4 className="text-secondary">
         {children}
         {buttonText && to && (
           <div className="text-end">

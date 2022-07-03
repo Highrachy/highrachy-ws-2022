@@ -93,9 +93,9 @@
 
 .nav-link {
   color: $text-muted;
-  font-size: 1.1rem;
+  font-size: 1rem;
   &.active {
-    color: $text-color;
+    color: $primary;
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid $primary;
