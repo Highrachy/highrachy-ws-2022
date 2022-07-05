@@ -5,26 +5,37 @@ import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Button from '@/components/forms/Button';
-import ReactMarkdown from 'react-markdown';
-import { SectionHeader } from '@/components/common/Section';
-import { ApplicantInfo } from 'pages/careers';
-import { ApplicantsRowList, getStatus } from '../applicants';
-import Modal from '@/components/ui/Modal';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { getTokenFromStore } from '@/utils/localStorage';
-import { getError, statusIsSuccessful } from '@/utils/helpers';
-import { RichTextSection } from '../jobs/[id]';
+import { getStatus } from '../applicants';
+import { camelToSentence, processData } from '@/utils/helpers';
 import ProcessButton from '@/components/utils/ProcessButton';
+import { GoBriefcase, GoPrimitiveDot } from 'react-icons/go';
+import { Tab } from 'react-bootstrap';
+import classNames from 'classnames';
+import Link from 'next/link';
+import { getShortDate } from '@/utils/date-helpers';
 
 const pageOptions = {
   key: 'applicant',
   pageName: 'Applicant',
 };
 
+const allApplicantTabs = [
+  {
+    key: 'Overview',
+    title: 'Overview',
+    fields: ['fullName', 'email', 'phoneNumber', 'resume', 'reviewed'],
+  },
+  {
+    key: 'Other Applications',
+    title: 'Other Applications',
+    fields: [],
+  },
+];
+
 const SingleApplicant = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [currentTab, setCurrentTab] = React.useState(allApplicantTabs[0].key);
 
   const [query, result] = useSWRQuery({
     name: id ? [pageOptions.key, id] : id,
@@ -45,77 +56,210 @@ const SingleApplicant = () => {
         results={result}
         name={pageOptions.pageName}
       >
-        <ApplicantDetail {...result?.attributes} id={id} query={query} />
+        <ApplicantHeader
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          {...result?.attributes}
+          prevJobs={result?.previousApplications}
+          id={id}
+          query={query}
+        />
+        <Tab.Container
+          activeKey={currentTab}
+          id="single-applicant-profile"
+          className="mb-3"
+        >
+          <Tab.Content>
+            {allApplicantTabs.map(({ key, title, fields }) => (
+              <Tab.Pane eventKey={key} key={key}>
+                <TabInformation
+                  id={id}
+                  title={title}
+                  applicant={{ id, ...result?.attributes }}
+                  data={fields}
+                  setCurrentTab={setCurrentTab}
+                  prevJobs={result?.previousApplications}
+                />
+              </Tab.Pane>
+            ))}
+          </Tab.Content>
+        </Tab.Container>
       </ContentLoader>
     </Backend>
   );
 };
 
-const ApplicantDetail = ({
+const ApplicantHeader = ({
+  currentTab,
+  setCurrentTab,
   id,
   fullName,
-  // email,
-  // phoneNumber,
-  // resume,
+  resume,
+  job,
   reviewed,
   rejected,
+  prevJobs,
   query,
-  notes,
 }) => {
   const status = getStatus({ reviewed, rejected });
   const currentState = !reviewed ? 'reviewed' : 'rejected';
+  const hasPrevApplication = prevJobs?.length > 0;
+
   return (
-    <div className="container-fluid">
-      <section className="pb-4 border-bottom">
-        <h3 className="text-gray">
-          {fullName} &nbsp;
-          <span className={`badge rounded-pill bg-${status.color}`}>
-            {status.text}
-          </span>
-        </h3>
+    <section className="card mb-5">
+      <div className="card-body p-5 pb-0">
+        <div className="d-flex flex-wrap flex-sm-nowrap">
+          <div className="flex-grow-1">
+            <div className="d-flex justify-content-between align-items-start flex-wrap mb-3">
+              <div className="d-flex flex-column">
+                <h4 className="d-flex align-items-center mb-2">{fullName}</h4>
+                <div className="d-flex flex-wrap align-items-center fs-6 mb-2 pe-2">
+                  <Link href={`/admin/jobs/${job?.data?.id}`} passHref>
+                    <a className="fw-bold text-reset d-flex align-items-center ">
+                      <GoBriefcase /> &nbsp; {job.data.attributes.title}
+                    </a>
+                  </Link>
+                </div>
+                <div
+                  className={`d-flex align-items-center text-${status.color} flex-wrap align-items-center fs-6 mb-2 pe-2`}
+                >
+                  {status.icon} &nbsp; {status.text}
+                </div>
+                {hasPrevApplication && (
+                  <div className="d-flex flex-wrap align-items-center fs-6 mb-3 pe-2">
+                    <span
+                      className={`d-flex align-items-center fw-bold text-danger`}
+                    >
+                      <GoPrimitiveDot /> Has {prevJobs.length} Other Application
+                    </span>
+                  </div>
+                )}
 
-        <section className="mt-3">
-          {!rejected && (
-            <ProcessButton
-              afterSuccess={() => query.mutate()}
-              api={`applicants/${id}`}
-              buttonColor={status.color}
-              data={{ [currentState]: true }}
-              modalContent={`Are you sure you want to mark this applicant as ${currentState}`}
-              modalTitle={`Mark as ${currentState}`}
-              successMessage={`The applicant has been successfully ${currentState}`}
+                <div className="d-flex flex-wrap fs-6 mb-2">
+                  <Button
+                    color="none"
+                    className="btn-xs btn-outline-dark"
+                    href={resume}
+                  >
+                    View Resume
+                  </Button>
+                </div>
+              </div>
+              {/* Action */}
+              <div className="d-flex my-2">
+                {!rejected && (
+                  <ProcessButton
+                    afterSuccess={() => query.mutate()}
+                    api={`applicants/${id}`}
+                    buttonColor={!rejected ? 'danger' : 'info'}
+                    data={{ [currentState]: true }}
+                    modalContent={`Are you sure you want to mark this applicant as ${currentState}`}
+                    modalTitle={`Mark as ${currentState}`}
+                    successMessage={`The applicant has been successfully ${currentState}`}
+                  >
+                    Mark as {currentState}
+                  </ProcessButton>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul className="nav fs-5 pt-5 fw-bolder">
+          {allApplicantTabs.map(({ key }) => (
+            <li
+              key={key}
+              className="nav-item"
+              onClick={() => setCurrentTab(key)}
             >
-              Mark as {currentState}
-            </ProcessButton>
-          )}
-          <Button
-            color="none"
-            className="btn-xs btn-outline-primary"
-            href={{
-              pathname: '/admin/applicants/new',
-              query: { id, action: 'edit' },
-            }}
-          >
-            Add Notes
-          </Button>
-          &nbsp;&nbsp;&nbsp;
-          {/* <ProcessApplicant id={id} available={available} query={query} /> */}
-        </section>
-      </section>
+              <span
+                className={classNames('nav-link', {
+                  active: currentTab === key,
+                })}
+              >
+                {key}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
-      {/* <section className="py-6 border-bottom">
-      <h3>Total applicants: {applicants.data.length}</h3>
-      {applicants.data.length > 0 && (
-        <ApplicantsRowList results={applicants.data} query={query} offset={0} />
-      )}
-    </section> */}
-
-      {notes && (
-        <section className="mt-5">
-          <RichTextSection title="Notes" text={notes} />
-        </section>
-      )}
-    </div>
+const TabInformation = ({ applicant, title, data, prevJobs }) => {
+  return (
+    <section>
+      <div className="card">
+        <div className="table-responsive">
+          <table className="table table-border">
+            <thead>
+              <tr>
+                <th colSpan="5">
+                  <h5 className="my-3">{title}</h5>
+                </th>
+              </tr>
+            </thead>
+            {!data || data.length === 0 ? (
+              <>
+                <tbody>
+                  {prevJobs.length === 0 ? (
+                    <td colSpan="5">
+                      <h5 className="text-muted text-center py-6">
+                        No Other Applications
+                      </h5>
+                    </td>
+                  ) : (
+                    prevJobs?.map(({ id, createdAt, resume, job }, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <Link href={`/admin/jobs/${job.id}`} passHref>
+                            <a className="fw-bold text-reset d-flex align-items-center ">
+                              {job.title}
+                            </a>
+                          </Link>
+                        </td>
+                        <td>on {getShortDate(createdAt)}</td>
+                        <td>
+                          <Button
+                            color="none"
+                            className="btn-xs btn-outline-dark"
+                            href={resume}
+                          >
+                            View Resume
+                          </Button>
+                          &nbsp;&nbsp;&nbsp;
+                          <Button
+                            color="primary"
+                            className="btn-xs"
+                            href={{
+                              pathname: '/admin/applicants/[id]',
+                              query: { id },
+                            }}
+                          >
+                            Manage Applicant
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </>
+            ) : (
+              <tbody>
+                {data.map((item, index) => (
+                  <tr key={index}>
+                    <th width="250">{camelToSentence(item)}</th>
+                    <td>{processData(applicant[item])}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+        </div>
+      </div>
+    </section>
   );
 };
 

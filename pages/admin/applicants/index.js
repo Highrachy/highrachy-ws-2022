@@ -4,6 +4,8 @@ import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
+import { RiCheckboxCircleFill, RiCloseCircleFill } from 'react-icons/ri';
+import { GrStatusCriticalSmall } from 'react-icons/gr';
 
 const Applicants = () => (
   <Backend>
@@ -12,7 +14,7 @@ const Applicants = () => (
       pageName="Applicant"
       DataComponent={ApplicantsRowList}
       PageIcon={adminMenu['Applicants']}
-      sort="createdAt:asc"
+      sort="createdAt:desc"
       showLogs
     />
   </Backend>
@@ -68,20 +70,23 @@ export const getStatus = ({ reviewed, rejected }) => {
     [applicantStatus.IS_ACTIVE]: {
       text: 'Still Active',
       color: 'success',
+      icon: <RiCheckboxCircleFill />,
     },
     [applicantStatus.AWAITING_REVIEW]: {
       text: 'Awaiting Review',
-      color: 'dark',
+      color: 'info',
+      icon: <GrStatusCriticalSmall />,
     },
     [applicantStatus.REJECTED]: {
       text: 'Rejected',
       color: 'danger',
+      icon: <RiCloseCircleFill />,
     },
   };
   return statusList[status];
 };
 
-const ApplicantsSingleRow = ({
+export const ApplicantsSingleRow = ({
   number,
   id,
   fullName,

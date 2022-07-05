@@ -194,12 +194,7 @@ const ApplicationForm = ({ job }) => {
                   name="email"
                   placeholder="Valid Email"
                 />
-                <Input
-                  floatingLabel
-                  label="Phone Number"
-                  name="phoneNumber"
-                  optional
-                />
+                <Input floatingLabel label="Phone Number" name="phoneNumber" />
                 <Upload
                   changeText="Update Resume"
                   customFormats={['pdf']}

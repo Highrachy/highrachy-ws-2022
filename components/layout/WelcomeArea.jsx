@@ -47,7 +47,7 @@ const WelcomeArea = () => (
         <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center">
           {(
             <Image
-              src="/assets/img/slides/hero-image.jpg"
+              src="/assets/img/slides/hero-image.png"
               className="rounded Tilt-inner"
               width="554"
               height="554"

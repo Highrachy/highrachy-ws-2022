@@ -1,6 +1,6 @@
 import { LocalImage } from '@/components/common/Image';
-import humanize from 'humanize-plus';
 import Link from 'next/link';
+import { getShortDate } from './date-helpers';
 
 export const isDevEnvironment = () =>
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -110,7 +110,7 @@ export const isBoolean = (value) => typeof value === 'boolean';
 
 // check if valid date
 export const isValidDate = (date) => {
-  return date instanceof Date && !isNaN(date.getTime());
+  return !isNaN(Date.parse(date));
 };
 
 // check if string is a valid url
@@ -132,11 +132,6 @@ export const isValidNumber = (value) => {
   return !isNaN(value) && isFinite(value);
 };
 
-// convert number to thousandSeparator
-export const numberToThousandSeparator = (value) => {
-  return humanize.formatNumber(value, 0);
-};
-
 export const processData = (data, item) => {
   if (isEmpty(data)) {
     return <em className="text-muted-light">(empty)</em>;
@@ -145,7 +140,7 @@ export const processData = (data, item) => {
     return data ? 'Yes' : 'No';
   }
   if (isValidNumber(data)) {
-    return numberToThousandSeparator(data);
+    return data;
   }
   if (isValidDate(data)) {
     return getShortDate(data);

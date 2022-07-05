@@ -11,7 +11,7 @@ import Switch from '@/components/forms/Switch';
 import { getTokenFromStore } from '@/utils/localStorage';
 import { getError, statusIsSuccessful } from '@/utils/helpers';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Humanize from 'humanize-plus';
 
@@ -69,6 +69,7 @@ const ProcessJobForm = ({ action, id, job }) => {
         .then(function (response) {
           const { status } = response;
           if (statusIsSuccessful(status)) {
+            Router.push('/admin/jobs');
             toast.success('Information sent successfully');
           }
         })

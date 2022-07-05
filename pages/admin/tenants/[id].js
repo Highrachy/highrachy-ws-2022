@@ -284,10 +284,6 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
           </thead>
           <tbody>
             <tr>
-              <th width="300">Profile Name matches</th>
-              <td>Yes</td>
-            </tr>
-            <tr>
               <th>Social Media</th>
               <td>
                 {tenant.facebook && (
@@ -304,8 +300,8 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
                     </a>
                   </Link>
                 )}
-                {tenant.linkedIn && (
-                  <Link href={tenant.linkedIn} passHref>
+                {tenant.linkedin && (
+                  <Link href={tenant.linkedin} passHref>
                     <a className="linkedin-color icon-md me-2">
                       <FaLinkedin />
                     </a>
@@ -378,8 +374,8 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
                     </a>
                   </Link>
                 )}
-                {tenant.companyLinkedIn && (
-                  <Link href={tenant.companyLinkedIn} passHref>
+                {tenant.companyLinkedin && (
+                  <Link href={tenant.companyLinkedin} passHref>
                     <a className="linkedin-color icon-md me-2">
                       <FaLinkedin />
                     </a>
@@ -431,8 +427,27 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
                   className="text-link"
                 >
                   {processData(!!tenant.pets)}
+                  {!!tenant.pets && ` - ${tenant.pets}`}
                 </span>
               </td>
+            </tr>
+            <tr>
+              <th>Pending Documents</th>
+              <td>
+                <ul className="list">
+                  <li>Testing 1</li>
+                  <li>Testing 2</li>
+                  <li>Testing 3</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>Created At</th>
+              <td>{processData(tenant.createdAt)}</td>
+            </tr>
+            <tr>
+              <th>Updated At</th>
+              <td>{processData(tenant.updatedAt)}</td>
             </tr>
           </tbody>
         </table>
@@ -465,7 +480,7 @@ const personalInformation = [
   'facebook',
   'twitter',
   'instagram',
-  'linkedIn',
+  'linkedin',
 ];
 
 const emergencyInfo = [
@@ -503,7 +518,7 @@ const employmentInfo = [
   'companyFacebook',
   'companyTwitter',
   'companyInstagram',
-  'companyLinkedIn',
+  'companyLinkedin',
   'employmentMoreDetails',
   'changeEmployerSoon',
   'offerLetterURL',

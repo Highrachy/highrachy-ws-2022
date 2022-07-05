@@ -22,6 +22,7 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import { tenantTestData } from '@/data/tenant';
 import { TENANT_STATUS } from '@/utils/constants';
 import {
   generateNumOptions,
@@ -34,105 +35,10 @@ import axios from 'axios';
 import { useFormikContext } from 'formik';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { FaChevronLeft, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-
-const initialValues = {
-  // tenantFullName: 'Haruna Popoola',
-  // tenantProfileImage:
-  //   'https://highrachy.s3.amazonaws.com/tenants/picture/587963b0-f572-11ec-b81b-4f8d0f407070.jpg',
-  // title: 'Mr',
-  // firstName: 'Popoola',
-  // middleName: 'Haruna',
-  // lastName: 'Oladayo',
-  // mobileTelephone: '+2348028388185',
-  // homeTelephone: '+2348028388185',
-  // personalEmail: 'harunpopson@gmail.com',
-  // workEmail: 'harunpopson2@gmail.com',
-  // dateOfBirth: {
-  //   date: '1987-03-12T23:00:00.000Z',
-  //   value: '12/03/1987',
-  // },
-  // bvn: '019808393877',
-  // identificationType: "Driver's License",
-  // identificationNumber: '1232455323233223',
-  // currentAddress: 'No 264,Ikorodu Road, Obanikoro',
-  // postCode: '110001',
-  // timeAtCurrentAddress: '2 years, 5 months',
-  // stateOfOrigin: 'Lagos',
-  // maritalStatus: 'Married',
-  // previousEmployment: 'I have no previous employment',
-  // facebook: 'https://www.facebook.com/',
-  // twitter: 'https://www.twitter.com/',
-  // instagram: 'https://www.instagram.com/',
-  // linkedIn: 'https://www.linkedin.com/',
-  // emergencyFullName: 'Oladele Ifemi',
-  // emergencyEmail: 'ifeme@gmail.com',
-  // emergencyRelationship: 'Brother',
-  // emergencyTelephone1: '08023456789',
-  // emergencyTelephone2: '080122333',
-  // emergencyAddress: 'Yomi Okunaiya Street',
-  // ownLastProperty: false,
-  // landlordFullName: 'Chief Oga Sabinus',
-  // landlordEmail: 'sabinus@me.com',
-  // landlordTelephone: '080551232343',
-  // landlordAddress: '17 Sample Landlord address',
-  // landlordPostcode: '551406',
-  // neverRentedBefore: '',
-  // propertyEvidenceURL: '',
-  // isSelfEmployed: true,
-  // employmentCompanyName: 'Highrachy Investment and Technology',
-  // employmentPositionTitle: 'IT Officer',
-  // employmentContractType: 'Contractor',
-  // employmentAddress: 'No 17, Adeolu Odeku, Victoria Island',
-  // employmentPostcode: '1140000',
-  // employmentStartDate: {
-  //   date: '2019-12-03T00:00:00.000Z',
-  //   value: '03/12/2019',
-  // },
-  // employmentManagerName: 'Mr Nnamdi',
-  // employmentManagerPosition: 'CEO',
-  // employmentManagerEmail: 'nnamdi@highrachy.com',
-  // employmentManagerTelephone: '0802233445566',
-  // companyFacebook: 'https://facebook.com/highrachy',
-  // companyTwitter: '',
-  // companyInstagram: '',
-  // companyLinkedIn: '',
-  // employmentMoreDetails: 'He is an awesome fellow',
-  // changeEmployerSoon: false,
-  // offerLetterURL: '',
-  // dependantName1: '',
-  // dependantAge1: '',
-  // dependantRelationship1: '',
-  // dependantOccupation1: '',
-  // dependantIdentification1: '',
-  // dependantName2: '',
-  // dependantAge2: '',
-  // dependantRelationship2: '',
-  // dependantOccupation2: '',
-  // dependantIdentification2: '',
-  // dependantName3: '',
-  // dependantAge3: '',
-  // dependantRelationship3: '',
-  // dependantOccupation3: '',
-  // dependantIdentification3: '',
-  // dependantName4: '',
-  // dependantAge4: '',
-  // dependantRelationship4: '',
-  // dependantOccupation4: '',
-  // dependantIdentification4: '',
-  // dependantName5: '',
-  // dependantAge5: '',
-  // dependantRelationship5: '',
-  // dependantOccupation5: '',
-  // dependantIdentification5: '',
-  // hasPersonsWithSpecialNeed: false,
-  // specialNeedDetails: '',
-  // pets: '',
-  // confirmation: [],
-};
 
 const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
@@ -252,10 +158,20 @@ const TenantForm = ({ apartment }) => {
     apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
     if (
+      !values.facebook &&
+      !values.twitter &&
+      !values.instagram &&
+      !values.linkedin
+    ) {
+      toast.error('You need to add at least one of your social media account');
+      actions.setSubmitting(false);
+      return;
+    }
+    if (
       !values.companyFacebook &&
       !values.companyTwitter &&
       !values.companyInstagram &&
-      !values.companyLinkedIn
+      !values.companyLinkedin
     ) {
       toast.error(
         "You need to add at least one of your company's social media account"
@@ -278,30 +194,28 @@ const TenantForm = ({ apartment }) => {
       isSelfEmployed: !!values?.isSelfEmployed,
       changeEmployerSoon: !!values?.changeEmployerSoon,
       hasPersonsWithSpecialNeed: !!values?.hasPersonsWithSpecialNeed,
-      hasPersonsWithSpecialNeed: !!values?.hasPersonsWithSpecialNeed,
 
       //CONDITION VALUES
       ...(values?.ownLastProperty
-        ? {}
-        : {
+        ? {
             landlordFullName: values.tenantFullName,
             landlordEmail: values.personalEmail,
             landlordTelephone: values.mobileTelephone,
-          }),
+          }
+        : {}),
       ...(values?.isSelfEmployed
-        ? {}
-        : {
+        ? {
             employmentPositionTitle: 'CEO',
             employmentContractType: 'Self Employed',
-            employmentManagerName: 'Not Applicable',
-            employmentPosition: 'Not Applicable',
-            employmentManagerEmail: 'Not Applicable',
-            employmentManagerTelephone: 'Not Applicable',
-          }),
+            employmentManagerName: 'Not Applicable - Self Employed',
+            employmentPosition: 'Not Applicable - Self Employed',
+            employmentManagerEmail: 'Not Applicable - Self Employed',
+            employmentManagerTelephone: 'Not Applicable - Self Employed',
+          }
+        : {}),
     };
 
     delete payload.confirmation;
-    console.log('payload', payload);
 
     try {
       axios({
@@ -313,6 +227,7 @@ const TenantForm = ({ apartment }) => {
         .then(function (response) {
           const { status } = response;
           if (statusIsSuccessful(status)) {
+            Router.push('/apartments');
             toast.success('Information sent successfully');
             actions.setSubmitting(false);
             actions.resetForm();
@@ -350,7 +265,7 @@ const TenantForm = ({ apartment }) => {
         showFormikState
         showAllFormikState
         persistForm
-        initialValues={initialValues}
+        initialValues={isDevEnvironment() ? tenantTestData : {}}
       >
         <PaddedSection>
           <>
@@ -551,17 +466,10 @@ const PersonalInformation = () => (
     </div>
     <div className="row">
       <DatePicker
-        formGroupClassName="col-md-6"
         label="Date of Birth"
         name="dateOfBirth"
         placeholder="YYYY-MM-DD"
         helpText="YYYY-MM-DD"
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="bvn"
-        label="BVN"
-        tooltipText="For identity purposes only. Does not give access to accounts"
       />
     </div>
     <div className="row">
@@ -569,7 +477,11 @@ const PersonalInformation = () => (
         name="identificationType"
         label="Identification Type"
         options={valuesToOptions(
-          ["Driver's License", 'International Passpport'],
+          [
+            "Driver's License",
+            'International Passpport',
+            'National Identification',
+          ],
           'Select One...'
         )}
         formGroupClassName="col-md-6"
@@ -630,6 +542,10 @@ const PersonalInformation = () => (
       helpText="Please provide sufficient information as to the name, location, position held and number of years spent at the organization"
     />
 
+    <h5>Social Media</h5>
+    <p className="text-muted">
+      At least one (1) of your social media handle is required
+    </p>
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
@@ -660,7 +576,7 @@ const PersonalInformation = () => (
       />
       <Input
         formGroupClassName="col-md-6"
-        name="linkedIn"
+        name="linkedin"
         label="LinkedIn"
         helpText="https://www.linkedin.com/..."
         type="url"
@@ -905,7 +821,7 @@ const EmploymentDetails = () => {
         />
         <Input
           formGroupClassName="col-md-6"
-          name="companyLinkedIn"
+          name="companyLinkedin"
           label="LinkedIn"
           type="url"
           optional
