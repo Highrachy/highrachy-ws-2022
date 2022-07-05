@@ -1,6 +1,7 @@
 import { LocalImage } from '@/components/common/Image';
 import Link from 'next/link';
 import { getShortDate } from './date-helpers';
+import Humanize from 'humanize-plus';
 
 export const isDevEnvironment = () =>
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
@@ -9,8 +10,8 @@ export const objectToOptions = (obj, defaultLabel = null, inverse = false) => {
   const output = Object.entries(obj).map(([label, value]) => ({
     value: inverse ? label.toString() : value.toString(),
     label: inverse
-      ? humanize.titleCase(value.toString())
-      : humanize.titleCase(label.toString()),
+      ? Humanize.titleCase(value.toString())
+      : Humanize.titleCase(label.toString()),
   }));
 
   return defaultLabel
@@ -21,7 +22,7 @@ export const objectToOptions = (obj, defaultLabel = null, inverse = false) => {
 export const valuesToOptions = (values, defaultLabel = null) => {
   const output = values.map((value) => ({
     value: value.toString(),
-    label: humanize.titleCase(value.toString()),
+    label: Humanize.titleCase(value.toString()),
   }));
 
   return defaultLabel
@@ -65,7 +66,7 @@ export const generateNumOptions = (
       label:
         num.toString() === startFrom.toString() && firstOptionText
           ? firstOptionText
-          : `${num} ${pluralizeText ? humanize.pluralize(num, type) : type}`,
+          : `${num} ${pluralizeText ? Humanize.pluralize(num, type) : type}`,
     };
   });
 };
