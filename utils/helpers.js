@@ -143,7 +143,11 @@ export const processData = (data, item) => {
     return data;
   }
   if (isValidDate(data)) {
-    return getShortDate(data);
+    try {
+      return getShortDate(data);
+    } catch (e) {
+      return data;
+    }
   }
   if (isString(data)) {
     if (isImage(data)) {

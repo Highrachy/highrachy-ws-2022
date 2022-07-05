@@ -3,7 +3,7 @@ import PaginatedContent from '@/components/admin/PaginatedContent';
 import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
-import Image, { LocalImage } from '@/components/common/Image';
+import { LocalImage } from '@/components/common/Image';
 import Button from '@/components/forms/Button';
 import { TENANT_STATUS_COLOR } from '@/utils/constants';
 
@@ -55,8 +55,6 @@ export const TenantsRowList = ({ results, offset, attachment }) => {
 export const TenantsSingleRow = ({ number, attachment, ...props }) => {
   const { id, apartment, title, tenantFullName, tenantProfileImage, status } =
     props;
-
-  console.log(' ->', tenantProfileImage);
   return (
     <tr>
       <td>{number}</td>

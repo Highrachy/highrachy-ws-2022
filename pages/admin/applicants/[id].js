@@ -5,7 +5,6 @@ import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Button from '@/components/forms/Button';
-import { getStatus } from '../applicants';
 import { camelToSentence, processData } from '@/utils/helpers';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { GoBriefcase, GoPrimitiveDot } from 'react-icons/go';
@@ -13,6 +12,7 @@ import { Tab } from 'react-bootstrap';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { getShortDate } from '@/utils/date-helpers';
+import { APPLICANT_STAGE, APPLICANT_STAGE_INFO } from '@/utils/constants';
 
 const pageOptions = {
   key: 'applicant',
@@ -23,7 +23,7 @@ const allApplicantTabs = [
   {
     key: 'Overview',
     title: 'Overview',
-    fields: ['fullName', 'email', 'phoneNumber', 'resume', 'reviewed'],
+    fields: ['fullName', 'email', 'phoneNumber', 'resume', 'status'],
   },
   {
     key: 'Other Applications',
@@ -31,6 +31,22 @@ const allApplicantTabs = [
     fields: [],
   },
 ];
+
+const getApplicantNextStage = (status) => {
+  switch (status) {
+    case APPLICANT_STAGE.APPLIED:
+      return APPLICANT_STAGE.REVIEWED;
+    case APPLICANT_STAGE.REVIEWED:
+      return APPLICANT_STAGE.INTERVIEW_STAGE;
+    case APPLICANT_STAGE.INTERVIEW_STAGE:
+      return APPLICANT_STAGE.OFFER_STAGE;
+    case APPLICANT_STAGE.OFFER_STAGE:
+      return APPLICANT_STAGE.ACCEPTED;
+    default:
+      return null;
+  }
+  return null;
+};
 
 const SingleApplicant = () => {
   const router = useRouter();
@@ -96,14 +112,12 @@ const ApplicantHeader = ({
   fullName,
   resume,
   job,
-  reviewed,
-  rejected,
+  status,
   prevJobs,
   query,
 }) => {
-  const status = getStatus({ reviewed, rejected });
-  const currentState = !reviewed ? 'reviewed' : 'rejected';
   const hasPrevApplication = prevJobs?.length > 0;
+  const nextStage = getApplicantNextStage(status);
 
   return (
     <section className="card mb-5">
@@ -121,9 +135,9 @@ const ApplicantHeader = ({
                   </Link>
                 </div>
                 <div
-                  className={`d-flex align-items-center text-${status.color} flex-wrap align-items-center fs-6 mb-2 pe-2`}
+                  className={`d-flex align-items-center text-${APPLICANT_STAGE_INFO[status].color} flex-wrap align-items-center fs-6 mb-2 pe-2`}
                 >
-                  {status.icon} &nbsp; {status.text}
+                  {APPLICANT_STAGE_INFO[status].icon} &nbsp; {status}
                 </div>
                 {hasPrevApplication && (
                   <div className="d-flex flex-wrap align-items-center fs-6 mb-3 pe-2">
@@ -140,6 +154,7 @@ const ApplicantHeader = ({
                     color="none"
                     className="btn-xs btn-outline-dark"
                     href={resume}
+                    newTab
                   >
                     View Resume
                   </Button>
@@ -147,18 +162,32 @@ const ApplicantHeader = ({
               </div>
               {/* Action */}
               <div className="d-flex my-2">
-                {!rejected && (
-                  <ProcessButton
-                    afterSuccess={() => query.mutate()}
-                    api={`applicants/${id}`}
-                    buttonColor={!rejected ? 'danger' : 'info'}
-                    data={{ [currentState]: true }}
-                    modalContent={`Are you sure you want to mark this applicant as ${currentState}`}
-                    modalTitle={`Mark as ${currentState}`}
-                    successMessage={`The applicant has been successfully ${currentState}`}
-                  >
-                    Mark as {currentState}
-                  </ProcessButton>
+                {status !== APPLICANT_STAGE.REJECTED && (
+                  <>
+                    <ProcessButton
+                      afterSuccess={() => query.mutate()}
+                      api={`applicants/${id}`}
+                      buttonClassName="me-3"
+                      buttonSizeClassName="btn-sm"
+                      data={{ status: APPLICANT_STAGE.REJECTED }}
+                      modalContent={`Are you sure you want to reject this application`}
+                      modalTitle={`Reject Application`}
+                      successMessage={`This application has been successfully rejected`}
+                    >
+                      Reject Application
+                    </ProcessButton>
+                    <ProcessButton
+                      afterSuccess={() => query.mutate()}
+                      api={`applicants/${id}`}
+                      buttonColor={APPLICANT_STAGE_INFO[nextStage].color}
+                      data={{ status: nextStage }}
+                      modalContent={`Are you sure you want to proceed this application to ${nextStage}`}
+                      modalTitle={`Process to ${nextStage}`}
+                      successMessage={`The applicant has been successfully updated to ${nextStage}`}
+                    >
+                      Proceed to {nextStage}
+                    </ProcessButton>
+                  </>
                 )}
               </div>
             </div>
@@ -210,39 +239,50 @@ const TabInformation = ({ applicant, title, data, prevJobs }) => {
                       </h5>
                     </td>
                   ) : (
-                    prevJobs?.map(({ id, createdAt, resume, job }, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>
-                          <Link href={`/admin/jobs/${job.id}`} passHref>
-                            <a className="fw-bold text-reset d-flex align-items-center ">
-                              {job.title}
-                            </a>
-                          </Link>
-                        </td>
-                        <td>on {getShortDate(createdAt)}</td>
-                        <td>
-                          <Button
-                            color="none"
-                            className="btn-xs btn-outline-dark"
-                            href={resume}
-                          >
-                            View Resume
-                          </Button>
-                          &nbsp;&nbsp;&nbsp;
-                          <Button
-                            color="primary"
-                            className="btn-xs"
-                            href={{
-                              pathname: '/admin/applicants/[id]',
-                              query: { id },
-                            }}
-                          >
-                            Manage Applicant
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
+                    prevJobs?.map(
+                      ({ id, createdAt, status, resume, job }, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <Link href={`/admin/jobs/${job.id}`} passHref>
+                              <a className="fw-bold text-reset d-flex align-items-center ">
+                                {job.title}
+                              </a>
+                            </Link>
+                          </td>
+                          <td>on {getShortDate(createdAt)}</td>
+                          <td className="text-center">
+                            <span
+                              className={`badge badge-icon d-flex align-items-center bg-${APPLICANT_STAGE_INFO[status].color}`}
+                            >
+                              {APPLICANT_STAGE_INFO[status].icon} &nbsp;{' '}
+                              {status}
+                            </span>
+                          </td>
+                          <td>
+                            <Button
+                              color="none"
+                              className="btn-xs btn-outline-dark"
+                              href={resume}
+                              newTab
+                            >
+                              View Resume
+                            </Button>
+                            &nbsp;&nbsp;&nbsp;
+                            <Button
+                              color="primary"
+                              className="btn-xs"
+                              href={{
+                                pathname: '/admin/applicants/[id]',
+                                query: { id },
+                              }}
+                            >
+                              Manage Applicant
+                            </Button>
+                          </td>
+                        </tr>
+                      )
+                    )
                   )}
                 </tbody>
               </>

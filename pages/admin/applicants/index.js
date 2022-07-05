@@ -4,8 +4,7 @@ import { Card } from 'react-bootstrap';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
-import { RiCheckboxCircleFill, RiCloseCircleFill } from 'react-icons/ri';
-import { GrStatusCriticalSmall } from 'react-icons/gr';
+import { APPLICANT_STAGE_INFO } from '@/utils/constants';
 
 const Applicants = () => (
   <Backend>
@@ -54,38 +53,6 @@ export const ApplicantsRowList = ({ results, offset, query }) => {
   );
 };
 
-const applicantStatus = {
-  IS_ACTIVE: 'active',
-  AWAITING_REVIEW: 'review',
-  REJECTED: 'rejected',
-};
-
-export const getStatus = ({ reviewed, rejected }) => {
-  let status = '';
-  if (reviewed && !rejected) status = 'active';
-  else if (reviewed && rejected) status = 'rejected';
-  else status = 'review';
-
-  const statusList = {
-    [applicantStatus.IS_ACTIVE]: {
-      text: 'Still Active',
-      color: 'success',
-      icon: <RiCheckboxCircleFill />,
-    },
-    [applicantStatus.AWAITING_REVIEW]: {
-      text: 'Awaiting Review',
-      color: 'info',
-      icon: <GrStatusCriticalSmall />,
-    },
-    [applicantStatus.REJECTED]: {
-      text: 'Rejected',
-      color: 'danger',
-      icon: <RiCloseCircleFill />,
-    },
-  };
-  return statusList[status];
-};
-
 export const ApplicantsSingleRow = ({
   number,
   id,
@@ -93,13 +60,8 @@ export const ApplicantsSingleRow = ({
   email,
   phoneNumber,
   resume,
-  reviewed,
-  rejected,
-  query,
+  status,
 }) => {
-  const status = getStatus({ reviewed, rejected });
-  // either set reviewed to true or set rejected to true
-  const currentState = !reviewed ? 'reviewed' : 'rejected';
   return (
     <tr>
       <td>{number}</td>
@@ -109,13 +71,20 @@ export const ApplicantsSingleRow = ({
       </td>
       <td>{phoneNumber}</td>
       <td className="text-center">
-        <span className={`badge  badge-dot bg-${status.color}`}>
-          {status.text}
+        <span
+          className={`badge badge-icon d-flex align-items-center bg-${APPLICANT_STAGE_INFO[status].color}`}
+        >
+          {APPLICANT_STAGE_INFO[status].icon} &nbsp; {status}
         </span>
       </td>
       <td></td>
       <td>
-        <Button color="none" className="btn-xs btn-outline-dark" href={resume}>
+        <Button
+          color="none"
+          className="btn-xs btn-outline-dark"
+          href={resume}
+          newTab
+        >
           View Resume
         </Button>
         &nbsp;&nbsp;&nbsp;

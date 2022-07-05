@@ -269,7 +269,8 @@ footer a {
   }
 }
 
-.badge-dot {
+.badge-dot,
+.badge-icon {
   display: inline-flex;
   align-items: center;
   background-color: transparent !important;
@@ -278,19 +279,7 @@ footer a {
   padding-right: 0;
   font-size: 0.75rem;
   position: relative;
-  &:before {
-    position: absolute;
-    content: '';
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    display: inline-block;
-    height: 6px;
-    width: 6px;
-    margin-top: 0;
-    border-radius: 50%;
-    background: currentColor;
-  }
+
   &.badge-sm,
   &.badge-md {
     padding-left: 1rem;
@@ -342,6 +331,22 @@ footer a {
 
   &.bg-dark {
     color: $dark;
+  }
+}
+
+.badge-dot {
+  &:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    margin-top: 0;
+    border-radius: 50%;
+    background: currentColor;
   }
 }
 

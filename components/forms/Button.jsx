@@ -15,6 +15,7 @@ const Button = ({
   color,
   type,
   href,
+  newTab,
   ...props
 }) => {
   const isLink = !!href;
@@ -22,7 +23,12 @@ const Button = ({
 
   return isLink ? (
     <Link href={href} passHref>
-      <a className={btnClassName} role="button" {...props}>
+      <a
+        className={btnClassName}
+        role="button"
+        target={newTab ? '_blank' : '_self'}
+        {...props}
+      >
         {children}
       </a>
     </Link>

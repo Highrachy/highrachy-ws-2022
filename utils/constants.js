@@ -1,3 +1,8 @@
+import { FaHandshake, FaPeopleArrows } from 'react-icons/fa';
+import { GrStatusCriticalSmall } from 'react-icons/gr';
+import { RiCheckboxCircleFill, RiCloseCircleFill } from 'react-icons/ri';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+
 export const COLOR_STYLE = [
   'none',
   'primary',
@@ -27,4 +32,40 @@ export const TENANT_STATUS_COLOR = {
   [TENANT_STATUS.LEAVING_SOON]: 'warning',
   [TENANT_STATUS.MOVED_OUT]: 'danger',
   [TENANT_STATUS.REJECTED]: 'danger',
+};
+
+export const APPLICANT_STAGE = {
+  APPLIED: 'APPLIED',
+  REVIEWED: 'REVIEWED',
+  INTERVIEW_STAGE: 'INTERVIEW STAGE',
+  OFFER_STAGE: 'OFFER STAGE',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+};
+
+export const APPLICANT_STAGE_INFO = {
+  [APPLICANT_STAGE.APPLIED]: {
+    icon: <BsQuestionCircleFill />,
+    color: 'secondary',
+  },
+  [APPLICANT_STAGE.REVIEWED]: {
+    icon: <GrStatusCriticalSmall />,
+    color: 'info',
+  },
+  [APPLICANT_STAGE.INTERVIEW_STAGE]: {
+    icon: <FaPeopleArrows />,
+    color: 'info',
+  },
+  [APPLICANT_STAGE.OFFER_STAGE]: {
+    icon: <FaHandshake />,
+    color: 'success',
+  },
+  [APPLICANT_STAGE.ACCEPTED]: {
+    icon: <RiCheckboxCircleFill />,
+    color: 'success',
+  },
+  [APPLICANT_STAGE.REJECTED]: {
+    icon: <RiCloseCircleFill />,
+    color: 'danger',
+  },
 };
