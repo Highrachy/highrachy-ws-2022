@@ -5,6 +5,9 @@ import TopTitle from './TopTitle';
 import { FiUser } from 'react-icons/fi';
 import Pagination from '../utils/Pagination';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
+import TopFilter from './TopFilter';
+import Button from '@/components/forms/Button';
+import { useFilter } from '@/hooks/useFilter';
 
 const PaginatedContent = ({
   addNewUrl,
@@ -12,8 +15,7 @@ const PaginatedContent = ({
   childrenKey,
   DataComponent,
   initialFilter = {},
-  filter,
-  FilterComponent,
+  filterFields,
   limit,
   PageIcon,
   pageName,
@@ -27,14 +29,31 @@ const PaginatedContent = ({
   showFetching,
   ...props
 }) => {
-  // const [filters, setFilters] = React.useState({});
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const pluralizePageName = pluralPageName || Humanize.pluralize(2, pageName);
   const Icon = PageIcon || <FiUser />;
 
+  const filterOutput = useFilter(
+    initialFilter,
+    filterFields,
+    pluralizePageName
+  );
+  const {
+    filterName,
+    filterQuery,
+    hasFilter,
+    filterLoadingText,
+    filterNoContentText,
+  } = filterOutput;
+
   const [query, results] = useSWRQuery({
-    name: ['paginated', pageName.toLowerCase(), currentPage],
+    name: [
+      'paginated',
+      ...(hasFilter ? [filterName] : []),
+      pageName.toLowerCase(),
+      currentPage,
+    ],
     endpoint,
     axiosOptions: {
       params: {
@@ -42,6 +61,7 @@ const PaginatedContent = ({
         'pagination[pageSize]': limit || 10,
         sort: sort || 'createdAt:desc',
         populate: populate || '*',
+        ...filterQuery,
       },
       ...axiosOptions,
     },
@@ -52,6 +72,8 @@ const PaginatedContent = ({
   const offset = (currentPage - 1) * (pagination?.pageSize || 0);
 
   const showTitle = !hideTitle && !(hideNoContent && results?.length === 0);
+  const noContentText = `No ${pageName} found`;
+  const loadingText = `Loading ${pageName}`;
 
   return (
     <>
@@ -62,23 +84,21 @@ const PaginatedContent = ({
         </TopTitle>
       )}
 
-      {/* {FilterComponent && (
-        <TopFilter
-          FilterComponent={FilterComponent}
-          filters={filters}
-          setFilters={setFilters}
-        />
-      )} */}
-
       <ContentLoader
         Icon={Icon}
         name={pageName}
-        noContentText={`No ${pluralizePageName} found`}
+        noContentText={hasFilter ? filterNoContentText : noContentText}
         hideNoContent={hideNoContent}
         query={query}
         results={results}
         showFetching={showFetching}
+        loadingText={hasFilter ? filterLoadingText : loadingText}
       >
+        <TopFilter
+          pageName={pageName}
+          filterFields={filterFields}
+          filterOutput={filterOutput}
+        />
         <DataComponent
           results={results || []}
           query={query}

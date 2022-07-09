@@ -69,3 +69,15 @@ export const APPLICANT_STAGE_INFO = {
     color: 'danger',
   },
 };
+
+export const FILTER_FIELDS = {
+  TEXT: 'text',
+  SELECT: 'select',
+};
+
+export const DATA_TYPE = {
+  STRING: 'string',
+  NUMBER: 'number',
+  DATE: 'date',
+  BOOLEAN: 'boolean',
+};

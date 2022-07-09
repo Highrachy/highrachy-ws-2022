@@ -388,17 +388,33 @@ footer a {
 }
 
 .Toastify__toast--success {
-  background-color: $success;
+  background-color: $success !important;
 }
 
 .Toastify__toast--error {
-  background-color: $danger;
+  background-color: $danger !important;
 }
 
 .Toastify__toast--info {
-  background-color: $info;
+  background-color: $info !important;
 }
 
 .Toastify__toast--warning {
-  background-color: $warning;
+  background-color: $warning !important;
+}
+
+.updating-spinner {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.filter-close-icon {
+  font-size: 1.25rem;
+  color: $secondary;
+  transition: all 0.5s;
+  cursor: pointer;
+  &:hover {
+    color: $primary;
+  }
 }

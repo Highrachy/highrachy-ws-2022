@@ -30,6 +30,17 @@ export const valuesToOptions = (values, defaultLabel = null) => {
     : output;
 };
 
+export const fieldsToOptions = (values, defaultLabel = null, labels = {}) => {
+  const output = values.map((value) => ({
+    value: value.toString(),
+    label: labels?.[value] || camelToSentence(value.toString()),
+  }));
+
+  return defaultLabel
+    ? [{ value: '', label: defaultLabel }, ...output]
+    : output;
+};
+
 export const dataToOptions = (data, label, value = '_id') => {
   if (!data) return null;
   const output = Object.values(data).map((item) => ({
@@ -78,6 +89,7 @@ export const moneyFormat = (value) => Humanize.formatNumber(value, 2);
 export const moneyFormatInNaira = (value) => commaNumber(value, true);
 
 export const getError = (error, policyError = 'Record exists') => {
+  if (error?.response?.status === 404) return;
   if (error?.response?.status === 403) {
     return policyError;
   } else {

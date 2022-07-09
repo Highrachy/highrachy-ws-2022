@@ -103,3 +103,17 @@
     transition: color 0.2s ease, background-color 0.2s ease;
   }
 }
+
+.dropdown-filter {
+  max-width: 22rem;
+  margin-top: 5px;
+
+  .filter-header {
+    padding: 1.25rem 1.7rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .filter-body {
+    padding: 1.5rem;
+  }
+}

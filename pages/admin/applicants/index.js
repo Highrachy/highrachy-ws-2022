@@ -6,6 +6,8 @@ import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
 import { APPLICANT_STAGE_INFO } from '@/utils/constants';
 
+import { filterApplicants } from '@/utils/filters';
+
 const Applicants = () => (
   <Backend>
     <PaginatedContent
@@ -14,7 +16,7 @@ const Applicants = () => (
       DataComponent={ApplicantsRowList}
       PageIcon={adminMenu['Applicants']}
       sort="createdAt:desc"
-      showLogs
+      filterFields={filterApplicants}
     />
   </Backend>
 );

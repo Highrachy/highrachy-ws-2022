@@ -54,7 +54,7 @@ export const ContentLoader = ({
   showFetching = false,
   name,
 }) => {
-  const hasContent = results || results?.length > 0;
+  const hasContent = Array.isArray(results) ? results?.length > 0 : !!results;
   return (
     <>
       {query?.isValidating && hasContent && showFetching && (
@@ -62,7 +62,7 @@ export const ContentLoader = ({
           <Spinner small />
         </div>
       )}
-      {!results ? (
+      {results === undefined && query?.isValidating ? (
         <Loading text={loadingText || `Loading ${name}`} Icon={Icon} />
       ) : hasContent ? (
         children

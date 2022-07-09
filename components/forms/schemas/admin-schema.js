@@ -2,6 +2,7 @@ import {
   booleanValidation,
   optionalValidation,
   positiveNumberValidation,
+  required,
   stringValidation,
 } from './schema-helpers';
 
@@ -29,4 +30,9 @@ export const apartmentSchema = {
   beds: positiveNumberValidation('Beds'),
   toilets: positiveNumberValidation('Toilets'),
   availableSoon: optionalValidation(booleanValidation('Available soon')),
+};
+
+export const filterSchema = {
+  field: stringValidation('Field'),
+  value: required('Value'),
 };

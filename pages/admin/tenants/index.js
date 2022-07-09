@@ -6,6 +6,7 @@ import { adminMenu } from '@/data/adminMenu';
 import { LocalImage } from '@/components/common/Image';
 import Button from '@/components/forms/Button';
 import { TENANT_STATUS_COLOR } from '@/utils/constants';
+import { filterTenants } from '@/utils/filters';
 
 const Tenants = () => (
   <Backend>
@@ -15,6 +16,7 @@ const Tenants = () => (
       DataComponent={TenantsRowList}
       PageIcon={adminMenu['Tenants']}
       populate="*"
+      filterFields={filterTenants}
     />
   </Backend>
 );

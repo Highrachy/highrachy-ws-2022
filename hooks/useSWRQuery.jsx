@@ -3,7 +3,7 @@ import Axios, { CancelToken } from 'axios';
 import { getError, statusIsSuccessful } from 'utils/helpers';
 import { getTokenFromStore } from 'utils/localStorage';
 import { toast } from 'react-toastify';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
 const fetchQuery =
   ({ currentEndpoint, axiosOptions }) =>

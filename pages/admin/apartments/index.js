@@ -6,6 +6,7 @@ import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
 import { BathIcon, BedIcon, ToiletIcon } from '@/components/common/Icons';
 import Humanize from 'humanize-plus';
+import { filterApartments } from '@/utils/filters';
 
 const Apartments = () => (
   <Backend>
@@ -15,6 +16,7 @@ const Apartments = () => (
       pageName="Apartment"
       DataComponent={ApartmentsRowList}
       PageIcon={adminMenu['Apartments']}
+      filterFields={filterApartments}
     />
   </Backend>
 );

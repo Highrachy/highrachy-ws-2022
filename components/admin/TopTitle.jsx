@@ -5,15 +5,17 @@ import { FiPlus } from 'react-icons/fi';
 
 const TopTitle = ({ children, buttonText, to }) => {
   return (
-    <div className="container-fluid mb-4">
-      <h4 className="text-secondary">
+    <div className="container-fluid mb-2">
+      <h4 className="text-secondary position-relative">
         {children}
         {buttonText && to && (
-          <div className="text-end">
-            <Button color="secondary" href={to}>
-              {<FiPlus />} {buttonText}
-            </Button>
-          </div>
+          <Button
+            color="secondary"
+            href={to}
+            className="position-absolute end-0 top-0"
+          >
+            {<FiPlus />} {buttonText}
+          </Button>
         )}
       </h4>
     </div>
