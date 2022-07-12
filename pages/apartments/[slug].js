@@ -470,7 +470,7 @@ const PersonalInformation = () => (
         label="Date of Birth"
         name="dateOfBirth"
         placeholder="YYYY-MM-DD"
-        helpText="YYYY-MM-DD"
+        helpText="Format: YYYY-MM-DD"
       />
     </div>
     <div className="row">
@@ -497,11 +497,9 @@ const PersonalInformation = () => (
       name="currentAddress"
       label="Current Address"
       placeholder="The required information under ‘previous employment’ is to be provided if you are currently self-employed."
+      helpText="Please provide sufficient information as to the name, location, position
+      held and number of years spent at the organization"
     />
-    <small>
-      Please provide sufficient information as to the name, location, position
-      held and number of years spent at the organization
-    </small>
 
     <div className="row">
       <Input
@@ -749,7 +747,7 @@ const EmploymentDetails = () => {
           label="Appox. Start Date"
           name="employmentStartDate"
           placeholder="YYYY-MM-DD"
-          helpText="YYYY-MM-DD"
+          helpText="Format: YYYY-MM-DD"
         />
       </div>
 

@@ -14,7 +14,8 @@ const TopTitle = ({ children, buttonText, to }) => {
             href={to}
             className="position-absolute end-0 top-0"
           >
-            {<FiPlus />} <span className="d-none d-sm-block">{buttonText}</span>
+            {<FiPlus />}{' '}
+            <span className="d-none d-sm-inline">{buttonText}</span>
           </Button>
         )}
       </h4>

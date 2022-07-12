@@ -7,8 +7,12 @@ $navbar-height: 80px;
   width: $sidebar-width;
   height: 100%;
   position: fixed;
-  left: 0;
+  right: 0;
   top: 0;
+  @include media-breakpoint-up(md) {
+    right: initial;
+    left: 0;
+  }
   z-index: 999;
   transition: width 0.1s ease, margin 0.1s ease-in-out;
   background-color: #fff;

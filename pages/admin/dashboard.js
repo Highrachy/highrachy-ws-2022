@@ -26,7 +26,7 @@ const Dashboard = () => {
       <ContentLoader
         Icon={adminMenu['Dashboard']}
         query={query}
-        results={Object.keys(result || {})}
+        results={result}
         name={pageOptions.pageName}
       >
         <div className="row">
@@ -47,10 +47,21 @@ const Dashboard = () => {
             attachment
           />
 
+          <div className="text-end my-4">
+            <Link href="/admin/tenants" passHref>
+              <a className="btn btn-xs btn-outline-warning">View All Tenants</a>
+            </Link>
+          </div>
+
           <h5 className="text-secondary fw-normal mt-6 mb-0">
             Recent Applicants
           </h5>
           <ApplicantsRowList results={result?.['applicants'].data} offset={0} />
+          <div className="text-end my-4">
+            <Link href="/admin/applicants" passHref>
+              <a className="btn btn-xs btn-outline-info">View All Applicants</a>
+            </Link>
+          </div>
         </div>
       </ContentLoader>
     </Backend>

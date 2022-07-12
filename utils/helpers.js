@@ -136,6 +136,11 @@ export const isValidUrl = (url) => {
   }
 };
 
+// check if variable is an object and is not empty
+export const isObject = (obj) => {
+  return obj && typeof obj === 'object';
+};
+
 export const camelToSentence = (str) =>
   str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
 

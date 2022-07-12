@@ -15,6 +15,7 @@ const ProcessButton = ({
   buttonColor,
   children,
   data,
+  hideActionButton,
   modalContent,
   modalTitle,
   buttonSizeClassName,
@@ -68,14 +69,16 @@ const ProcessButton = ({
         <section className="row">
           <div className="col-md-12 my-3 text-center">
             <h5 className="my-2 confirmation-text">{modalContent}</h5>
-            <Button
-              color={buttonColor}
-              onClick={handleProcess}
-              loading={loading}
-              className={buttonClassName}
-            >
-              {children}
-            </Button>
+            {!hideActionButton && (
+              <Button
+                color={buttonColor}
+                onClick={handleProcess}
+                loading={loading}
+                className={buttonClassName}
+              >
+                {children}
+              </Button>
+            )}
           </div>
         </section>
       </Modal>
@@ -85,10 +88,12 @@ const ProcessButton = ({
 
 ProcessButton.defaultProps = {
   afterSuccess: () => {},
+  api: '',
   buttonClassName: '',
   buttonSizeClassName: 'btn-xs',
   buttonColor: 'primary',
   data: {},
+  hideActionButton: false,
   modalContent: 'Are you sure you want to continue?',
   modalTitle: 'Action Modal',
   successMessage: 'Your action has been successfully completed',
@@ -96,12 +101,13 @@ ProcessButton.defaultProps = {
 
 ProcessButton.propTypes = {
   afterSuccess: PropTypes.func,
-  api: PropTypes.string.isRequired,
+  api: PropTypes.string,
   buttonClassName: PropTypes.string,
   buttonSizeClassName: PropTypes.string,
   buttonColor: PropTypes.string,
   children: PropTypes.node.isRequired,
   data: PropTypes.object,
+  hideActionButton: PropTypes.bool,
   modalContent: PropTypes.string,
   modalTitle: PropTypes.string,
   successMessage: PropTypes.string,

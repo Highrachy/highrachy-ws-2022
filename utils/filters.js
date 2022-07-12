@@ -30,6 +30,7 @@ export const filterApplicants = {
     values: valuesToOptions(Object.values(APPLICANT_STAGE)),
   },
 };
+
 export const filterMessages = {
   name: {},
   email: {},

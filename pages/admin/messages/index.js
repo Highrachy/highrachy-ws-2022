@@ -5,6 +5,8 @@ import { Card } from 'react-bootstrap';
 import { adminMenu } from '@/data/adminMenu';
 import { getShortDate } from '@/utils/date-helpers';
 import { filterMessages } from '@/utils/filters';
+import ProcessButton from '@/components/utils/ProcessButton';
+import Humanize from 'humanize-plus';
 
 const Messages = () => (
   <Backend>
@@ -69,9 +71,18 @@ export const MessagesSingleRow = ({
       <td>{phone}</td>
       <td className="td-block">
         {subject}
-        <span>{message}</span>
+        <span>{Humanize.truncate(message, 40)}</span>
       </td>
       <td>{getShortDate(createdAt)}</td>
+      <td>
+        <ProcessButton
+          modalContent={message}
+          modalTitle="View Message"
+          hideActionButton
+        >
+          View
+        </ProcessButton>
+      </td>
     </tr>
   );
 };

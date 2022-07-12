@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'components/utils/Spinner';
 import NoContent from '../admin/NoContent';
+import { isObject } from '@/utils/helpers';
 
 const LoadItems = ({ items, children, loadingText, noContent, Icon, size }) => {
   if (items == null) {
@@ -54,7 +55,14 @@ export const ContentLoader = ({
   showFetching = false,
   name,
 }) => {
-  const hasContent = Array.isArray(results) ? results?.length > 0 : !!results;
+  const hasContent = Array.isArray(results)
+    ? results?.length > 0
+    : isObject(results)
+    ? Object.keys(results).length > 0
+    : !!results;
+
+  console.log('results', results);
+
   return (
     <>
       {query?.isValidating && hasContent && showFetching && (

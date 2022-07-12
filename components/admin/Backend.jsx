@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Overlay } from 'react-bootstrap';
-import { FiMenu } from 'react-icons/fi';
-import Button from '../forms/Button';
 import Sidebar from './Sidebar';
 import TopTitle from './TopTitle';
 
@@ -35,7 +33,7 @@ const Backend = ({ children, title }) => {
         }`}
       >
         {!isDesktop && (
-          <div className="d-flex justify-content-between pb-2 border-bottom mt-3 mb-4">
+          <div className="d-flex d-md-none justify-content-between pb-2 border-bottom mt-3 mb-4">
             <Link href="/" passHref>
               <a>
                 <Image
@@ -46,14 +44,19 @@ const Backend = ({ children, title }) => {
                 />
               </a>
             </Link>
-            <Button
-              color="none"
-              className="btn-sm ms-auto btn-outline-dark"
+            <div
+              className="btn-link icon-md2"
               onClick={() => setIsFolded(!isFolded)}
             >
-              <FiMenu /> Menu
-            </Button>
-            &nbsp;&nbsp;
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+              >
+                <path d="M4 6h16v2H4zm4 5h12v2H8zm5 5h7v2h-7z" />
+              </svg>
+            </div>
           </div>
         )}
 

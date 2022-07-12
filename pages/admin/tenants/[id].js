@@ -435,9 +435,32 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
               <th>Pending Documents</th>
               <td>
                 <ul className="list">
-                  <li>Testing 1</li>
-                  <li>Testing 2</li>
-                  <li>Testing 3</li>
+                  {tenant.ownLastProperty && !tenant.propertyEvidenceURL && (
+                    <li>
+                      <strong>Owns Last Property</strong> - need to provide a
+                      copy of last mortgage statement or any other document
+                      confirming ownership
+                    </li>
+                  )}
+                  {tenant.neverRentedBefore && !tenant.propertyEvidenceURL && (
+                    <li>
+                      <strong>Never Rented Before</strong> - need to provide
+                      proof of address e.g. utility bill, bank statement, etc.
+                    </li>
+                  )}
+                  {tenant.isSelfEmployed && (
+                    <li>
+                      <strong>Self employed </strong>- need to provide last 3
+                      years’ tax returns or a letter from accountant confirming
+                      last 3 years of income
+                    </li>
+                  )}
+                  {tenant.changeEmployerSoon && !tenant.offerLetterURL && (
+                    <li>
+                      <strong>Changing Employer soon</strong> - need to provide
+                      offer letter
+                    </li>
+                  )}
                 </ul>
               </td>
             </tr>
