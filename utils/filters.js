@@ -5,6 +5,7 @@ import {
   TENANT_STATUS,
 } from '@/utils/constants';
 import { booleanOptions, valuesToOptions } from '@/utils/helpers';
+import { subjects } from 'pages/contact-us';
 
 export const filterApartments = {
   name: {},
@@ -28,6 +29,16 @@ export const filterApplicants = {
     field: FILTER_FIELDS.SELECT,
     values: valuesToOptions(Object.values(APPLICANT_STAGE)),
   },
+};
+export const filterMessages = {
+  name: {},
+  email: {},
+  phone: {},
+  subject: {
+    field: FILTER_FIELDS.SELECT,
+    values: valuesToOptions(subjects),
+  },
+  message: {},
 };
 
 export const filterJobs = {

@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { adminMenu } from '@/data/adminMenu';
 import { storeMenuState } from '@/utils/localStorage';
 import Image from 'next/image';
@@ -23,8 +22,8 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
                 <Image
                   src="/logo.png"
                   alt="Highrachy"
-                  width={isDesktop ? '142' : '71'}
-                  height={isDesktop ? '42' : '21'}
+                  width="142"
+                  height="42"
                 />
               </a>
             </Link>

@@ -207,12 +207,18 @@
 
   td:first-child,
   th:first-child {
-    padding-left: 2rem;
+    padding-left: 1.5rem;
+    @include media-breakpoint-up(sm) {
+      padding-left: 2rem;
+    }
   }
 
   td:last-child,
   th:last-child {
-    padding-right: 2rem;
+    padding-right: 1.5rem;
+    @include media-breakpoint-up(sm) {
+      padding-right: 2rem;
+    }
   }
 
   &.table-no-padding {
@@ -224,6 +230,31 @@
     td:last-child,
     th:last-child {
       padding-right: 0.5rem;
+    }
+  }
+}
+
+// https://stackoverflow.com/questions/72093603/how-to-make-table-fit-in-mobile-view
+.table-responsive {
+  min-height: 0.01%;
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #ddd;
+
+    > .table {
+      margin-bottom: 0;
+    }
+
+    > .table > thead > tr > th,
+    > .table > tbody > tr > th,
+    > .table > tfoot > tr > th,
+    > .table > thead > tr > td,
+    > .table > tbody > tr > td,
+    > .table > tfoot > tr > td {
+      white-space: nowrap;
     }
   }
 }
@@ -416,5 +447,104 @@ footer a {
   cursor: pointer;
   &:hover {
     color: $primary;
+  }
+}
+
+.bg-primary-light {
+  background: rgba($primary, 10%);
+}
+
+.bg-info-light {
+  background: rgba($info, 10%);
+}
+
+.bg-success-light {
+  background: rgba($success, 10%);
+}
+
+.bg-warning-light {
+  background: rgba($warning, 10%);
+}
+
+.text-primary-light {
+  color: rgba($primary, 25%);
+}
+
+.text-info-light {
+  color: rgba($info, 25%);
+}
+
+.text-success-light {
+  color: rgba($success, 25%);
+}
+
+.text-warning-light {
+  color: rgba($warning, 25%);
+}
+
+.widget a {
+  transition: all 0.5s;
+
+  .subtitle {
+    color: lighten($secondary, 10%);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04rem;
+    font-weight: bold;
+  }
+
+  &:hover {
+    .subtitle {
+      color: #333 !important;
+    }
+
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    .bg-primary-light {
+      background: rgba($primary, 20%);
+    }
+
+    .bg-info-light {
+      background: rgba($info, 20%);
+    }
+
+    .bg-success-light {
+      background: rgba($success, 20%);
+    }
+
+    .bg-warning-light {
+      background: rgba($warning, 20%);
+    }
+
+    .text-primary {
+      color: darken($primary, 10%) !important;
+    }
+
+    .text-info {
+      color: darken($info, 10%) !important;
+    }
+
+    .text-success {
+      color: darken($success, 10%) !important;
+    }
+
+    .text-warning {
+      color: darken($warning, 10%) !important;
+    }
+
+    .text-primary-light {
+      color: rgba($primary, 35%);
+    }
+
+    .text-info-light {
+      color: rgba($info, 35%);
+    }
+
+    .text-success-light {
+      color: rgba($success, 35%);
+    }
+
+    .text-warning-light {
+      color: rgba($warning, 35%);
+    }
   }
 }

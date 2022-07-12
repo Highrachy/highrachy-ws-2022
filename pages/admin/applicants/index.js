@@ -5,7 +5,6 @@ import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import Button from '@/components/forms/Button';
 import { APPLICANT_STAGE_INFO } from '@/utils/constants';
-
 import { filterApplicants } from '@/utils/filters';
 
 const Applicants = () => (

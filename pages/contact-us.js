@@ -19,6 +19,9 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { socialMediaLinks } from '../data';
 
+const allServices = Object.values(services).map((service) => service.title);
+export const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
+
 const contactUs = () => {
   return (
     <>
@@ -148,8 +151,6 @@ const ContactInfo = () => (
 );
 
 const ContactUsForm = () => {
-  const allServices = Object.values(services).map((service) => service.title);
-  const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
   const handleSubmit = async (values, actions) => {
     const fetchOptions = {
       /**
@@ -185,6 +186,7 @@ const ContactUsForm = () => {
       toast.success('Information sent successfully');
     }
     actions.setSubmitting(false);
+    actions.resetForm();
   };
 
   return (
@@ -204,7 +206,7 @@ const ContactUsForm = () => {
         label="Subject"
         options={valuesToOptions(subjects, 'Select One...')}
       />
-      <Textarea name="message" label="Your Message" />
+      <Textarea name="message" label="Your Message" rows="6" />
     </FormikForm>
   );
 };
