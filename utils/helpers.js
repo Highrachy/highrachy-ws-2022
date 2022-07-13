@@ -175,8 +175,7 @@ export const processData = (data, item) => {
             <LocalImage
               src={data}
               name={item}
-              className="img-cover"
-              height="128"
+              className="img-xxl img-cover"
               rounded
             />
           </a>

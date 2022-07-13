@@ -14,6 +14,7 @@ import humanize from 'humanize-plus';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
+import { GoPrimitiveDot } from 'react-icons/go';
 
 const Apartments = ({ apartments }) => {
   return (
@@ -84,7 +85,7 @@ const AvailableApartments = (props) => {
           name="apartments-form"
           showFormikState
           buttonText="Find Apartments"
-          buttonColor="dark"
+          buttonColor="info"
           useSubmitButton
         >
           <div className="row">
@@ -138,7 +139,7 @@ const AvailableApartments = (props) => {
                       <div className="text-muted">
                         <LocationIcon /> {apartment.address}
                       </div>
-                      <ul className="list-inline text-muted">
+                      <ul className="list-inline text-secondary">
                         <li className="list-inline-item pe-4">
                           <BedIcon /> {apartment.beds}
                         </li>
@@ -149,6 +150,22 @@ const AvailableApartments = (props) => {
                           <ToiletIcon /> {apartment.toilets}
                         </li>
                       </ul>
+                      <div className="d-flex flex-wrap align-items-center mt-2 opacity-75">
+                        {apartment.availableUnits > 0 ? (
+                          <span className="d-flex align-items-center fw-bold text-success">
+                            <GoPrimitiveDot /> Currently available
+                          </span>
+                        ) : apartment.availableSoon ? (
+                          <span className="d-flex align-items-center fw-bold text-info">
+                            <GoPrimitiveDot /> This apartment will be Available
+                            Soon
+                          </span>
+                        ) : (
+                          <span className="d-flex align-items-center fw-bold text-danger">
+                            <GoPrimitiveDot /> This apartment is fully booked
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <Link
                       passHref
@@ -159,13 +176,11 @@ const AvailableApartments = (props) => {
                     >
                       {apartment.availableUnits === 0 &&
                       apartment.availableSoon ? (
-                        <span className="btn text-danger btn-wide text-uppercase stretched-link">
-                          Available Soon
+                        <span className="btn  btn-outline-info">
+                          Join Waiting List
                         </span>
                       ) : (
-                        <a className="btn btn-dark btn-wide text-uppercase stretched-link">
-                          Apply Now
-                        </a>
+                        <a className="btn btn-dark ">Apply Now</a>
                       )}
                     </Link>
                   </div>

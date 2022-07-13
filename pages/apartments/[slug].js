@@ -496,9 +496,7 @@ const PersonalInformation = () => (
     <Textarea
       name="currentAddress"
       label="Current Address"
-      placeholder="The required information under ‘previous employment’ is to be provided if you are currently self-employed."
-      helpText="Please provide sufficient information as to the name, location, position
-      held and number of years spent at the organization"
+      placeholder="Current Home Address"
     />
 
     <div className="row">
@@ -799,6 +797,7 @@ const EmploymentDetails = () => {
           name="companyFacebook"
           type="url"
           label="Company Facebook"
+          helpText="https://www.facebook.com/..."
           optional
         />
         <Input
@@ -806,6 +805,7 @@ const EmploymentDetails = () => {
           name="companyTwitter"
           label="Twitter"
           type="url"
+          helpText="https://www.twitter.com/..."
           optional
         />
       </div>
@@ -816,12 +816,14 @@ const EmploymentDetails = () => {
           name="companyInstagram"
           label="Instagram"
           type="url"
+          helpText="https://www.instagram.com/..."
           optional
         />
         <Input
           formGroupClassName="col-md-6"
           name="companyLinkedin"
           label="LinkedIn"
+          helpText="https://www.linkedin.com/..."
           type="url"
           optional
         />
