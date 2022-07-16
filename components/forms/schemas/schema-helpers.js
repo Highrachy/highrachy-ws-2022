@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { parseISO } from 'date-fns';
-import { moneyFormatInNaira } from 'utils/helpers';
 import { getDateTime } from 'utils/date-helpers';
+import Humanize from 'humanize-plus';
 
 export const required = (label) =>
   yup.string().required(`${label} is required`);
@@ -112,15 +112,15 @@ export const percentageValidation = (label, type = 'number') =>
     .integer(`${label} must be a ${type}`)
     .max(100, `${label} must be lesser than 100`);
 
-export const moneyRange = (label, type = 'number', min, max = 0) =>
+export const numberRange = (label, type = 'number', min = 0, max = 100) =>
   yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
     .required(`${label} must be a valid ${type}`)
     .positive(`${label} must be a positive ${type}`)
     .integer(`${label} must be a ${type}`)
-    .min(min, `${label} must be greater than ${moneyFormatInNaira(min)}`)
-    .max(max, `${label} must be lesser than ${moneyFormatInNaira(max)}`);
+    .min(min, `${label} must be greater than ${Humanize.formatNumber(min, 2)}`)
+    .max(max, `${label} must be lesser than ${Humanize.formatNumber(max, 2)}`);
 
 export const validPercentage = (label) =>
   yup

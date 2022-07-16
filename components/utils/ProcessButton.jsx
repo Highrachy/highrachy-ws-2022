@@ -13,6 +13,7 @@ const ProcessButton = ({
   api,
   buttonClassName,
   buttonColor,
+  buttonText,
   children,
   data,
   hideActionButton,
@@ -76,7 +77,7 @@ const ProcessButton = ({
                 loading={loading}
                 className={buttonClassName}
               >
-                {children}
+                {buttonText || children}
               </Button>
             )}
           </div>
@@ -92,6 +93,7 @@ ProcessButton.defaultProps = {
   buttonClassName: '',
   buttonSizeClassName: 'btn-xs',
   buttonColor: 'primary',
+  buttonText: '',
   data: {},
   hideActionButton: false,
   modalContent: 'Are you sure you want to continue?',
@@ -105,6 +107,7 @@ ProcessButton.propTypes = {
   buttonClassName: PropTypes.string,
   buttonSizeClassName: PropTypes.string,
   buttonColor: PropTypes.string,
+  buttonText: PropTypes.string,
   children: PropTypes.node.isRequired,
   data: PropTypes.object,
   hideActionButton: PropTypes.bool,

@@ -1,5 +1,6 @@
 import {
   booleanValidation,
+  numberRange,
   optionalValidation,
   positiveNumberValidation,
   required,
@@ -35,4 +36,11 @@ export const apartmentSchema = {
 export const filterSchema = {
   field: stringValidation('Field'),
   value: required('Value'),
+};
+
+export const teamSchema = {
+  fullName: stringValidation('Full Name'),
+  position: stringValidation('Position'),
+  image: stringValidation('Image'),
+  priority: numberRange('Priority', 'number', 0, 20),
 };

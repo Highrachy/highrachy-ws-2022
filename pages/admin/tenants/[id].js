@@ -434,7 +434,7 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
             <tr>
               <th>Pending Documents</th>
               <td>
-                <ul className="list">
+                <ul className="list-unstyled list-pending-docs">
                   {tenant.ownLastProperty && !tenant.propertyEvidenceURL && (
                     <li>
                       <strong>Owns Last Property</strong> - need to provide a
@@ -450,7 +450,7 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
                   )}
                   {tenant.isSelfEmployed && (
                     <li>
-                      <strong>Self employed </strong>- need to provide last 3
+                      <strong>Self employed </strong> - need to provide last 3
                       years’ tax returns or a letter from accountant confirming
                       last 3 years of income
                     </li>

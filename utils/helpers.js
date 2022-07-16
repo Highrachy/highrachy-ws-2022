@@ -57,29 +57,31 @@ export const booleanOptions = (trueLabel = 'Yes', falseLabel = 'No') => [
 ];
 
 export const generateNumOptions = (
-  number = 12,
+  endAt = 12,
   type = '',
   options = {
-    startFrom: 0,
+    startFrom: 1,
     firstOptionText: null,
     pluralizeText: false,
   }
 ) => {
-  const startFrom =
-    options.startFrom || options.startFrom === 0 ? options.startFrom : 1;
+  const startFrom = options.startFrom === 0 ? 0 : options.startFrom || 1;
   const firstOptionText = options.firstOptionText;
-  const pluralizeText = options.pluralizeText || true;
+  const pluralizeText = !!options.pluralizeText;
 
-  return [...Array(number).keys()].map((value) => {
+  const numToGen = endAt - startFrom + 1;
+
+  const output = [...Array(numToGen).keys()].map((value) => {
     const num = value + startFrom;
     return {
       value: num.toString(),
-      label:
-        num.toString() === startFrom.toString() && firstOptionText
-          ? firstOptionText
-          : `${num} ${pluralizeText ? Humanize.pluralize(num, type) : type}`,
+      label: `${num} ${pluralizeText ? Humanize.pluralize(num, type) : type}`,
     };
   });
+
+  return firstOptionText
+    ? [{ value: '', label: firstOptionText }, ...output]
+    : output;
 };
 
 export const dashedLowerCase = (text) =>

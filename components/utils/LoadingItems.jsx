@@ -61,8 +61,6 @@ export const ContentLoader = ({
     ? Object.keys(results).length > 0
     : !!results;
 
-  console.log('results', results);
-
   return (
     <>
       {query?.isValidating && hasContent && showFetching && (

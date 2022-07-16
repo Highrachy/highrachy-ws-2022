@@ -82,7 +82,7 @@ export const TenantsSingleRow = ({ number, attachment, ...props }) => {
       </td>
       <td>
         <Button
-          color="primary"
+          color="secondary"
           className="btn-xs"
           href={{
             pathname: '/admin/tenants/[id]',

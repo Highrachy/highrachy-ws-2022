@@ -554,3 +554,21 @@ footer a {
     }
   }
 }
+
+.team-image {
+  height: 25rem;
+  max-height: 25rem;
+  object-fit: cover;
+}
+
+.list-pending-docs {
+  li {
+    padding-bottom: 1rem;
+    color: $secondary;
+
+    & > strong {
+      color: $dark;
+      display: block;
+    }
+  }
+}

@@ -115,7 +115,7 @@ const JobsSingleRow = ({
         </Button>
         &nbsp;&nbsp;&nbsp;
         <Button
-          color="primary"
+          color="secondary"
           className="btn-xs"
           href={{
             pathname: '/admin/jobs/[id]',

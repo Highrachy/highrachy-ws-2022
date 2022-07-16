@@ -1,5 +1,5 @@
 import FeatureCard from '@/components/common/FeatureCard';
-import ImageBlock from '@/components/common/ImageBlock';
+import { LocalImage } from '@/components/common/Image';
 import Section from '@/components/common/Section';
 import Shape from '@/components/common/Shape';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
@@ -8,7 +8,6 @@ import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { aboutUsLeadText, theCulture } from '@/data/about-us';
 import { about } from '@/data/navigation';
-import { our_team } from '@/data/team';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import React from 'react';
@@ -18,7 +17,7 @@ const breadcrumb = [
   { title: 'Our Culture' },
 ];
 
-const OurCulture = () => {
+const OurCulture = ({ teams }) => {
   return (
     <>
       <NextSeo
@@ -35,7 +34,7 @@ const OurCulture = () => {
       />
       <OurCultureSection />
       <TheCulture />
-      <OurTeam />
+      <OurTeam teams={teams} />
       <BusinessRelationships />
       <Footer />
     </>
@@ -89,36 +88,52 @@ const TheCulture = () => (
   </Section>
 );
 
-export const OurTeam = () => (
-  <Section title="Our Team" id="our-team">
-    <div className="container">
-      <div className="row">
-        {our_team.map((member, index) => (
-          <SingleTeamCard {...member} key={index} />
-        ))}
+export const OurTeam = ({ teams }) => {
+  if (!teams) return null;
+  return (
+    <Section title="Our Team" id="our-team">
+      <div className="container">
+        <div className="row">
+          {teams.map((member, index) => (
+            <SingleTeamCard {...member.attributes} key={index} />
+          ))}
+        </div>
       </div>
-    </div>
-  </Section>
-);
+    </Section>
+  );
+};
 
-const SingleTeamCard = ({ image, name, title }) => (
+const SingleTeamCard = ({ image, fullName, position }) => (
   <div className="col-md-6 col-lg-4 mb-5">
     <div className="card shadow lift rounded">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <LocalImage
         src={image}
-        alt={name}
-        className="img-fluid w-100 card-img-top rounded-top"
+        alt={fullName}
+        className="img-fluid w-100 card-img-top rounded-top team-image"
       />
       <div className="card-body py-4">
         <p className="card-text">
-          <strong>{name}</strong>
+          <strong>{fullName}</strong>
           <br />
-          <span className="small">{title}</span>
+          <span className="small">{position}</span>
         </p>
       </div>
     </div>
   </div>
 );
+
+export async function getStaticProps() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/teams?filters[publish][$eq]=true&sort=priority:desc`
+  );
+  const { data } = await res.json();
+
+  return {
+    props: {
+      teams: data,
+    },
+    revalidate: 10,
+  };
+}
 
 export default OurCulture;
