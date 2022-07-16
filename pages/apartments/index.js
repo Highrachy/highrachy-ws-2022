@@ -150,7 +150,7 @@ const AvailableApartments = (props) => {
                           <ToiletIcon /> {apartment.toilets}
                         </li>
                       </ul>
-                      <div className="d-flex flex-wrap align-items-center mt-2 opacity-75">
+                      <div className="d-flex flex-wrap align-items-center my-2 mb-5 small opacity-75">
                         {apartment.availableUnits > 0 ? (
                           <span className="d-flex align-items-center fw-bold text-success">
                             <GoPrimitiveDot /> Currently available

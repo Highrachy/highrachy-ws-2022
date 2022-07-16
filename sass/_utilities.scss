@@ -71,31 +71,37 @@
 .img-md {
   height: 1.5rem !important;
   width: 1.5rem !important;
+  object-fit: cover;
 }
 
 .icon-md2 svg,
 .img-md2 {
   height: 2.5rem !important;
   width: 2.5rem !important;
+  object-fit: cover;
 }
 
 .icon-lg svg,
 .img-lg {
   height: 4rem !important;
   width: 4rem !important;
+  object-fit: cover;
 }
 .icon-xl svg,
 .img-xl {
   height: 8rem !important;
   width: 8rem !important;
+  object-fit: cover;
 }
 .icon-xxl svg,
 .img-xxl {
   height: 12rem !important;
   width: 12rem !important;
+  object-fit: cover;
   @include media-breakpoint-up(lg) {
     height: 16rem !important;
     width: 16rem !important;
+    object-fit: cover;
   }
 }
 

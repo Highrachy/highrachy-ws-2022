@@ -1,4 +1,5 @@
 import FeatureCard from '@/components/common/FeatureCard';
+import ImageBlock from '@/components/common/ImageBlock';
 import Section from '@/components/common/Section';
 import Shape from '@/components/common/Shape';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
