@@ -44,13 +44,13 @@ const WelcomeArea = () => (
             Let’s Work Together
           </Button>
         </div>
-        <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center">
+        <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center img-wrapper">
           {(
             <Image
-              src="/assets/img/slides/hero-image.png"
+              src="/assets/img/slides/hero-image.svg"
               className="rounded Tilt-inner"
-              width="554"
-              height="554"
+              width="615"
+              height="656"
               blurDataURL={`data:image/svg+xml;base64,${toBase64(
                 shimmer(554, 554)
               )}`}

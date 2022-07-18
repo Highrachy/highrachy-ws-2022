@@ -572,3 +572,40 @@ footer a {
     }
   }
 }
+
+.auth-fluid {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.auth-fluid .auth-fluid-form-box {
+  max-width: 480px;
+  border-radius: 0;
+  z-index: 2;
+  padding: 3rem 2rem;
+  background-color: var(--ct-auth-bg);
+  position: relative;
+  width: 100%;
+}
+
+.auth-fluid .auth-fluid-right {
+  padding: 6rem 3rem;
+  flex: 1;
+  position: relative;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  background: url(../public/assets/img/bg/bg-login.png) center;
+  background-size: cover;
+}
+
+.img-wrapper {
+  font-size: 0;
+
+  img {
+    object-fit: cover !important;
+  }
+}
