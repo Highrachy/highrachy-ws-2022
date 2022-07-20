@@ -1,10 +1,4 @@
-import {
-  BathIcon,
-  BedIcon,
-  LeftAngleIcon,
-  ToiletIcon,
-} from '@/components/common/Icons';
-import { RightAngleIcon } from '@/components/common/Icons';
+import { BathIcon, BedIcon, ToiletIcon } from '@/components/common/Icons';
 import { LocationIcon } from '@/components/common/Icons';
 import Section, { PaddedSection } from '@/components/common/Section';
 import Button from '@/components/forms/Button';
@@ -23,8 +17,9 @@ import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { tenantTestData } from '@/data/tenant';
-import { TENANT_STATUS } from '@/utils/constants';
+import { STATES, TENANT_STATUS } from '@/utils/constants';
 import {
+  camelToSentence,
   generateNumOptions,
   getError,
   isDevEnvironment,
@@ -40,6 +35,7 @@ import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { FaChevronLeft, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import Humanize from 'humanize-plus';
 
 const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
@@ -90,7 +86,7 @@ const AlertStatus = ({ apartment }) =>
   ));
 
 const IntroText = ({ apartment }) => (
-  <div className="col-sm-12">
+  <div className="col-sm-12" id="top-page">
     <AlertStatus apartment={apartment} />
 
     <SectionHeader small>Tenant Application Form</SectionHeader>
@@ -126,6 +122,14 @@ const IntroText = ({ apartment }) => (
     <p>
       Please also be aware that the rent due date will be the lease start date.
     </p>
+
+    <p className="small mt-4 fw-bold">
+      Note that the individual whose information is filled herein will be
+      responsible for making all payments (including rent, Service charges and
+      levies). Kindly specify if the property will be occupied by multiple
+      persons and specify the number and provide details of other occupants in
+      the space provided below.
+    </p>
   </div>
 );
 
@@ -155,6 +159,7 @@ const IntroSection = ({ apartment }) => (
 
 const TenantForm = ({ apartment }) => {
   const [step, setStep] = React.useState(0);
+  const [errorFields, setErrorFields] = React.useState([]);
   const isWaitingList =
     apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
@@ -181,6 +186,7 @@ const TenantForm = ({ apartment }) => {
       return;
     }
     const payload = {
+      tenantFullName: `${values.title} ${values.firstName} ${values?.middleName} ${values.lastName}`,
       apartment: apartment.id,
       ...values,
       dateOfBirth: values.dateOfBirth.date,
@@ -244,18 +250,24 @@ const TenantForm = ({ apartment }) => {
     }
   };
 
+  const myRef = React.useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
+
   const ALL_STEPS = [
     <IntroText apartment={apartment} key="1" />,
     <ProfileInformation key="2" />,
-    <PersonalInformation key="3" />,
-    <EmergencyContact key="4" />,
-    <EmploymentDetails key="5" />,
-    <DependantsInformation key="6" />,
+    <EmergencyContact key="3" />,
+    <EmploymentDetails key="4" />,
+    <DependantsInformation key="5" />,
   ];
 
   const lastStep = ALL_STEPS.length - 1;
   const isFirstStep = step === 0;
   const isLastStep = step === lastStep;
+
+  const showErrorMessage = (fields = []) => {
+    setErrorFields(fields);
+  };
 
   return (
     <Section>
@@ -270,13 +282,28 @@ const TenantForm = ({ apartment }) => {
       >
         <PaddedSection>
           <>
-            <IntroSection apartment={apartment} />
+            <section ref={myRef}>
+              <IntroSection apartment={apartment} />
+            </section>
             <div className="bg-light py-5 px-6 mb-4">
               {!isFirstStep && (
                 <p className="muted fw-bold mb-0 small">
                   Step {step}/{lastStep}
                 </p>
               )}
+              {errorFields.length > 0 && (
+                <div className="alert alert-danger">
+                  <p className="mb-0">
+                    <strong>The following fields are required</strong>
+                  </p>
+                  <p className="mb-0">
+                    {errorFields.map((field, index) => (
+                      <li key={index}>{field}</li>
+                    ))}
+                  </p>
+                </div>
+              )}
+
               {ALL_STEPS[step]}
             </div>
 
@@ -287,6 +314,8 @@ const TenantForm = ({ apartment }) => {
               isFirstStep={isFirstStep}
               isLastStep={isLastStep}
               isWaitingList={isWaitingList}
+              executeScroll={executeScroll}
+              showErrorMessage={showErrorMessage}
             />
           </>
         </PaddedSection>
@@ -301,15 +330,81 @@ const ActionButtons = ({
   isFirstStep,
   isLastStep,
   isWaitingList,
+  executeScroll,
+  showErrorMessage,
 }) => {
-  const { values } = useFormikContext();
-  const confirmation = !!values?.['confirmation']?.[0];
-  const tenantFullName = !!values?.['tenantFullName'];
-  const tenantProfileImage = !!values?.['tenantProfileImage'];
-  const initialData = tenantFullName && tenantProfileImage;
+  const { values, setFieldTouched, setFieldError } = useFormikContext();
+
+  const validateStep = (step) => {
+    const requiredFields = getMissingRequiredFields(step);
+    const conditionalFields = getMissingConditionalFields(step);
+    const dependentFields = getMissingDependentFields(step, values);
+    console.log(
+      'requiredFields, conditionalFields',
+      'dependentFields',
+      requiredFields,
+      conditionalFields,
+      dependentFields
+    );
+    const missingFields = [...requiredFields, ...conditionalFields];
+    if (missingFields.length > 0) {
+      toast.error(
+        `${missingFields.join(', ')} ${Humanize.pluralize(
+          missingFields.length,
+          'is',
+          'are'
+        )} required`
+      );
+    } else if (dependentFields.length > 0) {
+      toast.error(`At least one of ${dependentFields.join(', ')} is required`);
+    }
+
+    return [...missingFields, ...dependentFields].length === 0;
+  };
+
+  const getMissingRequiredFields = (step) => {
+    const requiredFields = REQUIRED_FIELDS[step] || [];
+    if (!Array.isArray(requiredFields)) return [];
+    return requiredFields.reduce((acc, field) => {
+      if (!values?.[field]) {
+        acc.push(camelToSentence(field));
+        setFieldTouched(field, true, true);
+      }
+      return acc;
+    }, []);
+  };
+
+  const getMissingConditionalFields = (step) => {
+    const requiredConditionalFields = CONDITIONAL_FIELDS[step] || [];
+    if (!requiredConditionalFields) return [];
+    return Object.entries(requiredConditionalFields).reduce(
+      (acc, [field, value]) => {
+        if (!values?.[value] && !values?.[field]) {
+          acc.push(camelToSentence(field));
+          setFieldTouched(field, true, true);
+        }
+        return acc;
+      },
+      []
+    );
+  };
 
   return (
     <div className="d-flex justify-content-between">
+      {/*  Show Back button on all steps except First Step */}
+      {!isFirstStep && (
+        <Button
+          color="none"
+          className="ms-3 btn-outline-info"
+          onClick={() => {
+            setStep(step - 1);
+            executeScroll();
+          }}
+        >
+          <FaChevronLeft /> Back
+        </Button>
+      )}
+
       {isLastStep ? (
         // Submit Button on last step
         <FormikButton className="px-5" disabled={!confirmation}>
@@ -320,8 +415,12 @@ const ActionButtons = ({
         <Button
           color="primary"
           className="px-5"
-          onClick={() => setStep(step + 1)}
-          disabled={!initialData && !isFirstStep}
+          onClick={() => {
+            if (validateStep(step)) {
+              setStep(step + 1);
+            }
+            executeScroll();
+          }}
         >
           {isFirstStep ? (
             isWaitingList ? (
@@ -334,90 +433,44 @@ const ActionButtons = ({
           )}
         </Button>
       )}
-
-      {/*  Show Back button on all steps except First Step */}
-      {!isFirstStep && (
-        <Button
-          color="none"
-          className="ms-3 btn-outline-info"
-          onClick={() => setStep(step - 1)}
-        >
-          <FaChevronLeft /> Back
-        </Button>
-      )}
-    </div>
-  );
-};
-
-const StepNavigation = ({ step, setStep, isFirstStep, isLastStep }) => {
-  return step === 1 ? null : (
-    <div className="d-flex flex-column flex-md-row justify-content-end align-items-end mb-3 mt-5">
-      <div>
-        {!isFirstStep && (
-          <Button
-            color="none"
-            className="btn-outline-dark btn-sm"
-            onClick={() => setStep(step - 1)}
-          >
-            <LeftAngleIcon /> Previous Step
-          </Button>
-        )}
-      </div>
-      &nbsp;&nbsp;&nbsp;
-      <div>
-        {!isLastStep && !isFirstStep && (
-          <Button
-            color={isFirstStep ? 'danger' : 'none'}
-            className="btn-outline-dark btn-sm"
-            onClick={() => setStep(step + 1)}
-          >
-            <>
-              Next Step <RightAngleIcon />
-            </>
-          </Button>
-        )}
-      </div>
     </div>
   );
 };
 
 const ProfileInformation = () => (
   <>
-    <SectionHeader small>Tenant Application</SectionHeader>
+    <SectionHeader small>Personal Information</SectionHeader>
     <p className="lead">
       Please do not fill the information on behalf of another person. Applicants
       may not fraudulently present their information on behalf of another.
       Highrachy reserves the right to revoke a person&sbquo;s tenancy where the
       person resident on the property is not the original applicant.
     </p>
-    <div className="mt-3">
-      <Input name="tenantFullName" label="Tenant Full Name" />
-      <Upload
-        changeText="Update Picture"
-        defaultImage="/assets/img/placeholder/image.png"
-        imgOptions={{
-          className: 'mb-3 icon-md',
-          width: 200,
-          height: 300,
-        }}
-        name="tenantProfileImage"
-        uploadText={`Upload Picture`}
-        folder={`tenants/picture`}
-      />
-      <p className="small mt-4">
-        Note that the individual whose information is filled herein will be
-        responsible for making all payments (including rent, Service charges and
-        levies). Kindly specify if the property will be occupied by multiple
-        persons and specify the number and provide details of other occupants in
-        the space provided below.
-      </p>
+
+    <div className="row">
+      <div className="mt-2">
+        <Upload
+          label="Upload your image"
+          changeText="Update Picture"
+          defaultImage="/assets/img/placeholder/image.png"
+          imgOptions={{
+            className: 'mb-3 icon-md',
+            width: 200,
+            height: 300,
+          }}
+          name="tenantProfileImage"
+          uploadText={`Upload Picture`}
+          folder={`tenants/picture`}
+        />
+      </div>
+
+      <PersonalInformation />
     </div>
   </>
 );
 
 const PersonalInformation = () => (
   <>
-    <SectionHeader small>Personal Information</SectionHeader>
     <div className="row">
       <Input formGroupClassName="col-md-6" name="title" label="Title" />
       <Input
@@ -435,7 +488,6 @@ const PersonalInformation = () => (
       />
       <Input formGroupClassName="col-md-6" name="lastName" label="Last Name" />
     </div>
-
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
@@ -516,10 +568,12 @@ const PersonalInformation = () => (
     </div>
 
     <div className="row">
-      <Input
+      <Select
         formGroupClassName="col-md-6"
         name="stateOfOrigin"
         label="State of Origin"
+        options={valuesToOptions(STATES)}
+        blankOption="Select State of Origin"
         optional
       />
       <Select
@@ -543,13 +597,14 @@ const PersonalInformation = () => (
     <p className="text-muted">
       At least one (1) of your social media handle is required
     </p>
+
     <div className="row">
       <Input
         formGroupClassName="col-md-6"
         name="facebook"
         type="url"
         label="Facebook"
-        helpText="https://www.facebook.com/..."
+        helpText="Your Facebook profile"
         optional
       />
       <Input
@@ -557,7 +612,7 @@ const PersonalInformation = () => (
         name="twitter"
         label="Twitter"
         type="url"
-        helpText="https://www.twitter.com/..."
+        helpText="Your Twitter handle"
         optional
       />
     </div>
@@ -568,14 +623,14 @@ const PersonalInformation = () => (
         name="instagram"
         label="Instagram"
         type="url"
-        helpText="https://www.instagram.com/..."
+        helpText="Your Instagram handle"
         optional
       />
       <Input
         formGroupClassName="col-md-6"
         name="linkedin"
         label="LinkedIn"
-        helpText="https://www.linkedin.com/..."
+        helpText="Your Linkedin page"
         type="url"
         optional
       />
@@ -666,7 +721,11 @@ const EmergencyContact = () => {
         </div>
       )}
       <Textarea name="landlordAddress" label={`${landlordText} Address`} />
-      <Input name="landlordPostcode" label={`${landlordText} Post Code`} />
+      <Input
+        name="landlordPostcode"
+        optional
+        label={`${landlordText} Post Code`}
+      />
 
       {(ownLastProperty || neverRentedBefore) && (
         <Upload
@@ -969,6 +1028,7 @@ const DependantInfo = ({ number }) => {
           formGroupClassName="col-md-6"
           name={`dependantOccupation${number}`}
           label={`Occupation ${number}`}
+          optional
         />
       </div>
 
@@ -1029,3 +1089,47 @@ export async function getStaticPaths() {
 }
 
 export default SingleApartment;
+
+export const REQUIRED_FIELDS = {
+  1: [
+    'title',
+    'firstName',
+    'lastName',
+    'tenantProfileImage',
+    'mobileTelephone',
+    'personalEmail',
+    'dateOfBirth',
+    'identificationType',
+    'identificationNumber',
+    'currentAddress',
+    'maritalStatus',
+    'previousEmployment',
+  ],
+  2: [
+    'emergencyFullName',
+    'emergencyEmail',
+    'emergencyRelationship',
+    'emergencyTelephone1',
+    'emergencyAddress',
+    'landlordAddress',
+  ],
+};
+
+export const CONDITIONAL_FIELDS = {
+  2: {
+    landlordFullName: 'ownLastProperty',
+    landlordEmail: 'ownLastProperty',
+    landlordTelephone: 'ownLastProperty',
+  },
+};
+export const DEPENDENT_FIELDS = {
+  1: ['facebook', 'twitter', 'instagram', 'linkedin'],
+};
+
+export const getMissingDependentFields = (step, values) => {
+  const dependentFields = DEPENDENT_FIELDS[step] || [];
+  if (!dependentFields) return [];
+  return dependentFields.some((field) => !values?.[field])
+    ? dependentFields.map((field) => camelToSentence(field))
+    : [];
+};

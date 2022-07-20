@@ -9,6 +9,7 @@ import ProcessButton from '@/components/utils/ProcessButton';
 import { BsCaretDownFill, BsCaretUpFill } from 'react-icons/bs';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { FaUserEdit } from 'react-icons/fa';
+import { RiCheckboxCircleFill, RiCloseCircleFill } from 'react-icons/ri';
 
 const Teams = () => {
   return (
@@ -37,6 +38,7 @@ const TeamsRowList = ({ results, offset, query }) => {
                 <th>Name</th>
                 <th>Position</th>
                 <th className="text-center">Priority</th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -85,6 +87,11 @@ const TeamsSingleRow = ({
       </td>
       <td className="text-center">
         <strong className="badge bg-dark rounded">{priority}</strong>
+      </td>
+      <td className="text-center">
+        <span className={`text-${publish ? 'success' : 'secondary'}`}>
+          {publish ? <RiCheckboxCircleFill /> : <RiCloseCircleFill />}
+        </span>
       </td>
       <td>
         {priority < 20 && (

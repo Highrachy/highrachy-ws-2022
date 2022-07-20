@@ -2,12 +2,16 @@ import * as yup from 'yup';
 import { parseISO } from 'date-fns';
 import { getDateTime } from 'utils/date-helpers';
 import Humanize from 'humanize-plus';
+import { isBoolean } from '@/utils/helpers';
 
 export const required = (label) =>
   yup.string().required(`${label} is required`);
 
-export const optionalValidation = (validation) =>
-  yup.lazy((value) => {
+export const optionalValidation = (validation) => {
+  return yup.lazy((value) => {
+    if (isBoolean(value)) {
+      return yup.boolean().notRequired();
+    }
     if (value && value !== JSON.stringify('') && !Array.isArray(value)) {
       return validation;
     }
@@ -16,7 +20,7 @@ export const optionalValidation = (validation) =>
     }
     return yup.mixed().notRequired();
   });
-
+};
 export const stringValidation = (label, length = 2) =>
   yup
     .string()

@@ -10,6 +10,7 @@ import Image from '../common/Image';
 import { useFormikContext } from 'formik';
 import { feedback, FeedbackMessage, getValidityClass } from './form-helper';
 import classNames from 'classnames';
+import Label from './Label';
 
 // https://blog.devgenius.io/upload-files-to-amazon-s3-from-a-react-frontend-fbd8f0b26f5
 
@@ -28,10 +29,16 @@ const Upload = ({
   formGroupClassName,
   imgOptions,
   isValidMessage,
+  label,
+  labelClassName,
   maxFileSize,
   name,
   oldImage,
+  optional,
   showFeedback,
+  tooltipHeader,
+  tooltipText,
+  tooltipPosition,
   uploadText,
 }) => {
   const [loading, setLoading] = React.useState(false);
@@ -128,9 +135,9 @@ const Upload = ({
   };
 
   const formikImage = formikProps?.values?.[name];
-  const currentImage = uploadedFile || oldImage;
-  const inputHasAnImage = !!currentImage || !!formikImage || !!defaultImage;
-  const hasUploadedFile = !!uploadedFile || !!oldImage;
+  const currentImage = formikProps ? formikImage : uploadedFile;
+  const inputHasAnImage = !!currentImage || !!defaultImage;
+  const hasUploadedFile = !!currentImage || !!oldImage;
 
   const supportedFormats = allowedFormats.map((extension) => '.' + extension);
   const helpText = `Supported Formats: ${Humanize.oxford(
@@ -141,6 +148,15 @@ const Upload = ({
   const id = name || 'upload-file';
   return (
     <div className={formGroupClassName}>
+      <Label
+        className={labelClassName}
+        name={name}
+        optional={optional}
+        text={label}
+        tooltipHeader={tooltipHeader}
+        tooltipPosition={tooltipPosition}
+        tooltipText={tooltipText}
+      />
       <div
         className={classNames(
           'form-control',
@@ -152,7 +168,7 @@ const Upload = ({
           (inputHasAnImage && (
             <Image
               defaultImage={defaultImage}
-              src={formikImage ? formikImage : uploadedFile || oldImage}
+              src={currentImage || oldImage}
               name={name || 'uploaded-image'}
               alt={name}
               {...imgOptions}
@@ -223,10 +239,16 @@ Upload.propTypes = {
   formGroupClassName: PropTypes.string,
   imgOptions: PropTypes.object,
   isValidMessage: PropTypes.string,
+  label: PropTypes.string,
+  labelClassName: PropTypes.string,
   maxFileSize: PropTypes.number,
   name: PropTypes.string,
   oldImage: PropTypes.string,
+  optional: PropTypes.bool,
   showFeedback: PropTypes.oneOf(Object.keys(feedback)),
+  tooltipHeader: PropTypes.string,
+  tooltipPosition: PropTypes.string,
+  tooltipText: PropTypes.any,
   uploadText: PropTypes.string,
 };
 
@@ -241,11 +263,17 @@ Upload.defaultProps = {
   folder: 'unknown',
   formGroupClassName: 'mb-4',
   imgOptions: {},
+  label: null,
+  labelClassName: null,
   isValidMessage: '',
   maxFileSize: 1_024 * 1_000, // 1 MB
   name: null,
   oldImage: null,
+  optional: false,
   showFeedback: feedback.ALL,
+  tooltipHeader: null,
+  tooltipText: null,
+  tooltipPosition: 'right',
   uploadText: null,
 };
 

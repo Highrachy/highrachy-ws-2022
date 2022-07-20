@@ -48,9 +48,14 @@
 .optional-form-field {
   font-size: 0.75rem;
   padding-top: 0.25rem;
-  color: $text-muted;
+  color: lighten($text-muted, 5%);
   display: inline-block;
   margin-top: -2px;
+}
+.compulsory-form-field {
+  font-size: 1rem;
+  font-weight: bold;
+  color: $danger;
 }
 
 .confirmation-text {

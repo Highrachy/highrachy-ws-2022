@@ -30,13 +30,12 @@ const Label = ({
       {labelText}
 
       {/* Optional / Compulsory Fields */}
-      {optional ? (
-        !hideOptionalText && (
+      {!hideOptionalText &&
+        (optional ? (
           <em className="optional-form-field">&nbsp;(optional)</em>
-        )
-      ) : (
-        <small> * </small>
-      )}
+        ) : (
+          <span className="compulsory-form-field "> * </span>
+        ))}
 
       <Tooltip
         header={tooltipHeader}

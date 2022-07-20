@@ -1,5 +1,4 @@
 export const tenantTestData = {
-  tenantFullName: 'Haruna Popoola',
   tenantProfileImage:
     'https://highrachy.s3.amazonaws.com/tenants/picture/587963b0-f572-11ec-b81b-4f8d0f407070.jpg',
   title: 'Mr',

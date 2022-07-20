@@ -43,28 +43,28 @@ const dependantSchema = (number) => ({
     `dependantName${number}`,
     (name) => !!name
   ),
-  [`dependantOccupation${number}`]: conditionalValidation(
-    stringValidation(`Dependant Occupation ${number}`),
-    `dependantName${number}`,
-    (name) => !!name
+
+  // please note that the info will be vetted and verified in line with company procedure
+  // what does the dependant do
+  [`dependantOccupation${number}`]: optionalValidation(
+    required(`Dependant Occupation ${number}`)
   ),
+  // school, work, none of the above
   [`dependantIdentification${number}`]: conditionalValidation(
     stringValidation(`Dependant ${number} Identification`),
     [`dependantAge${number}`, `dependantRelationship${number}`],
-    (age, relationship) => age > 18 && relationship === 'Dependants'
+    (age, relationship) => age >= 18 && relationship === 'Dependants'
+    // upload school or work id card, passport, SHOULD BE
   ),
 });
 
 export const tenantSchema = {
   // step 1 - start
-  tenantFullName: stringValidation('Tenant Full Name'),
-  tenantProfileImage: stringValidation('Tenant Profile Name'),
-
-  // step 2 - Profile
   title: stringValidation('Title'),
   firstName: stringValidation('First Name'),
   middleName: optionalValidation(stringValidation('Middle Name')),
   lastName: stringValidation('Last Name'),
+  tenantProfileImage: stringValidation('Tenant Profile Name'),
   mobileTelephone: phoneNumber,
   homeTelephone: OptionalPhoneNumber,
   personalEmail: email,
@@ -80,12 +80,12 @@ export const tenantSchema = {
   stateOfOrigin: optionalValidation(stringValidation('State of Origin')),
   maritalStatus: stringValidation('Marital Status'),
   previousEmployment: stringValidation('Previous Employment'),
-  facebook: optionalValidation(urlValidation('Facebook')),
-  twitter: optionalValidation(urlValidation('Twitter')),
-  instagram: optionalValidation(urlValidation('Instragram')),
-  linkedin: optionalValidation(urlValidation('LinkedIn')),
+  facebook: optionalValidation(stringValidation('Facebook')),
+  twitter: optionalValidation(stringValidation('Twitter')),
+  instagram: optionalValidation(stringValidation('Instragram')),
+  linkedin: optionalValidation(stringValidation('LinkedIn')),
 
-  // // step 3 - Emergency and Landlord
+  // // step 2 - Emergency and Landlord
   emergencyFullName: stringValidation('Emergency Full Name'),
   emergencyEmail: emailValidation('Emergency Email'),
   emergencyRelationship: stringValidation('Emergency Relationship'),
@@ -108,7 +108,7 @@ export const tenantSchema = {
     'ownLastProperty'
   ),
   landlordAddress: stringValidation('Landlord Address'),
-  landlordPostcode: stringValidation('Landlord Postcode'),
+  landlordPostcode: optionalValidation(stringValidation('Landlord Postcode')),
   neverRentedBefore: optionalValidation(
     booleanValidation('Never Rented Before')
   ),
@@ -120,7 +120,7 @@ export const tenantSchema = {
   // - landlordFullName, landlordEmail, landlordTelephone
   // show mortgage Statement field
 
-  // step 4 - Employment Details
+  // step 3 - Employment Details
   isSelfEmployed: optionalValidation(booleanValidation('Self Employed')),
   employmentCompanyName: stringValidation('Employment Company Name'),
   employmentPositionTitle: conditionalValidation(
@@ -168,7 +168,7 @@ export const tenantSchema = {
   // companyFacebook, companyTwitter, companyInstagram, companyLinkedIn (only one is allowed)
   // - changing employment (move down, show offer letter upload)
 
-  // step 5 - Dependabots
+  // step 4 - Dependabots
   ...dependantSchema(1),
   ...dependantSchema(2),
   ...dependantSchema(3),
