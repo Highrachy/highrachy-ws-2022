@@ -305,6 +305,13 @@ const TenantForm = ({ apartment }) => {
               )}
 
               {ALL_STEPS[step]}
+
+              {step > 0 && (
+                <div className="text-muted mt-5">
+                  <strong>Note: </strong> The information provided on this page
+                  will be vetted and verified in line with company procedure.
+                </div>
+              )}
             </div>
 
             <ActionButtons
@@ -333,7 +340,7 @@ const ActionButtons = ({
   executeScroll,
   showErrorMessage,
 }) => {
-  const { values, setFieldTouched, setFieldError } = useFormikContext();
+  const { values, setFieldTouched } = useFormikContext();
 
   const validateStep = (step) => {
     const requiredFields = getMissingRequiredFields(step);
@@ -407,7 +414,10 @@ const ActionButtons = ({
 
       {isLastStep ? (
         // Submit Button on last step
-        <FormikButton className="px-5" disabled={!confirmation}>
+        <FormikButton
+          className="px-5"
+          disabled={!values?.['confirmation']?.[0]}
+        >
           Submit Application
         </FormikButton>
       ) : (
@@ -602,17 +612,13 @@ const PersonalInformation = () => (
       <Input
         formGroupClassName="col-md-6"
         name="facebook"
-        type="url"
         label="Facebook"
-        helpText="Your Facebook profile"
         optional
       />
       <Input
         formGroupClassName="col-md-6"
         name="twitter"
         label="Twitter"
-        type="url"
-        helpText="Your Twitter handle"
         optional
       />
     </div>
@@ -622,16 +628,12 @@ const PersonalInformation = () => (
         formGroupClassName="col-md-6"
         name="instagram"
         label="Instagram"
-        type="url"
-        helpText="Your Instagram handle"
         optional
       />
       <Input
         formGroupClassName="col-md-6"
         name="linkedin"
         label="LinkedIn"
-        helpText="Your Linkedin page"
-        type="url"
         optional
       />
     </div>
@@ -738,7 +740,8 @@ const EmergencyContact = () => {
           }}
           name="propertyEvidenceURL"
           uploadText={`Upload Evidence`}
-          folder={`tenants/picture`}
+          folder={`tenants/evidence`}
+          optional
         />
       )}
     </>
@@ -798,6 +801,7 @@ const EmploymentDetails = () => {
           formGroupClassName="col-md-6"
           name="employmentPostcode"
           label="Company Address Post Code"
+          optional
         />
         <DatePicker
           formGroupClassName="col-md-6"
@@ -854,17 +858,13 @@ const EmploymentDetails = () => {
         <Input
           formGroupClassName="col-md-6"
           name="companyFacebook"
-          type="url"
           label="Company Facebook"
-          helpText="https://www.facebook.com/..."
           optional
         />
         <Input
           formGroupClassName="col-md-6"
           name="companyTwitter"
           label="Twitter"
-          type="url"
-          helpText="https://www.twitter.com/..."
           optional
         />
       </div>
@@ -874,16 +874,12 @@ const EmploymentDetails = () => {
           formGroupClassName="col-md-6"
           name="companyInstagram"
           label="Instagram"
-          type="url"
-          helpText="https://www.instagram.com/..."
           optional
         />
         <Input
           formGroupClassName="col-md-6"
           name="companyLinkedin"
           label="LinkedIn"
-          helpText="https://www.linkedin.com/..."
-          type="url"
           optional
         />
       </div>
@@ -905,7 +901,7 @@ const EmploymentDetails = () => {
           }}
           name="offerLetterURL"
           uploadText={`Upload Offer Letter`}
-          folder={`tenants/picture`}
+          folder={`tenants/offer-letters`}
         />
       )}
     </>
@@ -956,6 +952,7 @@ const DependantsInformation = () => {
       <Input
         name="pets"
         label="List your Pets"
+        optional
         helpText="Please note that the landlord has to give written permission for you to
         keep a pet at the property and you must abide by the House Rules on
         keeping pet/s. Examples are cats, dogs, e.t.c"
@@ -1024,11 +1021,15 @@ const DependantInfo = ({ number }) => {
             'Select Relationship Type'
           )}
         />
-        <Input
+        <Select
           formGroupClassName="col-md-6"
           name={`dependantOccupation${number}`}
           label={`Occupation ${number}`}
           optional
+          options={valuesToOptions(
+            ['Currently Working', 'Schooling', 'None'],
+            'Select what they do?'
+          )}
         />
       </div>
 
@@ -1043,7 +1044,9 @@ const DependantInfo = ({ number }) => {
           }}
           name={`dependantIdentification${number}`}
           uploadText={`Upload Dependant  ${number} Identification`}
-          folder={`tenants/picture`}
+          folder={`tenants/dependants`}
+          optional
+          label="Upload School or Work ID Card"
         />
       )}
     </section>
@@ -1113,6 +1116,7 @@ export const REQUIRED_FIELDS = {
     'emergencyAddress',
     'landlordAddress',
   ],
+  3: ['employmentCompanyName', 'employmentAddress', 'employmentStartDate'],
 };
 
 export const CONDITIONAL_FIELDS = {
@@ -1121,15 +1125,29 @@ export const CONDITIONAL_FIELDS = {
     landlordEmail: 'ownLastProperty',
     landlordTelephone: 'ownLastProperty',
   },
+  3: {
+    employmentPositionTitle: 'isSelfEmployed',
+    employmentContractType: 'isSelfEmployed',
+    employmentManagerName: 'isSelfEmployed',
+    employmentManagerPosition: 'isSelfEmployed',
+    employmentManagerEmail: 'isSelfEmployed',
+    employmentManagerTelephone: 'isSelfEmployed',
+  },
 };
 export const DEPENDENT_FIELDS = {
   1: ['facebook', 'twitter', 'instagram', 'linkedin'],
+  3: [
+    'companyFacebook',
+    'companyTwitter',
+    'companyInstagram',
+    'companyLinkedin',
+  ],
 };
 
 export const getMissingDependentFields = (step, values) => {
   const dependentFields = DEPENDENT_FIELDS[step] || [];
   if (!dependentFields) return [];
-  return dependentFields.some((field) => !values?.[field])
-    ? dependentFields.map((field) => camelToSentence(field))
-    : [];
+  return dependentFields.some((field) => !!values?.[field])
+    ? []
+    : dependentFields.map((field) => camelToSentence(field));
 };

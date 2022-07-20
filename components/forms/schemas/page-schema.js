@@ -8,7 +8,6 @@ import {
   optionalValidation,
   required,
   OptionalPhoneNumber,
-  urlValidation,
   booleanValidation,
   conditionalValidation,
 } from './schema-helpers';
@@ -44,17 +43,15 @@ const dependantSchema = (number) => ({
     (name) => !!name
   ),
 
-  // please note that the info will be vetted and verified in line with company procedure
   // what does the dependant do
   [`dependantOccupation${number}`]: optionalValidation(
     required(`Dependant Occupation ${number}`)
   ),
   // school, work, none of the above
   [`dependantIdentification${number}`]: conditionalValidation(
-    stringValidation(`Dependant ${number} Identification`),
+    optionalValidation(stringValidation(`Dependant ${number} Identification`)),
     [`dependantAge${number}`, `dependantRelationship${number}`],
     (age, relationship) => age >= 18 && relationship === 'Dependants'
-    // upload school or work id card, passport, SHOULD BE
   ),
 });
 
@@ -132,7 +129,9 @@ export const tenantSchema = {
     'isSelfEmployed'
   ),
   employmentAddress: stringValidation('Employment Address'),
-  employmentPostcode: stringValidation('Company Address Post Code'),
+  employmentPostcode: optionalValidation(
+    stringValidation('Company Address Post Code')
+  ),
   employmentStartDate: requiredDate('Employment State Date'),
   employmentManagerName: conditionalValidation(
     stringValidation('Employment Manager Name'),

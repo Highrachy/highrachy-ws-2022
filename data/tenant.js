@@ -89,5 +89,5 @@ export const tenantTestData = {
   hasPersonsWithSpecialNeed: false,
   specialNeedDetails: '',
   pets: '',
-  confirmation: [],
+  // confirmation: [],
 };
