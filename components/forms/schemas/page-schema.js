@@ -48,10 +48,8 @@ const dependantSchema = (number) => ({
     required(`Dependant Occupation ${number}`)
   ),
   // school, work, none of the above
-  [`dependantIdentification${number}`]: conditionalValidation(
-    optionalValidation(stringValidation(`Dependant ${number} Identification`)),
-    [`dependantAge${number}`, `dependantRelationship${number}`],
-    (age, relationship) => age >= 18 && relationship === 'Dependants'
+  [`dependantIdentification${number}`]: optionalValidation(
+    stringValidation(`Dependant ${number} Identification`)
   ),
 });
 
@@ -113,10 +111,6 @@ export const tenantSchema = {
     stringValidation('Property Evidence')
   ),
 
-  // ownLastProperty (hide the following fields if true)
-  // - landlordFullName, landlordEmail, landlordTelephone
-  // show mortgage Statement field
-
   // step 3 - Employment Details
   isSelfEmployed: optionalValidation(booleanValidation('Self Employed')),
   employmentCompanyName: stringValidation('Employment Company Name'),
@@ -145,9 +139,8 @@ export const tenantSchema = {
     emailValidation('Employment Manager Email'),
     'isSelfEmployed'
   ),
-  employmentManagerTelephone: conditionalValidation(
-    optionalValidation(phoneValidation('Employment Manager Phone')),
-    'isSelfEmployed'
+  employmentManagerTelephone: optionalValidation(
+    phoneValidation('Employment Manager Phone')
   ),
   companyFacebook: optionalValidation(stringValidation('Company Facebook')),
   companyTwitter: optionalValidation(stringValidation('Company Twitter')),
@@ -160,12 +153,6 @@ export const tenantSchema = {
     booleanValidation('Change Employer Soon')
   ),
   offerLetterURL: optionalValidation(stringValidation('Offer Letter')),
-
-  // isSelfEmployed (hide the following fields if true)
-  // - Position Title = CEO,contractype = self employed (Hidden)
-  // manager name, manager position, manager email, manager telephone (hidden)
-  // companyFacebook, companyTwitter, companyInstagram, companyLinkedIn (only one is allowed)
-  // - changing employment (move down, show offer letter upload)
 
   // step 4 - Dependabots
   ...dependantSchema(1),

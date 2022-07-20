@@ -285,7 +285,7 @@ const TenantForm = ({ apartment }) => {
             <section ref={myRef}>
               <IntroSection apartment={apartment} />
             </section>
-            <div className="bg-light py-5 px-6 mb-4">
+            <div className="bg-light py-4 px-4 px-md-6 py-md-5 mb-4">
               {!isFirstStep && (
                 <p className="muted fw-bold mb-0 small">
                   Step {step}/{lastStep}
@@ -1024,10 +1024,10 @@ const DependantInfo = ({ number }) => {
         <Select
           formGroupClassName="col-md-6"
           name={`dependantOccupation${number}`}
-          label={`Occupation ${number}`}
+          label="What do they do?"
           optional
           options={valuesToOptions(
-            ['Currently Working', 'Schooling', 'None'],
+            ['Work', 'School', 'None'],
             'Select what they do?'
           )}
         />
