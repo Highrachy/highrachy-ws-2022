@@ -122,12 +122,6 @@ const IntroText = ({ apartment }) => (
     <p>
       Please also be aware that the rent due date will be the lease start date.
     </p>
-
-    <p className="small mt-4 fw-bold">
-      Note that the individual whose information is filled herein will be
-      responsible for making all payments (including rent, Service charges and
-      levies).
-    </p>
   </div>
 );
 
@@ -427,7 +421,7 @@ const ProfileInformation = () => (
     <p className="lead">
       Please do not fill the information on behalf of another person. Applicants
       may not fraudulently present their information on behalf of another.
-      Highrachy reserves the right to revoke a person&sbquo;s tenancy where the
+      Highrachy reserves the right to revoke a person&apos;s tenancy where the
       person resident on the property is not the original applicant.
     </p>
 
