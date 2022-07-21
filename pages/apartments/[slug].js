@@ -36,6 +36,7 @@ import React from 'react';
 import { FaChevronLeft, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Humanize from 'humanize-plus';
+import { setInitialValues } from '@/components/forms/form-helper';
 
 const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
@@ -209,7 +210,7 @@ const TenantForm = ({ apartment }) => {
             Router.push('/apartments');
             toast.success('Information sent successfully');
             actions.setSubmitting(false);
-            actions.resetForm();
+            actions.resetForm({ values: setInitialValues(tenantSchema) });
           }
         })
         .catch(function (error) {
