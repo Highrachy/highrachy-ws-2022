@@ -706,7 +706,7 @@ const EmploymentDetails = () => {
       <ToggleField
         name="isSelfEmployed"
         label="Are you self-employed?"
-        note="Please provide us with your last 1 year tax returns or statement of account confirming your last 1 year of income"
+        note="Please provide us with your last 1-year tax returns or statement of account confirming your last 1-year of income."
       />
 
       <Input name="employmentCompanyName" label="Company Name" />
@@ -862,8 +862,8 @@ const DependantsInformation = () => {
     <>
       <SectionHeader small>Dependants/Co-residents</SectionHeader>
       <p className="lead">
-        Kindly specify if the property will be occupied by multiple persons and
-        specify the number and provide details of other occupants in the space
+        Kindly specify if the property will be occupied by multiple persons, the
+        number of persons, and provide details of other occupants in the space
         provided below.
       </p>
 
