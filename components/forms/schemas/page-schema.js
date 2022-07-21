@@ -68,13 +68,8 @@ export const tenantSchema = {
   identificationType: stringValidation('Identification Type'),
   identificationNumber: stringValidation('Identification Number'),
   currentAddress: stringValidation('Current Address'),
-  postCode: optionalValidation(stringValidation('Post Code')),
-  timeAtCurrentAddress: optionalValidation(
-    stringValidation('Time at Current Address')
-  ),
   stateOfOrigin: optionalValidation(stringValidation('State of Origin')),
   maritalStatus: stringValidation('Marital Status'),
-  previousEmployment: stringValidation('Previous Employment'),
   facebook: optionalValidation(stringValidation('Facebook')),
   twitter: optionalValidation(stringValidation('Twitter')),
   instagram: optionalValidation(stringValidation('Instragram')),
@@ -94,10 +89,7 @@ export const tenantSchema = {
     stringValidation('Landlord/Guardian Full Name'),
     'ownLastProperty'
   ),
-  landlordEmail: conditionalValidation(
-    emailValidation('Landlord Email'),
-    'ownLastProperty'
-  ),
+  landlordEmail: optionalValidation(emailValidation('Landlord Email')),
   landlordTelephone: conditionalValidation(
     phoneValidation('Landlord Telephone'),
     'ownLastProperty'
@@ -135,13 +127,10 @@ export const tenantSchema = {
     stringValidation('Employment Manager Position'),
     'isSelfEmployed'
   ),
-  employmentManagerEmail: conditionalValidation(
-    emailValidation('Employment Manager Email'),
-    'isSelfEmployed'
+  employmentManagerEmail: optionalValidation(
+    emailValidation('Employment Manager Email')
   ),
-  employmentManagerTelephone: optionalValidation(
-    phoneValidation('Employment Manager Phone')
-  ),
+  employmentManagerTelephone: phoneValidation('Employment Manager Phone'),
   companyFacebook: optionalValidation(stringValidation('Company Facebook')),
   companyTwitter: optionalValidation(stringValidation('Company Twitter')),
   companyInstagram: optionalValidation(stringValidation('Company Instagram')),

@@ -435,13 +435,6 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
               <th>Pending Documents</th>
               <td>
                 <ul className="list-unstyled list-pending-docs">
-                  {tenant.ownLastProperty && !tenant.propertyEvidenceURL && (
-                    <li>
-                      <strong>Owns Last Property</strong> - need to provide a
-                      copy of last mortgage statement or any other document
-                      confirming ownership
-                    </li>
-                  )}
                   {tenant.neverRentedBefore && !tenant.propertyEvidenceURL && (
                     <li>
                       <strong>Never Rented Before</strong> - need to provide

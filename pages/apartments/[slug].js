@@ -126,9 +126,7 @@ const IntroText = ({ apartment }) => (
     <p className="small mt-4 fw-bold">
       Note that the individual whose information is filled herein will be
       responsible for making all payments (including rent, Service charges and
-      levies). Kindly specify if the property will be occupied by multiple
-      persons and specify the number and provide details of other occupants in
-      the space provided below.
+      levies).
     </p>
   </div>
 );
@@ -163,29 +161,9 @@ const TenantForm = ({ apartment }) => {
   const isWaitingList =
     apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
-    if (
-      !values.facebook &&
-      !values.twitter &&
-      !values.instagram &&
-      !values.linkedin
-    ) {
-      toast.error('You need to add at least one of your social media account');
-      actions.setSubmitting(false);
-      return;
-    }
-    if (
-      !values.companyFacebook &&
-      !values.companyTwitter &&
-      !values.companyInstagram &&
-      !values.companyLinkedin
-    ) {
-      toast.error(
-        "You need to add at least one of your company's social media account"
-      );
-      actions.setSubmitting(false);
-      return;
-    }
     const payload = {
+      // not needed values
+      previousEmployment: 'None',
       tenantFullName: `${values.title} ${values.firstName} ${values?.middleName} ${values.lastName}`,
       apartment: apartment.id,
       ...values,
@@ -308,8 +286,11 @@ const TenantForm = ({ apartment }) => {
 
               {step > 0 && (
                 <div className="text-muted mt-5">
-                  <strong>Note: </strong> The information provided on this page
-                  will be vetted and verified in line with company procedure.
+                  <strong>Note: </strong> Your information is confidential and
+                  will not be shared with any 3rd parties. The information
+                  provided will be vetted and verified in line with company
+                  procedure. The vetting process is necessary to ensure the
+                  safety of our residents.
                 </div>
               )}
             </div>
@@ -346,13 +327,6 @@ const ActionButtons = ({
     const requiredFields = getMissingRequiredFields(step);
     const conditionalFields = getMissingConditionalFields(step);
     const dependentFields = getMissingDependentFields(step, values);
-    console.log(
-      'requiredFields, conditionalFields',
-      'dependentFields',
-      requiredFields,
-      conditionalFields,
-      dependentFields
-    );
     const missingFields = [...requiredFields, ...conditionalFields];
     if (missingFields.length > 0) {
       toast.error(
@@ -562,22 +536,6 @@ const PersonalInformation = () => (
     />
 
     <div className="row">
-      <Input
-        formGroupClassName="col-md-6"
-        name="postCode"
-        label="Post Code"
-        optional
-      />
-      <Input
-        formGroupClassName="col-md-6"
-        name="timeAtCurrentAddress"
-        label="Time at Current Address"
-        helpText="Time in Years and Month"
-        optional
-      />
-    </div>
-
-    <div className="row">
       <Select
         formGroupClassName="col-md-6"
         name="stateOfOrigin"
@@ -596,12 +554,6 @@ const PersonalInformation = () => (
         )}
       />
     </div>
-
-    <Textarea
-      name="previousEmployment"
-      label="Previous Employment"
-      helpText="Please provide sufficient information as to the name, location, position held and number of years spent at the organization"
-    />
 
     <h5>Social Media</h5>
     <p className="text-muted">
@@ -690,8 +642,6 @@ const EmergencyContact = () => {
       <ToggleField
         name="ownLastProperty"
         label="Do you own the last property?"
-        note="Please provide us with a copy of your last mortgage statement or any
-          other document confirming ownership"
       />
 
       {!ownLastProperty && (
@@ -714,6 +664,7 @@ const EmergencyContact = () => {
             name="landlordEmail"
             type="email"
             label={`${landlordText} Contact Email`}
+            optional
           />
           <Input
             formGroupClassName="col-md-6"
@@ -729,7 +680,7 @@ const EmergencyContact = () => {
         label={`${landlordText} Post Code`}
       />
 
-      {(ownLastProperty || neverRentedBefore) && (
+      {neverRentedBefore && (
         <Upload
           changeText="Update Picture"
           defaultImage="/assets/img/placeholder/image.png"
@@ -759,9 +710,8 @@ const EmploymentDetails = () => {
 
       <ToggleField
         name="isSelfEmployed"
-        label="Are you’re self-employed?"
-        note="Please provide us with your last 3 years’ tax returns or a letter from
-        your accountant, confirming your last 3 years of income"
+        label="Are you self-employed?"
+        note="Please provide us with your last 1 year tax returns or statement of account confirming your last 1 year of income"
       />
 
       <Input name="employmentCompanyName" label="Company Name" />
@@ -833,12 +783,12 @@ const EmploymentDetails = () => {
               name="employmentManagerEmail"
               type="email"
               label="Manager Email"
+              optional
             />
             <Input
               formGroupClassName="col-md-6"
               name="employmentManagerTelephone"
               label="Manager Telephone"
-              optional
             />
           </div>
         </>
@@ -916,6 +866,11 @@ const DependantsInformation = () => {
   return (
     <>
       <SectionHeader small>Dependants/Co-residents</SectionHeader>
+      <p className="lead">
+        Kindly specify if the property will be occupied by multiple persons and
+        specify the number and provide details of other occupants in the space
+        provided below.
+      </p>
 
       {dependants.map((number) => (
         <DependantInfo number={number} key={number} />
@@ -1061,7 +1016,7 @@ const ToggleField = ({ name, label, note }) => {
       <div className="mt-4">
         <Switch name={name} label={label} />
       </div>
-      {values?.[name] && <p className="lead mb-4">{note}</p>}
+      {values?.[name] && note && <p className="lead mb-4">{note}</p>}
     </section>
   );
 };
@@ -1106,7 +1061,6 @@ export const REQUIRED_FIELDS = {
     'identificationNumber',
     'currentAddress',
     'maritalStatus',
-    'previousEmployment',
   ],
   2: [
     'emergencyFullName',
@@ -1122,7 +1076,6 @@ export const REQUIRED_FIELDS = {
 export const CONDITIONAL_FIELDS = {
   2: {
     landlordFullName: 'ownLastProperty',
-    landlordEmail: 'ownLastProperty',
     landlordTelephone: 'ownLastProperty',
   },
   3: {
@@ -1130,7 +1083,6 @@ export const CONDITIONAL_FIELDS = {
     employmentContractType: 'isSelfEmployed',
     employmentManagerName: 'isSelfEmployed',
     employmentManagerPosition: 'isSelfEmployed',
-    employmentManagerEmail: 'isSelfEmployed',
     employmentManagerTelephone: 'isSelfEmployed',
   },
 };
