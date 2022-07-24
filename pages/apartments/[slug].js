@@ -36,7 +36,6 @@ import React from 'react';
 import { FaChevronLeft, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Humanize from 'humanize-plus';
-import { setInitialValues } from '@/components/forms/form-helper';
 
 const SingleApartment = ({ apartment }) => {
   const breadcrumb = [
@@ -157,8 +156,7 @@ const TenantForm = ({ apartment }) => {
     apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
     const payload = {
-      // not needed values
-      previousEmployment: 'None',
+      previousEmployment: 'Not applicable',
       tenantFullName: `${values.title} ${values.firstName} ${values?.middleName} ${values.lastName}`,
       apartment: apartment.id,
       ...values,
@@ -196,6 +194,7 @@ const TenantForm = ({ apartment }) => {
     };
 
     delete payload.confirmation;
+    delete payload.hasDependants;
 
     try {
       axios({
@@ -209,8 +208,8 @@ const TenantForm = ({ apartment }) => {
           if (statusIsSuccessful(status)) {
             Router.push('/apartments');
             toast.success('Information sent successfully');
+            actions.resetForm({ values: {} });
             actions.setSubmitting(false);
-            actions.resetForm({ values: setInitialValues(tenantSchema) });
           }
         })
         .catch(function (error) {
@@ -857,33 +856,44 @@ const DependantsInformation = () => {
   const [dependants, setDependants] = React.useState([1]);
   const { values } = useFormikContext();
   const hasPersonsWithSpecialNeed = !!values?.['hasPersonsWithSpecialNeed'];
+  const hasDependants = !!values?.['hasDependants'];
 
   return (
     <>
       <SectionHeader small>Dependants/Co-residents</SectionHeader>
-      <p className="lead">
-        Kindly specify if the property will be occupied by multiple persons, the
-        number of persons, and provide details of other occupants in the space
-        provided below.
-      </p>
+      <ToggleField
+        name="hasDependants"
+        label="Do you have dependants or co-residents?"
+      />
 
-      {dependants.map((number) => (
-        <DependantInfo number={number} key={number} />
-      ))}
+      {!hasDependants ? (
+        <label htmlFor="hasDependants" className="lead mb-4">
+          Kindly specify if the property will be occupied by multiple persons,
+          the number of persons, and provide details of other occupants by
+          clicking the toggle switch above.
+        </label>
+      ) : (
+        <>
+          {dependants.map((number) => (
+            <DependantInfo number={number} key={number} />
+          ))}
 
-      {dependants.length < 5 && (
-        <div className="border-bottom">
-          <Button
-            color="secondary"
-            className="mt-2 mb-5 btn-sm py-2 px-4"
-            onClick={() =>
-              setDependants([...dependants, dependants.length + 1])
-            }
-          >
-            <FaPlus /> Add More Dependants
-          </Button>
-        </div>
+          {dependants.length < 5 && (
+            <div className="border-bottom">
+              <Button
+                color="secondary"
+                className="mt-2 mb-5 btn-sm py-2 px-4"
+                onClick={() =>
+                  setDependants([...dependants, dependants.length + 1])
+                }
+              >
+                <FaPlus /> Add More Dependants
+              </Button>
+            </div>
+          )}
+        </>
       )}
+
       <div className="my-5"></div>
       <Switch
         name="hasPersonsWithSpecialNeed"

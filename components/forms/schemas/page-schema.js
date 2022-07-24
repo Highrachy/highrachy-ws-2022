@@ -157,4 +157,5 @@ export const tenantSchema = {
   ),
   pets: optionalValidation(stringValidation('List of Pets')),
   confirmation: booleanValidation('Confirmation'),
+  hasDependants: optionalValidation(booleanValidation('Has Dependants')),
 };
