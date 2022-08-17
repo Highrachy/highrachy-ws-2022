@@ -53,7 +53,7 @@ const Footer = ({ hideConsultation }) => (
                   No. 70 Adetokunbo Ademola Street, <br />
                   Victoria Island, Lagos.
                 </p>
-                <p>Email: nnamdi@highrachy.com</p>
+                <p>Email: info@highrachy.com</p>
                 <p>
                   <span>Phone:</span> +234 802 833 7440
                 </p>

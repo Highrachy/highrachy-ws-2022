@@ -162,33 +162,34 @@ const ApplicantHeader = ({
               </div>
               {/* Action */}
               <div className="d-flex my-2">
-                {status !== APPLICANT_STAGE.REJECTED && (
-                  <>
-                    <ProcessButton
-                      afterSuccess={() => query.mutate()}
-                      api={`applicants/${id}`}
-                      buttonClassName="me-3"
-                      buttonSizeClassName="btn-sm"
-                      data={{ status: APPLICANT_STAGE.REJECTED }}
-                      modalContent={`Are you sure you want to reject this application`}
-                      modalTitle={`Reject Application`}
-                      successMessage={`This application has been successfully rejected`}
-                    >
-                      Reject Application
-                    </ProcessButton>
-                    <ProcessButton
-                      afterSuccess={() => query.mutate()}
-                      api={`applicants/${id}`}
-                      buttonColor={APPLICANT_STAGE_INFO[nextStage].color}
-                      data={{ status: nextStage }}
-                      modalContent={`Are you sure you want to proceed this application to ${nextStage}`}
-                      modalTitle={`Process to ${nextStage}`}
-                      successMessage={`The applicant has been successfully updated to ${nextStage}`}
-                    >
-                      Proceed to {nextStage}
-                    </ProcessButton>
-                  </>
-                )}
+                {status !== APPLICANT_STAGE.REJECTED &&
+                  status !== APPLICANT_STAGE.ACCEPTED && (
+                    <>
+                      <ProcessButton
+                        afterSuccess={() => query.mutate()}
+                        api={`applicants/${id}`}
+                        buttonClassName="me-3"
+                        buttonSizeClassName="btn-sm"
+                        data={{ status: APPLICANT_STAGE.REJECTED }}
+                        modalContent={`Are you sure you want to reject this application`}
+                        modalTitle={`Reject Application`}
+                        successMessage={`This application has been successfully rejected`}
+                      >
+                        Reject Application
+                      </ProcessButton>
+                      <ProcessButton
+                        afterSuccess={() => query.mutate()}
+                        api={`applicants/${id}`}
+                        buttonColor={APPLICANT_STAGE_INFO[nextStage].color}
+                        data={{ status: nextStage }}
+                        modalContent={`Are you sure you want to proceed this application to ${nextStage}`}
+                        modalTitle={`Process to ${nextStage}`}
+                        successMessage={`The applicant has been successfully updated to ${nextStage}`}
+                      >
+                        Proceed to {nextStage}
+                      </ProcessButton>
+                    </>
+                  )}
               </div>
             </div>
           </div>

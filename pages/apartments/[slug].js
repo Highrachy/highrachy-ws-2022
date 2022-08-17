@@ -155,9 +155,12 @@ const TenantForm = ({ apartment }) => {
   const isWaitingList =
     apartment?.availableUnits === 0 && apartment?.availableSoon;
   const handleSubmit = async (values, actions) => {
+    const tenantFullName = values?.middleName
+      ? `${values.firstName} ${values.middleName} ${values.lastName}`
+      : `${values.firstName} ${values.lastName}`;
     const payload = {
       previousEmployment: 'Not applicable',
-      tenantFullName: `${values.title} ${values.firstName} ${values?.middleName} ${values.lastName}`,
+      tenantFullName,
       apartment: apartment.id,
       ...values,
       dateOfBirth: values.dateOfBirth.date,
