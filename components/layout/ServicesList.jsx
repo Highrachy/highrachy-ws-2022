@@ -57,8 +57,8 @@ const ServicesImage = ({ altBg, image, title }) => (
       src={image}
       alt={title}
       className="img-fluid"
-      height="450"
-      width="450"
+      height="410"
+      width="550"
     />
   </div>
 );

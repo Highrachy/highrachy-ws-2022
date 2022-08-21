@@ -48,10 +48,10 @@ const OurCompany = () => (
         </div>
         <div className="col-lg-5 col-md-6 mt-lg-n6">
           <Image
-            src="/assets/img/about-us/our-company.png"
+            src="/assets/img/about-us/our-company.svg"
             className="img-fluid d-block"
-            height={396}
-            width={598}
+            height={600}
+            width={600}
             alt="Our Company"
           />
         </div>

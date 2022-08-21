@@ -55,9 +55,9 @@ const Career = () => (
         </div>
         <div className="col-lg-5 col-md-6 mt-lg-n6">
           <Image
-            src="/assets/img/about-us/careers.png"
+            src="/assets/img/about-us/careers.svg"
             className="img-fluid d-block"
-            height={372}
+            height={574}
             width={590}
             alt="Join Our Team"
           />

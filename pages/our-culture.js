@@ -50,9 +50,9 @@ const OurCultureSection = () => (
         </div>
         <div className="col-lg-5 col-md-6 mt-lg-n6">
           <Image
-            src="/assets/img/about-us/our-culture.png"
+            src="/assets/img/about-us/our-culture.svg"
             className="img-fluid d-block"
-            height={372}
+            height={440}
             width={590}
             alt="Our Company"
           />
