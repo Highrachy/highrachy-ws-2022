@@ -2,10 +2,16 @@ import React from 'react';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import { ContentLoader } from '@/components/utils/LoadingItems';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import Button from '@/components/forms/Button';
-import { camelToSentence, processData } from '@/utils/helpers';
+import {
+  camelToSentence,
+  getError,
+  processData,
+  statusIsSuccessful,
+  valuesToOptions,
+} from '@/utils/helpers';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { GoBriefcase, GoPrimitiveDot } from 'react-icons/go';
 import { Tab } from 'react-bootstrap';
@@ -13,6 +19,18 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { getShortDate } from '@/utils/date-helpers';
 import { APPLICANT_STAGE, APPLICANT_STAGE_INFO } from '@/utils/constants';
+import FormikModalButton from '@/components/utils/FormikModalButton';
+import Input from '@/components/forms/Input';
+import FormikButton from '@/components/forms/FormikButton';
+import Textarea from '@/components/forms/Textarea';
+import Switch from '@/components/forms/Switch';
+import DatePicker from '@/components/forms/DatePicker';
+import Select from '@/components/forms/Select';
+import { useFormikContext } from 'formik';
+import { interviewSchema } from '@/components/forms/schemas/admin-schema';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { getTokenFromStore } from '@/utils/localStorage';
 
 const pageOptions = {
   key: 'applicant',
@@ -116,8 +134,47 @@ const ApplicantHeader = ({
   prevJobs,
   query,
 }) => {
+  const router = useRouter();
   const hasPrevApplication = prevJobs?.length > 0;
   const nextStage = getApplicantNextStage(status);
+
+  const handleSubmitInterview = (values, actions) => {
+    const interviewDate = values.date.date;
+    const isOnline = !!values.isOnline;
+
+    const payload = { id, ...values, date: interviewDate, isOnline };
+
+    try {
+      axios({
+        method: 'post',
+        url: `${process.env.NEXT_PUBLIC_API_URL}/api/dashboard/send-interview-email`,
+        data: { data: payload },
+        headers: { Authorization: getTokenFromStore() },
+      })
+        .then(function (response) {
+          const { status } = response;
+          console.log('response', status);
+          if (statusIsSuccessful(status)) {
+            router.push('/admin/applicants');
+            toast.success('Interview details has been sent successfully');
+            actions.resetForm({ values: {} });
+            actions.setSubmitting(false);
+          }
+        })
+        .catch(function (error) {
+          toast.error(getError(error));
+          actions.setSubmitting(false);
+        });
+    } catch (error) {
+      toast.error(getError(error));
+      actions.setSubmitting(false);
+    }
+  };
+
+  const initialValues = {
+    interviewContent:
+      'We were impressed by your background and would like to invite you to an interview to tell you a little more about the position and get to know you better.',
+  };
 
   return (
     <section className="card mb-5">
@@ -158,6 +215,22 @@ const ApplicantHeader = ({
                   >
                     View Resume
                   </Button>
+                  &nbsp;&nbsp;
+                  <>
+                    {status === APPLICANT_STAGE.INTERVIEW_STAGE && (
+                      <FormikModalButton
+                        color="info"
+                        className="btn-xs"
+                        name="send-interview-email"
+                        schema={interviewSchema}
+                        initialValues={initialValues}
+                        modalContent={<InterviewForm />}
+                        handleSubmit={handleSubmitInterview}
+                      >
+                        Send Interview Email
+                      </FormikModalButton>
+                    )}
+                  </>
                 </div>
               </div>
               {/* Action */}
@@ -234,11 +307,13 @@ const TabInformation = ({ applicant, title, data, prevJobs }) => {
               <>
                 <tbody>
                   {prevJobs.length === 0 ? (
-                    <td colSpan="5">
-                      <h5 className="text-muted text-center py-6">
-                        No Other Applications
-                      </h5>
-                    </td>
+                    <tr>
+                      <td colSpan="5">
+                        <h5 className="text-muted text-center py-6">
+                          No Other Applications
+                        </h5>
+                      </td>
+                    </tr>
                   ) : (
                     prevJobs?.map(
                       ({ id, createdAt, status, resume, job }, index) => (
@@ -301,6 +376,63 @@ const TabInformation = ({ applicant, title, data, prevJobs }) => {
         </div>
       </div>
     </section>
+  );
+};
+
+const InterviewForm = () => {
+  const { values } = useFormikContext();
+
+  const isOnline = !!values?.['isOnline'];
+  return (
+    <>
+      <div className="row">
+        <DatePicker
+          label="Date of the Interview"
+          name="date"
+          placeholder="YYYY-MM-DD"
+          helpText="Format: YYYY-MM-DD"
+          formGroupClassName="col-sm-6"
+        />
+        <Select
+          name="time"
+          label="Time of Interview"
+          options={valuesToOptions(
+            [
+              '8:00 AM',
+              '9:00 AM',
+              '10:00 AM',
+              '11:00 AM',
+              '12:00 PM',
+              '1:00 PM',
+              '2:00 PM',
+              '3:00 PM',
+              '4:00 PM',
+              '5:00 PM',
+            ],
+            'Select One...'
+          )}
+          formGroupClassName="col-sm-6"
+        />
+      </div>
+
+      <Switch
+        formGroupClassName="col-md-6"
+        label="Online Interview?"
+        name="isOnline"
+        optional
+      />
+
+      {isOnline ? (
+        <Input label="Meeting Link" name="meetingLink" />
+      ) : (
+        <Input label="Location" name="location" />
+      )}
+      <Textarea label="Interview Content" name="interviewContent" />
+
+      <FormikButton color="info" className="mt-5">
+        Send Interview Email
+      </FormikButton>
+    </>
   );
 };
 

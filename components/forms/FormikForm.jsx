@@ -41,7 +41,7 @@ const FormikForm = ({
           )}
 
           {persistForm && <Persist name={name} />}
-          {isDevEnvironment() && showFormikState && (
+          {isDevEnvironment() && (showFormikState || showAllFormikState) && (
             <DisplayFormikState {...props} showAll={showAllFormikState} />
           )}
         </Form>

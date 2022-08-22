@@ -1,10 +1,13 @@
 import {
   booleanValidation,
+  conditionalValidation,
   numberRange,
   optionalValidation,
   positiveNumberValidation,
   required,
+  requiredDate,
   stringValidation,
+  urlValidation,
 } from './schema-helpers';
 
 export const jobSchema = {
@@ -43,4 +46,17 @@ export const teamSchema = {
   position: stringValidation('Position'),
   image: stringValidation('Image'),
   priority: numberRange('Priority', 'number', 0, 20),
+};
+
+export const interviewSchema = {
+  date: requiredDate('Interview Date'),
+  time: required('Interview Time'),
+  location: conditionalValidation(stringValidation('Location'), 'isOnline'),
+  meetingLink: conditionalValidation(
+    urlValidation('Meeting Link'),
+    'isOnline',
+    (isOnline) => !!isOnline
+  ),
+  isOnline: booleanValidation('Is Online'),
+  interviewContent: stringValidation('Interview Content'),
 };
