@@ -425,9 +425,9 @@ const InterviewForm = () => {
       {isOnline ? (
         <Input label="Meeting Link" name="meetingLink" />
       ) : (
-        <Input label="Location" name="location" />
+        <Textarea label="Location" name="location" />
       )}
-      <Textarea label="Interview Content" name="interviewContent" />
+      <Textarea label="Interview Content" name="interviewContent" rows={6} />
 
       <FormikButton color="info" className="mt-5">
         Send Interview Email

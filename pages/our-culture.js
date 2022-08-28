@@ -48,12 +48,12 @@ const OurCultureSection = () => (
         <div className="col-lg-7 col-md-6 pe-lg-6">
           <p className="text lead pt-3">{aboutUsLeadText}</p>
         </div>
-        <div className="col-lg-5 col-md-6 mt-lg-n6">
+        <div className="col-lg-5 col-md-6 mt-lg-n7">
           <Image
             src="/assets/img/about-us/our-culture.svg"
             className="img-fluid d-block"
-            height={440}
-            width={590}
+            height={500}
+            width={500}
             alt="Our Company"
           />
         </div>

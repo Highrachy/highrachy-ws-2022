@@ -42,16 +42,16 @@ const OurCompany = () => (
   <Section title="Our Company">
     <div className="container">
       <div className="row">
-        <div className="col-lg-7 col-md-6 pe-lg-6">
+        <div className="col-lg-6 col-md-6 pe-lg-6">
           <p className="text lead pt-3">{welcomeNote}</p>
           <p className="lead fw-bold">{welcomeNoteLeadText}</p>
         </div>
-        <div className="col-lg-5 col-md-6 mt-lg-n6">
+        <div className="col-lg-6 col-md-6 mt-lg-n7">
           <Image
             src="/assets/img/about-us/our-company.svg"
             className="img-fluid d-block"
-            height={600}
-            width={600}
+            height={800}
+            width={800}
             alt="Our Company"
           />
         </div>
