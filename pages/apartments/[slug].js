@@ -72,18 +72,23 @@ const SingleApartment = ({ apartment }) => {
   );
 };
 
-const AlertStatus = ({ apartment }) =>
-  apartment?.availableUnits === 0 &&
-  (apartment?.availableSoon ? (
-    <div className="alert alert-info my-4" role="alert">
-      This property will be <strong>available soon</strong>. You can submit an
-      application to join the waiting list.
-    </div>
-  ) : (
-    <div className="alert alert-danger my-4" role="alert">
-      Property not available
-    </div>
-  ));
+const AlertStatus = ({ apartment }) => {
+  return (
+    <>
+      {apartment?.availableUnits === 0 && apartment?.availableSoon && (
+        <div className="alert alert-info my-4" role="alert">
+          This property will be <strong>available soon</strong>. You can submit
+          an application to join the waiting list.
+        </div>
+      )}
+      {apartment?.availableUnits === 0 && !apartment?.availableSoon && (
+        <div className="alert alert-info my-4" role="alert">
+          This property is currently not available.
+        </div>
+      )}
+    </>
+  );
+};
 
 const IntroText = ({ apartment }) => (
   <div className="col-sm-12" id="top-page">
@@ -179,7 +184,7 @@ const TenantForm = ({ apartment }) => {
       //CONDITION VALUES
       ...(values?.ownLastProperty
         ? {
-            landlordFullName: values.tenantFullName,
+            landlordFullName: tenantFullName,
             landlordEmail: values.personalEmail,
             landlordTelephone: values.mobileTelephone,
           }
@@ -189,7 +194,7 @@ const TenantForm = ({ apartment }) => {
             employmentPositionTitle: 'CEO',
             employmentContractType: 'Self Employed',
             employmentManagerName: 'Not Applicable - Self Employed',
-            employmentPosition: 'Not Applicable - Self Employed',
+            employmentManagerPosition: 'Not Applicable - Self Employed',
             employmentManagerEmail: 'Not Applicable - Self Employed',
             employmentManagerTelephone: 'Not Applicable - Self Employed',
           }
@@ -442,6 +447,7 @@ const ProfileInformation = () => (
           name="tenantProfileImage"
           uploadText={`Upload Picture`}
           folder={`tenants/picture`}
+          maxFileSize={1_024 * 2_050}
         />
       </div>
 
@@ -513,7 +519,7 @@ const PersonalInformation = () => (
         options={valuesToOptions(
           [
             "Driver's License",
-            'International Passpport',
+            'International Passport',
             'National Identification',
           ],
           'Select One...'
@@ -679,6 +685,7 @@ const EmergencyContact = () => {
 
       {neverRentedBefore && (
         <Upload
+          allowPdf
           changeText="Update Picture"
           defaultImage="/assets/img/placeholder/image.png"
           imgOptions={{
@@ -834,11 +841,12 @@ const EmploymentDetails = () => {
       <ToggleField
         name="changeEmployerSoon"
         label="Are you changing employer between now and the tenancy start date?"
-        note=" Please provide us with your offer letter in this case."
+        note=" Please provide us with your offer letter in this case (optional)."
       />
 
       {changeEmployerSoon && (
         <Upload
+          allowPdf
           changeText="Update Picture"
           defaultImage="/assets/img/placeholder/image.png"
           imgOptions={{
@@ -953,8 +961,8 @@ const DependantsInformation = () => {
 const DependantInfo = ({ number }) => {
   const { values } = useFormikContext();
   const age = values?.[`dependantAge${number}`];
-  const relationship = values?.[`dependantRelationship${number}`];
-  const showUploadField = age && age >= 18 && relationship === 'Dependants';
+  // const relationship = values?.[`dependantRelationship${number}`];
+  const showUploadField = age && age >= 18;
 
   return (
     <section>
@@ -970,6 +978,7 @@ const DependantInfo = ({ number }) => {
           label={`Age ${number} (In Years)`}
           options={generateNumOptions(100, 'year', {
             firstOptionText: 'Select Age',
+            pluralizeText: true,
           })}
         />
       </div>
@@ -998,6 +1007,7 @@ const DependantInfo = ({ number }) => {
 
       {showUploadField && (
         <Upload
+          allowPdf
           changeText="Update Picture"
           defaultImage="/assets/img/placeholder/image.png"
           imgOptions={{

@@ -130,7 +130,10 @@ export const tenantSchema = {
   employmentManagerEmail: optionalValidation(
     emailValidation('Employment Manager Email')
   ),
-  employmentManagerTelephone: phoneValidation('Employment Manager Phone'),
+  employmentManagerTelephone: conditionalValidation(
+    phoneValidation('Employment Manager Phone'),
+    'isSelfEmployed'
+  ),
   companyFacebook: optionalValidation(stringValidation('Company Facebook')),
   companyTwitter: optionalValidation(stringValidation('Company Twitter')),
   companyInstagram: optionalValidation(stringValidation('Company Instagram')),

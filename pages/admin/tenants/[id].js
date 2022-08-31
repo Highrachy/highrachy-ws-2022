@@ -426,8 +426,7 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
                   onClick={() => setCurrentTab(allTenantTabs[5].key)}
                   className="text-link"
                 >
-                  {processData(!!tenant.pets)}
-                  {!!tenant.pets && ` - ${tenant.pets}`}
+                  {tenant?.pets || '-'}
                 </span>
               </td>
             </tr>

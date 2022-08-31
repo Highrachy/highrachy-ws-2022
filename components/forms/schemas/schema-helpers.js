@@ -72,8 +72,11 @@ export const confirmPassword = yup
 export const phoneNumber = yup
   .string()
   .label('Phone')
-  .min(6, `Only mobile is allowed. It should be more than 5 characters`)
-  .max(14, `Only mobile is allowed. It should be less than 14 characters`)
+  .min(
+    6,
+    `Only a valid phone number is allowed. It should be more than 5 characters`
+  )
+  .max(17, `Only a valid phone number is allowed.`)
   .required('Phone is required');
 
 export const phoneValidation = (label) =>
@@ -82,12 +85,9 @@ export const phoneValidation = (label) =>
     .label(label)
     .min(
       6,
-      `Only mobile is allowed for ${label}. It should be more than 5 characters`
+      `Only a valid phone number is allowed for ${label}. It should be more than 5 characters`
     )
-    .max(
-      14,
-      `Only mobile is allowed for ${label}. It should be less than 14 characters`
-    )
+    .max(17, `Only a valid phone number is allowed for ${label}`)
     .required(`Phone is required for ${label}`);
 
 export const OptionalPhoneNumber = optionalValidation(phoneNumber);
