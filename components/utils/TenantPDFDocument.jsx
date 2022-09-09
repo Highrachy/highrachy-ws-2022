@@ -11,14 +11,16 @@ import {
 } from '@react-pdf/renderer';
 import { getDate, getMonthYear } from '@/utils/date-helpers';
 
-const TenantPDFDocument = ({ tenant }) => {
+const TenantPDFDocument = ({ tenant, showPreview }) => {
   const Doc = <TenantInfoDocument tenant={tenant} />;
 
   return (
     <>
-      <PDFViewer width="500" height="800">
-        {Doc}
-      </PDFViewer>
+      {showPreview && (
+        <PDFViewer width="500" height="800">
+          {Doc}
+        </PDFViewer>
+      )}
       <PDFDownloadLink
         document={Doc}
         fileName={`${tenant.firstName}-${tenant.lastName}-information.pdf`}
