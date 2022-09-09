@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import Humanize from 'humanize-plus';
 import { TENANT_STATUS, TENANT_STATUS_COLOR } from '@/utils/constants';
 import ProcessButton from '@/components/utils/ProcessButton';
+import TenantPDFDocument from '@/components/utils/TenantPDFDocument';
 
 const pageOptions = {
   key: 'tenant',
@@ -256,6 +257,7 @@ const TabInformation = ({ tenant, title, data, setCurrentTab }) => {
           </div>
         </div>
       )}
+      <TenantPDFDocument tenant={tenant} />
     </section>
   );
 };

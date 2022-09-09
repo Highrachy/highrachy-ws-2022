@@ -13,7 +13,7 @@ import {
  * Date and Time
  * @param {*} date
  */
-export const getDate = (date) => format(parseISO(date), 'MMMM DD, YYYY');
+export const getDate = (date) => format(parseISO(date), 'MMMM dd, yyyy');
 export const getDateTime = (date) =>
   format(parseISO(date), 'ddd, MMM d, YYYY h:mm A');
 export const getShortDateTime = (date) =>
@@ -36,6 +36,8 @@ export const getTimeOfDay = (date) => {
     'Night'
   );
 };
+
+export const getMonthYear = (date) => format(parseISO(date), 'MMMM, yyyy');
 export const isPastDate = (date) => isPast(date);
 export const differenceInDays = (date) =>
   differenceInCalendarDays(Date.now(), date);
