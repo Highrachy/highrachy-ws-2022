@@ -4,10 +4,11 @@ import React from 'react';
 import '../sass/App.scss';
 import { ToastContainer, Slide } from 'react-toastify';
 import { DefaultSeo } from 'next-seo';
+import UserProvider from 'context/user';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <UserProvider>
       <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
       <NextNProgress color="#ed3237" />
       <DefaultSeo
@@ -36,7 +37,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <Component {...pageProps} />
-    </>
+    </UserProvider>
   );
 }
 

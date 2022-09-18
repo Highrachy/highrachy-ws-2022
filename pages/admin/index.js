@@ -1,56 +1,53 @@
 import Overlay from '@/components/common/Overlay';
-import FormikForm from '@/components/forms/FormikForm';
-import Input from '@/components/forms/Input';
+import GoogleLogin from '@/components/utils/GoogleLogin';
 import Image from 'next/image';
-import Router from 'next/router';
 import React from 'react';
 
+import { useRouter } from 'next/router';
+import { useEffect, useContext, useState } from 'react';
+
+import { UserContext } from '../../context/user';
+
 const Login = () => {
-  const handleSubmit = async (values, actions) => {
-    Router.push('/admin/dashboard');
-    // const fetchOptions = {
-    //   /**
-    //    * The default method for a request with fetch is GET,
-    //    * so we must tell it to use the POST HTTP method.
-    //    */
-    //   method: 'POST',
-    //   /**
-    //    * These headers will be added to the request and tell
-    //    * the API that the request body is JSON and that we can
-    //    * accept JSON responses.
-    //    */
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Accept: 'application/json',
-    //   },
-    //   /**
-    //    * The body of our POST request is the JSON string that
-    //    * we created above.
-    //    */
-    //   body: JSON.stringify({ data: values }),
-    // };
-    // const response = await fetch(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/api/contacts`,
-    //   fetchOptions
-    // );
-    // if (!response.ok) {
-    //   const errorMessage = await response.text();
-    //   toast.error(errorMessage);
-    // } else {
-    //   toast.success('Information sent successfully');
-    // }
-    // actions.setSubmitting(false);
-    // actions.resetForm();
-  };
+  const [error, setError] = useState();
+  const router = useRouter();
+  const { checkLogin, doGoogleCallback, user, setUser } =
+    useContext(UserContext);
+
+  useEffect(() => {
+    async function confirmPreviousLogin() {
+      await checkLogin();
+    }
+    confirmPreviousLogin();
+  }, [checkLogin]);
+
+  useEffect(() => {
+    async function confirmGoogleLogin() {
+      if (router.query.access_token) {
+        const res = await doGoogleCallback({
+          access_token: router.query.access_token,
+        });
+        if (res[0] === 'error') {
+          setError(res[1]);
+        }
+        setUser(res[1].username);
+      }
+    }
+    confirmGoogleLogin();
+  }, [router, doGoogleCallback, setUser]);
+
+  if (user) {
+    router.push('/admin/dashboard');
+  }
 
   return (
     <div className="auth-fluid">
-      {/*Auth fluid left content */}
+      {error && <p className="text-danger">{JSON.stringify(error)}</p>}
       <div className="auth-fluid-form-box">
         <div className="align-items-center d-flex h-100">
-          <div className="card-body">
+          <div className="card-body text-center">
             {/* Logo */}
-            <div className="auth-brand text-center text-lg-start">
+            <div className="auth-brand text-center mb-3">
               <Image
                 src="/logo.png"
                 alt="Highrachy"
@@ -58,19 +55,8 @@ const Login = () => {
                 height={'42'}
               />
             </div>
-            {/* title*/}
-            <h4 className="mt-6 mb-3">Sign In</h4>
-
-            <FormikForm
-              schema={{}}
-              handleSubmit={handleSubmit}
-              name="sign-in-form"
-              butttonText="Login"
-              useSubmitButton
-            >
-              <Input name="email" type="email" label="Email Address" />
-              <Input name="password" type="password" label="Password" />
-            </FormikForm>
+            <h2 className="mb-5">Admin Panel</h2>
+            <GoogleLogin />
           </div>
           {/* end .card-body */}
         </div>

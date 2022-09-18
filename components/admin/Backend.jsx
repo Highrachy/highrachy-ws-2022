@@ -1,11 +1,15 @@
 import useWindowSize from '@/hooks/useWindowSize';
-import { getMenuStateFromStore } from '@/utils/localStorage';
+import { getMenuStateFromStore, getTokenFromStore } from '@/utils/localStorage';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { Overlay } from 'react-bootstrap';
 import Sidebar from './Sidebar';
 import TopTitle from './TopTitle';
+import { useContext } from 'react';
+import { UserContext } from '../../context/user';
+import { useRouter } from 'next/router';
+import NoContent from './NoContent';
 
 const Backend = ({ children, title }) => {
   const { width } = useWindowSize();
@@ -14,6 +18,25 @@ const Backend = ({ children, title }) => {
   const menuState = getMenuStateFromStore();
 
   const [isFolded, setIsFolded] = React.useState(true);
+
+  const { checkLogin, doLogout } = useContext(UserContext);
+  const router = useRouter();
+  const token = getTokenFromStore();
+
+  React.useEffect(() => {
+    async function confirmPreviousLogin() {
+      const response = await checkLogin();
+      if (response.status !== 200) {
+        router.push('/admin');
+      }
+    }
+    if (!token) {
+      doLogout();
+      router.push('/admin');
+    } else {
+      confirmPreviousLogin();
+    }
+  }, [checkLogin, doLogout, token, router]);
 
   React.useEffect(() => {
     isDesktop && setIsFolded(menuState);
@@ -59,11 +82,17 @@ const Backend = ({ children, title }) => {
             </div>
           </div>
         )}
-
-        {title && <TopTitle>{title}</TopTitle>}
-        {children}
+        {!token ? (
+          <NoContent text="Loading..." />
+        ) : (
+          <>
+            {title && <TopTitle>{title}</TopTitle>}
+            {children}
+          </>
+        )}
       </div>
     </section>
   );
 };
+
 export default Backend;
