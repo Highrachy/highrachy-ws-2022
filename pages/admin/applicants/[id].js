@@ -153,7 +153,6 @@ const ApplicantHeader = ({
       })
         .then(function (response) {
           const { status } = response;
-          console.log('response', status);
           if (statusIsSuccessful(status)) {
             router.push('/admin/applicants');
             toast.success('Interview details has been sent successfully');
