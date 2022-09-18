@@ -10,9 +10,37 @@ import {
   Image,
 } from '@react-pdf/renderer';
 import { getDate, getMonthYear } from '@/utils/date-helpers';
+import Humanize from 'humanize-plus';
+const tenantTestData = {
+  dependantName1: 'Haruna Popoola',
+  dependantAge1: '19',
+  dependantRelationship1: 'Dependant',
+  dependantOccupation1: 'None',
+  dependantIdentification1: '',
+  dependantName2: 'Oladayo Popoola',
+  dependantAge2: '1',
+  dependantRelationship2: 'Brother',
+  dependantOccupation2: '',
+  dependantIdentification2: '',
+  dependantName3: '',
+  dependantAge3: '',
+  dependantRelationship3: '',
+  dependantOccupation3: '',
+  dependantIdentification3: '',
+  dependantName4: 'Aremu Popoola',
+  dependantAge4: '8',
+  dependantRelationship4: 'Brother',
+  dependantOccupation4: '',
+  dependantIdentification4: '',
+  dependantName5: '',
+  dependantAge5: '',
+  dependantRelationship5: '',
+  dependantOccupation5: '',
+  dependantIdentification5: '',
+};
 
-const TenantPDFDocument = ({ tenant, showPreview }) => {
-  const Doc = <TenantInfoDocument tenant={tenant} />;
+const TenantPDFDocument = ({ tenant, showPreview = true }) => {
+  const Doc = <TenantInfoDocument tenant={{ ...tenant, ...tenantTestData }} />;
 
   return (
     <>
@@ -40,23 +68,29 @@ export default TenantPDFDocument;
 const TenantInfoDocument = ({ tenant }) => (
   <Document>
     <Page style={styles.body}>
-      <Text style={styles.header} fixed>
-        ~ Tenant Information ~
+      <Image alt="" style={styles.logo} src="/logo.png" fixed />
+      <Text style={styles.header}>
+        The content of this document is confidential, privileged and only for
+        the information of the intended recipient. It is strictly forbidden to
+        use or share any part of this message with any third party. If you
+        received this message by mistake, kindly contact us and follow with its
+        deletion, so that we can ensure such a mistake does not occur in the
+        future.
       </Text>
-
       <Image
         alt=""
         style={styles.image}
         src={`https://images.weserv.nl/?url=${tenant.tenantProfileImage}`}
       />
       <TenantInformation tenant={tenant} />
-
-      <Image alt="" style={styles.logo} src="/logo.png" />
-      <Text
-        style={styles.pageNumber}
-        render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        fixed
-      />
+      <View style={{ display: 'flex', flexDirection: 'row' }} fixed>
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) =>
+            ` ~ Tenant Information ${pageNumber} / ${totalPages} ~`
+          }
+        />
+      </View>
     </Page>
   </Document>
 );
@@ -83,8 +117,25 @@ const TenantInformation = ({ tenant }) => (
       )}
     </TableRow>
     <TableRow label="Company Address">{tenant.employmentAddress}</TableRow>
+    <DependantInfoRow tenant={tenant} />
   </Table>
 );
+
+const DependantInfoRow = ({ tenant }) => {
+  const dependantArray = Array.from(Array(5).keys());
+  return dependantArray.map((dependant, index) => {
+    const dependantName = tenant[`dependantName${index + 1}`];
+    const dependantAge = tenant[`dependantAge${index + 1}`];
+    if (dependantName && dependantAge) {
+      return (
+        <TableRow label={`Dependant ${index + 1}`}>
+          {dependantName} - {dependantAge}{' '}
+          {Humanize.pluralize(dependantAge, 'year')} old
+        </TableRow>
+      );
+    }
+  });
+};
 
 const Table = ({ children }) => <View style={styles.table}>{children}</View>;
 const TableRow = ({ label, children }) => (
@@ -101,24 +152,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 35,
   },
   header: {
+    marginBottom: 5,
+    color: '#666',
+    fontFamily: 'Helvetica',
     fontSize: 10,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  title: {
-    fontSize: 24,
-    margin: 12,
-    fontFamily: 'Helvetica-Bold',
-    textAlign: 'center',
+    lineHeight: 1.6,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 
   logo: {
     marginVertical: 5,
     width: 85,
     height: 25,
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    marginBottom: 15,
   },
 
   image: {
@@ -136,28 +183,29 @@ const styles = StyleSheet.create({
   },
 
   pageNumber: {
-    position: 'absolute',
-    fontSize: 12,
-    bottom: 30,
-    left: 0,
-    right: 0,
+    marginTop: 15,
+    fontSize: 9,
+    width: '100%',
+    color: '#aaa',
     textAlign: 'center',
-    color: 'grey',
   },
 
   table: {
     width: '100%',
   },
+
   row: {
     display: 'flex',
     flexDirection: 'row',
     borderTop: '1px solid #EEE',
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
   },
+
   tableHeader: {
     borderTop: 'none',
   },
+
   tableLabelColumn: {
     width: '40%',
     fontFamily: 'Helvetica-Bold',
@@ -168,5 +216,6 @@ const styles = StyleSheet.create({
     width: '60%',
     fontFamily: 'Helvetica',
     fontSize: 11,
+    color: '#333',
   },
 });
