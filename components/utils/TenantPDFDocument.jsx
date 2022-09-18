@@ -39,8 +39,8 @@ const tenantTestData = {
   dependantIdentification5: '',
 };
 
-const TenantPDFDocument = ({ tenant, showPreview = true }) => {
-  const Doc = <TenantInfoDocument tenant={{ ...tenant, ...tenantTestData }} />;
+const TenantPDFDocument = ({ tenant }) => {
+  const Doc = <TenantInfoDocument tenant={tenant} />;
 
   return (
     <>
