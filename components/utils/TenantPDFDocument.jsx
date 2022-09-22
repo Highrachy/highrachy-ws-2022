@@ -12,7 +12,7 @@ import {
 import { getDate, getMonthYear } from '@/utils/date-helpers';
 import Humanize from 'humanize-plus';
 
-const TenantPDFDocument = ({ tenant, showPreview = true }) => {
+const TenantPDFDocument = ({ tenant, showPreview }) => {
   const Doc = <TenantInfoDocument tenant={tenant} />;
 
   return (
@@ -195,5 +195,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     fontSize: 10,
     color: '#333',
+    lineHeight: 1.5,
   },
 });
