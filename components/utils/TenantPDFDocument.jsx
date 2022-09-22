@@ -11,35 +11,8 @@ import {
 } from '@react-pdf/renderer';
 import { getDate, getMonthYear } from '@/utils/date-helpers';
 import Humanize from 'humanize-plus';
-const tenantTestData = {
-  dependantName1: 'Haruna Popoola',
-  dependantAge1: '19',
-  dependantRelationship1: 'Dependant',
-  dependantOccupation1: 'None',
-  dependantIdentification1: '',
-  dependantName2: 'Oladayo Popoola',
-  dependantAge2: '1',
-  dependantRelationship2: 'Brother',
-  dependantOccupation2: '',
-  dependantIdentification2: '',
-  dependantName3: '',
-  dependantAge3: '',
-  dependantRelationship3: '',
-  dependantOccupation3: '',
-  dependantIdentification3: '',
-  dependantName4: 'Aremu Popoola',
-  dependantAge4: '8',
-  dependantRelationship4: 'Brother',
-  dependantOccupation4: '',
-  dependantIdentification4: '',
-  dependantName5: '',
-  dependantAge5: '',
-  dependantRelationship5: '',
-  dependantOccupation5: '',
-  dependantIdentification5: '',
-};
 
-const TenantPDFDocument = ({ tenant, showPreview }) => {
+const TenantPDFDocument = ({ tenant, showPreview = true }) => {
   const Doc = <TenantInfoDocument tenant={tenant} />;
 
   return (
@@ -151,14 +124,18 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     paddingHorizontal: 35,
   },
+
   header: {
-    marginBottom: 5,
-    color: '#666',
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+    marginBottom: 15,
+    color: '#555',
     fontFamily: 'Helvetica',
-    fontSize: 10,
-    lineHeight: 1.6,
+    fontSize: 9,
+    lineHeight: 1.4,
     marginLeft: 'auto',
     marginRight: 'auto',
+    borderRadius: 4,
   },
 
   logo: {
@@ -170,8 +147,8 @@ const styles = StyleSheet.create({
 
   image: {
     marginVertical: 10,
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     marginLeft: 'auto',
     marginRight: 'auto',
     borderTopLeftRadius: 4,
@@ -186,7 +163,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontSize: 9,
     width: '100%',
-    color: '#aaa',
+    color: '#bbb',
     textAlign: 'center',
   },
 
@@ -210,12 +187,13 @@ const styles = StyleSheet.create({
     width: '40%',
     fontFamily: 'Helvetica-Bold',
     fontWeight: 'bold',
-    fontSize: 11,
+    fontSize: 10,
   },
+
   tableValueColumn: {
     width: '60%',
     fontFamily: 'Helvetica',
-    fontSize: 11,
+    fontSize: 10,
     color: '#333',
   },
 });
