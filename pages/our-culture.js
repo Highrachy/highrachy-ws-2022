@@ -104,7 +104,7 @@ export const OurTeam = ({ teams }) => {
 };
 
 const SingleTeamCard = ({ image, fullName, position }) => (
-  <div className="col-md-6 col-lg-4 mb-5">
+  <div className="col-md-4 col-lg-3 col-sm-6 mb-5">
     <div className="card shadow lift rounded">
       <LocalImage
         src={image}
