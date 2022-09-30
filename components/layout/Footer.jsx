@@ -55,7 +55,10 @@ const Footer = ({ hideConsultation }) => (
                 </p>
                 <p>Email: info@highrachy.com</p>
                 <p>
-                  <span>Phone:</span> +234 802 833 7440
+                  <span>Phone:</span>{' '}
+                  <a className="text-reset" href="tel:+2349055555146">
+                    +234 905 555 5146
+                  </a>
                 </p>
               </div>
               <ul className="list-inline text-white ms-auto">

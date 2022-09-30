@@ -81,13 +81,13 @@ const MissionAndVision = () => (
         <div className="offset-lg-1 col-lg-10">
           <div className="row">
             <FeatureCard icon={<VisionIcon />} title="Our Vision">
-              To be one of the best performing, most trusted and respected real
-              estate company in the world.
+              To be globally Recognised as the access point for real
+              opportunities within the African Real Estate industry. .
             </FeatureCard>
             <FeatureCard icon={<MissionIcon />} title="Our Mission">
-              To continuously enhance your lives be it home or work by providing
-              technology and real investments solutions and ensuring seamless
-              objective delivery via Project Management consultancy.
+              To avail people from across the globe with convenient access to
+              value driven real estate opportunities with keen focus on quality,
+              comfort and value for money.
             </FeatureCard>
           </div>
         </div>

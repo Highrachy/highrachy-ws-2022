@@ -8,10 +8,10 @@ export const footerLinks = [
     title: 'Careers',
     url: '/careers',
   },
-  {
-    title: 'Sitemap',
-    url: '/sitemap-0.xml',
-  },
+  // {
+  //   title: 'Sitemap',
+  //   url: '/sitemap-0.xml',
+  // },
   {
     title: 'Our Projects',
     url: '/projects',

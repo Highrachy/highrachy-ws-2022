@@ -10,6 +10,7 @@ import Textarea from '@/components/forms/Textarea';
 import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import Map from '@/components/utils/Map';
 import { about } from '@/data/navigation';
 import services from '@/data/services';
 import { valuesToOptions } from '@/utils/helpers';
@@ -38,20 +39,6 @@ const contactUs = () => {
     </>
   );
 };
-
-const Map = () => (
-  <section className="google-map">
-    <iframe
-      title="Highrachy on Google Map"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.7225456353594!2d3.4277053146311514!3d6.429678795348128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf52560c8903b%3A0x264b8d5dbb789d4a!2sHighrachy!5e0!3m2!1sen!2sus!4v1643001127842!5m2!1sen!2sus"
-      height={450}
-      style={{ border: 0 }}
-      allowFullScreen
-      loading="lazy"
-      className="full-map img-cover"
-    />
-  </section>
-);
 
 const GetInTouch = () => (
   <section className="form-wrapper p-5">
@@ -88,8 +75,8 @@ const ContactInfo = () => (
                         <PhoneIcon />
                       </span>
                       <p>
-                        <a href="#" className="text-reset">
-                          +234 802 833 7440
+                        <a className="text-reset" href="tel:+2349055555146">
+                          +234 905 555 5146
                         </a>
                       </p>
                     </div>
