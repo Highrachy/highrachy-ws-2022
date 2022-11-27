@@ -1,9 +1,7 @@
 import navigation from '@/data/navigation';
 import useScrollPosition from '@/hooks/useScrollPosition';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Container,
   Nav,
@@ -13,6 +11,7 @@ import {
 } from 'react-bootstrap';
 import ActiveLink from '../utils/ActiveLink';
 import useWindowSize from '@/hooks/useWindowSize';
+import HighrachyLogo from '../utils/HighrachyLogo';
 
 const DesktopNavigation = ({ MENU, Apartments }) => {
   return (
@@ -128,16 +127,9 @@ const Navigation = ({ parentPage }) => {
       className={className}
     >
       <Container>
-        <Link href="/" passHref>
-          <Navbar.Brand>
-            <Image
-              src="/logo.png"
-              alt="Highrachy"
-              width={isDesktop ? '169' : '142'}
-              height={isDesktop ? '50' : '42'}
-            />
-          </Navbar.Brand>
-        </Link>
+        <Navbar.Brand>
+          <HighrachyLogo />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="highrachy-navbar">
           <svg
             xmlns="http://www.w3.org/2000/svg"

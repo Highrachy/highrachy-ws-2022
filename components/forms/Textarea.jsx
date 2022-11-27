@@ -14,6 +14,7 @@ const TextArea = ({
   autoComplete,
   formGroupClassName,
   formik,
+  floatingLabel,
   helpText,
   inline,
   inputClassName,
@@ -35,6 +36,7 @@ const TextArea = ({
       <Label
         className={labelClassName}
         labelLink={labelLink}
+        floatingLabel={floatingLabel}
         name={name}
         optional={optional}
         text={label}

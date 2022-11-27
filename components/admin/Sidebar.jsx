@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React, { useContext } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+import HighrachyLogo from '../utils/HighrachyLogo';
 
 const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
   const handleMenuState = () => {
@@ -22,16 +23,7 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
         <div className="sidebar-header">
           {!isFolded &&
             (isDesktop ? (
-              <Link href="/" passHref>
-                <a>
-                  <Image
-                    src="/logo.png"
-                    alt="Highrachy"
-                    width="142"
-                    height="42"
-                  />
-                </a>
-              </Link>
+              <HighrachyLogo />
             ) : (
               <h5 className="text-dark">Menu</h5>
             ))}

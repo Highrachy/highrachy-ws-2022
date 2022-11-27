@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useContext, useState } from 'react';
 
 import { UserContext } from '../../context/user';
+import HighrachyLogo from '@/components/utils/HighrachyLogo';
 
 const Login = () => {
   const [error, setError] = useState();
@@ -48,12 +49,7 @@ const Login = () => {
           <div className="card-body text-center">
             {/* Logo */}
             <div className="auth-brand text-center mb-3">
-              <Image
-                src="/logo.png"
-                alt="Highrachy"
-                width={'142'}
-                height={'42'}
-              />
+              <HighrachyLogo />
             </div>
             <h2 className="mb-5">Admin Panel</h2>
             <GoogleLogin />

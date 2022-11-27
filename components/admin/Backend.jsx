@@ -1,7 +1,5 @@
 import useWindowSize from '@/hooks/useWindowSize';
 import { getMenuStateFromStore, getTokenFromStore } from '@/utils/localStorage';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import { Overlay } from 'react-bootstrap';
 import Sidebar from './Sidebar';
@@ -10,6 +8,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/user';
 import { useRouter } from 'next/router';
 import NoContent from './NoContent';
+import HighrachyLogo from '../utils/HighrachyLogo';
 
 const Backend = ({ children, title }) => {
   const { width } = useWindowSize();
@@ -57,16 +56,7 @@ const Backend = ({ children, title }) => {
       >
         {!isDesktop && (
           <div className="d-flex d-md-none justify-content-between pb-2 border-bottom mt-3 mb-4">
-            <Link href="/" passHref>
-              <a>
-                <Image
-                  src="/logo.png"
-                  alt="Highrachy"
-                  width="142"
-                  height="42"
-                />
-              </a>
-            </Link>
+            <HighrachyLogo />
             <div
               className="btn-link icon-md2"
               onClick={() => setIsFolded(!isFolded)}
