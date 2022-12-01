@@ -5,13 +5,12 @@ import '../sass/App.scss';
 import { ToastContainer, Slide } from 'react-toastify';
 import { DefaultSeo } from 'next-seo';
 import UserProvider from 'context/user';
-import Snowfall from 'react-snowfall';
-import { isFestivePeriod } from '@/utils/helpers';
+import XmasFall from '@/components/utils/XmasFall';
 
 function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
-      {isFestivePeriod() && <Snowfall />}
+      <XmasFall />
       <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
       <NextNProgress color="#ed3237" />
       <DefaultSeo
