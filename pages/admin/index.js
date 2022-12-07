@@ -15,12 +15,12 @@ const Login = () => {
   const { checkLogin, doGoogleCallback, user, setUser } =
     useContext(UserContext);
 
-  useEffect(() => {
-    async function confirmPreviousLogin() {
-      await checkLogin();
-    }
-    confirmPreviousLogin();
-  }, [checkLogin]);
+  // useEffect(() => {
+  //   async function confirmPreviousLogin() {
+  //     await checkLogin();
+  //   }
+  //   confirmPreviousLogin();
+  // }, [checkLogin]);
 
   useEffect(() => {
     async function confirmGoogleLogin() {
