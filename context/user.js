@@ -11,12 +11,12 @@ const UserProvider = ({ children }) => {
   async function checkLogin() {
     try {
       const resp = await axios.get(`/api/auth/callback/google`);
-
       setUser(resp.data.user);
       setEmail(resp.data.email);
       setId(resp.data.id);
       return resp;
     } catch (error) {
+      clearToken();
       return error.response;
     }
   }
@@ -26,10 +26,7 @@ const UserProvider = ({ children }) => {
       method: 'POST',
     });
     if (resp.data.message == 'success') {
-      storeToken(null);
-      setUser('');
-      setEmail('');
-      setId('');
+      clearToken();
     }
   };
 
@@ -39,8 +36,16 @@ const UserProvider = ({ children }) => {
       storeToken(resp?.data?.token || null);
       return ['OK', resp.data.message];
     } catch (error) {
+      clearToken();
       return ['error', error?.response?.data?.message || error];
     }
+  }
+
+  function clearToken() {
+    storeToken(null);
+    setUser('');
+    setEmail('');
+    setId('');
   }
 
   const useract = {
