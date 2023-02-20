@@ -29,11 +29,15 @@ export const footerLinks = [
 export const socialMediaLinks = [
   {
     icon: <FacebookIcon />,
-    url: 'https://www.facebook.com/highrachy',
+    url: 'https://www.facebook.com/Highrachy/',
   },
   {
     icon: <TwitterIcon />,
-    url: 'https://twitter.com/Highrachy',
+    url: 'https://twitter.com/highrachy',
+  },
+  {
+    icon: <InstagramIcon />,
+    url: 'https://www.instagram.com/highrachyhq/',
   },
   {
     icon: <LinkedInIcon />,

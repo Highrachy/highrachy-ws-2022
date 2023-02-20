@@ -15,9 +15,9 @@ export const dreamworld = {
 
 export const ifactor = {
   content:
-    ' Ifactor is an exquisitely designed, energy efficient, world class mini estate within a secure environment. It comprises 6 apartments that brings forth a luxurious five-star concept blended with contemporary architectural design and an array of relaxation and recreational facilities including a rooftop gym, rooftop terraced lounge with swimming pool overlooking the Lagos Lagoon and twinkling of bright stars in the night sky. ',
+    'I-Factor is an exquisitely designed, energy efficient, world class mini estate within a secure environment. It comprises 6 apartments that brings forth a luxurious five-star concept blended with contemporary architectural design and an array of relaxation and recreational facilities including a rooftop gym, rooftop terraced lounge with swimming pool overlooking the Lagos Lagoon and twinkling of bright stars in the night sky. ',
   image: '/assets/img/projects/ifactor.jpg',
-  title: 'Ifactor',
+  title: 'I-Factor',
 };
 
 const projects = [blissville, ifactor];
