@@ -47,18 +47,24 @@ const SingleCareer = ({ job }) => {
         breadcrumb={breadcrumb}
       />
 
-      <Section className="careers-page">
+      <Section>
         {!available && <JobNotAvailableAlert />}
         <Intro job={job} />
-        <WhoWeAre />
-        <RichTextSection title="Job Summary" text={minimumRequirements} />
-        <RichTextSection title="Qualifications" text={desiredSkills} />
-        <RichTextSection
-          title="Skills and Competencies"
-          text={softwareProficiency}
-        />
-        {note && <RichTextSection title="Note" text={note} />}
-        {!available && <JobNotAvailableAlert />}
+        <div className="careers-page mt-4">
+          <WhoWeAre />
+          <RichTextSection title="Job Summary" text={minimumRequirements} />
+          <RichTextSection text={desiredSkills} />
+          <RichTextSection text={softwareProficiency} />
+          {note && <RichTextSection title="Note" text={note} />}
+          {available && (
+            <PaddedSection>
+              <Link passHref href={'#apply-now'}>
+                <a className="btn btn-primary text-uppercase">Apply Now</a>
+              </Link>
+            </PaddedSection>
+          )}
+          {!available && <JobNotAvailableAlert />}
+        </div>
       </Section>
 
       {available && <ApplicationForm job={job} />}
@@ -119,7 +125,7 @@ export const RichTextSection = ({ title, text }) => (
 );
 
 const PaddedSection = ({ children, title }) => (
-  <section className="pb-5">
+  <section className="pb-3">
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-9 col-sm-10">

@@ -73,7 +73,8 @@ const Backend = ({ children, title }) => {
           </div>
         )}
         {!token ? (
-          <NoContent text="Loading..." />
+          // <NoContent text="Loading..." />
+          <></>
         ) : (
           <>
             {title && <TopTitle>{title}</TopTitle>}
