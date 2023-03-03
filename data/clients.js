@@ -1,10 +1,12 @@
 export const allClients = [
   'gtb',
   'paystack',
+  'elvira',
+  'legrand',
   'zenith',
   'stanbic',
-  'elvira',
   'jutem',
+  'schneider',
 ];
 
-export const topClients = ['gtb', 'paystack', 'zenith', 'stanbic'];
+export const topClients = allClients.slice(0, 4);
