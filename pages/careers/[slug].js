@@ -100,8 +100,9 @@ const WhoWeAre = () => (
     <p>
       At Highrachy, we are passionate about delivering value-driven real estate
       solutions that make a difference. As a leading 21st-century
-      project-oriented organization, deliver top-notch processes and solutions
-      that ensure our clients&apos; real estate goals are met consistently.
+      project-oriented organization, we deliver top-notch processes and
+      solutions that ensure our clients&apos; real estate goals are met
+      consistently.
     </p>
     <p>
       Our vision is to be globally recognised as the access point for real
