@@ -41,8 +41,8 @@ const ProcessJobForm = ({ action, id, job }) => {
     location: 'Lagos',
     remote: true,
     contract: false,
-    desiredSkills: '- Desired Skills 1 test \n- Desired Skills 2',
-    minimumRequirements: '- Minimum requirements 1',
+    desiredSkills: '- Qualifications 1 test \n- Qualifications 2',
+    minimumRequirements: '- Job Summary \n\n###Duties and Responsibilities',
     softwareProficiency: '- Google Docs \n-Google Sheets',
   };
   const currentAction = action ? Humanize.capitalize(action) : 'New';
@@ -127,9 +127,12 @@ const JobForm = ({ handleSubmit, initialValues, isEdit }) => (
             />
           </div>
 
-          <MdEditor label="Minimum Requirements" name="minimumRequirements" />
-          <MdEditor label="Desired Skills" name="desiredSkills" />
-          <MdEditor label="Software Proficiency" name="softwareProficiency" />
+          <MdEditor label="Job Summary" name="minimumRequirements" />
+          <MdEditor label="Qualifications" name="desiredSkills" />
+          <MdEditor
+            label="Skills and Competencies"
+            name="softwareProficiency"
+          />
           <MdEditor label="Note" name="note" optional height="10rem" />
 
           <Switch

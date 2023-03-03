@@ -15,9 +15,9 @@ export const jobSchema = {
   remote: booleanValidation('Remote'),
   contract: booleanValidation('Contract'),
   location: stringValidation('Location'),
-  minimumRequirements: stringValidation('Minimum Requirements'),
-  desiredSkills: stringValidation('Desired Skills'),
-  softwareProficiency: stringValidation('Software Proficiency'),
+  minimumRequirements: stringValidation('Job Summary'),
+  desiredSkills: stringValidation('Qualifications'),
+  softwareProficiency: stringValidation('Skills and Competencies'),
   note: optionalValidation(stringValidation('Note')),
   available: booleanValidation('Available'),
 };

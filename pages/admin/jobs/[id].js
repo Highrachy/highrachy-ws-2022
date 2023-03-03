@@ -211,13 +211,10 @@ const JobDetail = ({
   return (
     <div className="container-fluid">
       <section className="mt-5">
+        <RichTextSection title="Job Summary" text={minimumRequirements} />
+        <RichTextSection title="Qualifications" text={desiredSkills} />
         <RichTextSection
-          title="Minimum Requirements"
-          text={minimumRequirements}
-        />
-        <RichTextSection title="Desired Skills" text={desiredSkills} />
-        <RichTextSection
-          title="Software Proficiency"
+          title="Skills and Competencies"
           text={softwareProficiency}
         />
         <RichTextSection title="Note" text={note} />

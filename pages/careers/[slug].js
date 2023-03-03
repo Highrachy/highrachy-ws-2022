@@ -47,17 +47,14 @@ const SingleCareer = ({ job }) => {
         breadcrumb={breadcrumb}
       />
 
-      <Section>
+      <Section className="careers-page">
         {!available && <JobNotAvailableAlert />}
         <Intro job={job} />
         <WhoWeAre />
+        <RichTextSection title="Job Summary" text={minimumRequirements} />
+        <RichTextSection title="Qualifications" text={desiredSkills} />
         <RichTextSection
-          title="Minimum Requirements"
-          text={minimumRequirements}
-        />
-        <RichTextSection title="Desired Skills" text={desiredSkills} />
-        <RichTextSection
-          title="Software Proficiency"
+          title="Skills and Competencies"
           text={softwareProficiency}
         />
         {note && <RichTextSection title="Note" text={note} />}
@@ -95,16 +92,22 @@ const Intro = ({ job: { title, remote, contract, location } }) => (
 const WhoWeAre = () => (
   <PaddedSection title="Who we are">
     <p>
-      We&apos;re one of the leading 21st century project-oriented organization
-      setup primarily to meet real estate needs.
+      At Highrachy, we are passionate about delivering value-driven real estate
+      solutions that make a difference. As a leading 21st-century
+      project-oriented organization, deliver top-notch processes and solutions
+      that ensure our clients&apos; real estate goals are met consistently.
     </p>
     <p>
-      Experience top notch processes and solutions that are deliberately
-      designed to guarantee your real estate goals are met consistently.
+      Our vision is to be globally recognised as the access point for real
+      opportunities within the African Real Estate industry. Our mission is to
+      provide convenient access to value driven real estate opportunities with
+      keen focus on quality, comfort and value for money.
     </p>
-    <p className="lead">
-      Give yourself the gift of true value driven by quality for a better
-      tomorrow with us.
+    <p>
+      We are seeking brilliant and passionate individuals who share our values
+      and want to make a difference in the world. Join us and be a part of a
+      team that is committed to excellence, innovation, and making a positive
+      impact in the world of real estate.
     </p>
   </PaddedSection>
 );
