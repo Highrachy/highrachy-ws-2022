@@ -1,4 +1,5 @@
 import { FaHouseUser } from 'react-icons/fa';
+import { IoDocuments } from 'react-icons/io5';
 import {
   RiCommunityFill,
   RiDashboard3Fill,
@@ -17,5 +18,6 @@ export const adminMenu = {
   Applicants: <RiFileUserFill />,
   Messages: <RiMessage2Fill />,
   Team: <HiUsers />,
+  Internal: <IoDocuments />,
   Logout: <RiLogoutCircleRFill />,
 };
