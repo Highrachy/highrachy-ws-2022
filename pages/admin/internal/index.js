@@ -15,23 +15,41 @@ const Internal = () => {
 
 const content = [
   {
-    header: 'Onboarding Checklist',
+    header: 'Onboarding Documents',
     content: (
       <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1hSIlkrd-zLzOm7X0IdbMHsLQFgjqzolvlR0tGyacRws"
+            rel="noopener noreferrer"
+          >
+            Onboarding Checklist
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1u7-q8WFAlawiCydIh-Jr4subte4NwuHRS98JGBnEP3Q/edit#heading=h.pu6bmdcz1d6o"
+            rel="noopener noreferrer"
+          >
+            Laptop Handling Policy
+          </a>
+        </li>
         <li>
           <a
             target="_blank"
             href="https://docs.google.com/document/d/1s9opfwXrN5dyL-F7-VqH4JxFp3bMGSqmvnZ5UujYLiU/edit?pli=1#heading=h.pdd8wt8ls9ve"
             rel="noopener noreferrer"
           >
-            LAPTOP POLICY ACCEPTANCE FORM
+            Laptop and Policy Acceptance Form
           </a>
         </li>
       </ul>
     ),
   },
   {
-    header: 'Managing your Highrachy Signature Line',
+    header: 'Managing your Highrachy Email Signature Line',
     content: (
       <ul>
         <li>
@@ -52,7 +70,23 @@ const content = [
             href="https://docs.google.com/document/d/1s9opfwXrN5dyL-F7-VqH4JxFp3bMGSqmvnZ5UujYLiU/edit?pli=1#heading=h.pdd8wt8ls9ve"
             rel="noopener noreferrer"
           >
-            The current version of our signature line
+            Current Signature Line
+          </a>
+        </li>
+      </ul>
+    ),
+  },
+  {
+    header: 'Social Media Resources',
+    content: (
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1OtznopjLjaEDGzXcXmGiQH0H0Mr0bcAnzDOfGsfeqYI/edit#gid=80577250"
+            rel="noopener noreferrer"
+          >
+            Social Media Content Calendar Template
           </a>
         </li>
       </ul>
