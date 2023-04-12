@@ -942,7 +942,7 @@ const DependantsInformation = () => {
                 on this Tenant Application Form is (to the best of my knowledge)
                 accurate, complete and not misleading and that I have read and
                 agreed to the attached{' '}
-                <Link href="/privacy/data-protection-statement" passHref>
+                <Link href="/privacy-policy/data-protection-statement" passHref>
                   <a target="_blank" className="text-primary">
                     Data Protection Statement
                   </a>

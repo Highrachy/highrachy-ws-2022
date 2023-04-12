@@ -7,7 +7,7 @@ import { NextSeo } from 'next-seo';
 import React from 'react';
 
 const breadcrumb = [
-  { title: 'Privacy', url: 'about-us' },
+  { title: 'Privacy', url: 'privacy-policy' },
   { title: 'Data Protection Statement' },
 ];
 
@@ -18,7 +18,7 @@ const DataProtectionStatement = () => {
         title="Data Protection Statement"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/privacy/data-protection-statement"
+        canonical="https://www.highrachy.com/privacy-policy/data-protection-statement"
       />
       <Navigation parentPage={about.url} />
       <PageHeader
@@ -211,8 +211,8 @@ const DataProtectionStatement = () => {
             </p>
             <p className="mt-4">
               However, as noted above, we will not hold on to any personal
-              information for any longer than is necessary for thepurposes noted
-              above.
+              information for any longer than is necessary for the purposes
+              noted above.
             </p>
             <h5 className="mt-6">Fraud prevention agencies</h5>
             <p className="mt-4">

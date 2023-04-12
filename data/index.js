@@ -24,6 +24,10 @@ export const footerLinks = [
     title: 'Existing Business Relationships',
     url: '/about-us#business-relationships',
   },
+  {
+    title: 'Privacy Policy',
+    url: '/privacy-policy',
+  },
 ];
 
 export const socialMediaLinks = [
