@@ -46,7 +46,14 @@ const ProjectListGrid = () => {
   );
 };
 
-const ProjectCard = ({ title, content, image, index, useAltBg }) => (
+const ProjectCard = ({
+  title,
+  content,
+  image,
+  externalLink,
+  index,
+  useAltBg,
+}) => (
   <ImageBlock title={title} image={image} altBg={useAltBg && isAltBg(index)}>
     <h5 className="mb-0 text-gray">{title}</h5>
     <p className="text pt-3">{humanize.truncate(content, 200)}</p>

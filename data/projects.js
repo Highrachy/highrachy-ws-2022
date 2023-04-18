@@ -19,7 +19,21 @@ export const ifactor = {
   image: '/assets/img/projects/ifactor.jpg',
   title: 'I-Factor',
 };
+export const crescent = {
+  content: (
+    <>
+      <p>
+        Blissville Crescent, within the Prestigious Caribbean Lake City. Enjoy
+        the ambience and serenity of plosh gardens and the calm fishing lake
+        that flows into the gracious Omu Creek.
+      </p>
+      <p>Coming soon to you.</p>
+    </>
+  ),
+  image: '/assets/img/projects/crescent.png',
+  title: 'Blissville Crescent',
+};
 
-const projects = [blissville, ifactor];
+const projects = [blissville, ifactor, crescent];
 
 export default projects;

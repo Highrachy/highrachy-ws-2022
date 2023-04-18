@@ -15,7 +15,7 @@ const ImageBlock = ({ image, children, title, altBg }) => (
         <Image
           src={image}
           alt={title}
-          className="img-fluid"
+          className="img-cover"
           height="800"
           width="1200"
         />
