@@ -54,20 +54,13 @@ const content = [
       <ul>
         <li>
           <Link href="/admin/internal/create-signature">
-            Creating a new Highrachy Signature Line
-          </Link>
-        </li>
-        <li>
-          <Link href="/admin/internal/create-signature" passHref>
-            <a>
-              Updating your Signature Line <em>(In Progress)</em>
-            </a>
+            Creating and managing your Highrachy Signature Line
           </Link>
         </li>
         <li>
           <a
             target="_blank"
-            href="https://docs.google.com/document/d/1s9opfwXrN5dyL-F7-VqH4JxFp3bMGSqmvnZ5UujYLiU/edit?pli=1#heading=h.pdd8wt8ls9ve"
+            href="https://highrachy.github.io/signature-line"
             rel="noopener noreferrer"
           >
             Current Signature Line
@@ -77,9 +70,18 @@ const content = [
     ),
   },
   {
-    header: 'Social Media Resources',
+    header: 'Our Templates',
     content: (
       <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
+            rel="noopener noreferrer"
+          >
+            Monthly Report Template
+          </a>
+        </li>
         <li>
           <a
             target="_blank"
