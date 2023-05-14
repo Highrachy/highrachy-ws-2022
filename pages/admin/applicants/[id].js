@@ -41,7 +41,15 @@ const allApplicantTabs = [
   {
     key: 'Overview',
     title: 'Overview',
-    fields: ['fullName', 'email', 'phoneNumber', 'resume', 'status'],
+    fields: [
+      'fullName',
+      'email',
+      'phoneNumber',
+      'resume',
+      'status',
+      'createdAt',
+      'updatedAt',
+    ],
   },
   {
     key: 'Other Applications',
