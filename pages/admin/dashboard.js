@@ -63,10 +63,6 @@ const Dashboard = () => {
             </Link>
           </div>
         </div>
-
-        <p className="mt-7 text-xs">
-          Key: {process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}
-        </p>
       </ContentLoader>
     </Backend>
   );

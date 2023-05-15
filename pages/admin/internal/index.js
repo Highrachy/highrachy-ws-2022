@@ -94,6 +94,58 @@ const content = [
       </ul>
     ),
   },
+  {
+    header: 'Ballers Resources',
+    content: (
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1ToJvkMkLXP8cw2ARQPqiCInMvHnnKO6e/edit"
+            rel="noopener noreferrer"
+          >
+            BALLERS - Offer Letter Template
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1gsomOY9qclUz9RzadN3ztJH4Y0ryGT-fukNBFLhJAIU/edit"
+            rel="noopener noreferrer"
+          >
+            Ballers - Search Result Calculator
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1oR5_bhClwX08aA-CPePocZ6WZpWt0LC1Lbnoa-x3sWg/edit"
+            rel="noopener noreferrer"
+          >
+            BALLERS - Value added services
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1UDdqi4tH-wqUFHrS-UcqHzQw-ZtYt0SYij6Tf9PPi5M/edit#heading=h.ddo8e4w4294z"
+            rel="noopener noreferrer"
+          >
+            BALLERS - Term of Use
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/document/d/1kicljW_JDF9bj-uwKHB6NCsoFXVJe8K-ZhZNAQF5_FE/edit#heading=h.i67ji34ryzgr"
+            rel="noopener noreferrer"
+          >
+            BALLERS - Preventing Users from boycotting (Brainstorming Docs)
+          </a>
+        </li>
+      </ul>
+    ),
+  },
 ];
 
 const InternalAccordion = () => (
