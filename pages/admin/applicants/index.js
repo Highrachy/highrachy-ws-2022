@@ -14,6 +14,7 @@ const Applicants = () => (
       pageName="Applicant"
       DataComponent={ApplicantsRowList}
       PageIcon={adminMenu['Applicants']}
+      populate="*"
       sort="createdAt:desc"
       filterFields={filterApplicants}
     />
@@ -31,7 +32,7 @@ export const ApplicantsRowList = ({ results, offset, query }) => {
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th className="text-center">Status</th>
+                <th>Status</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -59,6 +60,7 @@ export const ApplicantsSingleRow = ({
   id,
   fullName,
   email,
+  job,
   phoneNumber,
   resume,
   status,
@@ -71,9 +73,10 @@ export const ApplicantsSingleRow = ({
         <span>{email}</span>
       </td>
       <td>{phoneNumber}</td>
-      <td className="text-center">
+      <td>
+        {job?.data?.attributes?.title}
         <span
-          className={`badge badge-icon d-flex align-items-center bg-${APPLICANT_STAGE_INFO[status].color}`}
+          className={`badge badge-icon d-flex align-items-center ps-0 bg-${APPLICANT_STAGE_INFO[status].color}`}
         >
           {APPLICANT_STAGE_INFO[status].icon} &nbsp; {status}
         </span>
