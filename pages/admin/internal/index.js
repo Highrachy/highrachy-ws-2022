@@ -101,6 +101,15 @@ const content = [
         <li>
           <a
             target="_blank"
+            href="https://docs.google.com/presentation/d/16B6L_BlQxgLnQkbNZaBhC_afne46g2d8JjvRIDsYP0M/edit"
+            rel="noopener noreferrer"
+          >
+            BALLERS - Website Testing Bug Template
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
             href="https://docs.google.com/document/d/1ToJvkMkLXP8cw2ARQPqiCInMvHnnKO6e/edit"
             rel="noopener noreferrer"
           >

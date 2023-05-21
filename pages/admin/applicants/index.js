@@ -17,6 +17,7 @@ const Applicants = () => (
       populate="*"
       sort="createdAt:desc"
       filterFields={filterApplicants}
+      limit={20}
     />
   </Backend>
 );
