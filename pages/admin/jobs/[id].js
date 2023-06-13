@@ -13,21 +13,38 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import classNames from 'classnames';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { Tab } from 'react-bootstrap';
+import { APPLICANT_STAGE } from '@/utils/constants';
 
 const pageOptions = {
   key: 'job',
   pageName: 'Job',
 };
 
+const STAGE = {
+  NEW_APPLICANTS: 'New Applicants',
+  REVIEWED_APPLICANTS: 'Reviewed Applicants',
+  REJECTED_APPLICANTS: 'Rejected Applicants',
+};
+
 const allJobTabs = [
-  {
-    key: 'Applicants',
-    title: 'Applicants',
-    fields: [],
-  },
   {
     key: 'Job Details',
     title: 'Job Details',
+    fields: [],
+  },
+  {
+    key: STAGE.NEW_APPLICANTS,
+    title: STAGE.NEW_APPLICANTS,
+    fields: [],
+  },
+  {
+    key: STAGE.REVIEWED_APPLICANTS,
+    title: STAGE.REVIEWED_APPLICANTS,
+    fields: [],
+  },
+  {
+    key: STAGE.REJECTED_APPLICANTS,
+    title: STAGE.REJECTED_APPLICANTS,
     fields: [],
   },
 ];
@@ -47,6 +64,32 @@ const SingleJob = () => {
     },
   });
 
+  const { applicants } = result?.attributes || {};
+  // Initialize an empty object to store applicants for each stage
+  const applicantsByStage = {};
+
+  // Iterate over the data array and group applicants based on their stage
+  applicants?.data.forEach((applicant) => {
+    const { id, attributes } = applicant;
+    const { status } = attributes;
+
+    // Determine the stage based on the status
+    const stage =
+      status === APPLICANT_STAGE.REJECTED
+        ? STAGE.REJECTED_APPLICANTS
+        : status === APPLICANT_STAGE.APPLIED
+        ? STAGE.NEW_APPLICANTS
+        : STAGE.REVIEWED_APPLICANTS;
+
+    // Initialize the array for the stage if it doesn't exist
+    if (!applicantsByStage[stage]) {
+      applicantsByStage[stage] = [];
+    }
+
+    // Add applicant to the array for the corresponding stage
+    applicantsByStage[stage].push({ id, attributes });
+  });
+
   return (
     <Backend title="Single Job">
       <ContentLoader
@@ -61,6 +104,7 @@ const SingleJob = () => {
           {...result?.attributes}
           id={id}
           query={query}
+          applicantsByStage={applicantsByStage}
         />
         <Tab.Container
           activeKey={currentTab}
@@ -76,6 +120,8 @@ const SingleJob = () => {
                   job={{ id, ...result?.attributes }}
                   data={fields}
                   setCurrentTab={setCurrentTab}
+                  stage={key}
+                  applicantsByStage={applicantsByStage}
                 />
               </Tab.Pane>
             ))}
@@ -87,6 +133,7 @@ const SingleJob = () => {
 };
 
 const JobHeader = ({
+  applicantsByStage,
   currentTab,
   setCurrentTab,
   available,
@@ -181,21 +228,34 @@ const JobHeader = ({
         </div>
 
         <ul className="nav fs-5 pt-5 fw-bolder">
-          {allJobTabs.map(({ key }) => (
-            <li
-              key={key}
-              className="nav-item"
-              onClick={() => setCurrentTab(key)}
-            >
-              <span
-                className={classNames('nav-link', {
-                  active: currentTab === key,
-                })}
+          {allJobTabs.map(({ key }) => {
+            const isJobDetails = key === 'Job Details';
+            return (
+              <li
+                key={key}
+                className="nav-item"
+                onClick={() => setCurrentTab(key)}
               >
-                {key}
-              </span>
-            </li>
-          ))}
+                <span
+                  className={classNames('nav-link', {
+                    active: currentTab === key,
+                  })}
+                >
+                  {key}
+                  {!isJobDetails && (
+                    <span>
+                      {' '}
+                      (
+                      {applicantsByStage[key]
+                        ? applicantsByStage[key].length
+                        : '0'}
+                      )
+                    </span>
+                  )}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
@@ -242,8 +302,9 @@ const PaddedSection = ({ children, title }) => (
   </section>
 );
 
-const TabInformation = ({ job, title }) => {
-  const { applicants } = job;
+const TabInformation = ({ applicantsByStage, job, title, stage }) => {
+  const isJobDetails = title === 'Job Details';
+  const currentApplicants = applicantsByStage?.[stage];
   return (
     <section>
       <div className="card">
@@ -256,16 +317,18 @@ const TabInformation = ({ job, title }) => {
                 </th>
               </tr>
             </thead>
-            {title === allJobTabs[0].title ? (
+            {isJobDetails ? (
+              <JobDetail {...job} />
+            ) : (
               <tbody>
-                {!applicants?.data || applicants?.data === 0 ? (
+                {!currentApplicants || currentApplicants === 0 ? (
                   <td colSpan="5">
                     <h5 className="text-muted text-center py-6">
-                      No Applications Yet
+                      You have no {stage}
                     </h5>
                   </td>
                 ) : (
-                  applicants?.data.map(({ id, attributes }, index) => (
+                  currentApplicants.map(({ id, attributes }, index) => (
                     <ApplicantsSingleRow
                       key={index}
                       number={index + 1}
@@ -276,8 +339,6 @@ const TabInformation = ({ job, title }) => {
                   ))
                 )}
               </tbody>
-            ) : (
-              <JobDetail {...job} />
             )}
           </table>
         </div>
