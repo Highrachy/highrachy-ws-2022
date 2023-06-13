@@ -58,7 +58,7 @@ const allApplicantTabs = [
   },
 ];
 
-const getApplicantNextStage = (status) => {
+export const getApplicantNextStage = (status) => {
   switch (status) {
     case APPLICANT_STAGE.APPLIED:
       return APPLICANT_STAGE.REVIEWED;
@@ -248,12 +248,12 @@ const ApplicantHeader = ({
                       <ProcessButton
                         afterSuccess={() => query.mutate()}
                         api={`applicants/${id}`}
-                        buttonClassName="me-3"
+                        buttonClassName="mx-3"
                         buttonSizeClassName="btn-sm"
                         data={{ status: APPLICANT_STAGE.REJECTED }}
-                        modalContent={`Are you sure you want to reject this application`}
+                        modalContent={`Are you sure you want to reject '${fullName}' application`}
                         modalTitle={`Reject Application`}
-                        successMessage={`This application has been successfully rejected`}
+                        successMessage={`'${fullName}' application has been successfully rejected`}
                       >
                         Reject Application
                       </ProcessButton>
@@ -262,9 +262,9 @@ const ApplicantHeader = ({
                         api={`applicants/${id}`}
                         buttonColor={APPLICANT_STAGE_INFO[nextStage].color}
                         data={{ status: nextStage }}
-                        modalContent={`Are you sure you want to proceed this application to ${nextStage}`}
+                        modalContent={`Are you sure you want to proceed '${fullName}' application to ${nextStage}`}
                         modalTitle={`Process to ${nextStage}`}
-                        successMessage={`The applicant has been successfully updated to ${nextStage}`}
+                        successMessage={`'${fullName}' application has been successfully updated to ${nextStage}`}
                       >
                         Proceed to {nextStage}
                       </ProcessButton>

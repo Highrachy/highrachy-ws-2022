@@ -122,6 +122,7 @@ const SingleJob = () => {
                   setCurrentTab={setCurrentTab}
                   stage={key}
                   applicantsByStage={applicantsByStage}
+                  query={query}
                 />
               </Tab.Pane>
             ))}
@@ -302,7 +303,7 @@ const PaddedSection = ({ children, title }) => (
   </section>
 );
 
-const TabInformation = ({ applicantsByStage, job, title, stage }) => {
+const TabInformation = ({ applicantsByStage, query, job, title, stage }) => {
   const isJobDetails = title === 'Job Details';
   const currentApplicants = applicantsByStage?.[stage];
   return (
@@ -333,6 +334,7 @@ const TabInformation = ({ applicantsByStage, job, title, stage }) => {
                       key={index}
                       number={index + 1}
                       id={id}
+                      query={query}
                       {...attributes}
                       attachment={true}
                     />
