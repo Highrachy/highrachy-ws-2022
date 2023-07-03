@@ -23,7 +23,7 @@ const Apartments = ({ apartments }) => {
         title="Apartments | Real Estate"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/apartments"
+        canonical="https://www.highrachy.com/apartments"
       />
       <Navigation />
       <PageHeader

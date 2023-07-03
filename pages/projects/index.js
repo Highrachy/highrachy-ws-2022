@@ -13,7 +13,7 @@ const Projects = () => {
         title="Our Projects"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/projects"
+        canonical="https://www.highrachy.com/projects"
       />
       <Navigation parentPage={projects.url} />
       <PageHeader title="Our Projects" bgImage="/assets/img/bg/projects.jpg" />

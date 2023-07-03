@@ -21,7 +21,7 @@ const Careers = ({ jobs }) => {
         title="Careers at Highrachy"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/careers"
+        canonical="https://www.highrachy.com/careers"
       />
       <Navigation parentPage={about.url} />
       <PageHeader title="Careers" bgImage="/assets/img/bg/careers.jpg" />

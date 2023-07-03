@@ -24,7 +24,7 @@ const OurCulture = ({ teams }) => {
         title="Our Culture"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/our-culture"
+        canonical="https://www.highrachy.com/our-culture"
       />
       <Navigation parentPage={about.url} />
       <PageHeader

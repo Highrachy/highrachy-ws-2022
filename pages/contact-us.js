@@ -30,7 +30,7 @@ const contactUs = () => {
         title="Contact Us"
         description=" If you want to reach out, discuss opportunities or plan your property
         strategy, we’d love to hear from you."
-        canonical="https://www.highrahcy.com/contact-us"
+        canonical="https://www.highrachy.com/contact-us"
       />
       <Navigation parentPage={about.url} />
       <Map />

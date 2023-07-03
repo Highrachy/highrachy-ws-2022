@@ -13,7 +13,7 @@ const Services = () => {
       <NextSeo
         title="Our Services | Real Estate, Consulting, Technology, and Investment"
         description="Give yourself the gift of true value driven by quality for a better tomorrow with us."
-        canonical="https://www.highrahcy.com/services"
+        canonical="https://www.highrachy.com/services"
       />
       <Navigation parentPage={services.url} />
       <PageHeader title="Our Services" bgImage="/assets/img/bg/services.jpg" />

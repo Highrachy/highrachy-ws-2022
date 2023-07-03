@@ -15,7 +15,7 @@ export default function Home() {
         title="Welcome to Highrachy"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/"
+        canonical="https://www.highrachy.com/"
       />
       <CircleBackground />
       <Navigation parentPage={home.url} />

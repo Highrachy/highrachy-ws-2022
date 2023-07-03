@@ -25,7 +25,7 @@ const AboutUs = () => {
         title="About Highrachy"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/about-us"
+        canonical="https://www.highrachy.com/about-us"
       />
       <Navigation parentPage={about.url} />
       <PageHeader title="About Us" bgImage="/assets/img/bg/about-us.jpg" />

@@ -27,7 +27,7 @@ const SingleProject = ({ project }) => {
         title={`Project | ${project.title}`}
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrahcy.com/about-us"
+        canonical="https://www.highrachy.com/about-us"
       />
       <Navigation parentPage={projectNav.url} />
       <PageHeader
