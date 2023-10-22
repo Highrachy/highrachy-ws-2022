@@ -13,7 +13,7 @@ import {
   valuesToOptions,
 } from '@/utils/helpers';
 import ProcessButton from '@/components/utils/ProcessButton';
-import { GoBriefcase, GoPrimitiveDot } from 'react-icons/go';
+import { GoBriefcase, GoDotFill } from 'react-icons/go';
 import { Tab } from 'react-bootstrap';
 import classNames from 'classnames';
 import Link from 'next/link';
@@ -208,7 +208,7 @@ const ApplicantHeader = ({
                     <span
                       className={`d-flex align-items-center fw-bold text-danger`}
                     >
-                      <GoPrimitiveDot /> Has {prevJobs.length} Other Application
+                      <GoDotFill /> Has {prevJobs.length} Other Application
                     </span>
                   </div>
                 )}

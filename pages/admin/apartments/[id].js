@@ -12,7 +12,7 @@ import { Tab } from 'react-bootstrap';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import Humanize from 'humanize-plus';
-import { GoPrimitiveDot } from 'react-icons/go';
+import { GoDotFill } from 'react-icons/go';
 import ProcessButton from '@/components/utils/ProcessButton';
 
 const pageOptions = {
@@ -130,16 +130,16 @@ const ApartmentHeader = ({
                 <div className="d-flex text-muted flex-wrap align-items-center fs-6 mb-3 pe-2">
                   {availableUnits > 0 ? (
                     <span className="d-flex align-items-center fw-bold text-success">
-                      <GoPrimitiveDot /> {availableUnits}{' '}
+                      <GoDotFill /> {availableUnits}{' '}
                       {Humanize.pluralize(totalUnits, 'unit')} available
                     </span>
                   ) : availableSoon ? (
                     <span className="d-flex align-items-center fw-bold text-info">
-                      <GoPrimitiveDot /> Apartment is Available Soon
+                      <GoDotFill /> Apartment is Available Soon
                     </span>
                   ) : (
                     <span className="d-flex align-items-center fw-bold text-danger">
-                      <GoPrimitiveDot /> Apartment is fully booked
+                      <GoDotFill /> Apartment is fully booked
                     </span>
                   )}
                 </div>

@@ -2,7 +2,7 @@ import { FiChevronRight } from 'react-icons/fi';
 import { FiChevronLeft } from 'react-icons/fi';
 import { FiUploadCloud } from 'react-icons/fi';
 import { FaFacebookSquare } from 'react-icons/fa';
-import { FaTwitterSquare } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaInstagramSquare } from 'react-icons/fa';
 import { FaCertificate } from 'react-icons/fa';
@@ -38,7 +38,7 @@ export const IconWithBackground = ({ size = 4, icon, iconClassName }) => (
 );
 
 export const FacebookIcon = () => <FaFacebookSquare />;
-export const TwitterIcon = () => <FaTwitterSquare />;
+export const TwitterIcon = () => <FaSquareXTwitter />;
 export const LinkedInIcon = () => <FaLinkedin />;
 export const InstagramIcon = () => <FaInstagramSquare />;
 

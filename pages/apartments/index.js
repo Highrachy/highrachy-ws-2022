@@ -14,7 +14,7 @@ import humanize from 'humanize-plus';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
-import { GoPrimitiveDot } from 'react-icons/go';
+import { GoDotFill } from 'react-icons/go';
 
 const Apartments = ({ apartments }) => {
   return (
@@ -153,16 +153,15 @@ const AvailableApartments = (props) => {
                       <div className="d-flex flex-wrap align-items-center my-2 mb-5 small opacity-75">
                         {apartment.availableUnits > 0 ? (
                           <span className="d-flex align-items-center fw-bold text-success">
-                            <GoPrimitiveDot /> Currently available
+                            <GoDotFill /> Currently available
                           </span>
                         ) : apartment.availableSoon ? (
                           <span className="d-flex align-items-center fw-bold text-info">
-                            <GoPrimitiveDot /> This apartment will be Available
-                            Soon
+                            <GoDotFill /> This apartment will be Available Soon
                           </span>
                         ) : (
                           <span className="d-flex align-items-center fw-bold text-danger">
-                            <GoPrimitiveDot /> This apartment is fully booked
+                            <GoDotFill /> This apartment is fully booked
                           </span>
                         )}
                       </div>

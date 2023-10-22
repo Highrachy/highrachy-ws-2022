@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import { SectionHeader } from '@/components/common/Section';
 import { JobInfo } from 'pages/careers';
 import { ApplicantsSingleRow } from '../applicants';
-import { GoPrimitiveDot } from 'react-icons/go';
+import { GoDotFill } from 'react-icons/go';
 import classNames from 'classnames';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { Tab } from 'react-bootstrap';
@@ -170,7 +170,7 @@ const JobHeader = ({
                       available ? 'success' : 'danger'
                     }`}
                   >
-                    <GoPrimitiveDot />{' '}
+                    <GoDotFill />{' '}
                     {available ? 'Live on Website' : 'Currently Closed'}
                   </span>
                 </div>
