@@ -38,8 +38,8 @@ export const property = {
     'You can develop and maintain a high yield asset portfolio, minimize construction costs, address risks and regulatory issues, and reduce operating expenses. With our team of professionals, you can expect a refreshingly comprehensive approach to protecting and expanding your portfolio.',
   icon: <PropertyManagementIcon />,
   image: '/assets/img/services/property-development.svg',
-  title: 'Property Management',
-  name: 'Property Development & Management',
+  title: 'Property Development and Management',
+  name: 'Property Development and Management',
 };
 
 export const services = { consulting, technology, property, investment };

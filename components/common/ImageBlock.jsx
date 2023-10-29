@@ -16,7 +16,7 @@ const ImageBlock = ({ image, children, title, altBg }) => (
           src={image}
           alt={title}
           className="img-cover"
-          height="800"
+          height="1000"
           width="1200"
         />
       </div>
