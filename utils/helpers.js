@@ -199,9 +199,8 @@ export const processData = (data, item) => {
 };
 
 export const isFestivePeriod = () => {
-  return false;
-  // const today = new Date();
-  // const decemberFirst = new Date(today.getFullYear(), 11, 1);
-  // const januaryTen = new Date(today.getFullYear() + 1, 0, 10);
-  // return today >= decemberFirst && today <= januaryTen;
+  const today = new Date();
+  const decemberFirst = new Date(today.getFullYear(), 11, 1);
+  const januaryTen = new Date(today.getFullYear() + 1, 0, 10);
+  return today >= decemberFirst && today <= januaryTen;
 };
