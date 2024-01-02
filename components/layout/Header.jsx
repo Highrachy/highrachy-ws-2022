@@ -20,12 +20,7 @@ export const HeaderUnderBlock = ({ small, className }) => (
 export const PageHeader = ({ title, breadcrumb, bgImage }) => {
   const currentBreadCrumb = breadcrumb || [{ title }];
   return (
-    <Parallax
-      bgImage={
-        bgImage ||
-        'https://radiustheme.com/demo/html/techkit/assets/images/bg/contact-bg.jpg'
-      }
-    >
+    <Parallax bgImage={bgImage || ''}>
       <Section className="text-center">
         <div className="container">
           <div className="row">

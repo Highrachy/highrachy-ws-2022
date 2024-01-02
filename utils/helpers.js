@@ -199,8 +199,20 @@ export const processData = (data, item) => {
 };
 
 export const isFestivePeriod = () => {
-  const today = new Date();
-  const decemberFirst = new Date(today.getFullYear(), 11, 1);
-  const januaryTen = new Date(today.getFullYear() + 1, 0, 10);
-  return today >= decemberFirst && today <= januaryTen;
+  const currentDate = new Date();
+  const december = 11; // December is represented as 11 in JavaScript Date object
+  const january = 0; // January is represented as 0 in JavaScript Date object
+  const decemberStart = 12;
+  const januaryEnd = 8;
+
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+
+  if (currentMonth === december) {
+    return currentDay >= decemberStart;
+  } else if (currentMonth === january) {
+    return currentDay <= januaryEnd;
+  } else {
+    return false;
+  }
 };
