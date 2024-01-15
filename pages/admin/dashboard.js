@@ -57,11 +57,11 @@ const Dashboard = () => {
             Recent Applicants
           </h5>
           <ApplicantsRowList results={result?.['applicants'].data} offset={0} />
-          <div className="text-end my-4">
+          {/* <div className="text-end my-4">
             <Link href="/admin/applicants" passHref>
               <a className="btn btn-xs btn-outline-info">View All Applicants</a>
             </Link>
-          </div>
+          </div> */}
         </div>
       </ContentLoader>
     </Backend>
