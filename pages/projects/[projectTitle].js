@@ -80,7 +80,7 @@ const ShareContent = ({ title }) => (
 export async function getStaticProps({ params }) {
   const projectList = Object.values(projects);
   const project = projectList.find((p) => p.title === params.projectTitle);
-  return { props: { project } };
+  return { props: { project }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {

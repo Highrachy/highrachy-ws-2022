@@ -1046,7 +1046,10 @@ export async function getStaticProps({ params }) {
 
   const { data } = await res.json();
 
-  return { props: { apartment: { id: data[0].id, ...data[0]['attributes'] } } };
+  return {
+    props: { apartment: { id: data[0].id, ...data[0]['attributes'] } },
+    revalidate: 10,
+  };
 }
 
 export async function getStaticPaths() {
