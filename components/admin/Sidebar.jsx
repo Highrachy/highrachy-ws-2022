@@ -1,5 +1,5 @@
-import { adminMenu } from '@/data/adminMenu';
-import { storeMenuState } from '@/utils/localStorage';
+import { adminMenu, contentMenu, normalMenu } from '@/data/adminMenu';
+import { getRoleStateFromStore, storeMenuState } from '@/utils/localStorage';
 import { UserContext } from 'context/user';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import React, { useContext } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import HighrachyLogo from '../utils/HighrachyLogo';
+import { USER_ROLE } from '@/utils/constants';
 
 const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
   const handleMenuState = () => {
@@ -14,6 +15,15 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
     setIsFolded(newState);
     isDesktop && storeMenuState(newState);
   };
+
+  const allMenus = {
+    [USER_ROLE.ADMIN]: adminMenu,
+    [USER_ROLE.CONTENT]: contentMenu,
+    [USER_ROLE.NORMAL]: normalMenu,
+  };
+
+  const currentRole = getRoleStateFromStore();
+  const currentMenu = allMenus[currentRole] || normalMenu;
 
   const { doLogout } = useContext(UserContext);
   const router = useRouter();
@@ -36,7 +46,7 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
         </div>
         <div className="sidebar-body">
           <ul className="nav">
-            {Object.entries(adminMenu).map(([title, icon], index) => (
+            {Object.entries(currentMenu).map(([title, icon], index) => (
               <li key={index} className="nav-item">
                 {title !== 'Logout' ? (
                   <Link href={`/admin/${title.toLowerCase()}`} passHref>

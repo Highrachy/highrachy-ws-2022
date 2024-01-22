@@ -4,16 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import Link from 'next/link';
 import CreateSignature from './create-signature';
 
-const Internal = () => {
-  return (
-    <Backend>
-      <h4 className="mb-3">Internal Resources</h4>
-      <InternalAccordion />
-    </Backend>
-  );
-};
-
-const content = [
+export const internalContent = [
   {
     header: 'Onboarding Documents',
     content: (
@@ -157,7 +148,16 @@ const content = [
   },
 ];
 
-const InternalAccordion = () => (
+const Internal = () => {
+  return (
+    <Backend>
+      <h4 className="mb-3">Internal Resources</h4>
+      <InternalAccordion content={internalContent} />
+    </Backend>
+  );
+};
+
+export const InternalAccordion = ({ content }) => (
   <Accordion>
     {content.map(({ header, content }, index) => (
       <Accordion.Item key={index} eventKey={index} className="py-2">

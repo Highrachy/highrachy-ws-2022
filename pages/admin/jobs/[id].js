@@ -14,6 +14,8 @@ import classNames from 'classnames';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { Tab } from 'react-bootstrap';
 import { APPLICANT_STAGE } from '@/utils/constants';
+import { getRoleStateFromStore } from '@/utils/localStorage';
+import { USER_ROLE } from '@/utils/constants';
 
 const pageOptions = {
   key: 'job',
@@ -90,6 +92,10 @@ const SingleJob = () => {
     applicantsByStage[stage].push({ id, attributes });
   });
 
+  const currentRole = getRoleStateFromStore();
+  const currentJobTab =
+    currentRole === USER_ROLE.ADMIN ? allJobTabs : allJobTabs.slice(0, 1);
+
   return (
     <Backend title="Single Job">
       <ContentLoader
@@ -101,6 +107,7 @@ const SingleJob = () => {
         <JobHeader
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
+          allJobTabs={currentJobTab}
           {...result?.attributes}
           id={id}
           query={query}
@@ -112,7 +119,7 @@ const SingleJob = () => {
           className="mb-3"
         >
           <Tab.Content>
-            {allJobTabs.map(({ key, title, fields }) => (
+            {currentJobTab.map(({ key, title, fields }) => (
               <Tab.Pane eventKey={key} key={key}>
                 <TabInformation
                   id={id}
@@ -137,6 +144,7 @@ const JobHeader = ({
   applicantsByStage,
   currentTab,
   setCurrentTab,
+  allJobTabs,
   available,
   id,
   slug,
@@ -148,6 +156,9 @@ const JobHeader = ({
 }) => {
   const currentState = available ? 'Close' : 'Open';
   const currentStateButton = available ? 'primary' : 'success';
+
+  const currentRole = getRoleStateFromStore();
+  const isAdminRole = currentRole === USER_ROLE.ADMIN;
 
   return (
     <section className="card mb-5">
@@ -195,35 +206,41 @@ const JobHeader = ({
                     }}
                   >
                     Edit Job
-                  </Button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Button
-                    color="dark"
-                    className="btn-xs"
-                    href={{
-                      pathname: '/admin/jobs/new',
-                      query: { id, action: 'duplicate' },
-                    }}
-                  >
-                    Duplicate Job
-                  </Button>
+                  </Button>{' '}
+                  {isAdminRole && (
+                    <>
+                      &nbsp;&nbsp;&nbsp;
+                      <Button
+                        color="dark"
+                        className="btn-xs"
+                        href={{
+                          pathname: '/admin/jobs/new',
+                          query: { id, action: 'duplicate' },
+                        }}
+                      >
+                        Duplicate Job
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
               {/* Action */}
-              <div className="d-flex my-2">
-                <ProcessButton
-                  afterSuccess={() => query.mutate()}
-                  api={`jobs/${id}`}
-                  buttonColor={currentStateButton}
-                  buttonSizeClassName="btn-sm"
-                  data={{ available: !available }}
-                  modalContent={`Are you sure you want to ${currentState} this job`}
-                  modalTitle={`Mark as ${currentState}`}
-                  successMessage={`The applicant has been successfully updated to  ${currentState}`}
-                >
-                  {currentState} Job
-                </ProcessButton>
-              </div>
+              {isAdminRole && (
+                <div className="d-flex my-2">
+                  <ProcessButton
+                    afterSuccess={() => query.mutate()}
+                    api={`jobs/${id}`}
+                    buttonColor={currentStateButton}
+                    buttonSizeClassName="btn-sm"
+                    data={{ available: !available }}
+                    modalContent={`Are you sure you want to ${currentState} this job`}
+                    modalTitle={`Mark as ${currentState}`}
+                    successMessage={`The applicant has been successfully updated to  ${currentState}`}
+                  >
+                    {currentState} Job
+                  </ProcessButton>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -121,3 +121,9 @@ export const STATES = [
   'Yobe',
   'Zamfara',
 ];
+
+export const USER_ROLE = {
+  ADMIN: 'admin',
+  CONTENT: 'content',
+  NORMAL: 'normal',
+};

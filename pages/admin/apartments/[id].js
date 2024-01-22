@@ -14,6 +14,8 @@ import ReactMarkdown from 'react-markdown';
 import Humanize from 'humanize-plus';
 import { GoDotFill } from 'react-icons/go';
 import ProcessButton from '@/components/utils/ProcessButton';
+import { getRoleStateFromStore } from '@/utils/localStorage';
+import { USER_ROLE } from '@/utils/constants';
 
 const pageOptions = {
   key: 'apartment',
@@ -60,6 +62,11 @@ const SingleApartment = () => {
     },
   });
 
+  const currentRole = getRoleStateFromStore();
+  const currentApartmentTab =
+    currentRole === USER_ROLE.ADMIN
+      ? allApartmentTabs
+      : allApartmentTabs.slice(0, 1);
   return (
     <Backend title="Single Apartment">
       <ContentLoader
@@ -71,6 +78,7 @@ const SingleApartment = () => {
         <ApartmentHeader
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
+          allApartmentTabs={currentApartmentTab}
           {...result?.attributes}
           id={id}
           query={query}
@@ -81,7 +89,7 @@ const SingleApartment = () => {
           className="mb-3"
         >
           <Tab.Content>
-            {allApartmentTabs.map(({ key, title, fields }) => (
+            {currentApartmentTab.map(({ key, title, fields }) => (
               <Tab.Pane eventKey={key} key={key}>
                 <TabInformation
                   id={id}
@@ -102,6 +110,7 @@ const SingleApartment = () => {
 const ApartmentHeader = ({
   currentTab,
   setCurrentTab,
+  allApartmentTabs,
   id,
   slug,
   name,
@@ -114,6 +123,9 @@ const ApartmentHeader = ({
 }) => {
   const currentState = availableSoon ? 'Fully Booked' : 'Available Soon';
   const currentStateButton = availableSoon ? 'primary' : 'dark';
+  const currentRole = getRoleStateFromStore();
+  const isAdminRole = currentRole === USER_ROLE.ADMIN;
+
   return (
     <section className="card mb-5">
       <div className="card-body p-5 pb-0">
@@ -154,47 +166,53 @@ const ApartmentHeader = ({
                   >
                     View on Website
                   </Button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Button
-                    color="none"
-                    className="btn-xs btn-outline-primary"
-                    href={{
-                      pathname: '/admin/apartments/new',
-                      query: { id, action: 'edit' },
-                    }}
-                  >
-                    Edit Apartment
-                  </Button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Button
-                    color="info"
-                    className="btn-xs"
-                    href={{
-                      pathname: '/admin/apartments/new',
-                      query: { id, action: 'duplicate' },
-                    }}
-                  >
-                    Duplicate Apartment
-                  </Button>
+                  {isAdminRole && (
+                    <>
+                      &nbsp;&nbsp;&nbsp;
+                      <Button
+                        color="none"
+                        className="btn-xs btn-outline-primary"
+                        href={{
+                          pathname: '/admin/apartments/new',
+                          query: { id, action: 'edit' },
+                        }}
+                      >
+                        Edit Apartment
+                      </Button>
+                      &nbsp;&nbsp;&nbsp;
+                      <Button
+                        color="info"
+                        className="btn-xs"
+                        href={{
+                          pathname: '/admin/apartments/new',
+                          query: { id, action: 'duplicate' },
+                        }}
+                      >
+                        Duplicate Apartment
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
               {/* Action */}
-              <div className="d-flex my-2">
-                {availableUnits === 0 && (
-                  <ProcessButton
-                    afterSuccess={() => query.mutate()}
-                    api={`apartments/${id}`}
-                    buttonColor={currentStateButton}
-                    buttonSizeClassName="btn-sm"
-                    data={{ availableSoon: !availableSoon }}
-                    modalContent={`Are you sure you want to mark this aparment as ${currentState}`}
-                    modalTitle={`Mark as ${currentState}`}
-                    successMessage={`The applicant has been successfully updated to  ${currentState}`}
-                  >
-                    Mark as {currentState}
-                  </ProcessButton>
-                )}
-              </div>
+              {isAdminRole && (
+                <div className="d-flex my-2">
+                  {availableUnits === 0 && (
+                    <ProcessButton
+                      afterSuccess={() => query.mutate()}
+                      api={`apartments/${id}`}
+                      buttonColor={currentStateButton}
+                      buttonSizeClassName="btn-sm"
+                      data={{ availableSoon: !availableSoon }}
+                      modalContent={`Are you sure you want to mark this aparment as ${currentState}`}
+                      modalTitle={`Mark as ${currentState}`}
+                      successMessage={`The applicant has been successfully updated to  ${currentState}`}
+                    >
+                      Mark as {currentState}
+                    </ProcessButton>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

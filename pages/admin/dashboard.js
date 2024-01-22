@@ -8,6 +8,9 @@ import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import { ApplicantsRowList } from './applicants';
 import TopTitle from '@/components/admin/TopTitle';
+import { getRoleStateFromStore } from '@/utils/localStorage';
+import { InternalAccordion, internalContent } from './internal';
+import { USER_ROLE } from '@/utils/constants';
 
 const Dashboard = () => {
   const pageOptions = {
@@ -18,11 +21,21 @@ const Dashboard = () => {
     name: [pageOptions.key],
     endpoint: `api/dashboard`,
   });
+
+  const currentRole = getRoleStateFromStore();
+  const widgets =
+    currentRole === USER_ROLE.ADMIN
+      ? allWidgets
+      : currentRole === USER_ROLE.CONTENT
+      ? contentWidgets
+      : normalWidgets;
+
   return (
     <Backend>
       <div className="row">
         <TopTitle>Dashboard</TopTitle>
       </div>
+
       <ContentLoader
         Icon={adminMenu['Dashboard']}
         query={query}
@@ -30,7 +43,7 @@ const Dashboard = () => {
         name={pageOptions.pageName}
       >
         <div className="row">
-          {allWidgets.map((name, index) => (
+          {widgets.map((name, index) => (
             <Widget
               key={index}
               result={result}
@@ -39,37 +52,53 @@ const Dashboard = () => {
             />
           ))}
         </div>
-        <div className="row">
-          <h5 className="text-secondary fw-normal mt-5 mb-0">Recent Tenants</h5>
-          <TenantsRowList
-            results={result?.['tenants'].data}
-            offset={0}
-            attachment
-          />
+        {currentRole === USER_ROLE.ADMIN && (
+          <div className="row">
+            <h5 className="text-secondary fw-normal mt-5 mb-0">
+              Recent Tenants
+            </h5>
+            <TenantsRowList
+              results={result?.['tenants'].data}
+              offset={0}
+              attachment
+            />
 
-          <div className="text-end my-4">
-            <Link href="/admin/tenants" passHref>
-              <a className="btn btn-xs btn-outline-warning">View All Tenants</a>
-            </Link>
+            <div className="text-end my-4">
+              <Link href="/admin/tenants" passHref>
+                <a className="btn btn-xs btn-outline-warning">
+                  View All Tenants
+                </a>
+              </Link>
+            </div>
+
+            <h5 className="text-secondary fw-normal mt-6 mb-0">
+              Recent Applicants
+            </h5>
+            <ApplicantsRowList
+              results={result?.['applicants'].data}
+              offset={0}
+            />
           </div>
-
-          <h5 className="text-secondary fw-normal mt-6 mb-0">
-            Recent Applicants
-          </h5>
-          <ApplicantsRowList results={result?.['applicants'].data} offset={0} />
-          {/* <div className="text-end my-4">
-            <Link href="/admin/applicants" passHref>
-              <a className="btn btn-xs btn-outline-info">View All Applicants</a>
-            </Link>
-          </div> */}
-        </div>
+        )}
       </ContentLoader>
+
+      <h5 className={`text-secondary fw-normal mb-0 mt-6`}>
+        Internal Resources
+      </h5>
+      <InternalAccordion content={internalContent.slice(0, 2)} />
+      <Link href="/admin/internal" passHref>
+        <a className="btn btn-xs btn-outline-info mt-3">
+          View All Internal Resources
+        </a>
+      </Link>
     </Backend>
   );
 };
 
 export const widgetColors = ['primary', 'warning', 'info', 'success'];
 export const allWidgets = ['apartment', 'tenant', 'applicant', 'job'];
+export const contentWidgets = ['apartment', 'job'];
+export const normalWidgets = ['job'];
 
 const Widget = ({ name, color, result }) => {
   const pluralizeName = Humanize.pluralize(2, name);
