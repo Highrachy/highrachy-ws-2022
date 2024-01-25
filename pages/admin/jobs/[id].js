@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import { ContentLoader } from '@/components/utils/LoadingItems';
@@ -14,8 +14,9 @@ import classNames from 'classnames';
 import ProcessButton from '@/components/utils/ProcessButton';
 import { Tab } from 'react-bootstrap';
 import { APPLICANT_STAGE } from '@/utils/constants';
-import { getRoleStateFromStore } from '@/utils/localStorage';
 import { USER_ROLE } from '@/utils/constants';
+import { getUserRole } from '@/utils/access';
+import { UserContext } from 'context/user';
 
 const pageOptions = {
   key: 'job',
@@ -92,7 +93,9 @@ const SingleJob = () => {
     applicantsByStage[stage].push({ id, attributes });
   });
 
-  const currentRole = getRoleStateFromStore();
+  const { user } = useContext(UserContext);
+  const currentRole = getUserRole(user);
+
   const currentJobTab =
     currentRole === USER_ROLE.ADMIN ? allJobTabs : allJobTabs.slice(0, 1);
 
@@ -157,7 +160,9 @@ const JobHeader = ({
   const currentState = available ? 'Close' : 'Open';
   const currentStateButton = available ? 'primary' : 'success';
 
-  const currentRole = getRoleStateFromStore();
+  const { user } = useContext(UserContext);
+  const currentRole = getUserRole(user);
+
   const isAdminRole = currentRole === USER_ROLE.ADMIN;
 
   return (

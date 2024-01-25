@@ -1,5 +1,5 @@
 import { adminMenu, contentMenu, normalMenu } from '@/data/adminMenu';
-import { getRoleStateFromStore, storeMenuState } from '@/utils/localStorage';
+import { storeMenuState } from '@/utils/localStorage';
 import { UserContext } from 'context/user';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import HighrachyLogo from '../utils/HighrachyLogo';
 import { USER_ROLE } from '@/utils/constants';
+import { getUserRole } from '@/utils/access';
 
 const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
   const handleMenuState = () => {
@@ -22,10 +23,11 @@ const Sidebar = ({ isFolded, setIsFolded, isDesktop }) => {
     [USER_ROLE.NORMAL]: normalMenu,
   };
 
-  const currentRole = getRoleStateFromStore();
+  const { user, doLogout } = useContext(UserContext);
+
+  const currentRole = getUserRole(user);
   const currentMenu = allMenus[currentRole] || normalMenu;
 
-  const { doLogout } = useContext(UserContext);
   const router = useRouter();
   return (
     <div className={` ${isFolded ? 'sidebar-folded' : 'sidebar-open'}`}>

@@ -6,6 +6,15 @@ import Humanize from 'humanize-plus';
 export const isDevEnvironment = () =>
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
+export const capitalizeFirstLetter = (name) => {
+  if (typeof name !== 'string' || name.trim() === '') {
+    return '';
+  }
+
+  const firstWord = name.split('.')[0].trim();
+  return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+};
+
 export const objectToOptions = (obj, defaultLabel = null, inverse = false) => {
   const output = Object.entries(obj).map(([label, value]) => ({
     value: inverse ? label.toString() : value.toString(),

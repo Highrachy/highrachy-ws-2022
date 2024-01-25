@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Backend from '@/components/admin/Backend';
 import Link from 'next/link';
 import Humanize from 'humanize-plus';
@@ -8,9 +8,11 @@ import { ContentLoader } from '@/components/utils/LoadingItems';
 import { useSWRQuery } from '@/hooks/useSWRQuery';
 import { ApplicantsRowList } from './applicants';
 import TopTitle from '@/components/admin/TopTitle';
-import { getRoleStateFromStore } from '@/utils/localStorage';
 import { InternalAccordion, internalContent } from './internal';
 import { USER_ROLE } from '@/utils/constants';
+import { UserContext } from 'context/user';
+import { getUserRole } from '@/utils/access';
+import { capitalizeFirstLetter } from '@/utils/helpers';
 
 const Dashboard = () => {
   const pageOptions = {
@@ -22,7 +24,9 @@ const Dashboard = () => {
     endpoint: `api/dashboard`,
   });
 
-  const currentRole = getRoleStateFromStore();
+  const { user } = useContext(UserContext);
+  const currentRole = getUserRole(user);
+
   const widgets =
     currentRole === USER_ROLE.ADMIN
       ? allWidgets
@@ -34,6 +38,8 @@ const Dashboard = () => {
     <Backend>
       <div className="row">
         <TopTitle>Dashboard</TopTitle>
+
+        <h3 className="mt-3">Welcome {capitalizeFirstLetter(user)}, </h3>
       </div>
 
       <ContentLoader

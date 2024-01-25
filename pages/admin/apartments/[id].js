@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Backend from '@/components/admin/Backend';
 import { adminMenu } from '@/data/adminMenu';
 import { ContentLoader } from '@/components/utils/LoadingItems';
@@ -14,8 +14,9 @@ import ReactMarkdown from 'react-markdown';
 import Humanize from 'humanize-plus';
 import { GoDotFill } from 'react-icons/go';
 import ProcessButton from '@/components/utils/ProcessButton';
-import { getRoleStateFromStore } from '@/utils/localStorage';
 import { USER_ROLE } from '@/utils/constants';
+import { UserContext } from 'context/user';
+import { getUserRole } from '@/utils/access';
 
 const pageOptions = {
   key: 'apartment',
@@ -62,7 +63,9 @@ const SingleApartment = () => {
     },
   });
 
-  const currentRole = getRoleStateFromStore();
+  const { user } = useContext(UserContext);
+  const currentRole = getUserRole(user);
+
   const currentApartmentTab =
     currentRole === USER_ROLE.ADMIN
       ? allApartmentTabs
@@ -121,9 +124,11 @@ const ApartmentHeader = ({
   availableUnits,
   totalUnits,
 }) => {
+  const { user } = useContext(UserContext);
+  const currentRole = getUserRole(user);
+
   const currentState = availableSoon ? 'Fully Booked' : 'Available Soon';
   const currentStateButton = availableSoon ? 'primary' : 'dark';
-  const currentRole = getRoleStateFromStore();
   const isAdminRole = currentRole === USER_ROLE.ADMIN;
 
   return (
