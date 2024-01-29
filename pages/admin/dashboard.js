@@ -37,8 +37,6 @@ const Dashboard = () => {
   return (
     <Backend>
       <div className="row">
-        <TopTitle>Dashboard</TopTitle>
-
         <h3 className="mt-3">Welcome {capitalizeFirstLetter(user)}, </h3>
       </div>
 
@@ -88,7 +86,7 @@ const Dashboard = () => {
         )}
       </ContentLoader>
 
-      <h5 className={`text-secondary fw-normal mb-0 mt-6`}>
+      <h5 className={`text-secondary fw-normal mb-2 mt-6`}>
         Internal Resources
       </h5>
       <InternalAccordion content={internalContent.slice(0, 2)} />

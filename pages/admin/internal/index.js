@@ -6,6 +6,56 @@ import CreateSignature from './create-signature';
 
 export const internalContent = [
   {
+    header: 'Learning and Development',
+    content: (
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://drive.google.com/drive/folders/1T3UdANFps-99CSqpSMhFZlyQ1pPDb1Bn?usp=sharing"
+            rel="noopener noreferrer"
+          >
+            Learning and Development (All Resources)
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://drive.google.com/drive/folders/1wbTKo06BHC2B71TaxcIQaYqUNrey_N_K?usp=sharing"
+            rel="noopener noreferrer"
+          >
+            Mindset
+          </a>
+        </li>
+      </ul>
+    ),
+  },
+  {
+    header: 'Our Templates',
+    content: (
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
+            rel="noopener noreferrer"
+          >
+            Monthly Report Template
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1OtznopjLjaEDGzXcXmGiQH0H0Mr0bcAnzDOfGsfeqYI/edit#gid=80577250"
+            rel="noopener noreferrer"
+          >
+            Social Media Content Calendar Template
+          </a>
+        </li>
+      </ul>
+    ),
+  },
+  {
     header: 'Onboarding Documents',
     content: (
       <ul>
@@ -55,31 +105,6 @@ export const internalContent = [
             rel="noopener noreferrer"
           >
             Current Signature Line
-          </a>
-        </li>
-      </ul>
-    ),
-  },
-  {
-    header: 'Our Templates',
-    content: (
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
-            rel="noopener noreferrer"
-          >
-            Monthly Report Template
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1OtznopjLjaEDGzXcXmGiQH0H0Mr0bcAnzDOfGsfeqYI/edit#gid=80577250"
-            rel="noopener noreferrer"
-          >
-            Social Media Content Calendar Template
           </a>
         </li>
       </ul>
