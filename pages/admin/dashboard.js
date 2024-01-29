@@ -110,7 +110,7 @@ const Widget = ({ name, color, result }) => {
   const link = `/admin/${pluralizeName}`;
 
   return (
-    <section className="widget mb-4 col-sm-6 col-lg-3 mb-4">
+    <section className="widget mb-4 col-sm-6 col-xl-3 mb-4">
       <Link href={link} passHref>
         <a className="text-reset">
           <div className="card h-100">

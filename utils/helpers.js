@@ -152,9 +152,12 @@ export const isObject = (obj) => {
   return obj && typeof obj === 'object';
 };
 
-export const camelToSentence = (str) =>
-  str.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
-
+export const camelToSentence = (str) => {
+  if (!str || typeof str !== 'string') return str;
+  return str
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (str) => str.toUpperCase());
+};
 // check if is valid number or decimal number
 
 export const isValidNumber = (value) => {

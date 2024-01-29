@@ -12,7 +12,7 @@ import { HiUsers } from 'react-icons/hi';
 
 export const adminMenu = {
   Dashboard: <RiDashboard3Fill />,
-  Apartments: <RiDashboard3Fill />,
+  Apartments: <RiCommunityFill />,
   Tenants: <FaHouseUser />,
   Jobs: <MdOutlineWork />,
   Applicants: <RiFileUserFill />,

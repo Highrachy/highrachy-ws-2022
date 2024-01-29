@@ -11,8 +11,15 @@ import {
 } from '@react-pdf/renderer';
 import { getDate, getMonthYear } from '@/utils/date-helpers';
 import Humanize from 'humanize-plus';
+import {
+  emergencyInfo,
+  employmentInfo,
+  landlordInfo,
+  personalInformation,
+} from 'pages/admin/tenants/[id]';
+import { camelToSentence, processData } from '@/utils/helpers';
 
-const TenantPDFDocument = ({ tenant, showPreview }) => {
+const TenantFullPDFDocument = ({ tenant, showPreview }) => {
   const Doc = <TenantInfoDocument tenant={tenant} />;
 
   return (
@@ -24,11 +31,11 @@ const TenantPDFDocument = ({ tenant, showPreview }) => {
       )}
       <PDFDownloadLink
         document={Doc}
-        fileName={`${tenant.firstName}-${tenant.lastName}-information.pdf`}
+        fileName={`${tenant.firstName}-${tenant.lastName}-internal-info.pdf`}
       >
         {({ blob, url, loading, error }) => (
-          <div className="btn btn-secondary btn-wide mt-5">
-            {loading ? 'Loading document...' : 'Download Summary'}
+          <div className="btn btn-danger btn-wide ms-5 mt-5">
+            {loading ? 'Loading document...' : 'Download Full (Internal)'}
           </div>
         )}
       </PDFDownloadLink>
@@ -36,19 +43,14 @@ const TenantPDFDocument = ({ tenant, showPreview }) => {
   );
 };
 
-export default TenantPDFDocument;
+export default TenantFullPDFDocument;
 
 const TenantInfoDocument = ({ tenant }) => (
   <Document>
     <Page style={styles.body}>
       <Image alt="" style={styles.logo} src="/logo.png" fixed />
       <Text style={styles.header}>
-        The content of this document is confidential, privileged and only for
-        the information of the intended recipient. It is strictly forbidden to
-        use or share any part of this message with any third party. If you
-        received this message by mistake, kindly contact us and follow with its
-        deletion, so that we can ensure such a mistake does not occur in the
-        future.
+        ~ Confidential - Internal Use Only; Do not share with external parties ~
       </Text>
       <Image
         alt=""
@@ -68,31 +70,27 @@ const TenantInfoDocument = ({ tenant }) => (
   </Document>
 );
 
-const TenantInformation = ({ tenant }) => (
-  <Table>
-    <TableRow label="Tenant Full Name">
-      {tenant.title} {tenant.firstName} {tenant.middleName} {tenant.lastName}
-    </TableRow>
-    <TableRow label="Current Address">{tenant.currentAddress}</TableRow>
-    <TableRow label="State of Origin">{tenant.stateOfOrigin}</TableRow>
-    <TableRow label="Marital Status">{tenant.maritalStatus}</TableRow>
-    <TableRow label="Date of Birth">
-      {getDate(tenant.dateOfBirth?.date || tenant.dateOfBirth)}
-    </TableRow>
-    <TableRow label="Previous Employment">{tenant.previousEmployment}</TableRow>
-    <TableRow label="Company Name">{tenant.employmentCompanyName}</TableRow>
-    <TableRow label="Position">
-      {tenant.employmentPositionTitle} - {tenant.employmentContractType}
-    </TableRow>
-    <TableRow label="Start Date">
-      {getMonthYear(
-        tenant.employmentStartDate?.date || tenant.employmentStartDate
-      )}
-    </TableRow>
-    <TableRow label="Company Address">{tenant.employmentAddress}</TableRow>
-    <DependantInfoRow tenant={tenant} />
-  </Table>
-);
+const TenantInformation = ({ tenant }) => {
+  const data = [
+    ...personalInformation,
+    ...emergencyInfo,
+    ...landlordInfo,
+    ...employmentInfo,
+  ];
+  return (
+    <Table>
+      <TableRow label="Tenant Full Name">
+        {tenant.title} {tenant.firstName} {tenant.middleName} {tenant.lastName}
+      </TableRow>
+      {data.map((item, index) => (
+        <TableRow key={index} label={camelToSentence(item)}>
+          {processData(tenant[item])}
+        </TableRow>
+      ))}
+      <DependantInfoRow tenant={tenant} />
+    </Table>
+  );
+};
 
 const DependantInfoRow = ({ tenant }) => {
   const dependantArray = Array.from(Array(5).keys());

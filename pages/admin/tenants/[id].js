@@ -21,6 +21,7 @@ import Humanize from 'humanize-plus';
 import { TENANT_STATUS, TENANT_STATUS_COLOR } from '@/utils/constants';
 import ProcessButton from '@/components/utils/ProcessButton';
 import TenantPDFDocument from '@/components/utils/TenantPDFDocument';
+import TenantFullPDFDocument from '@/components/utils/TenantFullPDFDocument';
 
 const pageOptions = {
   key: 'tenant',
@@ -258,6 +259,7 @@ const TabInformation = ({ tenant, title, data, setCurrentTab }) => {
         </div>
       )}
       <TenantPDFDocument tenant={tenant} />
+      <TenantFullPDFDocument tenant={tenant} />
     </section>
   );
 };
@@ -475,7 +477,7 @@ const TenantOverview = ({ tenant, setCurrentTab }) => {
 
 export default SingleTenant;
 
-const personalInformation = [
+export const personalInformation = [
   'title',
   'firstName',
   'middleName',
@@ -500,7 +502,7 @@ const personalInformation = [
   'linkedin',
 ];
 
-const emergencyInfo = [
+export const emergencyInfo = [
   'emergencyFullName',
   'emergencyEmail',
   'emergencyRelationship',
@@ -509,7 +511,7 @@ const emergencyInfo = [
   'emergencyAddress',
 ];
 
-const landlordInfo = [
+export const landlordInfo = [
   'ownLastProperty',
   'landlordFullName',
   'landlordEmail',
@@ -520,7 +522,7 @@ const landlordInfo = [
   'propertyEvidenceURL',
 ];
 
-const employmentInfo = [
+export const employmentInfo = [
   'isSelfEmployed',
   'employmentCompanyName',
   'employmentPositionTitle',
