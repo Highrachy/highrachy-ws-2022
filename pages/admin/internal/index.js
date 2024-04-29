@@ -31,9 +31,18 @@ export const internalContent = [
     ),
   },
   {
-    header: 'Our Templates',
+    header: 'Logos and Templates',
     content: (
       <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://drive.google.com/drive/folders/1SDXr41u626fI1tefEZ9-hOVl7xw_istL"
+            rel="noopener noreferrer"
+          >
+            Our Logos
+          </a>
+        </li>
         <li>
           <a
             target="_blank"
