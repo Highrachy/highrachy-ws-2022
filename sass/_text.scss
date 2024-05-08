@@ -48,7 +48,7 @@
 .optional-form-field {
   font-size: 0.75rem;
   padding-top: 0.25rem;
-  color: lighten($text-muted, 5%);
+  color: lighten($gray-600, 5%);
   display: inline-block;
   margin-top: -2px;
 }
@@ -81,7 +81,7 @@ td {
 }
 
 .text-muted-light {
-  color: lighten($text-muted, 25%);
+  color: lighten($gray-600, 25%);
 }
 
 .text-muted-link {
