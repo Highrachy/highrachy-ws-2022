@@ -21,13 +21,13 @@
 }
 
 .btn-apartments {
-  border: 2px solid $dark !important;
-  color: $text-color !important;
-  background: $white !important;
+  border: 2px solid var(--#{$prefix}body-color) !important;
+  color: var(--#{$prefix}body-color) !important;
+  background: var(--#{$prefix}body-bg) !important;
 
   &:hover {
-    color: $white !important;
-    background: $dark !important;
+    color: var(--#{$prefix}body-bg) !important;
+    background: var(--#{$prefix}body-color) !important;
   }
 }
 

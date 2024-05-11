@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import useWindowSize from '@/hooks/useWindowSize';
 import { isFestivePeriod } from '@/utils/helpers';
+import ThemedImage from '../common/ThemedImage';
 
 const HighrachyLogo = () => {
   const { width } = useWindowSize();
@@ -18,8 +19,9 @@ const HighrachyLogo = () => {
             height={isDesktop ? '64' : '54'}
           />
         ) : (
-          <Image
+          <ThemedImage
             src="/logo.png"
+            darkSrc="/logo_dark.png"
             alt="Highrachy"
             width={isDesktop ? '169' : '142'}
             height={isDesktop ? '50' : '42'}

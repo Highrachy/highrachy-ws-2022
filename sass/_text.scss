@@ -42,7 +42,7 @@
 
 .text-color,
 .text-gray {
-  color: $text-color !important;
+  color: var(--#{$prefix}body-color) !important;
 }
 
 .optional-form-field {

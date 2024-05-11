@@ -265,7 +265,7 @@ const TenantForm = ({ apartment }) => {
             <section ref={myRef}>
               <IntroSection apartment={apartment} />
             </section>
-            <div className="bg-light py-4 px-4 px-md-6 py-md-5 mb-4">
+            <section className="bg-light py-4 px-4 px-md-6 py-md-5 mb-4">
               {!isFirstStep && (
                 <p className="muted fw-bold mb-0 small">
                   Step {step}/{lastStep}
@@ -295,7 +295,7 @@ const TenantForm = ({ apartment }) => {
                   safety of our residents.
                 </div>
               )}
-            </div>
+            </section>
 
             <ActionButtons
               apartment={apartment}

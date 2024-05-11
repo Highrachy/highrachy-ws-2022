@@ -12,6 +12,8 @@ import {
 import ActiveLink from '../utils/ActiveLink';
 import useWindowSize from '@/hooks/useWindowSize';
 import HighrachyLogo from '../utils/HighrachyLogo';
+import ThemeChanger from '../common/ThemedChanger';
+import { useTheme } from 'next-themes';
 
 const DesktopNavigation = ({ MENU, Apartments }) => {
   return (
@@ -44,6 +46,10 @@ const MobileNavigation = ({ MENU, Apartments }) => (
 
 const Navigation = ({ parentPage }) => {
   const { width } = useWindowSize();
+  const { resolvedTheme } = useTheme();
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  React.useEffect(() => setHasMounted(true), []);
 
   const currentScrollPos = useScrollPosition();
 
@@ -51,6 +57,7 @@ const Navigation = ({ parentPage }) => {
   const [lastScrollPos, setLastScrollPos] = useState(0);
   const [className, setClassName] = useState('show');
   const startingPos = 1;
+  const isDark = resolvedTheme === 'dark';
 
   React.useEffect(() => {
     // maintain current status
@@ -66,11 +73,13 @@ const Navigation = ({ parentPage }) => {
     // scrolling up or down
     const showNavbar = lastScrollPos > currentScrollPos;
     showNavbar ? setClassName('show') : setClassName('hide');
-    setNavbarColor('white');
+    setNavbarColor(isDark ? 'dark' : 'light');
 
     // reset lastScrollPos
     setLastScrollPos(currentScrollPos);
-  }, [currentScrollPos, lastScrollPos]);
+  }, [currentScrollPos, lastScrollPos, isDark]);
+
+  if (!hasMounted) return null;
 
   const MENU = navigation.map(({ children, url, title }, index) => (
     <React.Fragment key={index}>
@@ -101,14 +110,16 @@ const Navigation = ({ parentPage }) => {
   ));
 
   const Apartments = (
-    <ActiveLink href={`/apartments`} passHref>
-      <Nav.Link
-        aria-current="page"
-        className={`btn btn-sm btn-outline-dark btn-apartments`}
-      >
-        Find Apartments
+    <>
+      <Nav.Link>
+        <ThemeChanger />
       </Nav.Link>
-    </ActiveLink>
+      <ActiveLink href={`/apartments`} passHref>
+        <Nav.Link aria-current="page" className={`btn btn-sm btn-apartments`}>
+          Find Apartments
+        </Nav.Link>
+      </ActiveLink>
+    </>
   );
 
   const isDesktop = width > 991;

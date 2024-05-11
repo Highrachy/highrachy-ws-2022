@@ -35,8 +35,8 @@
   &:hover {
     background: $gray-100;
     padding-left: 1.5rem;
-    border-left-color: red;
-    color: darken($red, 10);
+    border-left-color: $primary;
+    color: darken($primary, 10);
   }
 }
 

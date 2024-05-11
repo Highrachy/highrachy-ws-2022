@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleMap, InfoBox, LoadScript, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
-  height: '450px',
+  height: '512px',
   width: '100%',
 };
 

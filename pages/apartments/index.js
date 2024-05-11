@@ -157,7 +157,7 @@ const AvailableApartments = (props) => {
                           </span>
                         ) : apartment.availableSoon ? (
                           <span className="d-flex align-items-center fw-bold text-info">
-                            <GoDotFill /> This apartment will be Available Soon
+                            <GoDotFill /> This apartment will be available soon
                           </span>
                         ) : (
                           <span className="d-flex align-items-center fw-bold text-danger">
@@ -175,11 +175,9 @@ const AvailableApartments = (props) => {
                     >
                       {apartment.availableUnits === 0 &&
                       apartment.availableSoon ? (
-                        <span className="btn  btn-outline-info">
-                          Join Waiting List
-                        </span>
+                        <span className="btn  btn-info">Join Waiting List</span>
                       ) : (
-                        <a className="btn btn-dark ">Apply Now</a>
+                        <a className="btn btn-primary ">Apply Now</a>
                       )}
                     </Link>
                   </div>

@@ -33,7 +33,7 @@
 }
 
 .img-block__text {
-  background: #fff;
+  background: var(--#{$prefix}body-bg);
   box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
   margin-top: -0.5rem;
 
@@ -150,10 +150,9 @@
 .form-wrapper {
   margin-top: -5rem;
   padding: 1rem 4rem 3rem;
-  -webkit-box-shadow: 0 0 10px rgb(0 0 0 / 10%);
   box-shadow: 0 0 10px rgb(0 0 0 / 10%);
   margin-top: -107px;
-  background: #fff;
+  background: var(--#{$prefix}body-bg);
   border-radius: 5px;
 }
 

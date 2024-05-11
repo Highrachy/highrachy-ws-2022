@@ -1,0 +1,42 @@
+[data-bs-theme='dark'] [data-hide-on-theme='dark'],
+[data-bs-theme='light'] [data-hide-on-theme='light'] {
+  display: none;
+}
+
+@include color-mode(dark) {
+  section.bg-light {
+    color: $gray-100;
+    background-color: #2c2c2d !important;
+  }
+
+  .form-wrapper {
+    box-shadow: 0 0 20px rgba($white, 0.05);
+  }
+
+  .shape-fluid-x.text-white {
+    color: $gray-900 !important;
+  }
+
+  .img-block__text {
+    box-shadow: 0 2px 48px 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba($white, 0.04);
+  }
+
+  .feature-card {
+    border-color: rgba($white, 0.04);
+  }
+
+  .card-client {
+    background: rgba($white, 0.04);
+    border-color: rgba($black, 0.2);
+  }
+
+  .dropdown-item {
+    border-bottom-color: $gray-800;
+
+    &:hover {
+      background: $gray-900;
+      color: $primary;
+    }
+  }
+}

@@ -21,7 +21,7 @@ $gray-500: #adb5bd;
 $gray-600: #6c757d;
 $gray-700: #495057;
 $gray-800: #343a40;
-$gray-900: #3d3d3d;
+$gray-900: #282828;
 $black: #000;
 // scss-docs-end gray-color-variables
 
@@ -1212,7 +1212,7 @@ $zindex-tooltip: 880;
 // $nav-link-font-weight: null !default;
 $nav-link-color: $text-color;
 $nav-link-hover-color: rgba($red, 0.7);
-// $nav-link-transition: color 0.15s ease-in-out,
+$nav-link-transition: none;
 //   background-color 0.15s ease-in-out, border-color 0.15s ease-in-out !default;
 // $nav-link-disabled-color: var(--#{$prefix}secondary-color) !default;
 // $nav-link-focus-box-shadow: $focus-ring-box-shadow !default;

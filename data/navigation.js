@@ -42,6 +42,6 @@ export const about = {
   },
 };
 
-const navigation = [home, services, projects, about];
+const navigation = [services, projects, about];
 
 export default navigation;

@@ -25,17 +25,25 @@ export const ServicesListCard = () => {
   );
 };
 
-const SingleServiceCard = ({ content, icon, title }) => (
+const SingleServiceCard = ({ content, image, title }) => (
   <Link href={`/services#${convertToSlug(title)}`} passHref>
     <section className="col-lg-3 col-md-6 col-sm-6 col-12 mb-4">
       <div className="service-card card w-100 h-100 text-center px-1 px-md-3 px-lg-1 pt-5 pb-3">
         <div className="mx-auto mb-2">
-          <IconWithBackground icon={icon} iconClassName="icon-md" />
+          <Image
+            src={image}
+            alt={title}
+            className="img-fluid"
+            height="82"
+            width="110"
+          />
         </div>
         <div className="card-body">
           <div className="card-text">
             <h6 className="text-color">{title} </h6>
-            <p className="text-muted small">{Humanize.truncate(content, 80)}</p>
+            <p className="text-muted small">
+              {Humanize.truncate(content, 120)}
+            </p>
           </div>
         </div>
       </div>
