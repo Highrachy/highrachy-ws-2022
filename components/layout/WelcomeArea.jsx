@@ -1,18 +1,14 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import ITyped from 'react-ityped';
-import { AnimatePresence, motion } from 'framer-motion';
-import Tilt from 'react-tilt';
 import Image from 'next/image';
 import { shimmer, toBase64 } from 'helpers/image';
 import Button from '../forms/Button';
 import Section from '../common/Section';
-
-const IMAGE_LIST = [
-  '/assets/img/slides/3.jpg',
-  '/assets/img/slides/1.png',
-  '/assets/img/slides/2.jpg',
-  '/assets/img/slides/4.png',
-];
+import { Autoplay, EffectCube, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cube';
+import 'swiper/css/pagination';
 
 const STRINGS = ['Expert', 'Specialist', 'Professional'];
 
@@ -45,114 +41,47 @@ const WelcomeArea = () => (
           </Button>
         </div>
         <div className="offset-lg-1 col-lg-6 col-md-5 col-sm-12 align-self-center img-wrapper">
-          {(
-            <Image
-              src="/assets/img/slides/hero-image.svg"
-              className="rounded Tilt-inner"
-              width="615"
-              height="656"
-              blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                shimmer(554, 554)
-              )}`}
-              alt="Hero Image"
-            />
-          ) || <ImageListSection />}
+          <Swiper
+            effect={'cube'}
+            grabCursor={true}
+            cubeEffect={{
+              shadow: true,
+              slideShadows: true,
+              shadowOffset: 20,
+              shadowScale: 0.94,
+            }}
+            pagination={true}
+            modules={[Autoplay, EffectCube, Pagination]}
+            className="mySwiper"
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            loop={true}
+          >
+            {[1, 2, 3].map((index) => (
+              <SwiperSlide key={index}>
+                <section className="position-relative">
+                  <div className="hero-description">
+                    <h5 className="mb-0 me-2">Blissville Terraces</h5>
+                    <p className="mb-0">Starting from ₦120 Million</p>
+                  </div>
+                  <Image
+                    src={'/assets/img/slides/bvt-' + index + '.jpg'}
+                    className="rounded Tilt-inner"
+                    width="615"
+                    height="607"
+                    blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                      shimmer(554, 554)
+                    )}`}
+                    alt="Blissville Terraces"
+                  />
+                </section>
+                )
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </div>
   </Section>
 );
-
-export const ImageListSection = () => {
-  const [currentImage, setCurrentImage] = React.useState(null);
-
-  const onClick = ({ src, name }) =>
-    src ? setCurrentImage({ src, name }) : setCurrentImage(null);
-
-  return (
-    <>
-      <motion.section className="position-relative row g-2" layout>
-        <AnimatePresence initial={false}>
-          <div key="image-list__col-1" className="col-6">
-            {[0, 1].map((index) => (
-              <SingleImage
-                key={index}
-                name={`image-list-${index}`}
-                tall={index === 0}
-                src={IMAGE_LIST[index]}
-                onClick={onClick}
-              />
-            ))}
-          </div>
-          <div key="image-list__col-2" className="col-6">
-            {[2, 3].map((index) => (
-              <SingleImage
-                key={index}
-                name={`image-list-${index}`}
-                tall={index === 3}
-                src={IMAGE_LIST[index]}
-                onClick={onClick}
-              />
-            ))}
-          </div>
-
-          <BigSingleImage
-            src={currentImage?.src}
-            name={currentImage?.name}
-            onClick={onClick}
-          />
-        </AnimatePresence>
-      </motion.section>
-    </>
-  );
-};
-
-const SingleImage = ({ tall, src, name, onClick }) => {
-  const height = tall ? 350 : 210;
-  const width = 300;
-
-  return (
-    <motion.div
-      key={name}
-      layoutId={name}
-      onClick={() => onClick({ src, name })}
-    >
-      <Tilt className="Tilt" options={{ max: 25, scale: 1.01 }}>
-        <Image
-          src={src}
-          className="rounded Tilt-inner"
-          height={height}
-          width={width}
-          alt="welcome area image"
-        />
-      </Tilt>
-    </motion.div>
-  );
-};
-
-const BigSingleImage = ({ src, name, onClick }) => {
-  if (!src) return null;
-  return (
-    <motion.div
-      className="position-absolute"
-      layoutId={name}
-      onClick={() => onClick({})}
-    >
-      <Tilt className="Tilt" options={{ max: 25, scale: 1.01 }}>
-        <Image
-          src={src}
-          className="rounded Tilt-inner"
-          width="554"
-          height="524"
-          blurDataURL={`data:image/svg+xml;base64,${toBase64(
-            shimmer(554, 524)
-          )}`}
-          alt="testing"
-          placeholder="blur"
-        />
-      </Tilt>
-    </motion.div>
-  );
-};
 
 export default WelcomeArea;

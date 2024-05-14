@@ -30,7 +30,7 @@ ActiveLink.propTypes = {
 };
 
 ActiveLink.defaultProps = {
-  activeClassName: 'text-danger active',
+  activeClassName: 'active',
 };
 
 export default ActiveLink;

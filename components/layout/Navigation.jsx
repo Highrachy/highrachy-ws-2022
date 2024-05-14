@@ -15,18 +15,19 @@ import HighrachyLogo from '../utils/HighrachyLogo';
 import ThemeChanger from '../common/ThemedChanger';
 import { useTheme } from 'next-themes';
 
-const DesktopNavigation = ({ MENU, Apartments }) => {
+const DesktopNavigation = ({ MENU, Apartments, DarkModeIcon }) => {
   return (
     <>
       <Navbar.Collapse id="highrachy-navbar">
         <Nav className="me-auto">{MENU}</Nav>
+        <Nav>{DarkModeIcon}</Nav>
         <Nav>{Apartments}</Nav>
       </Navbar.Collapse>
     </>
   );
 };
 
-const MobileNavigation = ({ MENU, Apartments }) => (
+const MobileNavigation = ({ MENU, Apartments, DarkModeIcon }) => (
   <>
     <Navbar.Offcanvas
       id="highrachy-navbar"
@@ -38,6 +39,7 @@ const MobileNavigation = ({ MENU, Apartments }) => (
       </Offcanvas.Header>
       <Offcanvas.Body>
         {MENU}
+        {DarkModeIcon}
         <div className="px-4 mt-5">{Apartments}</div>
       </Offcanvas.Body>
     </Navbar.Offcanvas>
@@ -60,6 +62,7 @@ const Navigation = ({ parentPage }) => {
   const isDark = resolvedTheme === 'dark';
 
   React.useEffect(() => {
+    setNavbarColor(isDark ? 'dark' : 'light');
     // maintain current status
     if (currentScrollPos === lastScrollPos) return;
 
@@ -111,9 +114,6 @@ const Navigation = ({ parentPage }) => {
 
   const Apartments = (
     <>
-      <Nav.Link>
-        <ThemeChanger />
-      </Nav.Link>
       <ActiveLink href={`/apartments`} passHref>
         <Nav.Link aria-current="page" className={`btn btn-sm btn-apartments`}>
           Find Apartments
@@ -122,12 +122,26 @@ const Navigation = ({ parentPage }) => {
     </>
   );
 
+  const DarkModeIcon = (
+    <Nav.Link>
+      <ThemeChanger />
+    </Nav.Link>
+  );
+
   const isDesktop = width > 991;
 
   const currentNavigation = isDesktop ? (
-    <DesktopNavigation MENU={MENU} Apartments={Apartments} />
+    <DesktopNavigation
+      MENU={MENU}
+      Apartments={Apartments}
+      DarkModeIcon={DarkModeIcon}
+    />
   ) : (
-    <MobileNavigation MENU={MENU} Apartments={Apartments} />
+    <MobileNavigation
+      MENU={MENU}
+      Apartments={Apartments}
+      DarkModeIcon={DarkModeIcon}
+    />
   );
 
   return (

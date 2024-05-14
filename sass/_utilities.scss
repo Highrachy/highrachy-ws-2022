@@ -462,7 +462,7 @@ footer a {
 }
 
 .bg-primary-light {
-  background: rgba($primary, 10%);
+  background: rgba($primary, 20%);
 }
 
 .bg-info-light {
@@ -497,7 +497,7 @@ footer a {
   transition: all 0.5s;
 
   .subtitle {
-    color: lighten($secondary, 10%);
+    color: var(--#{$prefix}secondary-color);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.04rem;
@@ -614,4 +614,18 @@ footer a {
   img {
     object-fit: cover !important;
   }
+}
+
+.circle-background {
+  position: absolute;
+  height: 55rem;
+  width: 55rem;
+  max-height: 125vw;
+  max-width: 125vw;
+  background-color: #fafafa;
+  border-radius: 50%;
+  display: inline-block;
+  left: -12rem;
+  top: -5rem;
+  z-index: -1;
 }

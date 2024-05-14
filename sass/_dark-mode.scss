@@ -4,9 +4,20 @@
 }
 
 @include color-mode(dark) {
+  .navbar-toggler svg {
+    fill: #fff;
+  }
+  .circle-background {
+    background-color: lighten($gray-900, 1%);
+  }
+
   section.bg-light {
     color: $gray-100;
-    background-color: #2c2c2d !important;
+    background-color: darken($gray-900, 1%) !important;
+  }
+
+  .bg-light-red {
+    background: #f2cacb;
   }
 
   .form-wrapper {
@@ -18,16 +29,16 @@
   }
 
   .img-block__text {
-    box-shadow: 0 2px 48px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 48px 0 rgba(255, 255, 255, 0.05);
     border-color: rgba($white, 0.04);
   }
 
   .feature-card {
-    border-color: rgba($white, 0.04);
+    border-color: rgba($white, 0.03);
   }
 
   .card-client {
-    background: rgba($white, 0.04);
+    background: rgba($white, 0.9);
     border-color: rgba($black, 0.2);
   }
 
@@ -38,5 +49,48 @@
       background: $gray-900;
       color: $primary;
     }
+  }
+
+  .nav-link {
+    color: $white;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .navbar.bg-dark {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 10px -10px;
+  }
+
+  .btn-outline-dark {
+    --bs-btn-color: #{$white};
+    --bs-btn-border-color: #{$white};
+    --bs-btn-hover-color: #{$white};
+    --bs-btn-hover-bg: #{lighten($gray-900, 10%)};
+    --bs-btn-hover-border-color: #{$white};
+  }
+
+  .table-responsive {
+    border-color: $gray-800;
+  }
+
+  .icon-md2 svg {
+    fill: $gray-100;
+    color: $gray-100;
+  }
+
+  .content-wrapper.bg-light {
+    background: #121212 !important;
+  }
+
+  .carousel .carousel-control-prev-icon,
+  .carousel .carousel-control-next-icon {
+    filter: none;
+  }
+
+  :root {
+    --bs-light-rgb: #{$gray-900};
+    --bs-secondary-rgb: #{$white};
   }
 }

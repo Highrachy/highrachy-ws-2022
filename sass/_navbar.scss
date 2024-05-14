@@ -8,7 +8,8 @@
     transform: initial;
     transition: all 0.4s ease-in-out;
 
-    &.bg-white {
+    &.bg-light {
+      background-color: white;
       box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
     }
   }
@@ -37,6 +38,12 @@
     padding-left: 1.5rem;
     border-left-color: $primary;
     color: darken($primary, 10);
+  }
+
+  &.active,
+  &:active {
+    color: $primary;
+    background: transparent;
   }
 }
 

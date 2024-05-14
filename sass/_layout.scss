@@ -1,3 +1,12 @@
+:root {
+  --swiper-theme-color: #{$primary} !important;
+  --bs-nav-link-hover-color: #{$primary} !important;
+
+  .navbar-nav {
+    --bs-navbar-hover-color: #{$primary} !important;
+  }
+}
+
 .container {
   @include media-breakpoint-down(md) {
     padding: 0 2rem;
@@ -60,5 +69,29 @@
   h5,
   h6 {
     font-size: 1rem;
+  }
+}
+
+.hero-description {
+  display: inline-block;
+  background-color: rgba($black, 0.75);
+  color: $gray-300;
+  border-radius: 0.4rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+  z-index: 3;
+
+  h5 {
+    font-family: $font-family-sans-serif;
+    color: $white !important;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $gray-300;
   }
 }

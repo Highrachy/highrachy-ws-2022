@@ -117,7 +117,7 @@ const AvailablePositions = ({ jobs }) => (
                       query: { slug },
                     }}
                   >
-                    <a className="btn btn-secondary btn-wide text-uppercase stretched-link">
+                    <a className="btn btn-outline-secondary btn-wide text-uppercase stretched-link">
                       Apply Now
                     </a>
                   </Link>
@@ -137,10 +137,10 @@ const AvailablePositions = ({ jobs }) => (
 
 export const JobInfo = ({ location, remote, contract }) => (
   <>
-    <span className="badge rounded-pill bg-light-red text-color">
+    <span className="badge bg-primary-light fw-normal text-color">
       {remote ? 'Remote' : location}
     </span>{' '}
-    <span className="badge rounded-pill bg-light-red text-color">
+    <span className="badge bg-primary-light fw-normal text-color">
       {contract ? 'Contract' : 'Permanent, Full-time'}
     </span>
   </>

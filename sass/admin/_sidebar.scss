@@ -15,7 +15,7 @@ $navbar-height: 80px;
   }
   z-index: 999;
   transition: width 0.1s ease, margin 0.1s ease-in-out;
-  background-color: #fff;
+  background-color: var(--#{$prefix}body-bg) !important;
 
   .sidebar-header {
     height: $navbar-height;
@@ -54,7 +54,7 @@ $navbar-height: 80px;
           padding: 0;
           height: 32px;
           white-space: nowrap;
-          color: $body-color;
+          color: var(--#{$prefix}body-color);
           .link-title {
             margin-left: 1rem;
             font-size: 1.25rem;
