@@ -243,6 +243,7 @@ const ApplicantHeader = ({
               {/* Action */}
               <div className="d-flex my-2">
                 {status !== APPLICANT_STAGE.REJECTED &&
+                  status !== APPLICANT_STAGE.CLOSED &&
                   status !== APPLICANT_STAGE.ACCEPTED && (
                     <>
                       <ProcessButton
@@ -256,6 +257,19 @@ const ApplicantHeader = ({
                         successMessage={`'${fullName}' application has been successfully rejected`}
                       >
                         Reject Application
+                      </ProcessButton>
+                      <ProcessButton
+                        afterSuccess={() => query.mutate()}
+                        api={`applicants/${id}`}
+                        buttonClassName="mx-3"
+                        buttonColor="dark"
+                        buttonSizeClassName="btn-sm"
+                        data={{ status: APPLICANT_STAGE.CLOSED }}
+                        modalContent={`Are you sure you want to close '${fullName}' application`}
+                        modalTitle={`Close Application`}
+                        successMessage={`'${fullName}' application has been successfully closed`}
+                      >
+                        Close Application
                       </ProcessButton>
                       <ProcessButton
                         afterSuccess={() => query.mutate()}

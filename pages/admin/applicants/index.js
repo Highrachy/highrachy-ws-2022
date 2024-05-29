@@ -108,6 +108,7 @@ export const ApplicantsSingleRow = ({
           Manage Applicant
         </Button>
         {status !== APPLICANT_STAGE.REJECTED &&
+          status !== APPLICANT_STAGE.CLOSED &&
           status !== APPLICANT_STAGE.ACCEPTED && (
             <>
               <ProcessButton

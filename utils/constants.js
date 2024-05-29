@@ -41,6 +41,7 @@ export const APPLICANT_STAGE = {
   OFFER_STAGE: 'OFFER STAGE',
   ACCEPTED: 'ACCEPTED',
   REJECTED: 'REJECTED',
+  CLOSED: 'CLOSED',
 };
 
 export const APPLICANT_STAGE_INFO = {
@@ -65,6 +66,10 @@ export const APPLICANT_STAGE_INFO = {
     color: 'success',
   },
   [APPLICANT_STAGE.REJECTED]: {
+    icon: <RiCloseCircleFill />,
+    color: 'danger',
+  },
+  [APPLICANT_STAGE.CLOSED]: {
     icon: <RiCloseCircleFill />,
     color: 'danger',
   },

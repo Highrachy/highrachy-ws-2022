@@ -78,7 +78,7 @@ const SingleJob = () => {
 
     // Determine the stage based on the status
     const stage =
-      status === APPLICANT_STAGE.REJECTED
+      status === APPLICANT_STAGE.REJECTED || status === APPLICANT_STAGE.CLOSED
         ? STAGE.REJECTED_APPLICANTS
         : status === APPLICANT_STAGE.APPLIED
         ? STAGE.NEW_APPLICANTS
