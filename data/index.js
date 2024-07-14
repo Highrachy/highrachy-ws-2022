@@ -17,8 +17,8 @@ export const footerLinks = [
     url: '/projects',
   },
   {
-    title: 'Download Brochure',
-    url: '/assets/pdf/brochure.pdf',
+    title: 'Our Team',
+    url: '/our-culture#our-team',
   },
   {
     title: 'Existing Business Relationships',

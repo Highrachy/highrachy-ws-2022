@@ -1,8 +1,8 @@
 export const blissville = {
   content:
-    'Blissville is a closely knit gated community of 12 family units, sitting on two blocks that promotes refined living. Surrounded by energy efficient facilities, its location is very close to access roads, shopping areas, schools, and favorite places of your choice. ',
+    'Blissville Apartment is a closely knit gated community of 12 family units, sitting on two blocks that promotes refined living. Surrounded by energy efficient facilities, its location is very close to access roads, shopping areas, schools, and favorite places of your choice. ',
   image: '/assets/img/projects/blissville-uno.jpg',
-  title: 'Blissville',
+  title: 'Blissville Apartments',
   externalLink: 'https://www.blissville.com.ng',
 };
 
@@ -23,7 +23,7 @@ export const terraces = {
   content: `Blissville Terraces, within the Prestigious Caribbean Lake City. Enjoy
         the ambience and serenity of plosh gardens and the calm fishing lake
         that flows into the gracious Omu Creek.`,
-  contentBottom: `Coming soon to you.`,
+  // contentBottom: `Coming soon to you.`,
   image: '/assets/img/projects/blissville-terraces.jpg',
   title: 'Blissville Terraces',
 };

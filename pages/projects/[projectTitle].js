@@ -51,11 +51,11 @@ const Project = ({ content, contentBottom, image, title, externalLink }) => (
           <Image
             src={image}
             alt={title}
-            className="img-fluid"
-            height="800"
+            className="img-fluid project-img"
+            height="1000"
             width="1200"
           />
-          <p className="">{content}</p>
+          <div>{content}</div>
 
           {externalLink && (
             <Button color="primary" href={externalLink} className="mt-3 mb-6">
