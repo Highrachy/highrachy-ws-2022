@@ -11,7 +11,12 @@ import XmasFall from '@/components/utils/XmasFall';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider attribute="data-bs-theme">
+    <ThemeProvider
+      attribute="data-bs-theme"
+      enableSystem={false}
+      disableTransitionOnChange
+      defaultTheme="light"
+    >
       <UserProvider>
         <XmasFall />
         <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
