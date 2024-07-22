@@ -21,10 +21,10 @@ export const internalContent = [
         <li>
           <a
             target="_blank"
-            href="https://drive.google.com/drive/folders/1wbTKo06BHC2B71TaxcIQaYqUNrey_N_K?usp=sharing"
+            href="https://drive.google.com/drive/folders/1lsQjxgqB_immQd5QEluR_bRcB1cXZDyn?usp=drive_link"
             rel="noopener noreferrer"
           >
-            Mindset
+            Worksheets
           </a>
         </li>
       </ul>
