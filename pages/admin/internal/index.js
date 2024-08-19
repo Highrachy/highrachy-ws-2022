@@ -49,7 +49,16 @@ export const internalContent = [
             href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
             rel="noopener noreferrer"
           >
-            Monthly Report Template
+            General Monthly Report Template
+          </a>
+        </li>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1zUpeCNXTEx4ndgJ5BagWZhPRijf_0NLzYiavuCAK0KM/edit"
+            rel="noopener noreferrer"
+          >
+            Personal Weekly Planning Sheet Template
           </a>
         </li>
         <li>
