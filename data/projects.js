@@ -20,37 +20,12 @@ export const ifactor = {
   title: 'I-Factor',
 };
 export const terraces = {
-  content: `
-      <p>
-        Blissville Terraces is defined by luxury, quality, comfort, and
-        convenience. It is an energy-efficient smart home that offers excellent
-        value for money. This idyllic estate environment is designed for modern
-        living and is specifically crafted for those who appreciate the finer
-        things in life. For individuals who have experienced the world and
-        understand the value of a truly unique home, Blissville Terraces offers
-        more than just a property; it represents a touch of modern
-        sophistication.
-      </p>
+  content: `Blissville Terraces is defined by luxury, quality, comfort, and convenience. It is an energy-efficient smart home that offers excellent value for money. This idyllic estate environment is designed for modern living and is specifically crafted for those who appreciate the finer things in life. For individuals who have experienced the world and understand the value of a truly unique home, Blissville Terraces offers more than just a property; it represents a touch of modern sophistication.
 
-      <p>
-        The 4-bedroom terrace, complete with a home office, home cinema, gym,
-        and maid&apos;s room, is not just a residence; it&rsquo;s a lifestyle
-        choice. With meticulously designed features that overlook a pristine
-        man-made lake, it provides a sense of tranquility and luxury amidst
-        nature. Those who cherish nature, tranquility, and beauty comprehend
-        that there is a slice of paradise in Blissville Terraces. Positioned
-        overlooking the beautiful man-made lake, it offers a haven for Nigerians
-        who seek more than just a house, but a sanctuary that embodies quality,
-        comfort, convenience, prestige, and peace.
-      </p>
+  The 4-bedroom terrace, complete with a home office, home cinema, gym, and maid's room, is not just a residence; it's a lifestyle choice. With meticulously designed features that overlook a pristine man-made lake, it provides a sense of tranquility and luxury amidst nature. Those who cherish nature, tranquility, and beauty comprehend that there is a slice of paradise in Blissville Terraces. Positioned overlooking the beautiful man-made lake, it offers a haven for Nigerians who seek more than just a house, but a sanctuary that embodies quality, comfort, convenience, prestige, and peace.
 
-      <p>
-        Strategically located within the Caribbean Lake City Estate and in close
-        proximity to the popular Novare Mall (Shoprite), Green Springs School,
-        Emperor Estate, and many other notable landmarks, Blissville Terraces is
-        situated within the fastest-developing corridor in the country and
-        arguably in West Africa.
-      </p>`,
+  Strategically located within the Caribbean Lake City Estate and in close proximity to the popular Novare Mall (Shoprite), Green Springs School, Emperor Estate, and many other notable landmarks, Blissville Terraces is situated within the fastest-developing corridor in the country and arguably in West Africa.
+    `,
   image: '/assets/img/projects/blissville-terraces.jpg',
   title: 'Blissville Terraces',
   externalLink: 'https://www.blissville.com.ng',

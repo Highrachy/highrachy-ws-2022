@@ -41,32 +41,37 @@ const SingleProject = ({ project }) => {
   );
 };
 
-const Project = ({ content, contentBottom, image, title, externalLink }) => (
-  <Section>
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <ShareContent title={title} />
-          <SectionHeader className="mb-4">{title}</SectionHeader>
-          <Image
-            src={image}
-            alt={title}
-            className="img-fluid project-img"
-            height="1000"
-            width="1200"
-          />
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+const Project = ({ content, contentBottom, image, title, externalLink }) => {
+  const paragraphs = content.trim().split('\n\n');
+  return (
+    <Section>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-8">
+            <ShareContent title={title} />
+            <SectionHeader className="mb-4">{title}</SectionHeader>
+            <Image
+              src={image}
+              alt={title}
+              className="img-fluid project-img"
+              height="1000"
+              width="1200"
+            />
+            {paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
 
-          {externalLink && (
-            <Button color="primary" href={externalLink} className="mt-3 mb-6">
-              More Details
-            </Button>
-          )}
+            {externalLink && (
+              <Button color="primary" href={externalLink} className="mt-3 mb-6">
+                More Details
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </Section>
-);
+    </Section>
+  );
+};
 
 const ShareContent = ({ title }) => (
   <div className="share-content text-end">
