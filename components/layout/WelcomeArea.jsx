@@ -61,7 +61,7 @@ const WelcomeArea = () => (
                 <section className="position-relative">
                   <div className="hero-description">
                     <h5 className="mb-0 me-2">Blissville Terraces</h5>
-                    <p className="mb-0">Starting from ₦120 Million</p>
+                    <p className="mb-0">Starting from ₦135 Million</p>
                   </div>
                   <Image
                     src={'/assets/img/slides/bvt-' + index + '.jpg'}

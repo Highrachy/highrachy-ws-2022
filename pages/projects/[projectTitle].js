@@ -55,7 +55,7 @@ const Project = ({ content, contentBottom, image, title, externalLink }) => (
             height="1000"
             width="1200"
           />
-          <div>{content}</div>
+          <div dangerouslySetInnerHTML={{ __html: content }} />
 
           {externalLink && (
             <Button color="primary" href={externalLink} className="mt-3 mb-6">
