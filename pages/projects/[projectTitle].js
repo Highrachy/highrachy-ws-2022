@@ -41,7 +41,7 @@ const SingleProject = ({ project }) => {
   );
 };
 
-const Project = ({ content, contentBottom, image, title, externalLink }) => {
+const Project = ({ content, image, title, externalLink }) => {
   const paragraphs = content.trim().split('\n\n');
   return (
     <Section>
