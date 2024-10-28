@@ -65,7 +65,7 @@ const PrivacyPolicy = () => {
                   <strong>Company</strong> (referred to as either &quot;the
                   Company&quot;, &quot;We&quot;, &quot;Us&quot; or
                   &quot;Our&quot; in this Agreement) refers to Highrachy
-                  Investment and Technology, 5th Floor, Ibukun House, No. 70
+                  Investment and Technology, 3rd Floor, Ibukun House, No. 70
                   Adetokunbo Ademola Street, Victoria Island, Lagos
                 </li>
                 <li>
