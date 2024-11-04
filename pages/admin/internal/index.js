@@ -21,11 +21,32 @@ export const internalContent = [
         <li>
           <a
             target="_blank"
-            href="https://drive.google.com/drive/folders/1lsQjxgqB_immQd5QEluR_bRcB1cXZDyn?usp=drive_link"
+            href="https://drive.google.com/drive/folders/11m0Zh5_30jqi3-AVvCcHg_f8zBUgnFLB"
             rel="noopener noreferrer"
           >
             Worksheets
           </a>
+        </li>
+      </ul>
+    ),
+  },
+  {
+    header: 'Monthly Planning and Reporting Guide',
+    content: (
+      <ul>
+        <li>
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
+            rel="noopener noreferrer"
+          >
+            Monthly Report Document
+          </a>
+        </li>
+        <li>
+          <Link href="/admin/internal/monthly-report">
+            Step-by-Step Guide for Using the Monthly Report Document
+          </Link>
         </li>
       </ul>
     ),
@@ -41,24 +62,6 @@ export const internalContent = [
             rel="noopener noreferrer"
           >
             Our Logos
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1-50E6uoT0fMzSFmszhQgQLZITYwQAVTE8hMOgEmLVKE/edit"
-            rel="noopener noreferrer"
-          >
-            General Monthly Report Template
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://docs.google.com/spreadsheets/d/1zUpeCNXTEx4ndgJ5BagWZhPRijf_0NLzYiavuCAK0KM/edit"
-            rel="noopener noreferrer"
-          >
-            Personal Weekly Planning Sheet Template
           </a>
         </li>
         <li>
