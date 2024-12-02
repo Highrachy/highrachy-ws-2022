@@ -32,15 +32,21 @@ const MonthlyReport = () => {
                 <SectionHeader small className="mt-6">
                   1. Checkbox
                 </SectionHeader>
-                {/* <h5>1. Checkbox</h5> */}
                 <p>
-                  This is used to mark tasks as completed with 1 click. When
-                  checked, it will strike through the row text, but it won’t
-                  affect any other values. This helps in quickly closing out
-                  completed tickets.
+                  The checkbox column is used to quickly mark tasks as
+                  completed. Once checked, the row text will be struck through,
+                  visually indicating that the task is done. However, this does
+                  not affect any other values in the row.
                 </p>
                 <AlertAttention type="success">
-                  Use this to quickly close out tasks you have fully completed
+                  Use this feature for tasks you have fully completed. For
+                  example, &quot;Setting up the blinds in the office&quot; can
+                  be marked complete once installed.
+                </AlertAttention>
+                <AlertAttention type="info">
+                  You can use the <strong>Filter</strong> option in Google
+                  Sheets to focus on unchecked tasks only. This helps in
+                  identifying pending work easily.
                 </AlertAttention>
               </div>
 
@@ -50,15 +56,17 @@ const MonthlyReport = () => {
                   2. Category
                 </SectionHeader>
                 <p>
-                  This is used to define the category of each task here to keep
-                  things organized. You can group tasks into categories like
-                  &quot;Highrachy,&quot; &quot;Blissville,&quot;
-                  &quot;Design,&quot; or &quot;Project&quot; to help other team
-                  members quickly identify task types.
+                  Categories help in grouping tasks logically for better
+                  organization. Examples of categories include:
                 </p>
                 <AlertAttention type="success">
-                  Use consistent categories to simplify filtering and searching
-                  for tasks.
+                  Always use consistent categories to simplify filtering and
+                  searching. For example, avoid using both &quot;HR&quot; and
+                  &quot;Human Resources&quot; for similar tasks.
+                </AlertAttention>
+                <AlertAttention type="info">
+                  Consider adding a new category only if the task doesn&apos;t
+                  fit existing ones.
                 </AlertAttention>
               </div>
 
@@ -89,7 +97,9 @@ const MonthlyReport = () => {
                   <ul>
                     <li>Use simple language to describe each item.</li>
                     <li>
-                      Example: “Set up database” is clearer than “Database.”
+                      Example: &quot;Set up the blind for the Office&quot; is
+                      clearer than &quot;Office setup&quot;. This helps in
+                      understanding the task better.
                     </li>
                   </ul>
                 </AlertAttention>
@@ -100,46 +110,55 @@ const MonthlyReport = () => {
                 <SectionHeader small className="mt-5">
                   4. Type
                 </SectionHeader>
-                <p>Select the task type from the dropdown list:</p>
+                <p>
+                  This column defines the type of task. Select the most
+                  appropriate option from the dropdown:
+                </p>
                 <ul>
                   <li>
-                    <strong>One-Off:</strong> A standalone task that doesn’t
-                    recur or link to other tasks.
+                    <strong>One-Off:</strong> A standalone task. Example:
+                    &quot;Print business cards for new team members.&quot;
                   </li>
                   <li>
-                    <strong>Main Task:</strong> Parent tasks with multiple
-                    subtasks underneath. Main tasks are only marked complete
-                    when all subtasks are done.
+                    <strong>Main Task:</strong> Parent tasks that encompass
+                    multiple subtasks. Example: &quot;Launch the product
+                    website.&quot;
                   </li>
                   <li>
-                    <strong>Subtask:</strong> Part of a larger main task.
-                    Subtasks help in breaking down complex tasks for better
-                    tracking.
+                    <strong>Subtask:</strong> A part of a main task. Example:
+                    &quot;Design the homepage layout for the website.&quot;
                   </li>
                   <li>
-                    <strong>High Priority:</strong> Select this for urgent
-                    tasks. High-priority items change the progress bar color,
-                    indicating their importance.
+                    <strong>High Priority:</strong> Tasks marked urgent will
+                    have increased contrast in the progress bar and bolded text
+                    for quick visibility. Example: &quot;Prepare emergency
+                    response plan for a client meeting.&quot;
                   </li>
                   <li>
                     <strong>From Last Month:</strong> Tasks carried over from
-                    the previous month. Helps in tracking ongoing items.
+                    the previous month. Example: &quot;Finalize performance
+                    reviews from September.&quot;
                   </li>
                   <li>
-                    <strong>New:</strong> Tasks created after the monthly
-                    planning session.
+                    <strong>New:</strong> Recently added tasks. Example:
+                    &quot;Draft new policy for hybrid work.&quot;
                   </li>
                   <li>
-                    <strong>Recurring:</strong> Tasks that repeat every month.
-                    Be sure to update progress each month.
+                    <strong>Recurring:</strong> Monthly tasks. Text is displayed
+                    in gray. Example: &quot;Submit monthly expense report.&quot;
                   </li>
                 </ul>
-
                 <AlertAttention type="success">
+                  For tasks marked as High Priority, ensure they&apos;re
+                  genuinely urgent to prevent overloading the category.
+                </AlertAttention>
+
+                <AlertAttention type="info">
                   <ul>
                     <li>
-                      Ensure that you don&apos;t select more that 3 types for a
-                      single story
+                      Avoid selecting more than three types for a single task.
+                      For instance, a task cannot be both &quot;One-Off&quot;
+                      and &quot;Recurring&quot;.
                     </li>
                     <li>
                       Only use one of the following types for a single story:
@@ -155,14 +174,24 @@ const MonthlyReport = () => {
                   5. Due On
                 </SectionHeader>
                 <p>
-                  Set the due date by selecting the week it&apos;s due (Week 1
-                  to Week 5+). Proper scheduling ensures tasks are spread out
-                  and completed on time.
+                  Set the due date by selecting the corresponding week (Week 1
+                  to Week 5+). For tasks spanning multiple weeks, specify both
+                  the start and end weeks.
                 </p>
-
                 <AlertAttention type="success">
-                  Reminder: Weekly planning is based on these dates, so try to
-                  be accurate.
+                  Weekly planning relies on these dates. Ensure dates align with
+                  team availability and priorities.
+                </AlertAttention>
+                <AlertAttention type="info">
+                  To filter tasks by selected weeks in Google Sheets, use the{' '}
+                  <strong>Filter</strong> feature:
+                  <ul>
+                    <li>Click the filter icon in the header row.</li>
+                    <li>
+                      Select &quot;Filter by values&quot; and choose the weeks
+                      you want to view.
+                    </li>
+                  </ul>
                 </AlertAttention>
               </div>
 
@@ -171,32 +200,46 @@ const MonthlyReport = () => {
                 <SectionHeader small className="mt-5">
                   6. Status
                 </SectionHeader>
-                <p>Update the current status for each task:</p>
+                <p>Track task progress with predefined statuses:</p>
                 <ul>
                   <li>
-                    <strong>Not Started:</strong> Task hasn’t been initiated.
+                    <strong>Not Started:</strong> No work initiated. Task is in
+                    the queue, awaiting action.
                   </li>
                   <li>
-                    <strong>In Progress:</strong> Task work has begun.
+                    <strong>In Progress:</strong> Work on the task has begun.
+                    Ensure regular updates to completion percentage and blockers
+                    if necessary.
                   </li>
                   <li>
-                    <strong>On Hold:</strong> Task is paused.
+                    <strong>On Hold:</strong> Task is paused due to internal or
+                    external dependencies. For example, &quot;Waiting for client
+                    feedback&quot;.
                   </li>
                   <li>
-                    <strong>Waiting for Review:</strong> Task is done but
-                    pending approval.
+                    <strong>Waiting for Review:</strong> Task is completed and
+                    awaiting approval or feedback. Example: &quot;Drafted
+                    proposal sent to manager for review&quot;.
                   </li>
                   <li>
-                    <strong>Blocked:</strong> Task cannot proceed due to
-                    external issues.
+                    <strong>Blocked:</strong> Task progress is halted due to
+                    unresolved issues. For instance, &quot;Waiting for legal
+                    clearance&quot; or &quot;System down&quot;.
                   </li>
                   <li>
-                    <strong>Completed:</strong> Task is finished.
+                    <strong>Completed:</strong> Task has been fully completed
+                    and no further action is required.
                   </li>
                   <li>
-                    <strong>Approved:</strong> Task is completed and approved.
+                    <strong>Approved:</strong> Completed task has been reviewed
+                    and officially accepted.
                   </li>
                 </ul>
+                <AlertAttention type="info">
+                  Use comments or notes to provide clarity on why a task is{' '}
+                  <strong>On Hold</strong> or <strong>Blocked</strong>. This
+                  ensures transparency and helps resolve issues faster.
+                </AlertAttention>
               </div>
 
               {/* Percentage */}
@@ -227,7 +270,8 @@ const MonthlyReport = () => {
                     progress.
                   </li>
                   <li>
-                    <strong>80-100%:</strong> Green bar for high completion.
+                    <strong>80-100%:</strong> Green bar for high task
+                    completion.
                   </li>
                 </ul>
               </div>
