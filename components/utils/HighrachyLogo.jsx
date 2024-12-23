@@ -12,17 +12,18 @@ const HighrachyLogo = () => {
     <Link href="/" passHref>
       <a>
         {isFestivePeriod() ? (
-          <Image
+          <ThemedImage
             src="/logo_xmas.png"
-            alt="Highrachy"
+            darkSrc="/logo_xmas_dark.png"
+            alt="Highrachy Logo"
             width={isDesktop ? '169' : '142'}
-            height={isDesktop ? '64' : '54'}
+            height={isDesktop ? '61' : '51'}
           />
         ) : (
           <ThemedImage
             src="/logo.png"
             darkSrc="/logo_dark.png"
-            alt="Highrachy"
+            alt="Highrachy Logo"
             width={isDesktop ? '169' : '142'}
             height={isDesktop ? '50' : '42'}
           />
