@@ -668,3 +668,13 @@ footer a {
     }
   }
 }
+
+.ongoing-label {
+  font-size: 0.75rem;
+  border: 1px solid $gray-600;
+  border-radius: 3px;
+  padding: 3px 8px;
+  color: $gray-600;
+  display: inline-block;
+  margin-top: 12px;
+}

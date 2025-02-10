@@ -51,11 +51,13 @@ const ProjectCard = ({
   content,
   image,
   externalLink,
+  status,
   index,
   useAltBg,
 }) => (
   <ImageBlock title={title} image={image} altBg={useAltBg && isAltBg(index)}>
     <h5 className="mb-0 text-gray">{title}</h5>
+    {status && <span className="ongoing-label">{status}</span>}
     <p className="text pt-3">{humanize.truncate(content, 200)}</p>
     <Link
       passHref

@@ -13,7 +13,7 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-const CONTENT_BODY = `Hi there! Join Ballers today -- the easiest way to become a Landlord`;
+const CONTENT_BODY = `Hi Friend! Check out Highrachy Investment and Technology Limited.  `;
 
 const Sharer = ({ shareUrl, content, shareText }) => (
   <ul className="list-inline icon-md">
@@ -39,10 +39,7 @@ const Sharer = ({ shareUrl, content, shareText }) => (
       </WhatsappShareButton>
     </li>
     <li className="list-inline-item">
-      <EmailShareButton
-        body={content}
-        subject={`Hey Friend! Check out Highrachy ${shareUrl}`}
-      >
+      <EmailShareButton body={content} subject={`${CONTENT_BODY} ${shareUrl}`}>
         <EmailIcon round width="48" />
       </EmailShareButton>
     </li>
@@ -56,6 +53,6 @@ Sharer.propTypes = {
 
 Sharer.defaultProps = {
   content: CONTENT_BODY,
-  shareUrl: 'https://duvlive.com',
+  shareUrl: 'https://highrachy.com',
 };
 export default Sharer;

@@ -41,7 +41,16 @@ const SingleProject = ({ project }) => {
   );
 };
 
-const Project = ({ content, image, title, externalLink }) => {
+const Project = ({
+  content,
+  image,
+  title,
+  status,
+  externalLink,
+  externalLinkText,
+  externalLink2,
+  externalLinkText2,
+}) => {
   const paragraphs = content.trim().split('\n\n');
   return (
     <Section>
@@ -49,7 +58,9 @@ const Project = ({ content, image, title, externalLink }) => {
         <div className="row justify-content-center">
           <div className="col-md-8">
             <ShareContent title={title} />
-            <SectionHeader className="mb-4">{title}</SectionHeader>
+            <SectionHeader className="mb-4">
+              {title} {status && <span>({status})</span>}
+            </SectionHeader>
             <Image
               src={image}
               alt={title}
@@ -63,7 +74,16 @@ const Project = ({ content, image, title, externalLink }) => {
 
             {externalLink && (
               <Button color="primary" href={externalLink} className="mt-3 mb-6">
-                More Details
+                {externalLinkText || 'More Details'}
+              </Button>
+            )}
+            {externalLink2 && (
+              <Button
+                color="info"
+                href={externalLink2}
+                className="mt-3 mb-6 ms-3"
+              >
+                {externalLinkText2 || 'Invest Now'}
               </Button>
             )}
           </div>

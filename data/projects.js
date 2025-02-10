@@ -4,6 +4,7 @@ export const blissville = {
   image: '/assets/img/projects/blissville-uno.jpg',
   title: 'Blissville Apartments',
   externalLink: 'https://www.blissville.com.ng',
+  status: 'Completed Project',
 };
 
 export const dreamworld = {
@@ -11,6 +12,7 @@ export const dreamworld = {
     'Dreamworld Technology Mall is approximately 6,000 sqm of retail and office space which will be a tech hub and home of some of the global Technology companies',
   image: '/assets/img/projects/blissville.jpg',
   title: 'Dreamworld Technology Mall',
+  status: 'Completed Project',
 };
 
 export const ifactor = {
@@ -18,6 +20,7 @@ export const ifactor = {
     'I-Factor is an exquisitely designed, energy efficient, world class mini estate within a secure environment. It comprises 6 apartments that brings forth a luxurious five-star concept blended with contemporary architectural design and an array of relaxation and recreational facilities including a rooftop gym, rooftop terraced lounge with swimming pool overlooking the Lagos Lagoon and twinkling of bright stars in the night sky. ',
   image: '/assets/img/projects/ifactor.jpg',
   title: 'I-Factor',
+  status: 'Completed Project',
 };
 export const terraces = {
   content: `Blissville Terraces is defined by luxury, quality, comfort, and convenience. It is an energy-efficient smart home that offers excellent value for money. This idyllic estate environment is designed for modern living and is specifically crafted for those who appreciate the finer things in life. For individuals who have experienced the world and understand the value of a truly unique home, Blissville Terraces offers more than just a property; it represents a touch of modern sophistication.
@@ -28,7 +31,12 @@ export const terraces = {
     `,
   image: '/assets/img/projects/blissville-terraces.jpg',
   title: 'Blissville Terraces',
-  externalLink: 'https://www.blissville.com.ng',
+  externalLink:
+    'https://www.blissville.com.ng/our-projects/blissville-terraces',
+  externalLinkText: 'Learn More',
+  externalLink2: 'https://www.blissville.com.ng/investors',
+  externalLinkText2: 'Invest Now',
+  status: 'Ongoing Project',
 };
 
 const projects = [terraces, blissville, ifactor];
