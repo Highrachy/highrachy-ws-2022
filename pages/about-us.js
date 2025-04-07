@@ -63,7 +63,7 @@ const OurCompany = () => (
 const ValuePreposition = () => (
   <Section>
     <ImageBlock title={projects[0].title} image={projects[0].image}>
-      <SectionHeader small>Value Preposition</SectionHeader>
+      <SectionHeader small>Value Proposition</SectionHeader>
       <p className="text pt-3">
         Our tested methodology perfectly harnesses the individual skill sets of
         our team by stricking a ballance between design and technology to ensure
