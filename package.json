@@ -18,6 +18,7 @@
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
     "formik-persist": "^1.1.0",
+    "fslightbox-react": "^1.8.0",
     "humanize-plus": "^1.8.2",
     "next": "12",
     "next-seo": "^5.1.0",

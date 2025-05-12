@@ -28,6 +28,10 @@ export const footerLinks = [
     title: 'Privacy Policy',
     url: '/privacy-policy',
   },
+  {
+    title: 'Company Profile',
+    url: 'assets/pdf/highrachy-company-profile.pdf',
+  },
 ];
 
 export const socialMediaLinks = [

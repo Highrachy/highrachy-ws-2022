@@ -1,8 +1,7 @@
+import DownloadCompanyProfile from '@/components/common/DownloadCompanyProfile';
 import FeatureCard from '@/components/common/FeatureCard';
-import { ConsultingIcon } from '@/components/common/Icons';
 import { MissionIcon } from '@/components/common/Icons';
 import { VisionIcon } from '@/components/common/Icons';
-import { TechnologyIcon } from '@/components/common/Icons';
 import ImageBlock from '@/components/common/ImageBlock';
 import Section from '@/components/common/Section';
 import Shape from '@/components/common/Shape';
@@ -45,6 +44,7 @@ const OurCompany = () => (
         <div className="col-lg-6 col-md-6 pe-lg-6">
           <p className="text lead pt-3">{welcomeNote}</p>
           <p className="lead fw-bold">{welcomeNoteLeadText}</p>
+          <DownloadCompanyProfile />
         </div>
         <div className="col-lg-6 col-md-6 mt-lg-n7">
           <Image

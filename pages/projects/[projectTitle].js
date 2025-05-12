@@ -1,7 +1,3 @@
-import { FacebookIcon } from '@/components/common/Icons';
-import { LinkedInIcon } from '@/components/common/Icons';
-import { InstagramIcon } from '@/components/common/Icons';
-import { TwitterIcon } from '@/components/common/Icons';
 import Section from '@/components/common/Section';
 import Button from '@/components/forms/Button';
 import Footer from '@/components/layout/Footer';
@@ -14,6 +10,7 @@ import { projects as projectNav } from '@/data/navigation';
 import React from 'react';
 import Sharer from '@/components/utils/Sharer';
 import { NextSeo } from 'next-seo';
+import LightboxGallery from '@/components/common/LightboxGallery';
 
 const SingleProject = ({ project }) => {
   const breadcrumb = [
@@ -46,12 +43,14 @@ const Project = ({
   image,
   title,
   status,
+  gallery,
   externalLink,
   externalLinkText,
   externalLink2,
   externalLinkText2,
 }) => {
   const paragraphs = content.trim().split('\n\n');
+
   return (
     <Section>
       <div className="container">
@@ -64,12 +63,16 @@ const Project = ({
             <Image
               src={image}
               alt={title}
-              className="img-fluid project-img"
+              className="img-fluid project-img rounded shadow-sm"
               height="1000"
               width="1200"
             />
             {paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+              <p
+                key={index}
+                className="project-content"
+                dangerouslySetInnerHTML={{ __html: paragraph }}
+              />
             ))}
 
             {externalLink && (
@@ -86,6 +89,8 @@ const Project = ({
                 {externalLinkText2 || 'Invest Now'}
               </Button>
             )}
+
+            <LightboxGallery images={gallery || []} />
           </div>
         </div>
       </div>

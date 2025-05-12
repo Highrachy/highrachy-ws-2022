@@ -39,6 +39,63 @@ export const terraces = {
   status: 'Ongoing Project',
 };
 
-const projects = [terraces, blissville, ifactor];
+export const caribbeanLake = {
+  title: 'Caribbean Lake City Estate',
+  image: '/assets/img/projects/caribbean-lake.jpg',
+  content: `Caribbean Lake City Estate offers breathtaking waterfront views and a unique blend of serene living and modern convenience. This estate provides residents with a secure and aesthetically pleasing environment to thrive.
+
+Highrachy has meticulously designed amenities to seamlessly support the exceptional quality of life that Caribbean Lake City Estate promises. These thoughtfully planned features include:
+
+<ol>
+  <li>A State-of-the-Art Security Entrance</li>
+  <li>Efficient Traffic Management System</li>
+  <li>Engaging Recreational and Relaxation Spaces (this includes mini football pitch, gym, outdoor barbeque spots, swimming pool and tropical gardens)</li>
+  <li>Convenient Visitor Parking Spaces</li>
+  <li>Modern Commercial Complex</li>
+</ol>
+
+The focus is on creating a holistic, and enriching lifestyle within this community for each resident, making it more than just a place to live, but a place to truly belong.`,
+
+  gallery: [
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-1.jpg',
+      alt: 'Main entrance of Caribbean Lake City Estate',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-2.jpg',
+      alt: 'Aerial view of the waterfront',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-3.jpg',
+      alt: 'Recreational area and tropical gardens',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-night-4.jpg',
+      alt: '',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-night-5.jpg',
+      alt: '',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-3.jpg',
+      alt: '',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-7.jpg',
+      alt: '',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-8.jpg',
+      alt: '',
+    },
+    {
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-9.jpg',
+      alt: '',
+    },
+  ],
+};
+
+const projects = [terraces, blissville, ifactor, caribbeanLake];
 
 export default projects;

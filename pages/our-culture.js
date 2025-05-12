@@ -1,3 +1,4 @@
+import DownloadCompanyProfile from '@/components/common/DownloadCompanyProfile';
 import FeatureCard from '@/components/common/FeatureCard';
 import { LocalImage } from '@/components/common/Image';
 import Section from '@/components/common/Section';
@@ -6,7 +7,7 @@ import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { aboutUsLeadText, theCulture } from '@/data/about-us';
+import { ourCultureLeadText, theCulture } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
@@ -46,7 +47,8 @@ const OurCultureSection = () => (
     <div className="container">
       <div className="row">
         <div className="col-lg-7 col-md-6 pe-lg-6">
-          <p className="text lead pt-3">{aboutUsLeadText}</p>
+          <p className="text lead pt-3">{ourCultureLeadText}</p>
+          <DownloadCompanyProfile />
         </div>
         <div className="col-lg-5 col-md-6 mt-lg-n7">
           <Image
