@@ -38,13 +38,13 @@ export const terraces = {
   externalLinkText2: 'Invest Now',
   status: 'Ongoing Project',
 };
-
 export const caribbeanLake = {
   title: 'Caribbean Lake City Estate',
   image: '/assets/img/projects/caribbean-lake.jpg',
+  status: 'Conceptualization & Design',
   content: `Caribbean Lake City Estate offers breathtaking waterfront views and a unique blend of serene living and modern convenience. This estate provides residents with a secure and aesthetically pleasing environment to thrive.
 
-Highrachy has meticulously designed amenities to seamlessly support the exceptional quality of life that Caribbean Lake City Estate promises. These thoughtfully planned features include:
+Highrachy has meticulously conceptualized and designed the following amenities to seamlessly support the exceptional quality of life that Caribbean Lake City Estate promises:
 
 <ol>
   <li>A State-of-the-Art Security Entrance</li>
@@ -63,35 +63,35 @@ The focus is on creating a holistic, and enriching lifestyle within this communi
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-2.jpg',
-      alt: 'Aerial view of the waterfront',
+      alt: 'Main entrance of Caribbean Lake City Estate',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-3.jpg',
-      alt: 'Recreational area and tropical gardens',
+      alt: 'Main entrance of Caribbean Lake City Estate',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-night-4.jpg',
-      alt: '',
+      alt: 'Caribbean Lake City Mall at night',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-night-5.jpg',
-      alt: '',
+      alt: 'Caribbean Lake City Mall at night - Side view',
     },
     {
-      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-3.jpg',
-      alt: '',
+      src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-5.jpg',
+      alt: 'Caribbean Lake City Mall at night - Side view',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-7.jpg',
-      alt: '',
+      alt: 'Estate pathways and green spaces',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-8.jpg',
-      alt: '',
+      alt: 'Estate roundabout and road network',
     },
     {
       src: 'https://blissville-staging.s3.us-east-1.amazonaws.com/bvt/clc/clc-day-9.jpg',
-      alt: '',
+      alt: 'Estate roundabout and road network',
     },
   ],
 };

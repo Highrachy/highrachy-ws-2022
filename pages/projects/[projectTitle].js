@@ -68,11 +68,9 @@ const Project = ({
               width="1200"
             />
             {paragraphs.map((paragraph, index) => (
-              <p
-                key={index}
-                className="project-content"
-                dangerouslySetInnerHTML={{ __html: paragraph }}
-              />
+              <p key={index} className="project-content">
+                <div dangerouslySetInnerHTML={{ __html: paragraph }} />
+              </p>
             ))}
 
             {externalLink && (
