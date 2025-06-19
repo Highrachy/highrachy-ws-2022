@@ -15,6 +15,7 @@ import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import React from 'react';
 import { GoDotFill } from 'react-icons/go';
+import { MdApartment } from 'react-icons/md';
 
 const Apartments = ({ apartments }) => {
   return (
@@ -55,6 +56,10 @@ const AvailableApartments = (props) => {
   const [apartments, setApartments] = React.useState(currentApartments);
   const [showOccupied, setShowOccupied] = React.useState(true);
 
+  const allFullyBooked = apartments.every(
+    ({ attributes: apartment }) => apartment.availableUnits === 0
+  );
+
   const handleSubmit = (values, actions) => {
     setApartments(() =>
       currentApartments.filter(({ attributes: apartment }) => {
@@ -79,112 +84,127 @@ const AvailableApartments = (props) => {
       id="available-positions"
     >
       <div className="container">
-        <FormikForm
-          schema={{}}
-          handleSubmit={handleSubmit}
-          name="apartments-form"
-          showFormikState
-          buttonText="Find Apartments"
-          buttonColor="info"
-          useSubmitButton
-        >
-          <div className="row">
-            {filterType.map((key) => (
-              <Select
-                formGroupClassName="col-md-4"
-                name={key}
-                key={key}
-                label={humanize.capitalize(key)}
-                optional
-                options={valuesToOptions(
-                  [...filters[key]].sort(),
-                  `Select ${key}`
-                )}
-              />
-            ))}
-          </div>
-          <div className="row">
-            <div className="mb-4">
-              <div className="form-check form-switch">
-                <input
-                  aria-describedby="availableUnits"
-                  className="form-check-input"
-                  name="availableUnits"
-                  type="checkbox"
-                  onChange={handleShowOccupied}
-                />
-                <Label
-                  name="availableUnits"
-                  className="form-check-label"
-                  hideOptionalText
-                  optional
-                  text="Hide apartments that will be available soon"
-                  floatingLabel
-                />
+        {allFullyBooked ? (
+          <section className="d-flex pt-6 pb-8 flex-column justify-content-center align-items-center text-center">
+            <MdApartment size={120} className="text-muted-light mb-4" />
+
+            <h4 className="fw-semibold mb-2 text-muted-light">
+              No apartments available at the moment
+            </h4>
+          </section>
+        ) : (
+          <>
+            <FormikForm
+              schema={{}}
+              handleSubmit={handleSubmit}
+              name="apartments-form"
+              showFormikState
+              buttonText="Find Apartments"
+              buttonColor="info"
+              useSubmitButton
+            >
+              <div className="row">
+                {filterType.map((key) => (
+                  <Select
+                    formGroupClassName="col-md-4"
+                    name={key}
+                    key={key}
+                    label={humanize.capitalize(key)}
+                    optional
+                    options={valuesToOptions(
+                      [...filters[key]].sort(),
+                      `Select ${key}`
+                    )}
+                  />
+                ))}
               </div>
-            </div>
-          </div>
-        </FormikForm>
-        <ul className="list-group mt-5">
-          {apartments.map(
-            ({ id: key, attributes: apartment }) =>
-              (apartment.availableUnits > 0 ||
-                (showOccupied && apartment.availableSoon)) && (
-                <li key={key} className="list-group-item">
-                  <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
-                    <div>
-                      <h5 className="mb-0">
-                        {apartment.type} - {apartment.name}
-                      </h5>
-                      <div className="text-muted">
-                        <LocationIcon /> {apartment.address}
-                      </div>
-                      <ul className="list-inline text-secondary">
-                        <li className="list-inline-item pe-4">
-                          <BedIcon /> {apartment.beds}
-                        </li>
-                        <li className="list-inline-item pe-4">
-                          <BathIcon /> {apartment.baths}
-                        </li>
-                        <li className="list-inline-item pe-4">
-                          <ToiletIcon /> {apartment.toilets}
-                        </li>
-                      </ul>
-                      <div className="d-flex flex-wrap align-items-center my-2 mb-5 small opacity-75">
-                        {apartment.availableUnits > 0 ? (
-                          <span className="d-flex align-items-center fw-bold text-success">
-                            <GoDotFill /> Currently available
-                          </span>
-                        ) : apartment.availableSoon ? (
-                          <span className="d-flex align-items-center fw-bold text-info">
-                            <GoDotFill /> This apartment will be available soon
-                          </span>
-                        ) : (
-                          <span className="d-flex align-items-center fw-bold text-danger">
-                            <GoDotFill /> This apartment is fully booked
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: '/apartments/[slug]',
-                        query: { slug: apartment.slug },
-                      }}
-                    >
-                      {apartment.availableUnits === 0 &&
-                      apartment.availableSoon ? (
-                        <span className="btn  btn-info">Join Waiting List</span>
-                      ) : (
-                        <a className="btn btn-primary ">Apply Now</a>
-                      )}
-                    </Link>
+              <div className="row">
+                <div className="mb-4">
+                  <div className="form-check form-switch">
+                    <input
+                      aria-describedby="availableUnits"
+                      className="form-check-input"
+                      name="availableUnits"
+                      type="checkbox"
+                      onChange={handleShowOccupied}
+                    />
+                    <Label
+                      name="availableUnits"
+                      className="form-check-label"
+                      hideOptionalText
+                      optional
+                      text="Hide apartments that will be available soon"
+                      floatingLabel
+                    />
                   </div>
-                </li>
-              )
-          )}
-        </ul>
+                </div>
+              </div>
+            </FormikForm>
+            <ul className="list-group mt-5">
+              {apartments.map(
+                ({ id: key, attributes: apartment }) =>
+                  (apartment.availableUnits > 0 ||
+                    (showOccupied && apartment.availableSoon)) && (
+                    <li key={key} className="list-group-item">
+                      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start position-relative p-4">
+                        <div>
+                          <h5 className="mb-0">
+                            {apartment.type} - {apartment.name}
+                          </h5>
+                          <div className="text-muted">
+                            <LocationIcon /> {apartment.address}
+                          </div>
+                          <ul className="list-inline text-secondary">
+                            <li className="list-inline-item pe-4">
+                              <BedIcon /> {apartment.beds}
+                            </li>
+                            <li className="list-inline-item pe-4">
+                              <BathIcon /> {apartment.baths}
+                            </li>
+                            <li className="list-inline-item pe-4">
+                              <ToiletIcon /> {apartment.toilets}
+                            </li>
+                          </ul>
+                          <div className="d-flex flex-wrap align-items-center my-2 mb-5 small opacity-75">
+                            {apartment.availableUnits > 0 ? (
+                              <span className="d-flex align-items-center fw-bold text-success">
+                                <GoDotFill /> Currently available
+                              </span>
+                            ) : apartment.availableSoon ? (
+                              <span className="d-flex align-items-center fw-bold text-info">
+                                <GoDotFill /> This apartment will be available
+                                soon
+                              </span>
+                            ) : (
+                              <span className="d-flex align-items-center fw-bold text-danger">
+                                <GoDotFill /> This apartment is fully booked
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <Link
+                          passHref
+                          href={{
+                            pathname: '/apartments/[slug]',
+                            query: { slug: apartment.slug },
+                          }}
+                        >
+                          {apartment.availableUnits === 0 &&
+                          apartment.availableSoon ? (
+                            <span className="btn  btn-info">
+                              Join Waiting List
+                            </span>
+                          ) : (
+                            <a className="btn btn-primary ">Apply Now</a>
+                          )}
+                        </Link>
+                      </div>
+                    </li>
+                  )
+              )}
+            </ul>
+          </>
+        )}
       </div>
     </Section>
   );
