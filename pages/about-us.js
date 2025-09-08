@@ -1,6 +1,6 @@
 import DownloadCompanyProfile from '@/components/common/DownloadCompanyProfile';
 import FeatureCard from '@/components/common/FeatureCard';
-import { MissionIcon } from '@/components/common/Icons';
+import { IconWithBackground, MissionIcon } from '@/components/common/Icons';
 import { VisionIcon } from '@/components/common/Icons';
 import ImageBlock from '@/components/common/ImageBlock';
 import Section from '@/components/common/Section';
@@ -10,12 +10,14 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
+import { oneLiner, welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import projects from '@/data/projects';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 import React from 'react';
+import { FaChartLine, FaQuoteLeft } from 'react-icons/fa6';
+import { MdTrendingUp } from 'react-icons/md';
 
 const AboutUs = () => {
   return (
@@ -79,6 +81,16 @@ const MissionAndVision = () => (
     <div className="container mb-6">
       <div className="row">
         <div className="offset-lg-1 col-lg-10">
+          <div className="d-flex justify-content-center">
+            <IconWithBackground
+              icon={<FaChartLine />}
+              size={5}
+              iconClassName="icon-md"
+            />
+          </div>
+          <p className="text-center pt-2 pt-md-5 px-md-6 pb-6 fs-3">
+            {oneLiner}
+          </p>
           <div className="row">
             <FeatureCard icon={<VisionIcon />} title="Our Vision">
               To be globally recognised as the access point for real

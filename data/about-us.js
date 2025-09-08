@@ -12,6 +12,9 @@ export const welcomeNoteLeadText =
 
 export const ourCultureLeadText = `Integrating all that is precious to people and communities, Highrachy develops and manages dynamic exclusively rated infrastructures with complete facilities that connect today with tomorrow's possibilities and embraces every moment of life's pursuit. We create new value, social value, and above all, real value.`;
 
+export const oneLiner =
+  'Highrachy helps you climb the wealth hierarchy through strategic real estate investments that secures your prosperity, legacy, and peace of mind.';
+
 export const theCulture = {
   Family: {
     title: 'Family',
