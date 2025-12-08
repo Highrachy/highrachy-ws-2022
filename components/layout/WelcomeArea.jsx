@@ -9,6 +9,7 @@ import { Autoplay, EffectCube, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cube';
 import 'swiper/css/pagination';
+import Link from 'next/link';
 
 const STRINGS = ['Expert', 'Specialist', 'Professional'];
 
@@ -59,10 +60,17 @@ const WelcomeArea = () => (
             {[1, 2, 3].map((index) => (
               <SwiperSlide key={index}>
                 <section className="position-relative">
-                  <div className="hero-description">
-                    <h5 className="mb-0 me-2">Blissville Terraces</h5>
-                    <p className="mb-0">Starting from ₦150 Million</p>
-                  </div>
+                  <Link
+                    href="https://www.blissville.com.ng/our-projects/blissville-terraces"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    passHref
+                  >
+                    <div className="hero-description">
+                      <h5 className="mb-0 me-2">Blissville Terraces</h5>
+                      <p className="mb-0">Starting from ₦155 Million</p>
+                    </div>
+                  </Link>
                   <Image
                     src={'/assets/img/slides/bvt-' + index + '.jpg'}
                     className="rounded Tilt-inner"
