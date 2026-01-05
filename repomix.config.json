@@ -1,0 +1,25 @@
+{
+  "output": {
+    "style": "markdown",
+    "filePath": "highrachy-frontend.repomix.md",
+    "removeComments": true,
+    "showLineNumbers": false,
+    "removeEmptyLines": true,
+    "topFilesLength": 0
+  },
+  "include": [
+    "pages/**",
+    "components/**",
+    "sass/plugins",
+    "package.json"
+  ],
+  "ignore": {
+    "customPatterns": [
+      "*.test.ts",
+      "docs/**",
+      "pages/admin/**",
+      "pages/api/**",
+      "components/admin/**"
+    ]
+  }
+}

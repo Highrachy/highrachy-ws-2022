@@ -3,6 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import ServicesList from '@/components/layout/ServicesList';
+import SEOHead from '@/components/utils/SEOHead';
 import { services } from '@/data/navigation';
 import { NextSeo } from 'next-seo';
 import React from 'react';
@@ -10,9 +11,9 @@ import React from 'react';
 const Services = () => {
   return (
     <>
-      <NextSeo
-        title="Our Services | Real Estate, Consulting, Technology, and Investment"
-        description="Give yourself the gift of true value driven by quality for a better tomorrow with us."
+      <SEOHead
+        title="Our Services"
+        description="Explore Highrachy's real estate services including project development, property investment, estate planning, and advisory solutions."
         canonical="https://www.highrachy.com/services"
       />
       <Navigation parentPage={services.url} />

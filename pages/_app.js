@@ -22,9 +22,29 @@ function MyApp({ Component, pageProps }) {
         <ToastContainer autoClose={10000} transition={Slide} theme="colored" />
         <NextNProgress color="#ed3237" />
         <DefaultSeo
-          defaultTitle="Welcome to Highrachy"
-          description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
+          titleTemplate="%s | Highrachy"
+          defaultTitle="Highrachy - Real Estate & Project-Oriented Solutions"
+          description="Highrachy is a 21st-century project-oriented real estate organization delivering value-driven property solutions across Africa."
+          canonical="https://www.highrachy.com"
+          openGraph={{
+            type: 'website',
+            locale: 'en_GB',
+            url: 'https://www.highrachy.com',
+            site_name: 'Highrachy',
+            images: [
+              {
+                url: 'https://www.highrachy.com/og-image.jpg',
+                width: 1200,
+                height: 630,
+                alt: 'Highrachy Real Estate',
+              },
+            ],
+          }}
+          twitter={{
+            handle: '@highrachy',
+            site: '@highrachy',
+            cardType: 'summary_large_image',
+          }}
         />
         <Head>
           <link

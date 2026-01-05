@@ -5,14 +5,14 @@ import ProjectList from '@/components/layout/ProjectList';
 import { projects } from '@/data/navigation';
 import React from 'react';
 import { NextSeo } from 'next-seo';
+import SEOHead from '@/components/utils/SEOHead';
 
 const Projects = () => {
   return (
     <>
-      <NextSeo
+      <SEOHead
         title="Our Projects"
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
+        description="Explore Highrachy’s portfolio of completed and ongoing real estate projects."
         canonical="https://www.highrachy.com/projects"
       />
       <Navigation parentPage={projects.url} />

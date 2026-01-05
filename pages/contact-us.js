@@ -19,6 +19,7 @@ import Link from 'next/link';
 import React from 'react';
 import { toast } from 'react-toastify';
 import { socialMediaLinks } from '../data';
+import SEOHead from '@/components/utils/SEOHead';
 
 const allServices = Object.values(services).map((service) => service.title);
 export const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
@@ -26,10 +27,9 @@ export const subjects = ['General', 'Enquiries', ...allServices, 'Others'];
 const contactUs = () => {
   return (
     <>
-      <NextSeo
-        title="Contact Us"
-        description=" If you want to reach out, discuss opportunities or plan your property
-        strategy, we’d love to hear from you."
+      <SEOHead
+        title="Contact Highrachy"
+        description="Get in touch with Highrachy for real estate development, investment opportunities, partnerships, or general enquiries."
         canonical="https://www.highrachy.com/contact-us"
       />
       <Navigation parentPage={about.url} />

@@ -10,6 +10,7 @@ import Footer from '@/components/layout/Footer';
 import { SectionHeader } from '@/components/layout/Header';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import SEOHead from '@/components/utils/SEOHead';
 import { oneLiner, welcomeNote, welcomeNoteLeadText } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import projects from '@/data/projects';
@@ -22,10 +23,9 @@ import { MdTrendingUp } from 'react-icons/md';
 const AboutUs = () => {
   return (
     <>
-      <NextSeo
+      <SEOHead
         title="About Highrachy"
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
+        description="Learn about Highrachy, a 21st-century project-oriented real estate organization focused on delivering value-driven developments and sustainable communities."
         canonical="https://www.highrachy.com/about-us"
       />
       <Navigation parentPage={about.url} />

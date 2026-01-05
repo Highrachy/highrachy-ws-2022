@@ -16,6 +16,7 @@ import { JobInfo } from '.';
 import { toast } from 'react-toastify';
 import FormikButton from '@/components/forms/FormikButton';
 import { jobApplicationSchema } from '@/components/forms/schemas/page-schema';
+import SEOHead from '@/components/utils/SEOHead';
 
 const SingleCareer = ({ job }) => {
   const router = useRouter();
@@ -35,10 +36,10 @@ const SingleCareer = ({ job }) => {
   const breadcrumb = [{ title: 'Careers', url: 'careers' }, { title: title }];
   return (
     <>
-      <NextSeo
-        title={`Careers | ${title}`}
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
+      <SEOHead
+        title={`Careers - ${job.title}`}
+        description="Join Highrachy and build a career in real estate and project development."
+        canonical={`https://www.highrachy.com/careers/${job.slug}`}
       />
       <Navigation parentPage={about.url} />
       <PageHeader

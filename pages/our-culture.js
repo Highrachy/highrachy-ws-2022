@@ -7,6 +7,7 @@ import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
+import SEOHead from '@/components/utils/SEOHead';
 import { ourCultureLeadText, theCulture } from '@/data/about-us';
 import { about } from '@/data/navigation';
 import { NextSeo } from 'next-seo';
@@ -21,10 +22,9 @@ const breadcrumb = [
 const OurCulture = ({ teams }) => {
   return (
     <>
-      <NextSeo
+      <SEOHead
         title="Our Culture"
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
+        description="Discover the values, principles, and people-first culture that drive Highrachy’s approach to real estate development and project execution."
         canonical="https://www.highrachy.com/our-culture"
       />
       <Navigation parentPage={about.url} />

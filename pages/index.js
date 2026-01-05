@@ -7,16 +7,17 @@ import WelcomeArea from '@/components/layout/WelcomeArea';
 import BusinessRelationships from '@/components/layout/BusinessRelationships';
 import { home } from '@/data/navigation';
 import { NextSeo } from 'next-seo';
+import SEOHead from '@/components/utils/SEOHead';
+import OrgSchema from '@/components/utils/OrgSchema';
 
 export default function Home() {
   return (
     <>
-      <NextSeo
-        title="Welcome to Highrachy"
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
-        canonical="https://www.highrachy.com/"
+      <SEOHead
+        title="Welcome to Highrachy - Real Estate & Project-Oriented Solutions"
+        canonical="https://www.highrachy.com"
       />
+      <OrgSchema />
       <CircleBackground />
       <Navigation parentPage={home.url} />
       <WelcomeArea />

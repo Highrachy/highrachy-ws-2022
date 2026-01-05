@@ -11,6 +11,7 @@ import React from 'react';
 import Sharer from '@/components/utils/Sharer';
 import { NextSeo } from 'next-seo';
 import LightboxGallery from '@/components/common/LightboxGallery';
+import SEOHead from '@/components/utils/SEOHead';
 
 const SingleProject = ({ project }) => {
   const breadcrumb = [
@@ -20,11 +21,13 @@ const SingleProject = ({ project }) => {
 
   return (
     <>
-      <NextSeo
-        title={`Project | ${project.title}`}
-        description="Highrachy is a 21st century project-oriented organization setup
-        primarily to meet your real estate needs."
-        canonical="https://www.highrachy.com/about-us"
+      <SEOHead
+        title={project.title}
+        description={project.content?.slice(0, 160)}
+        canonical={`https://www.highrachy.com/projects/${encodeURIComponent(
+          project.title
+        )}`}
+        image={project.image}
       />
       <Navigation parentPage={projectNav.url} />
       <PageHeader
