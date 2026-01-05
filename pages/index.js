@@ -9,6 +9,7 @@ import { home } from '@/data/navigation';
 import { NextSeo } from 'next-seo';
 import SEOHead from '@/components/utils/SEOHead';
 import OrgSchema from '@/components/utils/OrgSchema';
+import BlissvillePowered from '@/components/common/BlissvillePowered';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <WelcomeArea />
       <ServicesListCard />
       <ProjectList isSlideshow />
+      <BlissvillePowered />
       <BusinessRelationships topClientsOnly />
       <Footer />
     </>
