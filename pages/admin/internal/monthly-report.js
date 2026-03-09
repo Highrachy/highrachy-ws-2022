@@ -222,23 +222,24 @@ const MonthlyReport = () => {
 
                   <li>
                     <strong>On Hold:</strong> The task is temporarily paused due
-                    to an internal or external dependency. Example:
-                    &quot;Waiting for client feedback&quot;, &quot;Pending site
-                    access&quot;, or &quot;Awaiting legal documents&quot;.
+                    to an internal or external dependency beyond our control.
+                    Example: &quot;Waiting for client feedback&quot;,
+                    &quot;Pending site access&quot;, or &quot;Awaiting legal
+                    documents&quot;.
                   </li>
 
                   <li>
                     <strong>Blocked:</strong> Work cannot continue because of an
-                    unresolved issue. Example: &quot;System error&quot;,
-                    &quot;Approval pending&quot;, or &quot;Regulatory
-                    delay&quot;.
+                    unresolved issue beyond our control. Example: &quot;System
+                    error&quot;, &quot;Approval pending&quot;, or
+                    &quot;Regulatory delay&quot;.
                   </li>
 
                   <li>
-                    <strong>Waiting for Review (51% &ndash; 69%):</strong> The
-                    main work is completed and submitted for review, validation,
-                    or feedback. This may apply to design drafts, contracts,
-                    system updates, site reports, or financial reviews.
+                    <strong>Review Ongoing (51% &ndash; 69%):</strong> The main
+                    work is completed and submitted for review, validation, or
+                    feedback. This may apply to design drafts, contracts, system
+                    updates, site reports, or financial reviews.
                   </li>
 
                   <li>
@@ -248,12 +249,14 @@ const MonthlyReport = () => {
                   </li>
 
                   <li>
-                    <strong>Sent to Next Person (80% &ndash; 89%):</strong> The
-                    task has been handed over to the next responsible person or
-                    department for further validation, approval, or
+                    <strong>
+                      Sent to Next Person / Dept (80% &ndash; 89%):
+                    </strong>{' '}
+                    The task has been handed over to the next responsible person
+                    or department for further validation, approval, or
                     implementation. At this stage, additional verification may
-                    be required before final approval &mdash; such as proper
-                    testing, stakeholder feedback, quality checks, compliance
+                    be required before final approval such as proper testing,
+                    stakeholder feedback, quality checks, compliance
                     confirmation, or live usage validation.
                   </li>
 

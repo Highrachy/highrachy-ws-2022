@@ -88,9 +88,20 @@ const MissionAndVision = () => (
               iconClassName="icon-md"
             />
           </div>
-          <p className="text-center pt-2 pt-md-5 px-md-6 pb-6 fs-3">
+          <p className="text-center pt-2 pt-md-5 px-md-6 pb-2 fs-3">
             {oneLiner}
           </p>
+          {/* add one-liner image */}
+          <div className="d-flex justify-content-center mb-7">
+            <Image
+              src="/assets/img/about-us/one-liner.png"
+              className="img-fluid d-block"
+              height={1080}
+              width={1920}
+              alt="One Liner"
+            />
+          </div>
+
           <div className="row">
             <FeatureCard icon={<VisionIcon />} title="Our Vision">
               To be globally recognised as the access point for real

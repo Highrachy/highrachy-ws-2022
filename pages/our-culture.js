@@ -80,7 +80,7 @@ const TheCulture = () => (
                 >
                   {content}
                 </FeatureCard>
-              )
+              ),
             )}
           </div>
         </div>
@@ -126,7 +126,7 @@ const SingleTeamCard = ({ image, fullName, position }) => (
 
 export async function getStaticProps() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/teams?filters[publish][$eq]=true&sort=priority:desc`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/teams?filters[publish][$eq]=true&sort=priority:desc`,
   );
   const { data } = await res.json();
 
