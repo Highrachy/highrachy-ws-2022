@@ -27,9 +27,9 @@ const isAltBg = (index) => (index + 1) % 2 === 0;
 
 const ProjectListGrid = () => {
   return (
-    <Section title="Our Projects">
+    <Section title="Our Projects" centered>
       <div className="container">
-        <p className="lead mt-4 mb-6">
+        <p className="lead mb-6 text-center mt-n5">
           Actualize the dream of acquiring a property, readily tailored to suit
           your peculiar taste with the specific finishing details you desire.
           Highrachy aims to meet the needs of communities and individuals we

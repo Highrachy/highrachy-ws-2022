@@ -84,19 +84,26 @@
   margin-right: 1rem;
   padding: 1rem;
   z-index: 3;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 260ms ease, background-color 200ms ease;
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease,
+    background-color 200ms ease;
 
   h5 {
     font-family: $font-family-sans-serif;
     color: $gray-100 !important;
-    transition: color 180ms ease, transform 220ms ease, text-shadow 220ms ease;
+    transition:
+      color 180ms ease,
+      transform 220ms ease,
+      text-shadow 220ms ease;
   }
 
   p {
     font-size: 0.9rem;
     color: $gray-300;
-    transition: color 180ms ease, transform 220ms ease;
+    transition:
+      color 180ms ease,
+      transform 220ms ease;
   }
 
   &:hover,
@@ -133,6 +140,167 @@
     p {
       transition: none;
       transform: none;
+    }
+  }
+}
+
+.hero-blissville {
+  background: #f8f9fa;
+
+  .hero-inner {
+    max-width: 520px;
+  }
+
+  h1 {
+    letter-spacing: -0.5px;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  .hero-image-col {
+    height: 100vh;
+  }
+
+  .hero-image-wrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0.55)
+    );
+  }
+
+  .hero-bottom-card {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  @media (max-width: 991px) {
+    .hero-bottom-card {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+    }
+    .hero-image-col {
+      height: 60vh;
+    }
+  }
+
+  .hero-investment {
+    .investment-value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .investment-label {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #6c757d;
+    }
+
+    /* Highrachy brand tuning */
+    .text-success {
+      color: #03441d !important; // deep premium green (not bootstrap default)
+    }
+
+    .text-primary {
+      color: #0c3b5c !important; // muted professional blue
+    }
+  }
+}
+
+@include color-mode(dark) {
+  .hero-blissville {
+    background: #0f1115; // richer than pure black
+
+    h1 {
+      color: #ffffff;
+    }
+
+    h4 {
+      color: $primary; // keep brand red pop
+    }
+
+    p {
+      color: #a1a1aa; // softer gray for readability
+    }
+
+    .badge {
+      background: rgba($gray-100, 0.15) !important;
+      color: $gray-100 !important;
+    }
+
+    /* IMAGE OVERLAY — lighter at top, deeper at bottom */
+    .hero-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.75)
+      );
+    }
+
+    /* BOTTOM CARD — more premium */
+    .hero-bottom-card {
+      background: rgba(15, 17, 21, 0.85);
+      border: 1px solid rgba($white, 0.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-bottom-card small {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .hero-bottom-card div {
+      color: #fff;
+    }
+
+    /* INVESTMENT COLORS — tuned for dark */
+    .hero-investment {
+      .investment-label {
+        color: #71717a;
+      }
+
+      .text-success {
+        color: #22c55e !important; // brighter green for dark bg
+      }
+
+      .text-primary {
+        color: #38bdf8 !important; // soft blue pop
+      }
+    }
+
+    /* BUTTON FIX */
+    .btn-outline-dark {
+      --bs-btn-color: #fff;
+      --bs-btn-border-color: rgba(255, 255, 255, 0.4);
+      --bs-btn-hover-bg: rgba(255, 255, 255, 0.08);
+      --bs-btn-hover-border-color: #fff;
+    }
+  }
+
+  .project-card {
+    border: 1px solid rgba($white, 0.1) !important;
+    .bg-white {
+      background: $black !important;
     }
   }
 }
