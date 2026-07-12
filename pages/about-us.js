@@ -68,7 +68,7 @@ const ValuePreposition = () => (
       <SectionHeader small>Value Proposition</SectionHeader>
       <p className="text pt-3">
         Our tested methodology perfectly harnesses the individual skill sets of
-        our team by stricking a ballance between design and technology to ensure
+        our team by stricking a balance between design and technology to ensure
         that you are WOWed. All these promises delivered via impeccable services
         make Highrachy the number one choice for your real estate requirements.
       </p>

@@ -1,6 +1,5 @@
 // pages/sitemap.xml.js
 
-import Axios from 'axios';
 import projects from '@/data/projects'; // adjust path if needed
 
 const BASE_URL = 'https://www.highrachy.com';
@@ -49,7 +48,6 @@ export async function getServerSideProps({ res }) {
     /* ---------------------------------
      * Projects (FILE, TITLE-BASED)
      * --------------------------------- */
-    console.log('projects', projects);
     projectUrls = projects.map(
       (project) => `/projects/${encodeURIComponent(project.title)}`
     );
@@ -64,21 +62,26 @@ export async function getServerSideProps({ res }) {
     ...careerUrls,
   ];
 
+  const now = new Date().toISOString();
+  const uniqueUrls = [...new Set(urls)];
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
+${uniqueUrls
   .map(
     (path) => `
   <url>
     <loc>${BASE_URL}${path}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>${now}</lastmod>
+    <changefreq>${path === '/' ? 'daily' : 'weekly'}</changefreq>
+    <priority>${path === '/' ? '1.0' : '0.8'}</priority>
   </url>`
   )
   .join('')}
 </urlset>`;
 
   res.setHeader('Content-Type', 'text/xml');
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
   res.write(sitemap);
   res.end();
 

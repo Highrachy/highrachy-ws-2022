@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
-import { NextSeo } from 'next-seo';
+import SEOHead from '@/components/utils/SEOHead';
 import React from 'react';
 
 const breadcrumb = [
@@ -14,7 +14,7 @@ const breadcrumb = [
 const DataProtectionStatement = () => {
   return (
     <>
-      <NextSeo
+      <SEOHead
         title="Data Protection Statement"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."

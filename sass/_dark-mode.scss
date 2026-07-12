@@ -75,6 +75,41 @@
     border-color: $gray-800;
   }
 
+  // Ensure Bootstrap tables keep readable text and contrast in dark mode.
+  .table {
+    --bs-table-color: #{$gray-100};
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #{$gray-700};
+    --bs-table-striped-bg: #{rgba($white, 0.04)};
+    --bs-table-striped-color: #{$gray-100};
+    --bs-table-hover-bg: #{rgba($white, 0.08)};
+    --bs-table-hover-color: #{$white};
+    --bs-table-active-bg: #{rgba($white, 0.12)};
+    --bs-table-active-color: #{$white};
+
+    > :not(:first-child) {
+      border-top-color: $gray-700;
+    }
+
+    thead tr {
+      background: $gray-800;
+      color: $gray-200;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+      border-color: $gray-700 !important;
+    }
+
+    td.td-block {
+      color: $gray-100;
+
+      span {
+        color: $gray-300;
+      }
+    }
+  }
+
   .icon-md2 svg {
     fill: $gray-100;
     color: $gray-100;

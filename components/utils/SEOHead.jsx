@@ -1,7 +1,14 @@
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 
-const SITE_URL = 'https://www.highrachy.com';
-const SITE_NAME = 'Highrachy';
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SEO_DESCRIPTION,
+  SITE_NAME,
+  TWITTER_HANDLE,
+  buildCanonicalUrl,
+  toAbsoluteUrl,
+} from '@/utils/seo';
 
 export default function SEOHead({
   title,
@@ -11,17 +18,14 @@ export default function SEOHead({
   noindex = false,
   nofollow = false,
 }) {
-  const seoTitle = title
-    ? `${title} | ${SITE_NAME}`
-    : `${SITE_NAME} - Real Estate & Project-Oriented Solutions`;
+  const router = useRouter();
+  const seoTitle = title;
 
-  const seoDescription =
-    description ||
-    'Highrachy is a 21st-century project-oriented real estate organization delivering value-driven property solutions across Africa.';
+  const seoDescription = description || DEFAULT_SEO_DESCRIPTION;
 
-  const seoCanonical = canonical || SITE_URL;
+  const seoCanonical = canonical || buildCanonicalUrl(router.asPath);
 
-  const seoImage = image || `${SITE_URL}/og-image.jpg`;
+  const seoImage = image ? toAbsoluteUrl(image) : DEFAULT_OG_IMAGE;
 
   return (
     <NextSeo
@@ -48,8 +52,8 @@ export default function SEOHead({
       }}
       twitter={{
         cardType: 'summary_large_image',
-        site: '@highrachy',
-        handle: '@highrachy',
+        site: TWITTER_HANDLE,
+        handle: TWITTER_HANDLE,
       }}
       robotsProps={{
         nosnippet: false,

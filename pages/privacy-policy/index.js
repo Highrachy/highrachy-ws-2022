@@ -3,7 +3,7 @@ import Footer from '@/components/layout/Footer';
 import { PageHeader } from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { about } from '@/data/navigation';
-import { NextSeo } from 'next-seo';
+import SEOHead from '@/components/utils/SEOHead';
 import React from 'react';
 
 const breadcrumb = [{ title: 'Privacy Policy' }];
@@ -11,11 +11,11 @@ const breadcrumb = [{ title: 'Privacy Policy' }];
 const PrivacyPolicy = () => {
   return (
     <>
-      <NextSeo
+      <SEOHead
         title="Privacy Policy"
         description="Highrachy is a 21st century project-oriented organization setup
         primarily to meet your real estate needs."
-        canonical="https://www.highrachy.com/privacy-policy/data-protection-statement"
+        canonical="https://www.highrachy.com/privacy-policy"
       />
       <Navigation parentPage={about.url} />
       <PageHeader
