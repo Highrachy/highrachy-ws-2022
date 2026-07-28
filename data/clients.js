@@ -3,7 +3,7 @@ export const allClients = [
   'paystack',
   'elvira',
   'legrand',
-  'zenith',
+  'providus',
   'stanbic',
   'jutem',
   'schneider',
